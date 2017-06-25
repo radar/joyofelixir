@@ -1,0 +1,64 @@
+$purple: #791E94;
+$light-purple: #B559D1;
+
+body {
+  font: 14pt "Pavanam";
+  background: #E1C2EA;
+  margin: 0;
+}
+
+.wrapper {
+  margin: 0 5%;
+  background: white;
+  padding: 2.5% 5%;
+}
+
+h1, h2, h3 {
+  color: $purple;
+}
+
+h2 {
+  font-size: 150%;
+  font-weight: bold;
+}
+
+a {
+  color: $light-purple;
+}
+
+code {
+  font: 12pt "Source Code Pro";
+}
+
+pre {
+  overflow: auto;
+  background: #212733;
+  padding: 10px;
+  color: white;
+}
+
+aside {
+  background: #C7EBF0;
+  padding: 15px;
+
+  header {
+    font-weight: bold;
+    font-size: 125%;
+  }
+}
+
+blockquote {
+  background: #C7EBF0;
+  padding: 15px;
+
+  p {
+    margin: 0;
+  }
+}
+
+.todo {
+  background: #de0000;
+  padding: 25px;
+  color: white;
+  font-weight: bold;
+}

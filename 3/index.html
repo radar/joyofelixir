@@ -1,0 +1,76 @@
+---
+layout: default
+---
+
+<h2>Now, where did I put that value?</h2>
+
+<p>
+  We've now seen that Elixir can handle words and numbers easily. But what else can it do? Well, it can remember things.
+</p>
+
+<pre><code>iex(6)> sentence = "A really long and complex sentence we'd rather not repeat."
+<span class='console-green'>"A really long and complex sentence we'd rather not repeat."</span>
+iex(7)> score = 2 / 5 * 100
+<span class='console-yellow'>40</span></code></pre>
+
+<p>
+  As long as we leave <code>iex</code> running, Elixir will remember that <code>sentence</code> is <code>"A really long and complex sentence we'd rather not repeat."</code> and <code>score</code> is <code>40</code>. At any point in time, we can ask it what <code>sentence</code> or <code>score</code> is and it will tell us:
+</p>
+
+<pre><code>iex(8)> sentence
+<span class='console-green'>"A really long and complex sentence we'd rather not repeat."</span>
+iex(9)> score
+<span class='console-yellow'>40</span></code>
+</pre>
+
+<p>
+  <code>sentence</code> here is a <em>variable</em>, and it's given that name because the thing that the computer remembers with that name of <code>sentence</code> can <em>vary</em>. We can tell the computer to forget its previous definition of <code>sentence</code> and give it a new one like this:
+</p>
+
+<pre><code>iex(10)> sentence = "An even longer and significantly more complex sentence
+   that we might be ok with repeating, if the mood takes us."
+<span class='console-green'>"An even longer and significantly more complex sentence
+   that we might be ok with repeating, if the mood takes us."</span></code>
+</pre>
+
+Then when we ask the computer what <code>sentence</code> is, it will have forgotten the old <code>sentence</code> and will only know the new one:
+
+<pre><code>iex(11)> sentence
+<span class='console-green'>"An even longer and significantly more complex sentence
+   that we might be ok with repeating, if the mood takes us."
+</span></code></pre>
+
+Now the masses are looking chirpier. Some are even smiling! Isn't that wonderful? Let's create another variable called <code>place</code>:
+
+<pre><code>iex(9)> place = "World"
+<span class='console-green'>"World"</span>
+</code></pre>
+
+<p>
+  The computer will now remember that <code>place</code> is <code>"World"</code>. "But what's the use of just <em>setting</em> a variable like this? Why make the computer remember at all?", Roberto (the spokesman) says. By the way, we have since learned the spokesman's name is Roberto, and so we've done some variable creation of our own in our own brain: <code>spokesman = "Roberto"</code>. Woah.
+</p>
+
+<p>
+  Ok, Roberto's right. We should do something meaningful with this variable. Ok, Roberto, how about this? <em>[cracks knuckles]</em>
+</p>
+
+<pre><code>iex(10)> "Hello #{place}!"
+<span class='console-green'>"Hello, World!"</span></code></pre>
+
+<p>
+  The masses go nuts. It's pandemonium! Then after a few shushing motions with my hands, they're (mostly) quiet again.
+</p>
+
+<p>
+  "What just happened?", asks Roberto? But <em>you</em>, Dear Reader, had asked that question already. Roberto didn't hear because of the crowd and the <em>sheer, unbounded</em> pandemonium.
+</p>
+
+<p>
+  What on earth are those funky characters around <code>place</code>? You can think of them as a placeholder. Nerdier-types would call it <em>interpolation</em>. It tells the computer that we want to put the <code>place</code> variable <em>riiiiight</em> here, right after <code>Hello</code> and the space, and right before <code>!</code>.
+</p>
+
+<p>
+  The computer takes the sentence that we give it, realises that there's that funky <code>\#{}</code> placeholder indicator, and it remembers what <code>place</code> was and puts it right there. Pretty nifty, eh?
+</p>
+
+<a href='/2'>Previous</a> | <a href='/4'>Next</a>
