@@ -2,137 +2,75 @@
 layout: default
 ---
 
-<h2>Appeasing the masses with code</h2>
+<h2>Now, where did I put that value?</h2>
 
 <p>
-  OK, here's some code:
+  We've now seen that Elixir can handle words and numbers easily. But what else can it do? Well, it can remember things.
 </p>
 
-<center>
-  <pre style='white-space: inherit;'><code style='font-size: 36pt;'>"Hello, World!"</code></pre>
-</center>
+<pre><code>iex(6)> sentence = "A really long and complex sentence we'd rather not repeat."
+<span class='console-green'>"A really long and complex sentence we'd rather not repeat."</span>
+iex(7)> score = 2 / 5 * 100
+<span class='console-yellow'>40</span></code></pre>
 
 <p>
-  The masses are silent. Their stares harden. Their spokesman -- who they've nominated while I thought of this snippet -- says, systematically tearing down the fourth wall: "That's just a bunch of quoted words! Just like this one that I'm speaking."
+  As long as we leave <code>iex</code> running, Elixir will remember that <code>sentence</code> is <code>"A really long and complex sentence we'd rather not repeat."</code> and <code>score</code> is <code>40</code>. At any point in time, we can ask it what <code>sentence</code> or <code>score</code> is and it will tell us:
 </p>
 
-<p>
- The crowd agrees.
-</p>
-
-<p>
-  Ok, you're right. It is some quoted words, but they're quoted words that both humans <em>and</em> computers can understand. That's pretty cool. Well, I thought so, at least.
-</p>
-
-<p>
-  The crowd of humans arrayed before us know the words and that the words have <em>meaning</em> behind them and form an understandable sentence. The computer knows only the words, and cares not that they have a meaning or that they form an understandable sentence. "Those things are only important to the humans", it thinks, without acknowledging the <a href='http://whatis.techtarget.com/definition/machine-learning'>Machine Learning</a> zeitgeist.
-</p>
-
-<p>
-  When we say the sentence to the masses, they can easily repeat it back to us. To speak to the computer, we need to open up a <em>prompt</em> for the particular language we want to use to converse. Diffeent languages have different prompts. In this case, we want to talk Elixir and so we can open a prompt with the <code>iex</code> command. <code>iex</code> stands for "Interactive EliXir". Let's open up one now by typing <code>iex</code> and pressing <kbd>Enter</kbd>.
-</p>
-
-<p>
-  When it starts, the prompt says:
-</p>
-
-
-<pre><code>Erlang/OTP 19 [erts-8.1] [source] ...
-
-Interactive Elixir (1.4.2) - press Ctrl+C to exit (type h() ENTER for help)</code>
+<pre><code>iex(8)> sentence
+<span class='console-green'>"A really long and complex sentence we'd rather not repeat."</span>
+iex(9)> score
+<span class='console-yellow'>40</span></code>
 </pre>
 
-
-
 <p>
-  We can safely ignore this output. It is just giving us some nerdy information. The last line shown here tells us that we're running Interactive Elixir "1.4.2". This tells us that we're running the 1.4.2 version of Elixir. It tells us that we can hit <kbd>Ctrl+C</kbd> to exit (stop the `iex` command). The next thing the computer says is:
+  <code>sentence</code> here is a <em>variable</em>, and it's given that name because the thing that the computer remembers with that name of <code>sentence</code> can <em>vary</em>. We can tell the computer to forget its previous definition of <code>sentence</code> and give it a new one like this:
 </p>
 
-<pre><code>iex(1)></code></pre>
-
-<p>
-  This tells us that the computer is now listening for our instructions, eagerly awaiting them. Let's give the computer our sentence again, pressing enter at the end of the line:
-</p>
-
-<pre><code>iex(1)> "Hello, World!"
-<span class="console-green">"Hello, World!"</span></code>
+<pre><code>iex(10)> sentence = "An even longer and significantly more complex sentence
+   that we might be ok with repeating, if the mood takes us."
+<span class='console-green'>"An even longer and significantly more complex sentence
+   that we might be ok with repeating, if the mood takes us."</span></code>
 </pre>
 
+Then when we ask the computer what <code>sentence</code> is, it will have forgotten the old <code>sentence</code> and will only know the new one:
+
+<pre><code>iex(11)> sentence
+<span class='console-green'>"An even longer and significantly more complex sentence
+   that we might be ok with repeating, if the mood takes us."
+</span></code></pre>
+
+Now the masses are looking chirpier. Some are even smiling! Isn't that wonderful? Let's create another variable called <code>place</code>:
+
+<pre><code>iex(9)> place = "World"
+<span class='console-green'>"World"</span>
+</code></pre>
 
 <p>
-  On the first line here, we're giving the computer an instruction that looks like a regular sentence. This is because it is a regular sentence. In computer-nerd-terminology, we refer to this double-quoted collection of symbols as a _string_. It's easier to think of it like a string if you think of all of the sentence's parts being connected by an actual string:
-</p>
-
-<div class='todo'>TODO: String image goes here.</div>
-
-<p>
-  The computer then takes in this string, interprets it and tells us how it interpreted the string. In this case, the computer is just parroting our sentence/string back to us. The computer can do a lot more than this, believe me. Computers wouldn't be very good if they all they did was parrot back to us.
+  The computer will now remember that <code>place</code> is <code>"World"</code>. "But what's the use of just <em>setting</em> a variable like this? Why make the computer remember at all?", Roberto (the spokesman) says. By the way, we have since learned the spokesman's name is Roberto, and so we've done some variable creation of our own in our own brain: <code>spokesman = "Roberto"</code>. Woah.
 </p>
 
 <p>
-  The masses are now getting fidgety. And the computer is prompting us with this line.
+  Ok, Roberto's right. We should do something meaningful with this variable. Ok, Roberto, how about this? <em>[cracks knuckles]</em>
 </p>
 
-<pre><code>iex(2)></code></pre>
+<pre><code>iex(10)> "Hello #{place}!"
+<span class='console-green'>"Hello, World!"</span></code></pre>
 
 <p>
-  The computer hungers for more input. The masses want to see more of what this language can do. Fortunately for me (and you), computers can do much more than parrot.
+  The masses go nuts. It's pandemonium! Then after a few shushing motions with my hands, they're (mostly) quiet again.
 </p>
-
-
-<h2>Mathematical!</h2>
 
 <p>
-  How about we ask the computer to do some mathematical equations?
+  "What just happened?", asks Roberto? But <em>you</em>, Dear Reader, had asked that question already. Roberto didn't hear because of the crowd and the <em>sheer, unbounded</em> pandemonium.
 </p>
-
-<pre><code>iex(2)> 2 + 4
-<span class='console-yellow'>6</span>
-iex(3)> 3 - 6
-<span class='console-yellow'>-3</span>
-iex(4)> 4 * 12345
-<span class='console-yellow'>49380</span>
-iex(5)> 1234 / 4
-<span class='console-yellow'>308.5</span></code></pre>
 
 <p>
-  This appeases the masses, slightly. They're a fickle bunch. The computer is now no longer parroting things back to us. It's instead calculating the not-so-advance mathematical equations we're giving it, and then giving us the right numbers.
+  What on earth are those funky characters around <code>place</code>? You can think of them as a placeholder. Nerdier-types would call it <em>interpolation</em>. It tells the computer that we want to put the <code>place</code> variable <em>riiiiight</em> here, right after <code>Hello</code> and the space, and right before <code>!</code>.
 </p>
-
-<aside>
-  <header>Why are numbers yellow, but strings green?</header>
-
-  <p>
-    You may have noticed that a string shows up as green in the <code>iex</code> prompt:
-  </p>
-
-  <pre>
-<code>iex(1)> "Hello World!"
-<span class='console-green'>"Hello World"</span></code></pre>
-
-  <p>
-    But numbers show up as yellow:
-  </p>
-
-  <pre><code>iex(2)> 2 + 4
-<span class='console-yellow'>6</span></code></pre>
-
-  <p>
-    And you might've wondered why.
-  </p>
-
-  <p>
-    Well, there is no particular reason for strings being green and numbers being yellow; the colours don't mean much else than to serve as useful indicators of the different kinds of data. Strings are one kind of data, and numbers are a different kind. We'll see more kinds as we continue on our journey.
-  </p>
-
-  <p>
-    Green doesn't mean that strings are somehow more special than numbers, and yellow doesn't mean that numbers are more important. They're just colours to help differentiate the two at a glance.
-  </p>
-</aside>
 
 <p>
-  They realise that Elixir is now built for more things than simple parroting. Elixir can do calculations too! We've used the symbols <code>+</code>, <code>-</code>, <code>*</code>, and <code>/</code> here, asking the computer to add, subtract, multiply and divide, in that order.
+  The computer takes the sentence that we give it, realises that there's that funky <code>\#{}</code> placeholder indicator, and it remembers what <code>place</code> was and puts it right there. Pretty nifty, eh?
 </p>
-
 
 <a href='/1'>Previous</a> | <a href='/3'>Next</a>
