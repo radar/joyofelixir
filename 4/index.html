@@ -352,10 +352,43 @@ List.reverse(animals_or_derivatives_of_animals, [1, 2, 3])
 
 <pre><code>iex(12)> seasons = ["Summer", "Fall", "Winter", "Spring"]</code></pre>
 
+<p>
+  What we want to do in this case is to enumerate through each item in the list and to capitalize the first letter of each word, leaving all the others as lower case. There's a function to do this called <code>String.capitalize/1</code>, and for a single string we can call it like this:
+</p>
+
+<pre><code>iex(12)> String.capitalize("summer")
+<span class='console-green'>"Summer"</span></code></pre>
 
 <p>
-  What we want to do in this case is to enumerate through each item in the list and to capitalize the first letter of each word, leaving all the others as lower case.
+  "But how do we run that function on each item in a list?", Roberto asks. He then cries: "I don't want to have to rewrite the whole list!" Roberto is being a little dramatic, given it is a small list of four elements but I can see his point. We <em>could</em> rewrite the list to make it what we want it to be, but we're <em>computer programmers</em>, so let's program the computer to do our bidding instead.
 </p>
+
+<p>
+  We're going to need a function that goes through each item in the list and applies <code>String.capitalize/1</code>; something akin to making a list like this:
+</p>
+
+<pre><code>iex(12)> seasons = [
+  String.capitalize("summer"),
+  String.capitalize("fall"),
+  String.capitalize("winter"),
+  String.capitalize("spring"),
+]</code></pre>
+
+<p>
+  But since we've already got a list we're going to have to do <em>something</em> to that list to turn it into what we want. That something is to use another tool from the <code>Enum</code> toolbox called <code>Enum.map/2</code>. This <code>map</code> function is different from the map kind of data (<code>%{"name" => "Roberto"}</code>), in that it will take the specified enumerable and function, enumerate through each item in the list and apply the function to that list, and then return the result.
+</p>
+
+<p>
+  Enough jibber-jabber. Let's see this in actual practice:
+</p>
+
+<pre><code>iex(12)> Enum.map(seasons, &String.capitalize/1)</code></pre>
+
+<div class='todo'>
+  TODO: Link to https://hexdocs.pm/elixir/
+</div>
+
+<div class='todo'>Chapter is currently unfinished... please hold.</div>
 
 
 <a href='/3'>Previous</a>
