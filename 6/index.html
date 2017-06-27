@@ -1,0 +1,113 @@
+---
+layout: default
+---
+
+<h2>Funky functions</h2>
+
+<p>
+  After about half an hour, Roberto re-appears from seemingly nowhere. His computer screen glows with the information he has collected from the crowd. We're not quite sure how long he's been back for, but the moment our attention fixes on him, he speaks: "Okay, so you can represent different... <em>kinds</em> of things in Elixir -- strings, numbers, lists, maps -- but what is the point of doing that at all? What can you <em>do</em> with them? Do I need to write code to work with these different kinds of things all the time? Can the computer remember code too?"
+</p>
+
+<p>
+  Well Roberto, that was a very clever and completely unintentional segue into this next part of the book. Thank you for doing that.
+</p>
+
+<p>
+  Yes, in fact you can tell the computer to remember some code too. This saves <em>a lot</em> of typing. Crazy amounts of the stuff. You'll get <em>years</em> of your life back!
+</p>
+
+<p>
+  Ok, enough chit-chat. Let's look at how to make the computer remember some code:
+</p>
+
+<pre><code>iex(21)> greeting = fn (place) -> "Hello, #{place}!" end
+<span class='console-yellow'>#Function&lt;6.52032458/1 in :erl_eval.expr/5&gt;</span></code></pre>
+
+<p>
+  This is called a <em>function</em> and we can write whatever code we want the computer to remember for later, just like we could tell the computer to remember a string, a number, a list or a map. Elixir code is all about the functions, and now we understand why Wikipedia said it was a "functional" language. It didn't mean that it was functional in the sense that it is operational, but moreso that it uses functions to get things done.
+</p>
+
+<p>
+  The <code>fn</code> tells the computer we're about to define a function, and the defining-of-the-function doesn't stop until it gets to the <code>end</code>. Just like you wouldn't stop until you got to the end of something -- i.e. a book -- right?
+</p>
+
+<p>
+  The <code>(place)</code> here defines an <em>argument</em> for the function; think of it like a variable that is only available within this function and not the angry shouting matches that most <code>normal</code> arguments can devolve into. The <code>-></code> tells the computer that we're done defining the arguments for the function, and anything after this but before the <code>end</code> is going to be the code to run.
+</p>
+
+<p>
+  Once we hit enter at the end of this line, the computer gives us some output to indicate it has accepted our function. It's not the friendliest output, but at least it's something that tells us the computer has done <em>something</em>.
+</p>
+
+<p>
+  We've assigned our function to the <code>greeting</code> variable and so that's what the computer will remember the function as. "How do we make the computer run that function?", Roberto asks keenly, suddenly impressed about the computer's ability to remember functions. I'm sure you're asking the same thing, dear reader.
+</p>
+
+<p>
+Well, Roberto (and dearest reader), we need to use some new and exciting code that we've not seen yet:
+</p>
+
+<pre>
+<code>iex(22)> greeting.("World")
+<span class='console-green'>"Hello, World!"</span></code></pre>
+
+<p>
+  This is how we make the function run. We run this function by putting a dot after its name. The brackets after this dot represent the argument for the function. This time that we call the function, <code>place</code> will be <code>"World"</code>. But it doesn't always have to be <code>"World"</code>. It can be anything you wish:
+</p>
+
+<pre><code>iex(23)> greeting.("Mars")
+<span class='console-green'>"Hello, Mars!"</span>
+iex(24)> greeting.("Narnia")
+<span class='console-green'>"Hello, Narnia!"</span>
+iex(25)> greeting.("Motherland")
+<span class='console-green'>"Hello, Motherland!"</span></code></pre>
+
+<p>
+  Each time we run the function here we give it a new value for <code>place</code>. We don't have to set <code>place</code> ourselves, as the function takes care of that. But what of our <code>place</code> variable from yesteryear (line 9 in <code>iex</code>)? Has that changed?
+</p>
+
+<pre><code>iex(26)> place
+<span class='console-green'>"World"</span></code></pre>
+
+<p>
+  The computer knows that the <code>place</code> from <em>outside</em> the function is different to the place <em>inside</em> the function, and so it keeps the two separate. The computer is smart enough to know that <code>place</code> on the outside may not exist and so it shouldn't rely on it being present. The function contains everything it needs to run inside itself.
+</p>
+
+<p>
+  One more handy thing about functions is that they're not limited to just one argument. You can define a function that accepts as many arguments as you wish:
+</p>
+
+<pre>
+<code>iex(27)> greeting = fn (name, gender, age) ->
+...(27)>   "Hello, #{name}! I see you're a #{gender} and you're #{age} years old."
+...(27)> end
+<span class='console-yellow'>#Function&lt;18.52032458/3 in :erl_eval.expr/5&gt;</span></code></pre>
+
+<p>
+  This function has 3 arguments, and so when we run it we need to give it all three. To do that, we just separate them using a comma, similar to how we separated the items in a list earlier, just without the square brackets (<code>[]</code>) around these arguments.
+</p>
+
+<pre>
+<code>iex(28)> greeting.("Roberto", "Male", "30ish")
+<span class='console-green'>"Hello, Roberto! I see you're a Male and you're 30ish years old!"</span></code></pre>
+
+<p>We can go nuts with the number of arguments that a function is defined with. However, we need to take a modicum of caution when running the functions. If we specify the wrong number of arguments, Elixir will tell us off with big red text:</p>
+
+<pre><code>iex(19)> greeting.("Roberto")
+<span class='console-red'>** (BadArityError) #Function&lt;18.52032458/3 in :erl_eval.expr/5&gt;
+  with arity 3 called with 1 argument ("Roberto")</span></code></pre>
+
+<p>
+  Oh no the computer is angry with us. Well, if the computer felt any emotion from brutal indifference it would <em>probably</em> be some version of angry, or at least disappointed. The computer is reprimanding us: telling us that we caused a <code>BadArityError</code> and that means that we had a "&lt;function&gt; with arity 3 called with 1 argument".
+</p>
+
+<p>
+  "What on earth is an 'arity'?", Roberto asks, clearly flummoxed (and perhaps a bit affronted) by the word. Unlike the computer, Roberto is not brutally indifferent when it comes to these things. After all, Roberto thought he was getting a handle on this Elixir thing.
+</p>
+
+<p>
+  Arity is a fancy computer term which means "arguments". This error is saying that while the <code>greeting</code> function is defined with 3 arguments ("with arity 3") we're only running ("calling") it with 1 argument. Helpfully, it tells us what arguments we tried to give the function. To avoid the computer reprimanding us we should make sure to call functions with the right number of arguments.
+</p>
+
+<a href='/5'>Previous</a> | <a href='/7'>Next</a>
+

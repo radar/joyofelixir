@@ -2,7 +2,7 @@
 layout: default
 ---
 
-<h2>A quick interlude about lists</h2>
+<h2>Making lists</h2>
 
 But what <em>else</em> can Elixir do? We've seen that it can handle strings and it can handle mathematical equations with ease, but what else? Well, what if we had a <em>list</em> of things that we wanted the computer to remember? And we wanted the computer to remember them in a particular order?
 
@@ -36,119 +36,6 @@ iex(13)> third = "eggs"
 
 <p>
   The computer will now remember our entire shopping list in one variable, rather than remembering it across multiple variables. Now we have a one-stop-shop that we can go to for our shopping list.
-</p>
-
-<h2>Another quick interlude, this time about maps</h2>
-
-<p>
-  Roberto, impressed with Elixir's ability to keep a list of anything his heart desires, has started taking the names down of the people who are in the crowd. His computer materialised from nowhere, or perhaps from somewhere in the throng nearby. It was too quick to really notice. He starts taking down names, fingers flying across the keyboard:
-</p>
-
-<pre>
-<code>iex(16)> those_who_are_assembled = [
-...(16)> "Roberto",
-...(16)> "The Author",
-...(16)> "The Reader",
-...(16)> "Bob",
-...(16)> "Juliet",
-...(16)> "Charlie",
-...(16)> "Charlie (no relation)"
-...(16)> ]
-[<span class='console-green'>"Roberto"</span>, ...]</code></pre>
-
-<p>
-  Do you see what Roberto did there?
-</p>
-
-<p>
-  He started a list on one line and then continued it on the lines following. When he finished his list, the computer then took <em>all</em> the lines, processed them as one big instruction and presented us with the finished list. Elixir will let us write code over multiple lines like this, which is handy because it helps for readability!
-</p>
-
-<p>
-  And so Roberto continues. He disappears into the crowd directly to our right, and somehow re-appears within mere seconds on our left. This is despite the density of the crowd. Amazing stuff. He then asks: "Hey Mr. Author Guy, I want to also track people's ages so that I can do some statistics on who exactly is assembled here. Oh, and I want to track their gender too. But a list doesn't seem very suitable for this. How can I do this?"
-</p>
-
-<p>
-  Well Roberto, there's more than one way you could do this. If all you wanted to track about a person was their name, their age and their gender, you could make each item in the list its own list:
-</p>
-
-<pre>
-<code>iex(17)> those_who_are_assembled = [
-...(17)> ["Roberto", "30ish", "Male"]
-...(17)> ]
-</code>
-</pre>
-
-These lists-inside-of-lists would be called <em>sub-lists</em>. You would then have to keep in mind that the first item in each sublist is the name, the second is the age and the third is the gender. What if you lost track of this and started adding in people, but you flipped the age and their gender?
-
-<pre>
-<code>iex(18)> those_who_are_assembled = [
-...(18)> ["Roberto", "30ish", "Male"],
-  ... a long time passes ...
-...(18)> ["Young Roberto", "Male", "20ish"],
-...(18)> ]
-</code>
-</pre>
-
-<p>
-  Pandemonium again! We need a better way of enforcing what data we're collecting for each person. For that, we can use a <em>map</em>. Just like a regular map, maps in Elixir can tell us where to find things, if only we knew where to look.
-</p>
-
-<p>
-  Let's look at how we could collect a single person's data using a map:
-</p>
-
-<pre>
-<code>iex(19)> person = %{"name" => "Roberto", "age" => "30ish", "gender" => "Male"}
-  %{<span class='console-green'>"age"</span> => <span class='console-green'>"30ish"</span>, <span class='console-green'>"gender"</span> => <span class='console-green'>"Male"</span>, <span class='console-green'>"name"</span> => <span class='console-green'>"Roberto"</span>}</code></pre>
-
-<p>
-  In a map, we structure data using <em>keys</em> and <em>values</em>. The thing to the <em>left</em> of the <code>=></code> is called a <em>key</em> and the thing to the <em>right</em> is called a <em>value</em>.
-</p>
-
-<p>
-  You might notice here that the computer has taken in our map and returned the keys in a different order to the one that we specified. The order of keys doesn't matter in a map at all, unlike in lists where order <em>does</em> matter. We could specify the keys in any order we wish, and the map would be the same:
-</p>
-
-<pre>
-<code>iex(19)> person = %{"gender" => "Male", "age" => "30ish", "name" => "Roberto"}
-  %{<span class='console-green'>"age"</span> => <span class='console-green'>"30ish"</span>, <span class='console-green'>"gender"</span> => <span class='console-green'>"Male"</span>, <span class='console-green'>"name"</span> => <span class='console-green'>"Roberto"</span>}</code></pre>
-
-<p>
-  You may now be thinking about how to get the data back out of a map once you've put it in. In order to access a value from a map we need to know the corresponding key. Once we know the corresponding key, then we can use <code>[]</code> to pluck that value out of the map. Think of it like the claw from a skilltester, diving in to pick out the value.
-</p>
-
-<div class='todo'>TODO: Skilltester image goes here.</div>
-
-<p>
-  For instance, if we wanted to get out the value of <code>"name"</code> for <code>person</code> we can do:
-</p>
-
-<pre><code>iex(20)> person["name"]
-<span class='console-green'>"Roberto"</span></code></pre>
-
-And if we want to get the age, we would use the <code>"age"</code> key:
-
-<pre><code>iex(20)> person["age"]
-<span class='console-green'>"30ish"</span></code></pre>
-
-<p>
-  Roberto lets out a thoughtful "Mmmmmmmmmm" in something very close to an agreement. He likes maps. Now Roberto can know the exact data that we're collecting about the assembled masses, without a concern for how the data ordered, and then use that for later on. We don't know yet what Roberto has in mind for the data, but he's collecting it for a reason. Or at least, it seems that way.
-</p>
-
-<p>
-  To collect data about all the people assembled here before us, we can create a <em>list of maps</em>:
-</p>
-
-<pre>
-<code>iex(20)> [
-...(20)> %{age: "30ish", gender: "Male", name: "Roberto"},
-...(20)> %{age: "30ish", gender: "Male", name: "The Author"},
-...(20)> ]</code>
-</pre>
-
-<p>
-  Roberto excitedly disappears into the crowd again with this new knowledge.
 </p>
 
 <a href='/2'>Previous</a> | <a href='/4'>Next</a>

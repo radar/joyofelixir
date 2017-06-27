@@ -1,0 +1,306 @@
+---
+layout: default
+---
+
+<h2>Building on the foundations of what was already there, but you didn't see yet</h2>
+
+<p>
+  Elixir would be pretty hard to do if you had to write all the code for your programs by yourself. We have already seen that if you want to add, subtract, multiply or divide numbers, Elixir has your back:
+</p>
+
+<pre><code>iex(2)> 2 + 4
+<span class='console-yellow'>6</span>
+iex(3)> 3 - 6
+<span class='console-yellow'>-3</span>
+iex(4)> 4 * 12345
+<span class='console-yellow'>49380</span>
+iex(5)> 1234 / 4
+<span class='console-yellow'>308.5</span></code></pre>
+
+We also saw that it can run code inside of some other code, through string interpolation:
+
+<pre><code>iex(9)> place = "World"
+iex(10)> "Hello #{place}!"
+<span class='console-green'>"Hello, World!"</span>
+</code></pre>
+
+We saw that it can handle lists:
+
+<pre><code>iex(9)> ["chicken", "beef", "and so on"]
+[<span class='console-green'>"chicken"</span>, <span class='console-green'>"beef"</span>, <span class='console-green'>"and so on"</span>]
+</code></pre>
+
+And it can also handle maps:
+
+<pre>
+<code>iex(19)> person = %{"name" => "Roberto", "age" => "30ish", "gender" => "Male"}
+  %{<span class='console-green'>"age"</span> => <span class='console-green'>"30ish"</span>, <span class='console-green'>"gender"</span> => <span class='console-green'>"Male"</span>, <span class='console-green'>"name"</span> => <span class='console-green'>"Roberto"</span>}</code></pre>
+
+We also saw that it could remember functions for us:
+
+<pre><code>iex(11)> greeting = fn (name) -> "Hello, #{name}!" end
+<span class='console-yellow'>#Function&lt;6.52032458/1 in :erl_eval.expr/5&gt;</span></code></pre>
+
+<p>
+  But what if I told you that it could do more than this simple math, string interpolation and remembering functions? What if I told you that Elixir already provided some functions that you could use to build your programs if only you had asked to use them?
+</p>
+
+<p>
+  Well, all you need to do is ask and Elixir will provide.
+</p>
+
+<h3>Working with strings</h3>
+
+<p>
+  Have you ever wanted to reverse a sentence, but didn't want to type all the different characters yourself? Elixir has a handy function for this called <code>String.reverse</code>. Here it is in action:
+</p>
+
+<pre><code>iex(12)> String.reverse("reverse this")
+<span class='console-green'>"siht esrever"</span></code></pre>
+
+<p>
+  Roberto elicits a noticeable "wooooowww, that's so cool" at this. "What else does Elixir have?", he asks quickly. We'll get to that, Roberto. Let's take the time now to understand what's happening here first.
+</p>
+
+<p>
+  The functions that Elixir provides are separated into something akin to kitchen drawers or toolboxes, called <em>modules</em>. Whereas in your top kitchen drawer you might have forks, knives, sporks, and spoons (like every sane person's kitchen does), and in another you might have measuring cups, and in another tea towels, in Elixir the functions to work with the different kinds of data are separated into different modules. This makes finding functions to work with particular kinds of data in Elixir very easy.
+</p>
+
+<p>
+  Here, we're using the <code>reverse</code> function from the <code>String</code> <em>module</em> ("drawer" / "toolbox"). We're passing this <code>String.reverse</code> function one argument, which is a string <code>"reverse this"</code>. This function takes the string and flips it around, producing the reversed string: <code>"siht esrever"</code>.
+</p>
+
+<p>
+  Note here how we <em>don't</em> need to put a dot between the function name and its arguments, like we had to do with the functions we defined ourselves. You don't need to do this when you're running a function from a module.
+</p>
+
+<p>
+  What about if we wanted to split a string into its individual words? For that, we can use the <code>split</code> function:
+</p>
+
+<pre><code>iex(12)> String.split("split my string into pieces")
+[<span class='console-green'>"split"</span>, <span class='console-green'>"my"</span>, <span class='console-green'>"string"</span>, <span class='console-green'>"into"</span>, <span class='console-green'>"pieces"</span>]</code></pre>
+
+<p>
+  We now have a list of the words in the string. We'll see what we could do with such a list a little later in the chapter. For now, let's look at what else is in this <code>String</code> module.
+</p>
+
+<p>
+  What about if we wanted to make the computer turn a string into its shouty variant? We can use <code>upcase</code> for this:
+</p>
+
+<pre><code>iex(12)> String.upcase("not so quiet any more")
+<span class='console-green'>"NOT SO QUIET ANY MORE"</span></code></pre>
+
+<p>
+  At the opposite end of that particular spectrum, there is <code>downcase</code>:
+</p>
+
+<pre><code>iex(12)> String.downcase("LOUD TO QUIET")
+<span class='console-green'>"loud to quiet"</span></code></pre>
+
+<p>
+  So as you can see, the <code>String</code> module has some helpful functions that can help us whenever we need to split a string, turn it all into upper / lower ("down") case. There's plenty more functions in the <code>String</code> module, and we'll see those in due time.
+</p>
+
+<p>
+  Let's take a look at working with lists instead of strings.
+</p>
+
+<h3>Working with lists</h3>
+
+<p>
+  Now how about if we wanted to reverse something else, like this list:
+</p>
+
+<pre><code>iex(12)> animals_or_derivatives_of_animals = ["cat", "dog", "cow", "turducken"]</code></pre>
+
+<p>
+  We wouldn't reach into the <code>String</code> drawer to work with a <em>list</em>, because strings are not lists and lists are not strings! Just like we wouldn't reach into the top drawer in your kitchen to pull out the milk: it's in the fridge, silly!
+</p>
+
+<p>
+  We should reach into the <code>List</code> drawer instead, right? Let's try that:
+</p>
+
+<pre><code>iex(12)> List.reverse(animals_or_derivatives_of_animals)
+List.reverse(animals_or_derivatives_of_animals)
+<span class='console-red'>** (UndefinedFunctionError) function List.reverse/1 is undefined or private
+    (elixir) List.reverse(["cat", "dog", "cow", "turducken"])</span></code></pre>
+
+<p>
+  Uh oh, there's that red text again. The computer is telling us that Elixir doesn't know about a function called <code>List.reverse</code>, or the function is "<em>private</em>". The computer (slyly) won't tell us which one of non-existence or privateness it is, but we'll assume the first case here: that the function is undefined.
+</p>
+
+<aside>
+  <header>Roberto asks: "Hey, what's that <code>/1</code> after the function?"</header>
+
+  <p>
+    Glad you asked! It's indicating the <em>arity</em> of the function. Elixir functions can not only differ by <em>name</em> but also by the number of arguments that the function takes. This error message is telling us that we tried to call the <code>List.reverse/1</code> function, and if we passed two arguments instead of one it would tell us that we tried to call the <code>List.reverse/2</code> function instead.
+  </p>
+
+<pre><code>iex(12)> List.reverse(animals_or_derivatives_of_animals, [1, 2, 3])
+List.reverse(animals_or_derivatives_of_animals, [1, 2, 3])
+<span class='console-red'>** (UndefinedFunctionError) function List.reverse/2 is undefined or private
+    (elixir) List.reverse(["cat", "dog", "cow", "turducken"], [1, 2, 3])</span></code></pre>
+
+<p>A good example of this is the <code>String.split</code> function that we saw earlier. It has two variants, one that takes a single argument (<code>String.split/1</code>) and one that takes two arguments (<code>String.split/2</code>). We only saw the single-argument version before:</p>
+
+<pre><code>iex(12)> String.split("Hello, World!")
+[<span class='console-green'>"Hello,"</span>, <span class='console-green'>"World!"</span>]</code></pre>
+
+<p>
+  However, if we supply a second argument to this function it behaves differently:
+</p>
+
+<pre><code>iex(12)> String.split("Hello, World!", "o")
+["Hell", ", W", "rld!"]</code></pre>
+
+<p>
+  The second argument to <code>String.split/2</code> tells the computer where to split the string. With the single argument version, the computer assumed we wanted to split on the spaces between the words. With the two argument version -- that is, the <code>/2</code> version -- we tell it that we want to split on the <code>"o"</code> character instead.
+</p>
+
+<p>
+  This is an important distinction to make in Elixir, and so I'll say it again, this time a bit bigger:
+</p>
+
+<p style='font-size: 150%; text-align: center;'><strong>Functions not only differ by name, but by the number of arguments that they take.</strong></p>
+</aside>
+
+<p>
+  Ok, so we've talked about what <code>/1</code> means (Roberto is now deep in thought), so let's talk about why <code>List.reverse/1</code> doesn't exist.
+</p>
+
+<h3>Thank you Reader, but our <s>princess</s> function is in another <s>castle</s> module</h3>
+
+<h4>Another brief interlude, this time about enumerables</h4>
+
+<p>
+  Lists are a type of data in Elixir called an <em>enumerable</em>. Maps are also <em>enumerable</em>. This means that they can be <em>enumerated</em> through, and you can do something which each item in the list or map. For instance, if we were to write out our list on a piece of paper, it might look something like this:
+</p>
+
+<ul>
+  <li>Cat</li>
+  <li>Dog</li>
+  <li>Cow</li>
+  <li>Turducken</li>
+</ul>
+
+<p>
+  It's possible to write each item from the list separately from the other items in the list. We could try to do the same thing for a number (like 1,354), but it wouldn't make sense:
+</p>
+
+<ul>
+  <li>1</li>
+  <li>3</li>
+  <li>5</li>
+  <li>4</li>
+</ul>
+
+<p>
+  Numbers are not enumerable because it doesn't make sense for them to be, unlike our list. We can go through each of this list of animals one-at-a-time if we wish. Similar to this, we could <em>enumerate</em> through a map. If we were to take one of our maps from earlier...
+</p>
+
+<pre><code>%{<span class='console-green'>"name"</span> => <span class='console-green'>"Roberto"</span>, <span class='console-green'>"age"</span> => <span class='console-green'>"30ish"</span>, <span class='console-green'>"gender"</span> => <span class='console-green'>"Male"</span>}</code></pre>
+
+<p>
+  ...and write each key and value pair down, they may look something like this:
+</p>
+
+<dl>
+  <dt><strong>Name</strong></dt><dd>Roberto</dd>
+  <dt><strong>Age</strong></dt><dd>30ish</dd>
+  <dt><strong>Gender</strong></dt><dd>Male</dd>
+</dl>
+
+<p>
+  Again, it makes sense for a map to be an enumerable because you can <em>enumerate</em> through each of the key and value pairs in the map.
+</p>
+
+<h4>Ok, but where is <code>List.reverse/1</code>?</h4>
+
+<p>
+  We need to keep in mind that when we're working with <em>enumerable</em> things in Elixir the function that we need might live elsewhere. Sometimes, we need to look in the <code>Enum</code> module / drawer too. <code>Enum</code> is short for <code>Enumerable</code>, and it's done that way because nobody has the time to write out <code>Enumerable</code> correctly every single time. Even as this book's author I have a hard time spelling it correctly each time!
+</p>
+
+<p>
+  We tried looking in the <code>List</code> module to find the <code>reverse/1</code> function so that we could turn our list around but it wasn't there. So let's look in the <code>Enum</code> module instead. Before that, let's get our list in Elixir form again. It's been a while since we've seen it that way:
+</p>
+
+<pre><code>iex(12)> animals_or_derivatives_of_animals = ["cat", "dog", "cow", "turducken"]</code></pre>
+
+<p>
+  Since we now know that lists are <em>enumerables</em>, and that the <code>List.reverse/1</code> function doesn't exist <em>but</em> we also (now) know that there's an <code>Enum</code> module to work with this sort of thing, we can probably guess that there's going to be an <code>Enum.reverse/1</code> function. Let's try it and see:
+</p>
+
+<pre><code>iex(12)> Enum.reverse(animals_or_derivatives_of_animals)
+[<span class='console-green'>"turducken"</span>, <span class='console-green'>"cow"</span>, <span class='console-green'>"dog"</span>, <span class='console-green'>"cat"</span>]</code></pre>
+
+<p>
+  Hooray! We were able to reverse our list.
+</p>
+
+<p>
+  Roberto emerges from his deep thought trance to ask another question: "Hey, you mentioned before you could <em>enumerate</em> through a list or a map, but you didn't show an example of that. What gives?" You're absolutely right, Roberto. I was too distracted with explaining why <code>List.reverse/1</code> didn't exist to explain how to enumerate through an enumerable. Let's all now take a look at how to do that.
+</p>
+
+
+<h3>Enumerating the enumerables</h3>
+
+<p>
+  To appease Roberto (and the masses that he leads), we're going to need to look at how to enumerate through enumerables. What this means is that we're going to get an enumerable (a list or a map) and we're going to go through each of the enumerable's items and do something with them.
+</p>
+
+<p>
+  Let's start with a list. How about a list of the seasons, just for something different?
+</p>
+
+<pre><code>iex(12)> seasons = ["summer", "fall", "winter", "spring"]</code></pre>
+
+<p>
+  The names of these seasons should be capitalized because they are nouns, but whoever created this list neglected to capitalize them. Oops! What we should have is a list with proper capitalization:
+</p>
+
+<pre><code>iex(12)> seasons = ["Summer", "Fall", "Winter", "Spring"]</code></pre>
+
+<p>
+  What we want to do in this case is to enumerate through each item in the list and to capitalize the first letter of each word, leaving all the others as lower case. There's a function to do this called <code>String.capitalize/1</code>, and for a single string we can call it like this:
+</p>
+
+<pre><code>iex(12)> String.capitalize("summer")
+<span class='console-green'>"Summer"</span></code></pre>
+
+<p>
+  "But how do we run that function on each item in a list?", Roberto asks. He then cries: "I don't want to have to rewrite the whole list!" Roberto is being a little dramatic, given it is a small list of four elements but I can see his point. We <em>could</em> rewrite the list to make it what we want it to be, but we're <em>computer programmers</em>, so let's program the computer to do our bidding instead.
+</p>
+
+<p>
+  We're going to need a function that goes through each item in the list and applies <code>String.capitalize/1</code>; something akin to making a list like this:
+</p>
+
+<pre><code>iex(12)> seasons = [
+  String.capitalize("summer"),
+  String.capitalize("fall"),
+  String.capitalize("winter"),
+  String.capitalize("spring"),
+]</code></pre>
+
+<p>
+  But since we've already got a list we're going to have to do <em>something</em> to that list to turn it into what we want. That something is to use another function from the <code>Enum</code> module called <code>Enum.map/2</code>. This <code>map</code> function is different from the map kind of data (<code>%{"name" => "Roberto"}</code>), in that it will take the specified enumerable and function, enumerate through each item in the list and apply the function to that list, and then return the result.
+</p>
+
+<p>
+  Enough jibber-jabber. Let's see this in actual practice:
+</p>
+
+<pre><code>iex(12)> Enum.map(seasons, &String.capitalize/1)</code></pre>
+
+<div class='todo'>
+  TODO: Link to https://hexdocs.pm/elixir/
+</div>
+
+<div class='todo'>Chapter is currently unfinished... please hold.</div>
+
+
+<a href='/6'>Previous</a>
+
