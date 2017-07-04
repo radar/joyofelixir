@@ -161,6 +161,10 @@ List.reverse(animals_or_derivatives_of_animals, [1, 2, 3])
 </p>
 
 <p>
+  At this point it's also worth mentioning that the <code>String.reverse</code> function we called earlier has a proper name of <code>String.reverse/1</code>. Just like <code>/2</code> indicates the function takes two arguments, the <code>/1</code> here indicates that this function takes one argument.
+</p>
+
+<p>
   This is an important distinction to make in Elixir, and so I'll say it again, this time a bit bigger:
 </p>
 
@@ -261,7 +265,7 @@ List.reverse(animals_or_derivatives_of_animals, [1, 2, 3])
   The names of these seasons should be capitalized because they are nouns, but whoever created this list neglected to capitalize them. Oops! What we should have is a list with proper capitalization:
 </p>
 
-<pre><code>iex(12)> seasons = ["Summer", "Fall", "Winter", "Spring"]</code></pre>
+<pre><code>["Summer", "Fall", "Winter", "Spring"]</code></pre>
 
 <p>
   What we want to do in this case is to enumerate through each item in the list and to capitalize the first letter of each word, leaving all the others as lower case. There's a function to do this called <code>String.capitalize/1</code>, and for a single string we can call it like this:
@@ -271,7 +275,7 @@ List.reverse(animals_or_derivatives_of_animals, [1, 2, 3])
 <span class='console-green'>"Summer"</span></code></pre>
 
 <p>
-  "But how do we run that function on each item in a list?", Roberto asks. He then cries: "I don't want to have to rewrite the whole list!" Roberto is being a little dramatic, given it is a small list of four elements but I can see his point. We <em>could</em> rewrite the list to make it what we want it to be, but we're <em>computer programmers</em>, so let's program the computer to do our bidding instead.
+  "But how do we run that function on each item in a list?", Roberto asks. He then cries: "I don't want to have to rewrite the whole list!" Roberto is being a little dramatic &mdash; given it is a small list of four elements &mdash; but I can see his point. We <em>could</em> rewrite the list to make it what we want it to be, but we're <em>computer programmers</em>, so let's program the computer to do our bidding instead.
 </p>
 
 <p>
@@ -286,14 +290,30 @@ List.reverse(animals_or_derivatives_of_animals, [1, 2, 3])
 ]</code></pre>
 
 <p>
-  But since we've already got a list we're going to have to do <em>something</em> to that list to turn it into what we want. That something is to use another function from the <code>Enum</code> module called <code>Enum.map/2</code>. This <code>map</code> function is different from the map kind of data (<code>%{"name" => "Roberto"}</code>), in that it will take the specified enumerable and function, enumerate through each item in the list and apply the function to that list, and then return the result.
+  But since we've already got a list we're going to have to do <em>something</em> to that list to turn it into what we want. That something is to use another function from the <code>Enum</code> module called <code>Enum.map/2</code>. This <code>map</code> function is different from the map kind of data (<code>%{"name" => "Roberto"}</code>), in that it will take the specified enumerable and function, enumerate through each item in the list and run that function for each element, and then return the result.
 </p>
 
 <p>
   Enough jibber-jabber. Let's see this in actual practice:
 </p>
 
-<pre><code>iex(12)> Enum.map(seasons, &String.capitalize/1)</code></pre>
+<pre><code>iex(12)> Enum.map(seasons, &amp;String.capitalize/1)
+[<span class='console-green'>"Summer"</span>, <span class='console-green'>"Fall"</span>, <span class='console-green'>"Winter"</span>, <span class='console-green'>"Spring"</span>]</code></pre>
+
+<p>
+  Hooray! Each of our seasons now has a correctly capitalized name. What's happened here is that we've told the <code>map</code> function that we want it to run the <code>String.capitalize/1</code> function on each element of the <code>seasons</code> list. Put another way: we want it to <em>enumerate</em> through the list and run the function.
+</p>
+
+<p>
+  We need to prefix the function with a <code>&amp;</code> (ampersand) so that Elixir knows its a function, and not some other kind of code.
+</p>
+
+<h3>Working with maps</h3>
+
+* Explain enumerating through maps here, showing that kv pairs are returned as tuples.
+* Explain what tuples are and how they differ from lists. (iirc, tuples cannot be appended to or iterated (or can they?))
+
+<h3>Where to find more functions</h3>
 
 <div class='todo'>
   TODO: Link to https://hexdocs.pm/elixir/
