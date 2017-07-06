@@ -1,17 +1,11 @@
 ---
-layout: default
+layout: chapter
 title: Pattern Matching
+previous_page: /5-funky-functions
+next_page: /7-building-on-the-foundations
 ---
 
 <h2>Pattern Matching</h2>
-
-<div class='todo'>
-  Work in progress.
-
-  Will need to cover pattern matching, particularly that <code>=</code> is not assignment, + demonstrating how to pull values out of a map.
-
-  This should chapter should probably also cover <code>case</code>.
-</div>
 
 <p>
   Back in <a href='/2'>Chapter 2</a> you saw that the equals sign (<code>=</code>) made the computer remember things.
@@ -70,4 +64,19 @@ iex> person["age"]
 
 <pre><code>iex> %{"name" => name, "age" => age} = person</code></pre>
 
-<a href='/4'>Previous</a> | <a href='/6'>Next</a>
+<p>
+  "Hey, what gives? The left-hand-side here is <em>clearly</em> not the same as the right hand side!", cries Roberto. Yes, you're absolutely right. On the right hand side here we have a map which has a <code>"name"</code> key which points to a value of <code>"Roberto"</code>, but on the left hand side that <code>"name"</code> key points to a value of <code>name</code>. This is a trick of pattern matching: the left-hand-side can be used to assign multiple variables.
+</p>
+
+<p>
+  If we check the value of <code>name</code> and <code>age</code> here, we'll see that those values are the values from our map.
+</p>
+
+
+<div class='todo'>
+  Work in progress.
+
+  Will need to cover pattern matching, particularly that <code>=</code> is not assignment, + demonstrating how to pull values out of a map.
+
+  This should chapter should probably also cover <code>case</code>.
+</div>

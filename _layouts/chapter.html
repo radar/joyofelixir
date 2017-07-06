@@ -3,7 +3,12 @@
   <body>
     <div class="wrapper">
       <h1><a href='/'>Joy of Elixir</a></h1>
+
+      {% include pagination.html %}
+
       {{ content }}
+
+      {% include pagination.html %}
 
       <footer>
         <small><a href='/about.html'>About Joy of Elixir</a></small>

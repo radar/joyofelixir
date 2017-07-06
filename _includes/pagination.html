@@ -1,0 +1,11 @@
+{% if page.previous_page and page.next_page %}
+  <a href='{{ page.previous_page }}'>Previous</a> | <a href='{{ page.next_page }}'>Next</a>
+{% else %}
+  {% if page.previous_page %}
+    <a href='{{ page.previous_page }}'>Previous</a>
+  {% else %}
+    {% if page.next_page %}
+      <a href='{{ page.next_page }}'>Next</a>
+    {% endif %}
+  {% endif %}
+{% endif %}
