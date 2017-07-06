@@ -8,18 +8,18 @@ But what <em>else</em> can Elixir do? We've seen that it can handle strings and 
 
 We could do this by assigning each of the things to a unique variable:
 
-<pre><code>iex(11)> first = "fish"
+<pre><code>iex> first = "fish"
 <span class='console-green'>"fish"</span>
-iex(12)> second = "ham"
+iex> second = "ham"
 <span class='console-green'>"ham"</span>
-iex(13)> third = "eggs"
+iex> third = "eggs"
 <span class='console-green'>"eggs"</span></code></pre>
 
 <p>
   But then we would need to remember that the things we want are stored in the variables <code>first</code>, <code>second</code> and <code>third</code>. And what if we -- as humans -- forget what position we were up to?
 </p>
 
-<pre><code>iex(14)> fifth = "bread"
+<pre><code>iex> fifth = "bread"
 <span class='console-green'>"bread"</span>
 </code></pre>
 
@@ -31,7 +31,7 @@ iex(13)> third = "eggs"
   A better solution to getting the computer to remember a list in Elixir is to actually tell it what we're storing is a list. To do this, we wrap our list in square brackets (<code>[]</code>) and separate each item in the list with a comma:
 </p>
 
-<pre><code>iex(15)> shopping_list = ["fish", "ham", "eggs", "bread"]
+<pre><code>iex> shopping_list = ["fish", "ham", "eggs", "bread"]
 [<span class='console-green'>"fish"</span>, <span class='console-green'>"ham"</span>, <span class='console-green'>"eggs"</span>, <span class='console-green'>"bread"</span>]</code></pre>
 
 <p>

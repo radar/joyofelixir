@@ -8,37 +8,37 @@ layout: default
   Elixir would be pretty hard to do if you had to write all the code for your programs by yourself. We have already seen that if you want to add, subtract, multiply or divide numbers, Elixir has your back:
 </p>
 
-<pre><code>iex(2)> 2 + 4
+<pre><code>iex> 2 + 4
 <span class='console-yellow'>6</span>
-iex(3)> 3 - 6
+iex> 3 - 6
 <span class='console-yellow'>-3</span>
-iex(4)> 4 * 12345
+iex> 4 * 12345
 <span class='console-yellow'>49380</span>
-iex(5)> 1234 / 4
+iex> 1234 / 4
 <span class='console-yellow'>308.5</span></code></pre>
 
 We also saw that it can run code inside of some other code, through string interpolation:
 
-<pre><code>iex(9)> place = "World"
-iex(10)> "Hello #{place}!"
+<pre><code>iex> place = "World"
+iex> "Hello #{place}!"
 <span class='console-green'>"Hello, World!"</span>
 </code></pre>
 
 We saw that it can handle lists:
 
-<pre><code>iex(9)> ["chicken", "beef", "and so on"]
+<pre><code>iex> ["chicken", "beef", "and so on"]
 [<span class='console-green'>"chicken"</span>, <span class='console-green'>"beef"</span>, <span class='console-green'>"and so on"</span>]
 </code></pre>
 
 And it can also handle maps:
 
 <pre>
-<code>iex(19)> person = %{"name" => "Roberto", "age" => "30ish", "gender" => "Male"}
+<code>iex> person = %{"name" => "Roberto", "age" => "30ish", "gender" => "Male"}
   %{<span class='console-green'>"age"</span> => <span class='console-green'>"30ish"</span>, <span class='console-green'>"gender"</span> => <span class='console-green'>"Male"</span>, <span class='console-green'>"name"</span> => <span class='console-green'>"Roberto"</span>}</code></pre>
 
 We also saw that it could remember functions for us:
 
-<pre><code>iex(11)> greeting = fn (name) -> "Hello, #{name}!" end
+<pre><code>iex> greeting = fn (name) -> "Hello, #{name}!" end
 <span class='console-yellow'>#Function&lt;6.52032458/1 in :erl_eval.expr/5&gt;</span></code></pre>
 
 <p>
@@ -55,7 +55,7 @@ We also saw that it could remember functions for us:
   Have you ever wanted to reverse a sentence, but didn't want to type all the different characters yourself? Elixir has a handy function for this called <code>String.reverse</code>. Here it is in action:
 </p>
 
-<pre><code>iex(12)> String.reverse("reverse this")
+<pre><code>iex> String.reverse("reverse this")
 <span class='console-green'>"siht esrever"</span></code></pre>
 
 <p>
@@ -78,7 +78,7 @@ We also saw that it could remember functions for us:
   What about if we wanted to split a string into its individual words? For that, we can use the <code>split</code> function:
 </p>
 
-<pre><code>iex(12)> String.split("split my string into pieces")
+<pre><code>iex> String.split("split my string into pieces")
 [<span class='console-green'>"split"</span>, <span class='console-green'>"my"</span>, <span class='console-green'>"string"</span>, <span class='console-green'>"into"</span>, <span class='console-green'>"pieces"</span>]</code></pre>
 
 <p>
@@ -89,14 +89,14 @@ We also saw that it could remember functions for us:
   What about if we wanted to make the computer turn a string into its shouty variant? We can use <code>upcase</code> for this:
 </p>
 
-<pre><code>iex(12)> String.upcase("not so quiet any more")
+<pre><code>iex> String.upcase("not so quiet any more")
 <span class='console-green'>"NOT SO QUIET ANY MORE"</span></code></pre>
 
 <p>
   At the opposite end of that particular spectrum, there is <code>downcase</code>:
 </p>
 
-<pre><code>iex(12)> String.downcase("LOUD TO QUIET")
+<pre><code>iex> String.downcase("LOUD TO QUIET")
 <span class='console-green'>"loud to quiet"</span></code></pre>
 
 <p>
@@ -113,7 +113,7 @@ We also saw that it could remember functions for us:
   Now how about if we wanted to reverse something else, like this list:
 </p>
 
-<pre><code>iex(12)> animals_or_derivatives_of_animals = ["cat", "dog", "cow", "turducken"]</code></pre>
+<pre><code>iex> animals_or_derivatives_of_animals = ["cat", "dog", "cow", "turducken"]</code></pre>
 
 <p>
   We wouldn't reach into the <code>String</code> drawer to work with a <em>list</em>, because strings are not lists and lists are not strings! Just like we wouldn't reach into the top drawer in your kitchen to pull out the milk: it's in the fridge, silly!
@@ -123,7 +123,7 @@ We also saw that it could remember functions for us:
   We should reach into the <code>List</code> drawer instead, right? Let's try that:
 </p>
 
-<pre><code>iex(12)> List.reverse(animals_or_derivatives_of_animals)
+<pre><code>iex> List.reverse(animals_or_derivatives_of_animals)
 List.reverse(animals_or_derivatives_of_animals)
 <span class='console-red'>** (UndefinedFunctionError) function List.reverse/1 is undefined or private
     (elixir) List.reverse(["cat", "dog", "cow", "turducken"])</span></code></pre>
@@ -139,21 +139,21 @@ List.reverse(animals_or_derivatives_of_animals)
     Glad you asked! It's indicating the <em>arity</em> of the function. Elixir functions can not only differ by <em>name</em> but also by the number of arguments that the function takes. This error message is telling us that we tried to call the <code>List.reverse/1</code> function, and if we passed two arguments instead of one it would tell us that we tried to call the <code>List.reverse/2</code> function instead.
   </p>
 
-<pre><code>iex(12)> List.reverse(animals_or_derivatives_of_animals, [1, 2, 3])
+<pre><code>iex> List.reverse(animals_or_derivatives_of_animals, [1, 2, 3])
 List.reverse(animals_or_derivatives_of_animals, [1, 2, 3])
 <span class='console-red'>** (UndefinedFunctionError) function List.reverse/2 is undefined or private
     (elixir) List.reverse(["cat", "dog", "cow", "turducken"], [1, 2, 3])</span></code></pre>
 
 <p>A good example of this is the <code>String.split</code> function that we saw earlier. It has two variants, one that takes a single argument (<code>String.split/1</code>) and one that takes two arguments (<code>String.split/2</code>). We only saw the single-argument version before:</p>
 
-<pre><code>iex(12)> String.split("Hello, World!")
+<pre><code>iex> String.split("Hello, World!")
 [<span class='console-green'>"Hello,"</span>, <span class='console-green'>"World!"</span>]</code></pre>
 
 <p>
   However, if we supply a second argument to this function it behaves differently:
 </p>
 
-<pre><code>iex(12)> String.split("Hello, World!", "o")
+<pre><code>iex> String.split("Hello, World!", "o")
 ["Hell", ", W", "rld!"]</code></pre>
 
 <p>
@@ -231,13 +231,13 @@ List.reverse(animals_or_derivatives_of_animals, [1, 2, 3])
   We tried looking in the <code>List</code> module to find the <code>reverse/1</code> function so that we could turn our list around but it wasn't there. So let's look in the <code>Enum</code> module instead. Before that, let's get our list in Elixir form again. It's been a while since we've seen it that way:
 </p>
 
-<pre><code>iex(12)> animals_or_derivatives_of_animals = ["cat", "dog", "cow", "turducken"]</code></pre>
+<pre><code>iex> animals_or_derivatives_of_animals = ["cat", "dog", "cow", "turducken"]</code></pre>
 
 <p>
   Since we now know that lists are <em>enumerables</em>, and that the <code>List.reverse/1</code> function doesn't exist <em>but</em> we also (now) know that there's an <code>Enum</code> module to work with this sort of thing, we can probably guess that there's going to be an <code>Enum.reverse/1</code> function. Let's try it and see:
 </p>
 
-<pre><code>iex(12)> Enum.reverse(animals_or_derivatives_of_animals)
+<pre><code>iex> Enum.reverse(animals_or_derivatives_of_animals)
 [<span class='console-green'>"turducken"</span>, <span class='console-green'>"cow"</span>, <span class='console-green'>"dog"</span>, <span class='console-green'>"cat"</span>]</code></pre>
 
 <p>
@@ -259,7 +259,7 @@ List.reverse(animals_or_derivatives_of_animals, [1, 2, 3])
   Let's start with a list. How about a list of the seasons, just for something different?
 </p>
 
-<pre><code>iex(12)> seasons = ["summer", "fall", "winter", "spring"]</code></pre>
+<pre><code>iex> seasons = ["summer", "fall", "winter", "spring"]</code></pre>
 
 <p>
   The names of these seasons should be capitalized because they are nouns, but whoever created this list neglected to capitalize them. Oops! What we should have is a list with proper capitalization:
@@ -271,7 +271,7 @@ List.reverse(animals_or_derivatives_of_animals, [1, 2, 3])
   What we want to do in this case is to enumerate through each item in the list and to capitalize the first letter of each word, leaving all the others as lower case. There's a function to do this called <code>String.capitalize/1</code>, and for a single string we can call it like this:
 </p>
 
-<pre><code>iex(12)> String.capitalize("summer")
+<pre><code>iex> String.capitalize("summer")
 <span class='console-green'>"Summer"</span></code></pre>
 
 <p>
@@ -282,7 +282,7 @@ List.reverse(animals_or_derivatives_of_animals, [1, 2, 3])
   We're going to need a function that goes through each item in the list and applies <code>String.capitalize/1</code>; something akin to making a list like this:
 </p>
 
-<pre><code>iex(12)> seasons = [
+<pre><code>iex> seasons = [
   String.capitalize("summer"),
   String.capitalize("fall"),
   String.capitalize("winter"),
@@ -297,7 +297,7 @@ List.reverse(animals_or_derivatives_of_animals, [1, 2, 3])
   Enough jibber-jabber. Let's see this in actual practice:
 </p>
 
-<pre><code>iex(12)> Enum.map(seasons, &amp;String.capitalize/1)
+<pre><code>iex> Enum.map(seasons, &amp;String.capitalize/1)
 [<span class='console-green'>"Summer"</span>, <span class='console-green'>"Fall"</span>, <span class='console-green'>"Winter"</span>, <span class='console-green'>"Spring"</span>]</code></pre>
 
 <p>

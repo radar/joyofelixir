@@ -8,18 +8,18 @@ layout: default
   We've now seen that Elixir can handle words and numbers easily. But what else can it do? Well, it can remember things.
 </p>
 
-<pre><code>iex(6)> sentence = "A really long and complex sentence we'd rather not repeat."
+<pre><code>iex> sentence = "A really long and complex sentence we'd rather not repeat."
 <span class='console-green'>"A really long and complex sentence we'd rather not repeat."</span>
-iex(7)> score = 2 / 5 * 100
+iex> score = 2 / 5 * 100
 <span class='console-yellow'>40</span></code></pre>
 
 <p>
   As long as we leave <code>iex</code> running, Elixir will remember that <code>sentence</code> is <code>"A really long and complex sentence we'd rather not repeat."</code> and <code>score</code> is <code>40</code>. At any point in time, we can ask it what <code>sentence</code> or <code>score</code> is and it will tell us:
 </p>
 
-<pre><code>iex(8)> sentence
+<pre><code>iex> sentence
 <span class='console-green'>"A really long and complex sentence we'd rather not repeat."</span>
-iex(9)> score
+iex> score
 <span class='console-yellow'>40</span></code>
 </pre>
 
@@ -27,7 +27,7 @@ iex(9)> score
   <code>sentence</code> here is a <em>variable</em>, and it's given that name because the thing that the computer remembers with that name of <code>sentence</code> can <em>vary</em>. We can tell the computer to forget its previous definition of <code>sentence</code> and give it a new one like this:
 </p>
 
-<pre><code>iex(10)> sentence = "An even longer and significantly more complex sentence
+<pre><code>iex> sentence = "An even longer and significantly more complex sentence
    that we might be ok with repeating, if the mood takes us."
 <span class='console-green'>"An even longer and significantly more complex sentence
    that we might be ok with repeating, if the mood takes us."</span></code>
@@ -35,14 +35,14 @@ iex(9)> score
 
 Then when we ask the computer what <code>sentence</code> is, it will have forgotten the old <code>sentence</code> and will only know the new one:
 
-<pre><code>iex(11)> sentence
+<pre><code>iex> sentence
 <span class='console-green'>"An even longer and significantly more complex sentence
    that we might be ok with repeating, if the mood takes us."
 </span></code></pre>
 
 Now the masses are looking chirpier. Some are even smiling! Isn't that wonderful? Let's create another variable called <code>place</code>:
 
-<pre><code>iex(9)> place = "World"
+<pre><code>iex> place = "World"
 <span class='console-green'>"World"</span>
 </code></pre>
 
@@ -54,7 +54,7 @@ Now the masses are looking chirpier. Some are even smiling! Isn't that wonderful
   Ok, Roberto's right. We should do something meaningful with this variable. Ok, Roberto, how about this? <em>[cracks knuckles]</em>
 </p>
 
-<pre><code>iex(10)> "Hello #{place}!"
+<pre><code>iex> "Hello #{place}!"
 <span class='console-green'>"Hello, World!"</span></code></pre>
 
 <p>

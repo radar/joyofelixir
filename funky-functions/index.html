@@ -20,7 +20,7 @@ layout: default
   Ok, enough chit-chat. Let's look at how to make the computer remember some code:
 </p>
 
-<pre><code>iex(21)> greeting = fn (place) -> "Hello, #{place}!" end
+<pre><code>iex> greeting = fn (place) -> "Hello, #{place}!" end
 <span class='console-yellow'>#Function&lt;6.52032458/1 in :erl_eval.expr/5&gt;</span></code></pre>
 
 <p>
@@ -48,25 +48,25 @@ Well, Roberto (and dearest reader), we need to use some new and exciting code th
 </p>
 
 <pre>
-<code>iex(22)> greeting.("World")
+<code>iex> greeting.("World")
 <span class='console-green'>"Hello, World!"</span></code></pre>
 
 <p>
   This is how we make the function run. We run this function by putting a dot after its name. The brackets after this dot represent the argument for the function. This time that we call the function, <code>place</code> will be <code>"World"</code>. But it doesn't always have to be <code>"World"</code>. It can be anything you wish:
 </p>
 
-<pre><code>iex(23)> greeting.("Mars")
+<pre><code>iex> greeting.("Mars")
 <span class='console-green'>"Hello, Mars!"</span>
-iex(24)> greeting.("Narnia")
+iex> greeting.("Narnia")
 <span class='console-green'>"Hello, Narnia!"</span>
-iex(25)> greeting.("Motherland")
+iex> greeting.("Motherland")
 <span class='console-green'>"Hello, Motherland!"</span></code></pre>
 
 <p>
   Each time we run the function here we give it a new value for <code>place</code>. We don't have to set <code>place</code> ourselves, as the function takes care of that. But what of our <code>place</code> variable from yesteryear (line 9 in <code>iex</code>)? Has that changed?
 </p>
 
-<pre><code>iex(26)> place
+<pre><code>iex> place
 <span class='console-green'>"World"</span></code></pre>
 
 <p>
@@ -78,7 +78,7 @@ iex(25)> greeting.("Motherland")
 </p>
 
 <pre>
-<code>iex(27)> greeting = fn (name, gender, age) ->
+<code>iex> greeting = fn (name, gender, age) ->
 ...(27)>   "Hello, #{name}! I see you're a #{gender} and you're #{age} years old."
 ...(27)> end
 <span class='console-yellow'>#Function&lt;18.52032458/3 in :erl_eval.expr/5&gt;</span></code></pre>
@@ -88,12 +88,12 @@ iex(25)> greeting.("Motherland")
 </p>
 
 <pre>
-<code>iex(28)> greeting.("Roberto", "Male", "30ish")
+<code>iex> greeting.("Roberto", "Male", "30ish")
 <span class='console-green'>"Hello, Roberto! I see you're a Male and you're 30ish years old!"</span></code></pre>
 
 <p>We can go nuts with the number of arguments that a function is defined with. However, we need to take a modicum of caution when running the functions. If we specify the wrong number of arguments, Elixir will tell us off with big red text:</p>
 
-<pre><code>iex(19)> greeting.("Roberto")
+<pre><code>iex> greeting.("Roberto")
 <span class='console-red'>** (BadArityError) #Function&lt;18.52032458/3 in :erl_eval.expr/5&gt;
   with arity 3 called with 1 argument ("Roberto")</span></code></pre>
 

@@ -9,7 +9,7 @@ layout: default
 </p>
 
 <pre>
-<code>iex(16)> those_who_are_assembled = [
+<code>iex> those_who_are_assembled = [
 ...(16)> "Roberto",
 ...(16)> "The Author",
 ...(16)> "The Reader",
@@ -37,7 +37,7 @@ layout: default
 </p>
 
 <pre>
-<code>iex(17)> those_who_are_assembled = [
+<code>iex> those_who_are_assembled = [
 ...(17)> ["Roberto", "30ish", "Male"]
 ...(17)> ]
 </code>
@@ -46,7 +46,7 @@ layout: default
 These lists-inside-of-lists would be called <em>sub-lists</em>. You would then have to keep in mind that the first item in each sublist is the name, the second is the age and the third is the gender. What if you lost track of this and started adding in people, but you flipped the age and their gender?
 
 <pre>
-<code>iex(18)> those_who_are_assembled = [
+<code>iex> those_who_are_assembled = [
 ...(18)> ["Roberto", "30ish", "Male"],
   ... a long time passes ...
 ...(18)> ["Young Roberto", "Male", "20ish"],
@@ -63,7 +63,7 @@ These lists-inside-of-lists would be called <em>sub-lists</em>. You would then h
 </p>
 
 <pre>
-<code>iex(19)> person = %{"name" => "Roberto", "age" => "30ish", "gender" => "Male"}
+<code>iex> person = %{"name" => "Roberto", "age" => "30ish", "gender" => "Male"}
   %{<span class='console-green'>"age"</span> => <span class='console-green'>"30ish"</span>, <span class='console-green'>"gender"</span> => <span class='console-green'>"Male"</span>, <span class='console-green'>"name"</span> => <span class='console-green'>"Roberto"</span>}</code></pre>
 
 <p>
@@ -75,7 +75,7 @@ These lists-inside-of-lists would be called <em>sub-lists</em>. You would then h
 </p>
 
 <pre>
-<code>iex(19)> person = %{"gender" => "Male", "age" => "30ish", "name" => "Roberto"}
+<code>iex> person = %{"gender" => "Male", "age" => "30ish", "name" => "Roberto"}
   %{<span class='console-green'>"age"</span> => <span class='console-green'>"30ish"</span>, <span class='console-green'>"gender"</span> => <span class='console-green'>"Male"</span>, <span class='console-green'>"name"</span> => <span class='console-green'>"Roberto"</span>}</code></pre>
 
 <p>
@@ -88,12 +88,12 @@ These lists-inside-of-lists would be called <em>sub-lists</em>. You would then h
   For instance, if we wanted to get out the value of <code>"name"</code> for <code>person</code> we can do:
 </p>
 
-<pre><code>iex(20)> person["name"]
+<pre><code>iex> person["name"]
 <span class='console-green'>"Roberto"</span></code></pre>
 
 And if we want to get the age, we would use the <code>"age"</code> key:
 
-<pre><code>iex(20)> person["age"]
+<pre><code>iex> person["age"]
 <span class='console-green'>"30ish"</span></code></pre>
 
 <p>
@@ -105,7 +105,7 @@ And if we want to get the age, we would use the <code>"age"</code> key:
 </p>
 
 <pre>
-<code>iex(20)> [
+<code>iex> [
 ...(20)> %{age: "30ish", gender: "Male", name: "Roberto"},
 ...(20)> %{age: "30ish", gender: "Male", name: "The Author"},
 ...(20)> ]</code>
