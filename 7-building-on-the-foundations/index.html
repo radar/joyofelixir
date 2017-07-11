@@ -20,32 +20,45 @@ iex> 4 * 12345
 iex> 1234 / 4
 <span class='console-yellow'>308.5</span></code></pre>
 
-We also saw that it can run code inside of some other code, through string interpolation:
+<p>We also saw that it can run code inside of some other code, through string interpolation:</p>
 
 <pre><code>iex> place = "World"
 iex> "Hello #{place}!"
 <span class='console-green'>"Hello, World!"</span>
 </code></pre>
 
-We saw that it can handle lists:
+<p>We saw that it can handle lists:</p>
 
 <pre><code>iex> ["chicken", "beef", "and so on"]
 [<span class='console-green'>"chicken"</span>, <span class='console-green'>"beef"</span>, <span class='console-green'>"and so on"</span>]
 </code></pre>
 
-And it can also handle maps:
+<p>And it can also handle maps:</p>
 
 <pre>
 <code>iex> person = %{"name" => "Roberto", "age" => "30ish", "gender" => "Male"}
   %{<span class='console-green'>"age"</span> => <span class='console-green'>"30ish"</span>, <span class='console-green'>"gender"</span> => <span class='console-green'>"Male"</span>, <span class='console-green'>"name"</span> => <span class='console-green'>"Roberto"</span>}</code></pre>
 
-We also saw that it could remember functions for us:
+<p>
+  We also saw that it could remember functions for us:
+</p>
 
 <pre><code>iex> greeting = fn (name) -> "Hello, #{name}!" end
 <span class='console-yellow'>#Function&lt;6.52032458/1 in :erl_eval.expr/5&gt;</span></code></pre>
 
 <p>
-  But what if I told you that it could do more than this simple math, string interpolation and remembering functions? What if I told you that Elixir already provided some functions that you could use to build your programs if only you had asked to use them?
+  And in the last chapter we saw that we could do pattern matching:
+</p>
+
+<pre><code>iex> %{"name" => name, "age" => age} = %{"name" => "Roberto", "age" => "30ish"}
+%{<span class='console-green'>"name"</span> => <span class='console-green'>"Roberto"</span>, <span class='console-green'>"age"</span> => <span class='console-green'>"30ish"</span>}
+iex> name
+<span class='console-green'>"Roberto"</span>
+iex> age
+<span class='console-green'>"30ish"</span></code></pre>
+
+<p>
+  But what if I told you that it could do more than this simple math, string interpolation, remembering functions and pattern matching? What if I told you that Elixir already provided some functions that used all of the above things to aid you in building your programs if only you had asked to use them?
 </p>
 
 <p>

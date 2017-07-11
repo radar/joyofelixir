@@ -21,7 +21,7 @@ a {
 }
 
 code {
-  font: 12pt "Source Code Pro";
+  font: 12pt "Anonymous Pro";
 }
 
 pre {
@@ -29,6 +29,10 @@ pre {
   background: #212733;
   padding: 10px;
   color: white;
+
+  code {
+    line-height: 133%;
+  }
 }
 
 aside {

@@ -8,57 +8,23 @@ next_page: /5-funky-functions
 <h2>Crafting maps</h2>
 
 <p>
-  Roberto, impressed with Elixir's ability to keep a list of anything his heart desires, has started taking the names down of the people who are in the crowd. His computer materialised from nowhere, or perhaps from somewhere in the throng nearby. It was too quick to really notice. He starts taking down names, fingers flying across the keyboard:
+  Back in the last chapter, Roberto tried tracking information about the people assembled using some lists within another list:
 </p>
-
-<pre>
-<code>iex> those_who_are_assembled = [
-...(16)> "Roberto",
-...(16)> "The Author",
-...(16)> "The Reader",
-...(16)> "Bob",
-...(16)> "Juliet",
-...(16)> "Charlie",
-...(16)> "Charlie (no relation)"
-...(16)> ]
-[<span class='console-green'>"Roberto"</span>, ...]</code></pre>
-
-<p>
-  Do you see what Roberto did there?
-</p>
-
-<p>
-  He started a list on one line and then continued it on the lines following. When he finished his list, the computer then took <em>all</em> the lines, processed them as one big instruction and presented us with the finished list. Elixir will let us write code over multiple lines like this, which is handy because it helps for readability!
-</p>
-
-<p>
-  And so Roberto continues. He disappears into the crowd directly to our right, and somehow re-appears within mere seconds on our left. This is despite the density of the crowd. Amazing stuff. He then asks: "Hey Mr. Author Guy, I want to also track people's ages so that I can do some statistics on who exactly is assembled here. Oh, and I want to track their gender too. But a list doesn't seem very suitable for this. How can I do this?"
-</p>
-
-<p>
-  Well Roberto, there's more than one way you could do this. If all you wanted to track about a person was their name, their age and their gender, you could make each item in the list its own list:
-</p>
-
-<pre>
-<code>iex> those_who_are_assembled = [
-...(17)> ["Roberto", "30ish", "Male"]
-...(17)> ]
-</code>
-</pre>
-
-These lists-inside-of-lists would be called <em>sub-lists</em>. You would then have to keep in mind that the first item in each sublist is the name, the second is the age and the third is the gender. What if you lost track of this and started adding in people, but you flipped the age and their gender?
 
 <pre>
 <code>iex> those_who_are_assembled = [
 ...(18)> ["Roberto", "30ish", "Male"],
   ... a long time passes ...
 ...(18)> ["Young Roberto", "Male", "20ish"],
-...(18)> ]
-</code>
+...(18)> ]</code>
 </pre>
 
 <p>
-  Pandemonium again! We need a better way of enforcing what data we're collecting for each person. For that, we can use a <em>map</em>. Just like a regular map, maps in Elixir can tell us where to find things, if only we knew where to look.
+  But as we can see here, the order of the items within the list can be input incorrectly due to human error. We need something that helps prevent human error like this, and if that <em>something</em> could helpfully indicate what each item in the list was -- by giving it a kind of a name -- then that would be good too.
+</p>
+
+<p>
+  For that, we can use a <em>map</em>. Just like a regular map, maps in Elixir can tell us where to find things, if only we knew where to look.
 </p>
 
 <p>
