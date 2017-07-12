@@ -17,7 +17,7 @@ iex> score = 2 / 5 * 100
 <span class='console-yellow'>40</span></code></pre>
 
 <p>
-  While this is indeed still true, the equals sign (<code>=</code>) can do more than just set one value at a time. (Roberto double-takes at the last sentence, while the crowd murmurs.) There's a hidden feature of Elixir that we haven't shown yet, and that feature is called <em>pattern matching</em>.
+  While this is indeed still true, the equals sign (<code>=</code>) can do more than just set one value at a time. (Roberto double-takes at the last sentence, while the crowd murmurs.) There's a hidden feature of Elixir that we haven't shown yet, and that feature is called <em>pattern matching</em>. You'll use this feature quite a lot when programming with Elixir, so we'll spend a while talking about it here in this chapter too.
 </p>
 
 <h3>Equals is not just for equality</h3>
@@ -48,10 +48,99 @@ iex> score = 2 / 5 * 100
 <pre><code>iex> "dog" = "dog"
 <span class='console-green'>"dog"</span></code></pre>
 
+<p>
+  Let's do something more complex than having the same thing on both sides of the equals sign. Let's take a look at how we can pattern match on lists.
+</p>
+
+<h3>Pattern matching with lists</h3>
+
+<p>
+  Let's say we have a list of all the people assembled here, like we had back in Chapter 3:
+</p>
+
+<pre>
+<code>iex> those_who_are_assembled = [
+"Roberto",
+"The Author",
+"The Reader",
+"Juliet",
+"Mary",
+"Bobalina",
+"Charlie",
+"Charlie (no relation)"
+]
+[<span class='console-green'>"Roberto"</span>, ...]</code></pre>
+
+<p>
+  And let's also say that we wanted to grab the names of the first 3 people in this list, but then ignore the remainder -- given that the first three are clearly the most important people here. We can use some pattern matching on this list:
+</p>
+
+<pre><code>iex> [first, second, third | others] = those_who_are_assembled</code></pre>
+
+<p>
+  With this code, we're telling Elixir to assign the first, second and third items from the list to the variables <code>first</code>, <code>second</code> and <code>third</code>. We're also telling it to assign the remainder of the list to the <code>others</code> variable, and we specify that by using the pipe symbol (<code>|</code>). In this code we've selected the first 3 items from the list, but we could also just select the very first one, or the first 5. It doesn't have to be exactly 3.
+</p>
+
+<p>
+  We can check what this has done exactly in <code>iex</code> by looking at the values of each of these variables:
+</p>
+
+<pre><code>iex> first
+<span class="console-green">"Roberto"</span>
+iex> second
+<span class="console-green">"The Author"</span>
+iex> third
+<span class="console-green">"The Reader"</span>
+iex> others
+[<span class="console-green">"Juliet"</span>, <span class="console-green">"Mary"</span>, <span class="console-green">"Bobalina"</span>, <span class="console-green">"Charlie"</span>, <span class="console-green">"Charlie (no relation)"</span>]
+</code></pre>
+
+<p>
+  "Does this mean that I could do the same for the <code>others</code> list to get the next 3 people?", Roberto asks. Yes it does mean that you can do that:
+</p>
+
+<pre><code>iex> [first, second, third | remainder] = others
+<span class="console-green">"Roberto"</span></code></pre>
+
+<p>
+  Now when we check the values of <code>first</code>, <code>second</code> and <code>third</code> they'll be the names of the next 3 people in the list:
+</p>
+
+<pre><code>iex> first
+<span class="console-green">"Juliet"</span>
+iex> second
+<span class="console-green">"Mary"</span>
+iex> third
+<span class="console-green">"Bobalina"</span>
+</code></pre>
+
+<p>
+  And our <code>remainder</code> variable will be the remaining names in the list, which are just the two Charlies:
+</p>
+
+<pre><code>iex> remainder
+[<span class="console-green">"Charlie"</span>, <span class="console-green">"Charlie (no relation)"</span>]</code></pre>
+
+<p>
+  If we now try to pull out the next 3 people in the list, Elixir won't be able to do that because there are only two names left in the <code>remainder</code> list:
+</p>
+
+<pre><code>iex> [first, second, third | those_still_remaining] = remainder
+<span class='console-red'>** (MatchError) no match of right hand side value: ["Charlie", "Charlie (no relation)"]</span>
+</code></pre>
+
+<p>
+  It's always a good idea to be careful here with pattern matching lists with the right number of expected elements to avoid <code>MatchErrors</code> like these.
+</p>
+
+<p>
+  That's enough about lists for now. We'll revisit pattern matching them a little later on in this book. Let's look at how we can work with maps.
+</p>
+
 <h3>Pattern matching with maps</h3>
 
 <p>
-  Let's do something more complex than having the same thing on both sides of the equals sign. Let's say that we have a map containing a person's information:
+  Let's say that we have a map containing a person's information:
 </p>
 
 <pre><code>iex> person = %{"name" => "Roberto", "age" => "30ish"}
@@ -88,12 +177,6 @@ iex> age
 <p>
   Well, would you look at that? We were able to pull out these two values <em>at the same time</em>. The crowd cheers as if we've just performed a magic trick. Just wait until you see our next trick!
 </p>
-
-<h3>Pattern matching with lists</h3>
-
-<div class='todo'>
-Should we also show an example of pulling values out of a list here? Will need to explain the <code>[head | tail]</code> syntax. Is that syntax too advanced for this part of the book?
-</div>
 
 <h3>Pattern matching inside functions</h3>
 
@@ -209,9 +292,9 @@ end</code></pre>
  This match will succeed because there are no keys required by the left-hand-side of this match. This story is different if we've got a map on the left-hand-side with keys, as we've seen before with the first clause of our <code>greeting</code> function:
 </p>
 
-<pre><code>greeting = fn
-  %{"name" => name} -> "Hello, #{name}!"
-  %{} -> "Hello, Anonymous Stranger!"
+<pre><code>iex> greeting = fn
+  <span class='console-green'>%{"name" => name} -> "Hello, #{name}!"</span>
+  <span class='unused-clause'>%{} -> "Hello, Anonymous Stranger!"</span>
 end</code></pre>
 
 <p>
@@ -221,11 +304,59 @@ end</code></pre>
 <h3>Matching lists inside a function</h3>
 
 <div class='todo'>
-  Function clause pattern matching non-empty, partial and empty lists?
+  Function clause pattern matching non-empty, partial and empty lists? Can we even recurse through a list in an anonymous function?
 </div>
 
 <h3>Matching anything</h3>
 
-<div class='todo'>
-  Function clause pattern underscores (fn (_) -> ... end)?
-</div>
+<p>
+  Now one more thing I wanted to show you is how to avoid those pesky <code>FunctionClauseErrors</code> when all the function clauses inside a function don't match. Let's take a look at the <code>road</code> function again:
+</p>
+
+<pre><code>iex> road = fn
+  "high" -> "You take the high road!"
+  "low" -> "I'll take the low road! (and I'll get there before you)"
+end</code></pre>
+
+<p>
+  If the argument supplied to this function is neither <code>"high"</code> nor <code>"low"</code> then Elixir shows us a <code>FunctionClauseError</code>:
+</p>
+
+<pre><code>iex> road.("middle")
+<span class="console-red">** (FunctionClauseError) no function clause matching in :erl_eval."-inside-an-interpreted-fun-"/1</span></code></pre>
+
+<p>
+  What if instead of this error we could get the function to tell whoever was running it that they have to supply either "high" or "low" as the argument? Elixir allows us to do this by using an underscore (<code>_</code>) as the argument in a new function clause:
+</p>
+
+<pre><code>iex> road = fn
+  "high" -> "You take the high road!"
+  "low" -> "I'll take the low road! (and I'll get there before you)"
+  _ -> "Take the 'high' road or the 'low' road, thanks!"
+end</code></pre>
+
+<p>
+  This underscore (<code>_</code>) matches <em>anything</em> and is often used in cases like this where we want to show a message if no other function clause matches. Let's see this in action:
+</p>
+
+<pre><code>iex> road.("middle")
+<span class='console-green'>"Take the 'high' road or the 'low' road, thanks!"</span>
+</code></pre>
+
+<p>
+  This underscore doesn't just match strings, but it will match any other argument that we can pass to the function:
+</p>
+
+<pre><code>iex> road.(%{})
+<span class='console-green'>"Take the 'high' road or the 'low' road, thanks!"</span>
+iex> road.(["high", "low"])
+<span class='console-green'>"Take the 'high' road or the 'low' road, thanks!"</span>
+</code></pre>
+
+<p>
+  This helps keep people in line when it comes to providing the right arguments to the function, without Elixir blowing up in their face when they provide the wrong ones.
+</p>
+
+<p>
+  Speaking of functions: did you know Elixir has some built-in functions that you could use?
+</p>
