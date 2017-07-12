@@ -95,7 +95,7 @@ iex> age
 Should we also show an example of pulling values out of a list here? Will need to explain the <code>[head | tail]</code> syntax. Is that syntax too advanced for this part of the book?
 </div>
 
-<h3>You take the high road, and I'll take the low road</h3>
+<h3>Pattern matching inside functions</h3>
 
 <p>
   Pattern matching can be used for even more things than picking out the keys of a map or the elements out of a list. We can also use it when we define our functions too, making them respond differently depending on the arguments passed. For instance, we could define a function which took the kind of road that we took; either the "high" road or the "low" road, and get it to respond differently depending on which was passed.
@@ -107,7 +107,7 @@ Should we also show an example of pulling values out of a list here? Will need t
 end</code></pre>
 
 <p>
-  When we call this function with the <code>"high"</code> argument, that argument will <em>match</em> the first function line here, and "You take the high road" will be returned. Similarly, when we give it <code>"low"</code> it will return "I'll take the low road! (and I'll get there before you)". We could keep talking about this, or we could actually try it in our iex prompt:
+  When we call this function with the <code>"high"</code> argument, that argument will <em>match</em> the first function line here, and "You take the high road" will be returned. Similarly, when we give it <code>"low"</code> it will return "I'll take the low road! (and I'll get there before you)". Each line inside the function here is called a <em>clause</em>. We could keep talking about the theory behind this, or we could actually try it in our <code>iex</code> prompt:
 </p>
 
 <pre><code>iex> road.("high")
@@ -116,7 +116,7 @@ iex> road.("low")
 <span class='console-green'>"I'll take the low road! (and I'll get there before you)"</span></code></pre>
 
 <p>
-  This works because of how we've defined the <code>road</code> function. In that function, we've defined two separate <em>clauses</em>. The first function clause says that when the argument is <code>"high"</code> then the function should output the line about the "high road". The second function clause says that when we supply the <code>"low"</code> argument then it should output the line about the "low road".
+  This works because of how we've defined the <code>road</code> function. In that function, we've defined two separate function <em>clauses</em>. The first function clause says that when the argument is <code>"high"</code> then the function should output the line about the "high road". The second function clause says that when we supply the <code>"low"</code> argument then it should output the line about the "low road".
 </p>
 
 <p>
