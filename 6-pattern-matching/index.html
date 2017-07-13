@@ -301,10 +301,10 @@ end</code></pre>
   In the first clause's case, it will only match if the argument passed to the <code>greeting</code> function is a map which contains a <code>"name"</code> key; this key is <em>required</em> by the match. If the map does not contain a <code>"name"</code> key then this clause will not match. The second clause matches <em>any</em> map, and so that is the clause that will be used for any map not containing a <code>"name"</code> key.
 </p>
 
-<h3>Matching lists inside a function</h3>
+<h3>Matching lists inside functions</h3>
 
 <div class='todo'>
-  Function clause pattern matching non-empty, partial and empty lists? Can we even recurse through a list in an anonymous function?
+  Show example of matching one element <code>[h|t]</code>, another example of matching multiple elements, and a final example of matching an empty list.
 </div>
 
 <h3>Matching anything</h3>
@@ -360,3 +360,12 @@ iex> road.(["high", "low"])
 <p>
   Speaking of functions: did you know Elixir has some built-in functions that you could use?
 </p>
+
+<h3>Exercises</h3>
+
+<ul>
+  <li>Make a function that could take either two or three maps containing the key "age", and averages the ages. This is similar to an exercise in the previous chapter.</li>
+  <li>Make a function that takes either a map containing a "name" and "age", or just a map containing "name". Change the output depending on if "age" is present. What happens if you switch the order of the function clauses? What can you learn from this?</li>
+</ul>
+
+
