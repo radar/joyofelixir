@@ -20,27 +20,34 @@ next_page: /6-pattern-matching
 </p>
 
 <p>
-  Ok, enough chit-chat. Let's look at how to make the computer remember some code:
+  Ok, enough chit-chat. Let's look at one way we can use to make the computer remember some code:
 </p>
 
 <pre><code>iex> greeting = fn (place) -> "Hello, #{place}!" end
 <span class='console-yellow'>#Function&lt;6.52032458/1 in :erl_eval.expr/5&gt;</span></code></pre>
 
 <p>
-  This is called a <em>function</em> and we can write whatever code we want the computer to remember for later, just like we could tell the computer to remember a string, a number, a list or a map. Elixir code is all about the functions, and now we understand why Wikipedia said it was a "functional" language. It didn't mean that it was functional in the sense that it is operational, but moreso that it uses functions to get things done.
+  This is called a <em>function</em> and we can write whatever code we want the computer to remember for later, just like we could tell the computer to remember a string, a number, a list or a map. Elixir code is all about the functions, and now we understand why Wikipedia said it was a "functional" language. It didn't mean that it was functional in the sense that it is operational, but moreso that it uses functions to get things done. You'll be seeing a lot of functions in Elixir code from here on out.
 </p>
 
 <p>
-  The <code>fn</code> tells the computer we're about to define a function, and the defining-of-the-function doesn't stop until it gets to the <code>end</code>. Just like you wouldn't stop until you got to the end of something -- i.e. a book -- right?
+  The <code>fn</code> tells the computer we're about to define a function -- because typing <code>function</code> each time would just be too much for us to bear -- and the defining-of-the-function doesn't stop until it gets to the <code>end</code>. Just like you wouldn't stop until you got to the end of something -- i.e. a book -- right?
 </p>
 
 <p>
   The <code>(place)</code> here defines an <em>argument</em> for the function; think of it like a variable that is only available within this function and not the angry shouting matches that most <code>normal</code> arguments can devolve into. The <code>-></code> tells the computer that we're done defining the arguments for the function, and anything after this but before the <code>end</code> is going to be the code to run.
 </p>
 
+<div class='center'>
+  <img src='/5-funky-functions/images/function-definition.png' width='75%'/>
+</div>
+
 <p>
   Once we hit enter at the end of this line, the computer gives us some output to indicate it has accepted our function. It's not the friendliest output, but at least it's something that tells us the computer has done <em>something</em>.
 </p>
+
+<pre><code>iex> greeting = fn (place) -> "Hello, #{place}!" end
+<span class='console-yellow'>#Function&lt;6.52032458/1 in :erl_eval.expr/5&gt;</span></code></pre>
 
 <p>
   We've assigned our function to the <code>greeting</code> variable and so that's what the computer will remember the function as. "How do we make the computer run that function?", Roberto asks keenly, suddenly impressed about the computer's ability to remember functions. I'm sure you're asking the same thing, dear reader.

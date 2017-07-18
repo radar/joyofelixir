@@ -17,7 +17,7 @@ iex> score = 2 / 5 * 100
 <span class='console-yellow'>40</span></code></pre>
 
 <p>
-  While this is indeed still true, the equals sign (<code>=</code>) can do more than just set one value at a time. (Roberto double-takes at the last sentence, while the crowd murmurs.) There's a hidden feature of Elixir that we haven't shown yet, and that feature is called <em>pattern matching</em>. You'll use this feature quite a lot when programming with Elixir, so we'll spend a while talking about it here in this chapter too.
+  While this is indeed still true, the equals sign (<code>=</code>) can do more than just set one value at a time. (Roberto double-takes at the last sentence, while the crowd murmurs.) There's a hidden feature of Elixir that we haven't shown yet, and that feature is called <em>pattern matching</em>. You'll use this feature quite a lot when programming with Elixir -- just as much as functions! -- so we'll spend a while talking about it here in this chapter too.
 </p>
 
 <h3>Equals is not just for equality</h3>
@@ -130,7 +130,7 @@ iex> third
 </code></pre>
 
 <p>
-  It's always a good idea to be careful here with pattern matching lists with the right number of expected elements to avoid <code>MatchErrors</code> like these.
+  It's always a good idea to be careful here with pattern matching lists with the right number of expected items to avoid <code>MatchErrors</code> like these.
 </p>
 
 <p>
@@ -181,7 +181,7 @@ iex> age
 <h3>Pattern matching inside functions</h3>
 
 <p>
-  Pattern matching can be used for even more things than picking out the keys of a map or the elements out of a list. We can also use it when we define our functions too, making them respond differently depending on the arguments passed. For instance, we could define a function which took the kind of road that we took; either the "high" road or the "low" road, and get it to respond differently depending on which was passed.
+  Pattern matching can be used for even more things than picking out the keys of a map or the items out of a list. We can also use it when we define our functions too, making them respond differently depending on the arguments passed. For instance, we could define a function which took the kind of road that we took; either the "high" road or the "low" road, and get it to respond differently depending on which was passed.
 </p>
 
 <pre><code>iex> road = fn
@@ -300,12 +300,6 @@ end</code></pre>
 <p>
   In the first clause's case, it will only match if the argument passed to the <code>greeting</code> function is a map which contains a <code>"name"</code> key; this key is <em>required</em> by the match. If the map does not contain a <code>"name"</code> key then this clause will not match. The second clause matches <em>any</em> map, and so that is the clause that will be used for any map not containing a <code>"name"</code> key.
 </p>
-
-<h3>Matching lists inside functions</h3>
-
-<div class='todo'>
-  Show example of matching one element <code>[h|t]</code>, another example of matching multiple elements, and a final example of matching an empty list.
-</div>
 
 <h3>Matching anything</h3>
 

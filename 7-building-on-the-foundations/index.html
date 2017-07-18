@@ -67,6 +67,8 @@ iex> age
 
 <h3>Working with strings</h3>
 
+<h4>Reversing a string</h4>
+
 <p>
   Have you ever wanted to reverse a sentence, but didn't want to type all the different characters yourself? Elixir has a handy function for this called <code>String.reverse</code>. Here it is in action:
 </p>
@@ -87,8 +89,22 @@ iex> age
 </p>
 
 <p>
-  Note here how we <em>don't</em> need to put a dot between the function name and its arguments, like we had to do with the functions we defined ourselves. You don't need to do this when you're running a function from a module.
+  Note here how we <em>don't</em> need to put a dot between the function name and its arguments, like we had to do with the functions we defined ourselves. You don't need to do this when you're running a function from a module. You only need the dot if you've defined the function and assigned it to a variable. For instance, with our old <code>greeting</code> function:
 </p>
+
+<pre><code>iex> greeting = fn (place) -> "Hello, #{place}!" end
+<span class='console-yellow'>#Function&lt;6.52032458/1 in :erl_eval.expr/5&gt;</span>
+greeting.("world")
+</code></pre>
+
+<p>
+  When calling the <code>String.reverse</code> function, Elixir knows that it's a function because of that <code>String.</code> prefix. We don't need a dot right after the function name:
+</p>
+
+<pre><code>iex> String.reverse("reverse this")
+<span class='console-green'>"siht esrever"</span></code></pre>
+
+<h4>Splitting a string</h4>
 
 <p>
   What about if we wanted to split a string into its individual words? For that, we can use the <code>split</code> function:
@@ -101,12 +117,16 @@ iex> age
   We now have a list of the words in the string. We'll see what we could do with such a list a little later in the chapter. For now, let's look at what else is in this <code>String</code> module.
 </p>
 
+<h4>Making all the letters of a string uppercase</h4>
+
 <p>
   What about if we wanted to make the computer turn a string into its shouty variant? We can use <code>upcase</code> for this:
 </p>
 
 <pre><code>iex> String.upcase("not so quiet any more")
 <span class='console-green'>"NOT SO QUIET ANY MORE"</span></code></pre>
+
+<h4>Making all the letters of a string lowercase</h4>
 
 <p>
   At the opposite end of that particular spectrum, there is <code>downcase</code>:
@@ -120,13 +140,23 @@ iex> age
 </p>
 
 <p>
-  Let's take a look at working with lists instead of strings.
+  Let's take a look at working with something that we've not worked with before: input and output.
+</p>
+
+<h3>Input and output</h3>
+
+<div class='todo'>
+  Cover <code>IO.puts</code> and <code>IO.gets</code> here.
+</div>
+
+<p>
+  We've done a lot of work with strings so far in this chapter. Let's look at lists again and the built-in functions that we can use with them.
 </p>
 
 <h3>Working with lists</h3>
 
 <p>
-  Now how about if we wanted to reverse something else, like this list:
+  We looked earlier at how we could reverse a string, but how about if we wanted to reverse something else, like this list?
 </p>
 
 <pre><code>iex> animals_or_derivatives_of_animals = ["cat", "dog", "cow", "turducken"]</code></pre>
@@ -260,8 +290,19 @@ List.reverse(animals_or_derivatives_of_animals, [1, 2, 3])
   Hooray! We were able to reverse our list.
 </p>
 
+<aside>
+  <header>That function <em>might</em> be in the Enum module instead</header>
+  <p>
+    <small>(I thought I would put this in an aside so it's more visible. I know it's not a traditional aside, but it's an important concept and needs highlighting. So with the actual aside-ing out of the way:)</small>
+  </p>
+
+  <p>
+    It's important to keep in mind that when we're working with enumerable objects such as lists and maps that we might not be able to find the function in the <code>List</code> or <code>Map</code> modules because the function might be inside the <code>Enum</code> module instead. If you can't find it where you think it might be, make sure you remember to look at <code>Enum</code> too!
+  </p>
+</aside>
+
 <p>
-  Roberto emerges from his deep thought trance to ask another question: "Hey, you mentioned before you could <em>enumerate</em> through a list or a map, but you didn't show an example of that. What gives?" You're absolutely right, Roberto. I was too distracted with explaining why <code>List.reverse/1</code> didn't exist to explain how to enumerate through an enumerable. Let's all now take a look at how to do that.
+  Roberto emerges from his deep thought trance to ask another question: "Hey, you mentioned before you could <em>enumerate</em> through a list or a map, but you didn't show an example of that. What gives?" You're absolutely right, Roberto. I was too distracted with explaining why <code>List.reverse/1</code> didn't exist to explain how to enumerate through an enumerable. Let's all now take a look at how to do that before we move onto other functions. We've talked about enums briefly and it would be a shame to stop so early.
 </p>
 
 
@@ -278,6 +319,35 @@ List.reverse(animals_or_derivatives_of_animals, [1, 2, 3])
 <pre><code>iex> seasons = ["summer", "fall", "winter", "spring"]</code></pre>
 
 <p>
+  The simplest way of enumerating through a list in Elixir is to use the <code>Enum.each</code> function. This function takes two arguments: the thing we want to enumerate through and a function to run for each of the items. Let's take a look at an example:
+</p>
+
+<pre><code>iex> Enum.each(seasons, &amp;IO.puts/1)</code></pre>
+
+<p>
+  The first argument here is our list of seasons. The second argument is the function that we want to run for each element in this list: specifically the built-in <code>IO.puts/1</code> function.
+</p>
+
+<div class='todo'>
+  Finish explaining Enum.each
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h4>Map, but not the kind that you know already</h4>
+
+<p>
   The names of these seasons should be capitalized because they are nouns, but whoever created this list neglected to capitalize them. Oops! What we should have is a list with proper capitalization:
 </p>
 
@@ -291,11 +361,11 @@ List.reverse(animals_or_derivatives_of_animals, [1, 2, 3])
 <span class='console-green'>"Summer"</span></code></pre>
 
 <p>
-  "But how do we run that function on each item in a list?", Roberto asks. He then cries: "I don't want to have to rewrite the whole list!" Roberto is being a little dramatic &mdash; given it is a small list of four elements &mdash; but I can see his point. We <em>could</em> rewrite the list to make it what we want it to be, but we're <em>computer programmers</em>, so let's program the computer to do our bidding instead.
+  "But how do we run that function on each item in a list?", Roberto asks. He then cries: "I don't want to have to rewrite the whole list!" Roberto is being a little dramatic &mdash; given it is a small list of four items &mdash; but I can see his point. We <em>could</em> rewrite the list to make it what we want it to be, but we're <em>computer programmers</em>, so let's program the computer to do our bidding instead.
 </p>
 
 <p>
-  We're going to need a function that goes through each item in the list and applies <code>String.capitalize/1</code>; something akin to making a list like this:
+  We're going to need a function that goes through each item in the list and applies <code>String.capitalize/1</code>; something that would turn our existing list into a list like this one:
 </p>
 
 <pre><code>iex> seasons = [
@@ -303,10 +373,11 @@ List.reverse(animals_or_derivatives_of_animals, [1, 2, 3])
   String.capitalize("fall"),
   String.capitalize("winter"),
   String.capitalize("spring"),
-]</code></pre>
+]
+[<span class='console-green'>"Summer"</span>, <span class='console-green'>"Fall"</span>, <span class='console-green'>"Winter"</span>, <span class='console-green'>"Spring"</span>]</code></pre>
 
 <p>
-  But since we've already got a list we're going to have to do <em>something</em> to that list to turn it into what we want. That something is to use another function from the <code>Enum</code> module called <code>Enum.map/2</code>. This <code>map</code> function is different from the map kind of data (<code>%{"name" => "Roberto"}</code>), in that it will take the specified enumerable and function, enumerate through each item in the list and run that function for each element, and then return the result.
+  But since we've already got a list we're going to have to do <em>something</em> to that list to turn it into what we want. That something is to use another function from the <code>Enum</code> module called <code>Enum.map/2</code>. This <code>map</code> function is different from the map kind of data (<code>%{"name" => "Roberto"}</code>), in that it will take the specified enumerable and function, enumerate through each item in the list and run that function for each item, and then return the result.
 </p>
 
 <p>
@@ -317,14 +388,37 @@ List.reverse(animals_or_derivatives_of_animals, [1, 2, 3])
 [<span class='console-green'>"Summer"</span>, <span class='console-green'>"Fall"</span>, <span class='console-green'>"Winter"</span>, <span class='console-green'>"Spring"</span>]</code></pre>
 
 <p>
-  Hooray! Each of our seasons now has a correctly capitalized name. What's happened here is that we've told the <code>map</code> function that we want it to run the <code>String.capitalize/1</code> function on each element of the <code>seasons</code> list. Put another way: we want it to <em>enumerate</em> through the list and run the function.
-</p>
-
-<p>
-  We need to prefix the function with a <code>&amp;</code> (ampersand) so that Elixir knows its a function, and not some other kind of code.
+  Hooray! Each of our seasons now has a correctly capitalized name. What's happened here is that we've told the <code>map</code> function that we want it to run another function -- that'd be the <code>String.capitalize/1</code> function -- on each item of the <code>seasons</code> list. This is how we've been able to go from our existing list with non-capitalized season names to a new list with capitalized names.
 </p>
 
 <h3>Working with maps</h3>
+
+<p>
+  Now that we've looked at enumerating through lists, let's look at enumerating through maps. We spoke a little while ago about doing so:
+</p>
+
+<blockquote>
+  <p>
+    Similar to this, we could <em>enumerate</em> through a map. If we were to take one of our maps from earlier...
+  </p>
+
+<pre><code>%{<span class='console-green'>"name"</span> => <span class='console-green'>"Roberto"</span>, <span class='console-green'>"age"</span> => <span class='console-green'>"30ish"</span>, <span class='console-green'>"gender"</span> => <span class='console-green'>"Male"</span>}</code></pre>
+
+  <p>
+    ...and write each key and value pair down, they may look something like this:
+  </p>
+
+  <dl>
+    <dt><strong>Name</strong></dt><dd>Roberto</dd>
+    <dt><strong>Age</strong></dt><dd>30ish</dd>
+    <dt><strong>Gender</strong></dt><dd>Male</dd>
+  </dl>
+</blockquote>
+
+<p>
+To enumerate through a map we can use the same
+</p>
+
 
 * Explain enumerating through maps here, showing that kv pairs are returned as tuples.
 * Explain what tuples are and how they differ from lists. (iirc, tuples cannot be appended to or iterated (or can they?))
@@ -336,3 +430,9 @@ List.reverse(animals_or_derivatives_of_animals, [1, 2, 3])
 </div>
 
 <div class='todo'>Chapter is currently unfinished... please hold.</div>
+
+<h3>Exercises</h3>
+
+<ul>
+  <li>Find a function in the <code>Enum</code> module that will allow you to run a</li>
+</ul>

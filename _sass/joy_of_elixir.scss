@@ -20,37 +20,47 @@ a {
   color: $light-purple;
 }
 
-code {
-  font: 12pt "Anonymous Pro";
-}
+article {
+  .center {
+    text-align: center;
+  }
 
-pre {
-  overflow: auto;
-  background: #212733;
-  padding: 10px;
-  color: white;
+  img {
+    max-width: 100%;
+  }
 
   code {
-    line-height: 133%;
+    font: 12pt "Anonymous Pro";
   }
-}
 
-aside {
-  background: #C7EBF0;
-  padding: 15px;
+  pre {
+    overflow: auto;
+    background: #212733;
+    padding: 10px;
+    color: white;
 
-  header {
-    font-weight: bold;
-    font-size: 125%;
+    code {
+      line-height: 133%;
+    }
   }
-}
 
-blockquote {
-  background: #C7EBF0;
-  padding: 15px;
+  aside {
+    background: #C7EBF0;
+    padding: 15px;
 
-  p {
-    margin: 0;
+    header {
+      font-weight: bold;
+      font-size: 125%;
+    }
+  }
+
+  blockquote {
+    background: #C7EBF0;
+    padding: 15px;
+
+    p {
+      margin: 0;
+    }
   }
 }
 
