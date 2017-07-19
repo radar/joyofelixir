@@ -1,15 +1,27 @@
+$console-green: #c4d264;
+$console-yellow: #eccd58;
+$console-red: #ff4c41;
+
 .console-green {
-  color: #c4d264;
+  color: $console-green;
 }
 
 .console-yellow {
-  color: #eccd58;
+  color: $console-yellow;
 }
 
 .console-red {
-  color: #ff4c41;
+  color: $console-red;
+
+  span[class^="hljs-"] {
+    color: $console-red;
+  }
 }
 
 .unused-clause {
   opacity: 0.3;
+}
+
+.hljs-number {
+ color: $console-yellow;
 }
