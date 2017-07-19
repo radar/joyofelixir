@@ -89,8 +89,8 @@ iex> greeting.("Motherland")
 
 <pre>
 <code>iex> greeting = fn (name, gender, age) ->
-...(27)>   "Hello, #{name}! I see you're a #{gender} and you're #{age} years old."
-...(27)> end
+...>   "Hello, #{name}! I see you're a #{gender} and you're #{age} years old."
+...> end
 <span class='console-yellow'>#Function&lt;18.52032458/3 in :erl_eval.expr/5&gt;</span></code></pre>
 
 <p>
@@ -119,9 +119,26 @@ iex> greeting.("Motherland")
   Arity is a fancy computer term which means "arguments". This error is saying that while the <code>greeting</code> function is defined with 3 arguments ("with arity 3") we're only running ("calling") it with 1 argument. Helpfully, it tells us what arguments we tried to give the function. To avoid the computer reprimanding us we should make sure to call functions with the right number of arguments.
 </p>
 
+<aside>
+  <header>Saving code for later</header>
+
+  <p>
+    While it's all good and well to run code through the <code>iex</code> prompt, you may want to save some code to run later on. Maybe at this point you might have an idea of something to try out and you want to save it <em>somewhere</em> for later on because an <code>iex</code> prompt will only remember stuff as long as it is open. Once it's shut, that code is gone for good and you will need to type it all out again.
+  </p>
+
+  <p>
+    To save your Elixir code, you can create a new file in your favourite text editor, put in the code you want and then save it with a name like <code>hello.exs</code>. That <code>.exs</code> on the end symbolises that the file is an Elixir Script file.
+  </p>
+
+  <p>
+    To run the code inside the file, simply run <code>elixir hello.exs</code>. No need for a prompt now!
+  </p>
+</aside>
+
 <h3>Exercises</h3>
 
 <ul>
   <li>Make a function which returns the number of seconds in the specified amount of days. For example, <code>seconds.(2)</code> should tell us how many seconds there are in 2 days.</li>
   <li>Make a function which takes two maps with <code>"age"</code> keys in them and returns the average age.</li>
+  <li>Save either of these two solutions in their own file and run them through the <code>elixir</code> command-line tool.</li>
 </ul>

@@ -77,17 +77,17 @@ iex> third = "eggs"
 
 <pre>
 <code>iex> those_who_are_assembled = [
-...(17)> ["Roberto", "30ish", "Male"]
-...(17)> ]</code></pre>
+...> ["Roberto", "30ish", "Male"]
+...> ]</code></pre>
 
 These lists-inside-of-lists would be called <em>sub-lists</em>. You would then have to keep in mind that the first item in each sublist is the name, the second is the age and the third is the gender. What if you lost track of this and started adding in people, but you flipped the age and their gender?
 
 <pre>
 <code>iex> those_who_are_assembled = [
-...(18)> ["Roberto", "30ish", "Male"],
+...> ["Roberto", "30ish", "Male"],
   ... a long time passes ...
-...(18)> ["Young Roberto", "Male", "20ish"],
-...(18)> ]</code></pre>
+...> ["Young Roberto", "Male", "20ish"],
+...> ]</code></pre>
 
 <p>
   Pandemonium again! We need a better way of enforcing what data we're collecting for each person. We need a better data structure than lists within lists. Read on to find out what that data structure is!
