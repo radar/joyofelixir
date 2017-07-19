@@ -145,6 +145,25 @@ greeting.("world")
 
 <h3>Input and output</h3>
 
+<p>
+  Input and output are two fundamental things that you'll work with while programming. Programming is all about taking some data as an input and turning it into an output. We've seen this multiple times already with the functions we've defined and used throughout this book.
+</p>
+
+<p>
+  Let's say that we wanted to write a program in Elixir that prompted users for their names and we wanted to prompt them in a way that meant that they didn't have to read Joy of Elixir to understand that strings had to be wrapped in double quotes. Fortunately for us, Elixir has a module that provides us a function to do just this. That module is called <code>IO</code> (Input / Output) and the function is called <code>gets</code>. The name <code>gets</code> means "get string" and it will allow us to do exactly that. Let's see this function in practice:
+</p>
+
+<pre><code>iex> name = IO.gets "What is your name?"
+What is your name?</code></pre>
+
+<p>
+  "Hey what happened to our <code>iex</code> prompt?", Roberto asks. Good question! We're using <code>gets</code> and passing it a string. This string then becomes a new prompt. This prompt is asking us for our name. Let's type in our name and hit enter:
+</p>
+
+<pre><code>iex> name = IO.gets "What is your name?"
+What is your name? Ryan
+<span class='console-green'>"Ryan\n"</span></code></pre>
+
 <div class='todo'>
   Cover <code>IO.puts</code> and <code>IO.gets</code> here.
 </div>
@@ -416,8 +435,18 @@ List.reverse(animals_or_derivatives_of_animals, [1, 2, 3])
 </blockquote>
 
 <p>
-To enumerate through a map we can use the same
+  To enumerate through each item in the map we can use the same function as when we were enumerating through each item in a list: <code>Enum.each/2</code>. Here's an example:
 </p>
+
+<pre><code>iex> person = %{"name" => "Roberto", "age" => "30ish", "gender" => "Male"}
+%{<span class='console-green'>"name"</span> => <span class='console-green'>"Roberto"</span>, <span class='console-green'>"age"</span> => <span class='console-green'>"30ish"</span>, <span class='console-green'>"gender"</span> => <span class='console-green'>"Male"</span>}
+iex> Enum.each(person, fn ({k, v}) -> IO.puts v end)
+</code></pre>
+
+<p>
+  Before I can go any further, Roberto interrupts. "Hey, those curly braces are weird! It looks like a map but it's not a map. And it's not a list because the curliness of the brackets. So what is it?"
+</p>
+
 
 
 * Explain enumerating through maps here, showing that kv pairs are returned as tuples.
