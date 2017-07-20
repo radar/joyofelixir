@@ -109,7 +109,7 @@ What we'll cover in this section is getting some input from a different source: 
 What is your name?</code></pre>
 
 <p>
-  "Hey what happened to our <code>iex&gt;</code> prompt?", Roberto asks. Good question! We're using <code>gets</code> and passing it a string. This string then becomes a new prompt. This prompt is asking us for our name. Let's type in our name and hit enter:
+  "Hey what happened to our <code>iex&gt;</code> prompt?", Roberto asks. Good question! We're using <code>gets</code> and passing it a string. This string then becomes a new prompt. This prompt is asking us for our name. Let's type in our name and press enter:
 </p>
 
 <pre><code>iex> name = IO.gets "What is your name?"
@@ -144,20 +144,63 @@ What is your name? The Reader
   Lets deviate here from using the <code>iex</code> prompt and instead write our code inside one of those Elixir Script (<code>.exs</code>) files we mentioned back at the end of Chapter 5. Let's call this file <code>greet.exs</code> and put this content inside of it:
 </p>
 
-<pre><code class="elixir">name = IO.gets "What is your name?"
-age = IO.gets "And what is your age?"
-
+<pre><code class="elixir">name = IO.gets "What is your name? "
+age = IO.gets "And what is your age? "
 IO.puts "Hello, #{String.trim(name)}! You're #{String.trim(age)}? That's so old!"</code></pre>
 
 <p>
-  Well that's a bit sneaky of that <code>IO.puts</code> to just appear out of <em>nowhere</em>! Just like <code>gets</code> means "get string", <code>puts</code> means "put string". This function will generate some output when our program runs.
+  Well that's a bit sneaky of that <code>IO.puts</code> to just appear out of <em>nowhere</em>! Just like <code>gets</code> means "get string", <code>puts</code> means "put string". This function will generate some output when our script runs. If we didn't have this <code>IO.puts</code> here, our program would only take input, and it would not generate any output.
 </p>
 
 <p>
-  Speaking of running this program, let's do that now. First, we'll need to stop our <code>iex</code> prompt, which we can do by hitting <code>Ctrl+C</code> twice. Then we can run the program with the command <code>elixir greet.exs</code>. Here's what we'll see:
+  In this function we're interpolating the output of the <code>String.trim</code> function twice. Remember: we're doing this to remove the new line character (<code>\n</code>) from the result of the <code>IO.gets</code> calls.
 </p>
 
-<div class='todo'>Finish explanation here</div>
+<p>
+  There's some more new syntax that we've never seen before either. We've seen that we could interpolate variables into strings, but we've never seen that we could call functions while interpolating too. It's absolutely something you can do in Elixir. When interpolating inside a string you can put any code inside the interpolation brackets (<code>#{}</code>) &mdash; but as a general rule-of-thumb it's good to keep this interpolated code as short and simple as possible.
+</p>
+
+<p>
+  Let's run our <code>greet.exs</code> script now. First, we'll need to stop our <code>iex</code> prompt, which we can do by pressing <code>Ctrl+C</code> twice. Then we can run the script with this command:
+</p>
+
+<pre><code>elixir greet.exs</code></pre>
+
+<p>
+  Here's what we'll see initially:
+</p>
+
+<pre><code>What is your name?</code></pre>
+
+<p>
+  The script is prompting us for our name and it is doing that because the first line of code in that script is running the <code>IO.gets</code> function. Let's enter our name again and press enter.
+</p>
+
+<pre><code class="hljs text">What is your name? The Reader
+And what is your age?</code></pre>
+
+<p>
+  This little script is now prompting us for our age. This is because the second line is calling another <code>IO.gets</code>. Let's enter our age and then press enter again,
+</p>
+
+<pre><code class="hljs text">What is your name? The Reader
+And what is your age? 30ish
+Hello, Ryan! You're 30ish? That's so old!</code></pre>
+
+<p>
+  Our script gets to the third and final line, where it runs the <code>IO.puts</code> function and outputs its little teasing message. Apparently being 30ish is old! Kids these days have no respect.
+</p>
+
+<p>
+  This is just a small example of what we can do with <code>IO.gets</code> and <code>IO.puts</code>. We could use any number of <code>IO.gets</code> and <code>IO.puts</code> function calls to build up a program that took user input and generated some output from it.
+</p>
+
+<h3>Exercises</h3>
+
+<ul>
+  <li>Make a program that generates a very short story. Get it to take some input of a place, an action and an object and combine all three into a little sentence.</li>
+  <li>Ponder on what happens when you remove the <code>IO.puts</code> from the beginning of Line 3 in <code>greet.exs</code> and then run the program with <code>elixir greet.exs</code>. Think about how this would be different if you put that code into an <code>iex</code> prompt. </li>
+</ul>
 
 <p>
   We've done a lot of work with strings so far in this chapter. Let's look at lists and maps again in the next chapter and the built-in functions that we can use with them.
