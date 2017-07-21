@@ -1,0 +1,156 @@
+
+<section>
+  <h2 id='chapter-1'>Appeasing the masses with code</h2>
+
+  <p>
+    OK, here's some code:
+  </p>
+
+  <center>
+    <pre style='white-space: inherit;'><code style='font-size: 36pt;'><span class='console-green'>"Hello, World!"</span></code></pre>
+  </center>
+
+  <p>
+    The masses are silent. Their stares harden. Their spokesman -- who they've nominated while I thought of this snippet -- says, systematically tearing down the fourth wall: "That's just a bunch of quoted words! Just like this one that I'm speaking."
+  </p>
+
+  <p>
+   The crowd agrees.
+  </p>
+
+  <p>
+    Ok, you're right. It is some quoted words, but they're quoted words that both humans <em>and</em> computers can understand. That's pretty cool. Well, I thought so, at least.
+  </p>
+
+  <p>
+    The crowd of humans arrayed before us know the words and that the words have <em>meaning</em> behind them and form an understandable sentence. The computer knows only the words, and cares not that they have a meaning or that they form an understandable sentence. "Those things are only important to the humans", it thinks, without acknowledging the <a href='http://whatis.techtarget.com/definition/machine-learning'>Machine Learning</a> zeitgeist.
+  </p>
+
+  <p>
+    When we say the sentence to the masses, they can easily repeat it back to us. To speak to the computer, we need to open up a <em>prompt</em> for the particular language we want to use to converse. Diffeent languages have different prompts. In this case, we want to talk Elixir and so we can open a prompt with the <code>iex</code> command. <code>iex</code> stands for "Interactive EliXir". Let's open up one now by typing <code>iex</code> and pressing <kbd>Enter</kbd>.
+  </p>
+
+  <p>
+    When it starts, the prompt says:
+  </p>
+
+
+<pre><code class="hljs text">Erlang/OTP 19 [erts-8.1] [source] ...
+
+Interactive Elixir (1.4.2) - press Ctrl+C to exit (type h() ENTER for help)</code>
+</pre>
+
+  <p>
+    We can safely ignore this output. It is just giving us some nerdy information. The last line shown here tells us that we're running Interactive Elixir "1.4.2". This tells us that we're running the 1.4.2 version of Elixir. It tells us that we can hit <kbd>Ctrl+C</kbd> to exit (stop the <code>iex</code> command). The next thing the computer says is:
+  </p>
+
+<pre><code>iex></code></pre>
+
+  <p>
+    This tells us that the computer is now listening for our instructions, eagerly awaiting them. It's <em>prompting</em> us for input. Let's give the computer our sentence again, pressing enter at the end of the line:
+  </p>
+
+<pre><code>iex> "Hello, World!"
+<span class="console-green">"Hello, World!"</span></code>
+</pre>
+
+  <p>
+    On the first line here, we're giving the computer an instruction that looks like a regular sentence. This is because it is a regular sentence. In computer-nerd-terminology, we refer to this double-quoted collection of symbols as a <em>string</em>. It's easier to think of it like a string if you think of all of the sentence's parts being connected by an actual string:
+  </p>
+
+  <div class='todo'>TODO: String image goes here.</div>
+
+  <p>
+    The computer then takes in this string, interprets it and tells us how it interpreted the string. In this case, the computer is just parroting our sentence/string back to us. The computer can do a lot more than this, believe me. Computers wouldn't be very good if they all they did was parrot back to us.
+  </p>
+
+  <p>
+    The masses are now getting fidgety. And the computer is prompting us with this line.
+  </p>
+
+<pre><code>iex></code></pre>
+
+  <p>
+    The computer hungers for more input. The masses want to see more of what this language can do. Fortunately for me (and you), computers can do much more than parrot.
+  </p>
+
+  <aside>
+    <header>"We just saw a REPL!" "A what now?"</header>
+
+    <p>
+      Nerdier types would call this "prompt" of ours a REPL. If those nerdier types have been using the word "REPL" to describe prompts like iex, you now know what they mean. REPL = prompt. You know that it has nothing to do with descending from a height suspended by a double coiled rope (rappel).
+    </p>
+
+    <p>
+      "But hey REPL looks like an acronym!", I hear you say. Gold star for you. It <em>is</em> an acronym and it stands for <strong>R</strong>ead, <strong>E</strong>valuate, <strong>P</strong>rint, and <strong>L</strong>oop.
+    </p>
+
+    <p>The <code>iex</code> prompt prompts us for input. This is the "read" step. Once we give it input, it then <em>evaluates</em> what we've given it to determine if the computer is capable of running our program. If it is, then the computer runs our program and "<em>prints</em>" the output back to the prompt to show us what the computer has done. And then it prompts us again because it is <em>looping</em>. Hence: read, evaluate, print, loop: REPL.</p>
+  </aside>
+</section>
+
+
+<section>
+  <h2>Mathematical!</h2>
+
+  <p>
+    How about we ask the computer to do some mathematical equations?
+  </p>
+
+<pre><code>iex> 2 + 4
+<span class='console-yellow'>6</span>
+iex> 3 - 6
+<span class='console-yellow'>-3</span>
+iex> 4 * 12345
+<span class='console-yellow'>49380</span>
+iex> 1234 / 4 + 2 - 12 * 3
+<span class='console-yellow'>274.5</span></code></pre>
+
+  <p>
+    This appeases the masses, slightly. They're a fickle bunch. The computer is now no longer parroting things back to us. It's instead calculating the not-so-advance mathematical equations we're giving it, and then giving us the right numbers.
+  </p>
+
+  <aside>
+    <header>Why are numbers yellow, but strings green?</header>
+
+    <p>
+      You may have noticed that a string shows up as green in the <code>iex</code> prompt:
+    </p>
+
+<pre>
+<code>iex> "Hello World!"
+<span class='console-green'>"Hello World"</span></code></pre>
+
+    <p>
+      But numbers show up as yellow:
+    </p>
+
+<pre><code>iex> 2 + 4
+<span class='console-yellow'>6</span></code></pre>
+
+    <p>
+      And you might've wondered why.
+    </p>
+
+    <p>
+      Well, there is no particular reason for strings being green and numbers being yellow; the colours don't mean much else than to serve as useful indicators of the different kinds of data. Strings are one kind of data, and numbers are a different kind. We'll see more kinds as we continue on our journey.
+    </p>
+
+    <p>
+      Green doesn't mean that strings are somehow more special than numbers, and yellow doesn't mean that numbers are more important. They're just colours to help differentiate the two at a glance.
+    </p>
+  </aside>
+
+  <p>
+    They realise that Elixir is now built for more things than simple parroting. Elixir can do calculations too! We've used the symbols <code>+</code>, <code>-</code>, <code>*</code>, and <code>/</code> here, asking the computer to add, subtract, multiply and divide, in that order.
+  </p>
+</section>
+
+<section>
+  <h3>Exercises</h3>
+
+  <ul>
+    <li>Get Elixir to calculate the number of seconds in the day by multiplying the hours in a day by 60 twice. How many seconds are there in a day?</li>
+    <li>Calculate the average of these numbers: 4, 8, 15, 16, 23 and 42.</li>
+  </ul>
+</section>

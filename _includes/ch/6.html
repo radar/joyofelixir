@@ -1,0 +1,373 @@
+<section>
+  <h2 id='chapter-6'>Pattern matching</h2>
+
+  <p>
+    Back in <a href='/2'>Chapter 2</a> you saw that the equals sign (<code>=</code>) made the computer remember things.
+  </p>
+
+<pre><code>iex> sentence = "A really long and complex sentence we'd rather not repeat."
+<span class='console-green'>"A really long and complex sentence we'd rather not repeat."</span>
+iex> score = 2 / 5 * 100
+<span class='console-yellow'>40</span></code></pre>
+
+  <p>
+    While this is indeed still true, the equals sign (<code>=</code>) can do more than just set one value at a time. (Roberto double-takes at the last sentence, while the crowd murmurs.) There's a hidden feature of Elixir that we haven't shown yet, and that feature is called <em>pattern matching</em>. You'll use this feature quite a lot when programming with Elixir -- just as much as functions! -- so we'll spend a while talking about it here in this chapter too.
+  </p>
+</section>
+
+<section>
+  <h3>Equals is not just for equality</h3>
+
+  <p>
+    The equals sign isn't just about assigning things to make the computer remember them, but it can also be used for <em>matching</em> things. You can think of it like the equals sign in mathematics, where the left-hand-side must match the right-hand-side.
+  </p>
+
+  <p>
+    For instance, if we tried to make <code>2 + 2 = 5</code>, much like <a href='https://en.wikipedia.org/wiki/Nineteen_Eighty-Four'>Nineteen Eighty Four's Party</a> would want us to believe, Elixir would not have a bar of it:
+  </p>
+
+<pre><code>iex> 2 + 2 = 5
+<span class='console-red'>** (MatchError) no match of right hand side value: 5</span>
+</code></pre>
+
+  <p>
+    Unlike the famous Mr. Winston Smith, Elixir cannot ever be coerced into disbelieving reality. Here, Elixir is telling us that <code>2 + 2</code> is indeed not 5. In Elixir, the left-hand-side has to evaluate to the same as the right-hand-side. This will make the computer happy:
+  </p>
+
+<pre><code>iex> 2 + 2 = 4
+<span class='console-yellow'>4</span></code></pre>
+
+  <p>
+    Similarly, having two identical strings on either side of the equals sign will also make the computer happy:
+  </p>
+
+<pre><code>iex> "dog" = "dog"
+<span class='console-green'>"dog"</span></code></pre>
+
+  <p>
+    Let's do something more complex than having the same thing on both sides of the equals sign. Let's take a look at how we can pattern match on lists.
+  </p>
+</section>
+
+<section>
+  <h3>Pattern matching with lists</h3>
+
+  <p>
+    Let's say we have a list of all the people assembled here, like we had back in Chapter 3:
+  </p>
+
+<pre><code>iex> those_who_are_assembled = [
+"Roberto",
+"The Author",
+"The Reader",
+"Juliet",
+"Mary",
+"Bobalina",
+"Charlie",
+"Charlie (no relation)"
+]
+[<span class='console-green'>"Roberto"</span>, ...]</code></pre>
+
+  <p>
+    And let's also say that we wanted to grab the names of the first 3 people in this list, but then ignore the remainder -- given that the first three are clearly the most important people here. We can use some pattern matching on this list:
+  </p>
+
+<pre><code>iex> [first, second, third | others] = those_who_are_assembled</code></pre>
+
+  <p>
+    With this code, we're telling Elixir to assign the first, second and third items from the list to the variables <code>first</code>, <code>second</code> and <code>third</code>. We're also telling it to assign the remainder of the list to the <code>others</code> variable, and we specify that by using the pipe symbol (<code>|</code>). In this code we've selected the first 3 items from the list, but we could also just select the very first one, or the first 5. It doesn't have to be exactly 3.
+  </p>
+
+  <p>
+    We can check what this has done exactly in <code>iex</code> by looking at the values of each of these variables:
+  </p>
+
+<pre><code>iex> first
+<span class="console-green">"Roberto"</span>
+iex> second
+<span class="console-green">"The Author"</span>
+iex> third
+<span class="console-green">"The Reader"</span>
+iex> others
+[<span class="console-green">"Juliet"</span>, <span class="console-green">"Mary"</span>, <span class="console-green">"Bobalina"</span>, <span class="console-green">"Charlie"</span>, <span class="console-green">"Charlie (no relation)"</span>]
+</code></pre>
+
+  <p>
+    "Does this mean that I could do the same for the <code>others</code> list to get the next 3 people?", Roberto asks. Yes it does mean that you can do that:
+  </p>
+
+<pre><code>iex> [first, second, third | remainder] = others
+<span class="console-green">"Roberto"</span></code></pre>
+
+  <p>
+    Now when we check the values of <code>first</code>, <code>second</code> and <code>third</code> they'll be the names of the next 3 people in the list:
+  </p>
+
+<pre><code>iex> first
+<span class="console-green">"Juliet"</span>
+iex> second
+<span class="console-green">"Mary"</span>
+iex> third
+<span class="console-green">"Bobalina"</span>
+</code></pre>
+
+  <p>
+    And our <code>remainder</code> variable will be the remaining names in the list, which are just the two Charlies:
+  </p>
+
+<pre><code>iex> remainder
+[<span class="console-green">"Charlie"</span>, <span class="console-green">"Charlie (no relation)"</span>]</code></pre>
+
+  <p>
+    If we now try to pull out the next 3 people in the list, Elixir won't be able to do that because there are only two names left in the <code>remainder</code> list:
+  </p>
+
+<pre><code>iex> [first, second, third | those_still_remaining] = remainder
+<span class='console-red'>** (MatchError) no match of right hand side value: ["Charlie", "Charlie (no relation)"]</span>
+</code></pre>
+
+  <p>
+    It's always a good idea to be careful here with pattern matching lists with the right number of expected items to avoid <code>MatchErrors</code> like these.
+  </p>
+
+  <p>
+    That's enough about lists for now. We'll revisit pattern matching them a little later on in this book. Let's look at how we can work with maps.
+  </p>
+</section>
+
+<section>
+  <h3>Pattern matching with maps</h3>
+
+  <p>
+    Let's say that we have a map containing a person's information:
+  </p>
+
+<pre><code>iex> person = %{"name" => "Roberto", "age" => "30ish"}
+%{<span class='console-green'>"name"</span> => <span class='console-green'>"Roberto"</span>, <span class='console-green'>"age"</span> => <span class='console-green'>"30ish"</span>}</code></pre>
+
+  <p>
+    We've seen before that we could pull out the value attached to <code>"name"</code> or <code>"age"</code> at whim:
+  </p>
+
+<pre><code>iex> person["name"]
+<span class='console-green'>"Roberto"</span>
+iex> person["age"]
+<span class='console-green'>"30ish"</span></code></pre>
+
+  <p>
+    But what if we wanted to pull out both of these values <em>at the same time</em>? Or even in the shortest possible code? Well, for that we have this <em>pattern matching</em> thing that I've been banging on about for over a page. Let's take a look at how pattern matching can help get both the name and the age out of the <code>person</code> map.
+  </p>
+
+<pre><code>iex> %{"name" => name, "age" => age} = person</code></pre>
+
+  <p>
+    "Hey, what gives? The left-hand-side here is <em>clearly</em> not the same as the right hand side!", cries Roberto. Yes, you're absolutely right. On the right hand side here we have a map which has a <code>"name"</code> key which points to a value of <code>"Roberto"</code>, but on the left hand side that <code>"name"</code> key points to a value of <code>name</code>. This is a trick of pattern matching: the left-hand-side can be used to assign multiple variables; it doesn't have to match the right-hand-side exactly.
+  </p>
+
+  <p>
+    If we check the value of <code>name</code> and <code>age</code> here, we'll see that those values are the values from our map.
+  </p>
+
+<pre><code>iex> name
+  <span class='console-green'>"Roberto"</span>
+  iex> age
+  <span class='console-green'>"30ish"</span></code></pre>
+
+  <p>
+    Well, would you look at that? We were able to pull out these two values <em>at the same time</em>. The crowd cheers as if we've just performed a magic trick. Just wait until you see our next trick!
+  </p>
+</section>
+
+<section>
+  <h3>Pattern matching inside functions</h3>
+
+  <p>
+    Pattern matching can be used for even more things than picking out the keys of a map or the items out of a list. We can also use it when we define our functions too, making them respond differently depending on the arguments passed. For instance, we could define a function which took the kind of road that we took; either the "high" road or the "low" road, and get it to respond differently depending on which was passed.
+  </p>
+
+<pre><code>iex> road = fn
+  "high" -> "You take the high road!"
+  "low" -> "I'll take the low road! (and I'll get there before you)"
+end</code></pre>
+
+  <p>
+    When we call this function with the <code>"high"</code> argument, that argument will <em>match</em> the first function line here, and "You take the high road" will be returned. Similarly, when we give it <code>"low"</code> it will return "I'll take the low road! (and I'll get there before you)". Each line inside the function here is called a <em>clause</em>. We could keep talking about the theory behind this, or we could actually try it in our <code>iex</code> prompt:
+  </p>
+
+<pre><code>iex> road.("high")
+<span class='console-green'>"You take the high road!"</span>
+iex> road.("low")
+<span class='console-green'>"I'll take the low road! (and I'll get there before you)"</span></code></pre>
+
+  <p>
+    This works because of how we've defined the <code>road</code> function. In that function, we've defined two separate function <em>clauses</em>. The first function clause says that when the argument is <code>"high"</code> then the function should output the line about the "high road". The second function clause says that when we supply the <code>"low"</code> argument then it should output the line about the "low road".
+  </p>
+
+  <p>
+    Think of it like this: Elixir is pattern matching the value of the argument against the clauses of the function. If Elixir can see that the argument is equal to <code>"high"</code> then it will use the first function. If it isn't equal to "high", then Elixir will try matching against <code>"low"</code>. If the argument is <code>"low"</code> then the second clause will be used.
+  </p>
+
+  <p>
+    But what happens if it's neither? We can find out with a touch of experimentation in our iex prompt:
+  </p>
+
+<pre><code>iex> road.("middle")
+<span class='console-red'>** (FunctionClauseError) no function clause matching
+  in :erl_eval."-inside-an-interpreted-fun-"/1</span></code></pre>
+
+  <p>
+    Elixir here is showing us an error that we've never seen before: a <code>FunctionClauseError</code>. This error happens when we call a function giving it arguments that it doesn't expect. In the case of our <code>road</code> function, it's expecting either <code>"high"</code> or <code>"low"</code>, but we gave it <code>"middle"</code>. Both clauses of the function don't match the value of "middle", and so we see this error.
+  </p>
+
+  <p>
+    Matching on strings in functions is great, but as we saw earlier with the equals sign (<code>=</code>) we can match on more than just strings.
+  </p>
+</section>
+
+<section>
+  <h3>Matching maps inside functions</h3>
+
+  <p>
+    We can also match on the keys contained within a map and get the code to act differently depending on what keys are present. Let's take our <code>greeting</code> function from Chapter 5 and modify it slightly so that behaves differently depending on what kind of map we pass it:
+  </p>
+
+<pre><code>iex> greeting = fn
+  %{"name" => name} -> "Hello, #{name}!"
+  %{} -> "Hello, Anonymous Stranger!"
+end</code></pre>
+
+  <p>
+    "Oooh that's fancy! What is the empty map is for?", Roberto asks. Soon, Roberto. Soon. Let's see what happens if we call this <code>greeting</code> function with a map which has a <code>"name"</code> key:
+  </p>
+
+<pre><code>iex> greeting.(%{"name" => "Roberto"})
+<span class='console-green'>"Hello, Roberto!"</span>
+</code></pre>
+
+  <p>
+    Here, the first function clause is matching because the map we're supplying contains a key which is <code>"name"</code>, and that's what the first function clause (highlighted below in green) expects too: a map which has a key called <code>"name"</code>. So when we call this function with this map with a <code>"name"</code> key, we see the string <code>"Hello, Roberto!"</code> output from the function.
+  </p>
+
+<pre><code>iex> greeting = fn
+  <strong><span class='console-green'>%{"name" => name} -> "Hello, #{name}!"</span></strong>
+  <span class='unused-clause'>%{} -> "Hello, Anonymous Stranger!"</span>
+end</code></pre>
+
+
+  <p>
+    Now let's see what happens if we call this function with an empty map:
+  </p>
+
+<pre><code>iex> greeting.(%{})
+<span class='console-green'>"Hello, Anonymous Stranger!"</span>
+</code></pre>
+
+  <p>
+    Elixir is still acting as we would expect it to: we supplied an empty map and the second function clause matches an empty map, and so that's the clause that will be used here instead.
+  </p>
+
+<pre><code>iex> greeting = fn
+  <span class='unused-clause'>%{"name" => name} -> "Hello, #{name}!"</span>
+  <strong><span class='console-green'>%{} -> "Hello, Anonymous Stranger!"</span></strong>
+end</code></pre>
+
+  <p>
+    Ok, so what would you expect to happen here if you supplied neither a map with a <code>"name"</code> key or an empty map, but a map with a different key in it? "Based on the string test, I would expect it to fail with a FunctionClauseError!", Roberto proudly proclaims. Looks like someone has been paying attention. Dear Roberto, that is what I expected to happen too when I learned Elixir. However, maps are matched differently to strings in Elixir. Let's look:
+  </p>
+
+<pre><code>iex> greeting.(%{"age" => "30ish"})
+<span class='console-green'>"Hello, Anonymous Stranger!"</span></code></pre>
+
+  <p>
+    The <code>greeting</code> function still displays "Hello, Anonymous Stranger!" So what gives here?
+  </p>
+
+  <p>Well, in Elixir when you match two maps together it will always match on subset of the map. Let's take a look using our trusty equals sign (<code>=</code>) again:
+  </p>
+
+<pre><code>iex> %{} = %{"name" => "Roberto"}
+%{<span class='console-green'>"name"</span> => <span class='console-green'>"Roberto"</span>}</code></pre>
+
+  <p>
+    Just like in the second clause from the function above, we're comparing an empty map on the left-hand-side to a map from the right hand side. When pattern matching maps like this, it's helpful to think of the left-hand-side showing the keys that are absolutely required for the match to work. The right-hand-side <em>must</em> contain the same keys as the left-hand-side, but the right-hand-side can contain more keys than what's on the left.
+  </p>
+
+  <p>
+   This match will succeed because there are no keys required by the left-hand-side of this match. This story is different if we've got a map on the left-hand-side with keys, as we've seen before with the first clause of our <code>greeting</code> function:
+  </p>
+
+<pre><code>iex> greeting = fn
+  <span class='console-green'>%{"name" => name} -> "Hello, #{name}!"</span>
+  <span class='unused-clause'>%{} -> "Hello, Anonymous Stranger!"</span>
+end</code></pre>
+
+  <p>
+    In the first clause's case, it will only match if the argument passed to the <code>greeting</code> function is a map which contains a <code>"name"</code> key; this key is <em>required</em> by the match. If the map does not contain a <code>"name"</code> key then this clause will not match. The second clause matches <em>any</em> map, and so that is the clause that will be used for any map not containing a <code>"name"</code> key.
+  </p>
+</section>
+
+<section>
+  <h3>Matching anything</h3>
+
+  <p>
+    Now one more thing I wanted to show you is how to avoid those pesky <code>FunctionClauseErrors</code> when all the function clauses inside a function don't match. Let's take a look at the <code>road</code> function again:
+  </p>
+
+<pre><code>iex> road = fn
+  "high" -> "You take the high road!"
+  "low" -> "I'll take the low road! (and I'll get there before you)"
+end</code></pre>
+
+  <p>
+    If the argument supplied to this function is neither <code>"high"</code> nor <code>"low"</code> then Elixir shows us a <code>FunctionClauseError</code>:
+  </p>
+
+<pre><code>iex> road.("middle")
+<span class="console-red">** (FunctionClauseError) no function clause matching in :erl_eval."-inside-an-interpreted-fun-"/1</span></code></pre>
+
+  <p>
+    What if instead of this error we could get the function to tell whoever was running it that they have to supply either "high" or "low" as the argument? Elixir allows us to do this by using an underscore (<code>_</code>) as the argument in a new function clause:
+  </p>
+
+<pre><code>iex> road = fn
+  "high" -> "You take the high road!"
+  "low" -> "I'll take the low road! (and I'll get there before you)"
+  _ -> "Take the 'high' road or the 'low' road, thanks!"
+end</code></pre>
+
+  <p>
+    This underscore (<code>_</code>) matches <em>anything</em> and is often used in cases like this where we want to show a message if no other function clause matches. Let's see this in action:
+  </p>
+
+<pre><code>iex> road.("middle")
+<span class='console-green'>"Take the 'high' road or the 'low' road, thanks!"</span>
+</code></pre>
+
+  <p>
+    This underscore doesn't just match strings, but it will match any other argument that we can pass to the function:
+  </p>
+
+<pre><code>iex> road.(%{})
+<span class='console-green'>"Take the 'high' road or the 'low' road, thanks!"</span>
+iex> road.(["high", "low"])
+<span class='console-green'>"Take the 'high' road or the 'low' road, thanks!"</span>
+</code></pre>
+
+  <p>
+    This helps keep people in line when it comes to providing the right arguments to the function, without Elixir blowing up in their face when they provide the wrong ones.
+  </p>
+
+  <p>
+    Speaking of functions: did you know Elixir has some built-in functions that you could use?
+  </p>
+</section>
+
+<section>
+  <h3>Exercises</h3>
+
+  <ul>
+    <li>Make a function that could take either two or three maps containing the key "age", and averages the ages. This is similar to an exercise in the previous chapter.</li>
+    <li>Make a function that takes either a map containing a "name" and "age", or just a map containing "name". Change the output depending on if "age" is present. What happens if you switch the order of the function clauses? What can you learn from this?</li>
+  </ul>
+</section>
+

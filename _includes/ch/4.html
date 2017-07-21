@@ -1,0 +1,79 @@
+
+<section>
+  <h2 id='chapter-4'>Crafting maps</h2>
+
+  <p>
+    Back in the last chapter, Roberto tried tracking information about the people assembled using some lists within another list:
+  </p>
+
+<pre>
+<code>iex> those_who_are_assembled = [
+...> ["Roberto", "30ish", "Male"],
+  ... a long time passes ...
+...> ["Young Roberto", "Male", "20ish"],
+...> ]</code>
+</pre>
+
+  <p>
+    But as we can see here, the order of the items within the list can be input incorrectly due to human error. We need something that helps prevent human error like this, and if that <em>something</em> could helpfully indicate what each item in the list was -- by giving it a kind of a name -- then that would be good too.
+  </p>
+
+  <p>
+    For that, we can use a <em>map</em>. Just like a regular map, maps in Elixir can tell us where to find things, if only we knew where to look.
+  </p>
+
+  <p>
+    Let's look at how we could collect a single person's data using a map:
+  </p>
+
+<pre>
+<code>iex> person = %{"name" => "Roberto", "age" => "30ish", "gender" => "Male"}
+%{<span class='console-green'>"age"</span> => <span class='console-green'>"30ish"</span>, <span class='console-green'>"gender"</span> => <span class='console-green'>"Male"</span>, <span class='console-green'>"name"</span> => <span class='console-green'>"Roberto"</span>}</code></pre>
+
+  <p>
+    In a map, we structure data using <em>keys</em> and <em>values</em>. The thing to the <em>left</em> of the <code>=></code> is called a <em>key</em> and the thing to the <em>right</em> is called a <em>value</em>.
+  </p>
+
+  <p>
+    You might notice here that the computer has taken in our map and returned the keys in a different order to the one that we specified. The order of keys doesn't matter in a map at all, unlike in lists where order <em>does</em> matter. We could specify the keys in any order we wish, and the map would be the same:
+  </p>
+
+<pre>
+<code>iex> person = %{"gender" => "Male", "age" => "30ish", "name" => "Roberto"}
+%{<span class='console-green'>"age"</span> => <span class='console-green'>"30ish"</span>, <span class='console-green'>"gender"</span> => <span class='console-green'>"Male"</span>, <span class='console-green'>"name"</span> => <span class='console-green'>"Roberto"</span>}</code></pre>
+
+  <p>
+    You may now be thinking about how to get the data back out of a map once you've put it in. In order to access a value from a map we need to know the corresponding key. Once we know the corresponding key, then we can use <code>[]</code> to pluck that value out of the map. Think of it like the claw from a skilltester, diving in to pick out the value.
+  </p>
+
+  <div class='todo'>TODO: Skilltester image goes here.</div>
+
+  <p>
+    For instance, if we wanted to get out the value of <code>"name"</code> for <code>person</code> we can do:
+  </p>
+
+<pre><code>iex> person["name"]
+<span class='console-green'>"Roberto"</span></code></pre>
+
+  And if we want to get the age, we would use the <code>"age"</code> key:
+
+<pre><code>iex> person["age"]
+<span class='console-green'>"30ish"</span></code></pre>
+
+  <p>
+    Roberto lets out a thoughtful "Mmmmmmmmmm" in something very close to an agreement. He likes maps. Now Roberto can know the exact data that we're collecting about the assembled masses, without a concern for how the data ordered, and then use that for later on. We don't know yet what Roberto has in mind for the data, but he's collecting it for a reason. Or at least, it seems that way.
+  </p>
+
+  <p>
+    To collect data about all the people assembled here before us, we can create a <em>list of maps</em>:
+  </p>
+
+<pre><code>iex> [
+...> %{age: "30ish", gender: "Male", name: "Roberto"},
+...> %{age: "30ish", gender: "Male", name: "The Author"},
+...> ]</code></pre>
+
+  <p>
+    Roberto excitedly disappears into the crowd again with this new knowledge.
+  </p>
+</section>

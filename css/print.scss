@@ -1,0 +1,32 @@
+---
+---
+
+#navig a::after { content: leader(".") target-counter(attr(href), page); }
+
+body, code {
+  font-size: 12pt;
+}
+
+article {
+  code {
+    font-size: 10pt;
+  }
+}
+
+p, aside, section, pre, .todo {
+  page-break-inside: avoid;
+}
+
+nav, footer {
+  display: none;
+}
+
+.break {
+  page-break-before: always;
+}
+
+.cover {
+  margin-top: 50%;
+  font-size: 100pt;
+  page-break-after: always;
+}

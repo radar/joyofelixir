@@ -3,7 +3,9 @@ $light-purple: #B559D1;
 
 body {
   font: 14pt "Pavanam";
-  background: #E1C2EA;
+  @media screen {
+    background: #E1C2EA;
+  }
   margin: 0;
 }
 
@@ -74,10 +76,23 @@ footer {
   line-height: 200%;
 }
 
-
 .todo {
   background: #de0000;
   padding: 25px;
   color: white;
   font-weight: bold;
+}
+
+.intro {
+  .cover {
+    width: 50%;
+    float: left;
+    border: 3px solid green;
+    margin-right: 20px;
+    min-height: 500px;
+  }
+
+  .intro-text {
+
+  }
 }
