@@ -84,12 +84,19 @@ footer {
 }
 
 .intro {
+  min-height: 500px;
+
   .cover {
     width: 50%;
     float: left;
-    border: 3px solid green;
     margin-right: 20px;
     min-height: 500px;
+    text-align: center;
+
+    img {
+      max-width: 100%;
+      height: 500px;
+    }
   }
 
   .intro-text {
