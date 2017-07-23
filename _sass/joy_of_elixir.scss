@@ -99,7 +99,18 @@ footer {
     }
   }
 
-  .intro-text {
+  .buy {
+    border-radius: 3px;
+    border: 3px solid darken($purple, 5);
+    font-size: 150%;
+    padding: 10px 20px;
+    color: white;
+    background: $purple;
 
+  }
+
+
+  .intro-text {
+    padding-top: 1em;
   }
 }
