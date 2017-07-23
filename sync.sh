@@ -1,7 +1,6 @@
 #!/bin/bash
 bundle exec jekyll build
-aws s3 rm s3://joyofelixir.com --recursive
-aws s3 sync _site s3://joyofelixir.com --acl public-read
+aws s3 sync _site s3://joyofelixir.com --acl public-read --delete
 
 # Invalid CloudFront caches, otherwise new content will not display.
 
