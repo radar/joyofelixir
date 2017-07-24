@@ -66,7 +66,7 @@ footer {
 }
 
 .wrapper {
-  @media only screen and (min-width: 750px) {
+  @media only screen and (min-device-width: 750px) {
     margin: 0 5%;
   }
   background: white;
@@ -91,17 +91,17 @@ footer {
 
 .intro {
   min-height: 500px;
-  @media only screen and (min-width: 750px) {
+  @media only screen and (min-device-width: 750px) {
     display: flex;
   }
 
   .cover {
-    @media only screen and (min-width: 750px) {
+    @media only screen and (min-device-width: 750px) {
       float: left;
       min-width: 50%;
     }
 
-    @media only screen and (max-width: 750px) {
+    @media only screen and (max-device-width: 750px) {
       display: block;
       width: 100%;
     }
@@ -112,8 +112,8 @@ footer {
     img {
       flex: 1 0 auto;
       max-width: 100%;
-      @media only screen and (max-width: 750px) {
-        max-width: 200px;
+      @media only screen and (max-device-width: 750px) {
+        max-width: 400px;
       }
     }
   }
