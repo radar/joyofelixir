@@ -105,7 +105,7 @@ footer {
     font-size: 150%;
     padding: 10px 20px;
     color: white;
-    background: $purple;
+    background: linear-gradient(125deg, $purple, lighten($purple, 25));
 
   }
 
