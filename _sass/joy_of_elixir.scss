@@ -4,7 +4,7 @@ $light-purple: #B559D1;
 body {
   font: 14pt "Pavanam";
   @media screen {
-    background: #E1C2EA;
+    background: linear-gradient(145deg, #E1C2EA, darken(#E1C2EA, 25)) ;
   }
   margin: 0;
 }
@@ -23,10 +23,6 @@ a {
 }
 
 article {
-  .center {
-    text-align: center;
-  }
-
   img {
     max-width: 100%;
   }
@@ -51,6 +47,10 @@ article {
     }
   }
 
+  aside + aside {
+    margin-top: 20px;
+  }
+
   blockquote {
     background: #C7EBF0;
     padding: 15px;
@@ -66,9 +66,15 @@ footer {
 }
 
 .wrapper {
-  margin: 0 5%;
+  @media only screen and (min-width: 750px) {
+    margin: 0 5%;
+  }
   background: white;
   padding: 2.5% 5%;
+}
+
+.center {
+  text-align: center;
 }
 
 .toc {
@@ -85,17 +91,30 @@ footer {
 
 .intro {
   min-height: 500px;
+  @media only screen and (min-width: 750px) {
+    display: flex;
+  }
 
   .cover {
-    width: 50%;
-    float: left;
+    @media only screen and (min-width: 750px) {
+      float: left;
+      min-width: 50%;
+    }
+
+    @media only screen and (max-width: 750px) {
+      display: block;
+      width: 100%;
+    }
     margin-right: 20px;
-    min-height: 500px;
+
     text-align: center;
 
     img {
+      flex: 1 0 auto;
       max-width: 100%;
-      height: 500px;
+      @media only screen and (max-width: 750px) {
+        max-width: 200px;
+      }
     }
   }
 
@@ -106,11 +125,5 @@ footer {
     padding: 10px 20px;
     color: white;
     background: linear-gradient(125deg, $purple, lighten($purple, 25));
-
-  }
-
-
-  .intro-text {
-    padding-top: 1em;
   }
 }

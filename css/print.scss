@@ -3,8 +3,13 @@
 
 #navig a::after { content: leader(".") target-counter(attr(href), page); }
 
+
 body, code {
-  font-size: 12pt;
+  font-size: 13pt;
+}
+
+@page {
+  margin: 25mm 10mm;
 }
 
 article {
@@ -13,8 +18,12 @@ article {
   }
 }
 
-p, aside, section, pre, .todo {
+p, aside, section.major, pre, .todo, .grouped {
   page-break-inside: avoid;
+}
+
+section.major {
+  page-break-after: always;
 }
 
 nav, footer {

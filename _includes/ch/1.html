@@ -1,5 +1,4 @@
-
-<section>
+<section class='break'>
   <h2 id='chapter-1'>Appeasing the masses with code</h2>
 
   <p>
@@ -37,20 +36,20 @@
 
 <pre><code class="hljs text">Erlang/OTP 19 [erts-8.1] [source] ...
 
-Interactive Elixir (1.4.2) - press Ctrl+C to exit (type h() ENTER for help)</code>
+Interactive Elixir (1.4.5) - press Ctrl+C to exit (type h() ENTER for help)</code>
 </pre>
 
   <p>
-    We can safely ignore this output. It is just giving us some nerdy information. The last line shown here tells us that we're running Interactive Elixir "1.4.2". This tells us that we're running the 1.4.2 version of Elixir. It tells us that we can hit <kbd>Ctrl+C</kbd> to exit (stop the <code>iex</code> command). The next thing the computer says is:
+    We can safely ignore this output. It is just giving us some nerdy information. The last line shown here tells us that we're running Interactive Elixir "1.4.5". This tells us that we're running the 1.4.5 version of Elixir. It tells us that we can hit <kbd>Ctrl+C</kbd> to exit (stop the <code>iex</code> command). The next thing the computer says is:
   </p>
 
-<pre><code>iex></code></pre>
+<pre><code>iex(1)></code></pre>
 
   <p>
     This tells us that the computer is now listening for our instructions, eagerly awaiting them. It's <em>prompting</em> us for input. Let's give the computer our sentence again, pressing enter at the end of the line:
   </p>
 
-<pre><code>iex> "Hello, World!"
+<pre><code>iex(1)> "Hello, World!"
 <span class="console-green">"Hello, World!"</span></code>
 </pre>
 
@@ -68,7 +67,7 @@ Interactive Elixir (1.4.2) - press Ctrl+C to exit (type h() ENTER for help)</cod
     The masses are now getting fidgety. And the computer is prompting us with this line.
   </p>
 
-<pre><code>iex></code></pre>
+<pre><code>iex(2)></code></pre>
 
   <p>
     The computer hungers for more input. The masses want to see more of what this language can do. Fortunately for me (and you), computers can do much more than parrot.
@@ -86,11 +85,25 @@ Interactive Elixir (1.4.2) - press Ctrl+C to exit (type h() ENTER for help)</cod
     </p>
 
     <p>The <code>iex</code> prompt prompts us for input. This is the "read" step. Once we give it input, it then <em>evaluates</em> what we've given it to determine if the computer is capable of running our program. If it is, then the computer runs our program and "<em>prints</em>" the output back to the prompt to show us what the computer has done. And then it prompts us again because it is <em>looping</em>. Hence: read, evaluate, print, loop: REPL.</p>
+
+    <p>
+  </aside>
+
+  <aside>
+    <header>No more numbers in <code>iex</code> prompts</header>
+
+    <p>
+      Hi, it's me again. Bet you weren't expecting to hear from me again so soon. Well, here we are again. It'll only be a minute. Then we can get back to learning about Elixir. Promise.
+    </p>
+
+    <p>
+      Just a quick note: examples that use <code>iex</code> from here on out are going to be missing their numbers from the prompt. Instead of showing <code>iex(3)></code> for the next prompt, you'll just see <code>iex></code>. This makes it easier for this author to move things around in the book without having to re-number things. I hope you don't mind.
+    </p>
   </aside>
 </section>
 
 
-<section>
+<section class='break'>
   <h2>Mathematical!</h2>
 
   <p>

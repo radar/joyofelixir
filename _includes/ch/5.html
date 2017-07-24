@@ -1,5 +1,5 @@
 
-<section>
+<section class='break'>
   <h2 id='chapter-5'>Funky functions</h2>
 
   <p>
@@ -66,12 +66,14 @@ iex> greeting.("Narnia")
 iex> greeting.("Motherland")
 <span class='console-green'>"Hello, Motherland!"</span></code></pre>
 
+<div class='grouped'>
   <p>
     Each time we run the function here we give it a new value for <code>place</code>. We don't have to set <code>place</code> ourselves, as the function takes care of that. But what of our <code>place</code> variable from yesteryear (line 9 in <code>iex</code>)? Has that changed?
   </p>
 
-<pre><code>iex> place
-<span class='console-green'>"World"</span></code></pre>
+  <pre><code>iex> place
+  <span class='console-green'>"World"</span></code></pre>
+</div>
 
   <p>
     The computer knows that the <code>place</code> from <em>outside</em> the function is different to the place <em>inside</em> the function, and so it keeps the two separate. The computer is smart enough to know that <code>place</code> on the outside may not exist and so it shouldn't rely on it being present. The function contains everything it needs to run inside itself.

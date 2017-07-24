@@ -1,8 +1,8 @@
-<section>
+<section class='break'>
   <h2 id='chapter-6'>Pattern matching</h2>
 
   <p>
-    Back in <a href='/2'>Chapter 2</a> you saw that the equals sign (<code>=</code>) made the computer remember things.
+    Back in <a href='/2-where-did-i-put-that-value'>Chapter 2</a> you saw that the equals sign (<code>=</code>) made the computer remember things.
   </p>
 
 <pre><code>iex> sentence = "A really long and complex sentence we'd rather not repeat."
@@ -37,12 +37,14 @@ iex> score = 2 / 5 * 100
 <pre><code>iex> 2 + 2 = 4
 <span class='console-yellow'>4</span></code></pre>
 
+<div class='grouped'>
   <p>
     Similarly, having two identical strings on either side of the equals sign will also make the computer happy:
   </p>
 
 <pre><code>iex> "dog" = "dog"
 <span class='console-green'>"dog"</span></code></pre>
+</div>
 
   <p>
     Let's do something more complex than having the same thing on both sides of the equals sign. Let's take a look at how we can pattern match on lists.
@@ -78,6 +80,7 @@ iex> score = 2 / 5 * 100
     With this code, we're telling Elixir to assign the first, second and third items from the list to the variables <code>first</code>, <code>second</code> and <code>third</code>. We're also telling it to assign the remainder of the list to the <code>others</code> variable, and we specify that by using the pipe symbol (<code>|</code>). In this code we've selected the first 3 items from the list, but we could also just select the very first one, or the first 5. It doesn't have to be exactly 3.
   </p>
 
+<div class='grouped'>
   <p>
     We can check what this has done exactly in <code>iex</code> by looking at the values of each of these variables:
   </p>
@@ -91,6 +94,7 @@ iex> third
 iex> others
 [<span class="console-green">"Juliet"</span>, <span class="console-green">"Mary"</span>, <span class="console-green">"Bobalina"</span>, <span class="console-green">"Charlie"</span>, <span class="console-green">"Charlie (no relation)"</span>]
 </code></pre>
+</div>
 
   <p>
     "Does this mean that I could do the same for the <code>others</code> list to get the next 3 people?", Roberto asks. Yes it does mean that you can do that:
@@ -123,7 +127,8 @@ iex> third
   </p>
 
 <pre><code>iex> [first, second, third | those_still_remaining] = remainder
-<span class='console-red'>** (MatchError) no match of right hand side value: ["Charlie", "Charlie (no relation)"]</span>
+<span class='console-red'>** (MatchError) no match of right hand side value:
+   ["Charlie", "Charlie (no relation)"]</span>
 </code></pre>
 
   <p>
@@ -164,21 +169,23 @@ iex> person["age"]
     "Hey, what gives? The left-hand-side here is <em>clearly</em> not the same as the right hand side!", cries Roberto. Yes, you're absolutely right. On the right hand side here we have a map which has a <code>"name"</code> key which points to a value of <code>"Roberto"</code>, but on the left hand side that <code>"name"</code> key points to a value of <code>name</code>. This is a trick of pattern matching: the left-hand-side can be used to assign multiple variables; it doesn't have to match the right-hand-side exactly.
   </p>
 
+<div class='grouped'>
   <p>
     If we check the value of <code>name</code> and <code>age</code> here, we'll see that those values are the values from our map.
   </p>
 
 <pre><code>iex> name
-  <span class='console-green'>"Roberto"</span>
-  iex> age
-  <span class='console-green'>"30ish"</span></code></pre>
+<span class='console-green'>"Roberto"</span>
+iex> age
+<span class='console-green'>"30ish"</span></code></pre>
 
-  <p>
-    Well, would you look at that? We were able to pull out these two values <em>at the same time</em>. The crowd cheers as if we've just performed a magic trick. Just wait until you see our next trick!
-  </p>
+    <p>
+      Well, would you look at that? We were able to pull out these two values <em>at the same time</em>. The crowd cheers as if we've just performed a magic trick. Just wait until you see our next trick!
+    </p>
+</div>
 </section>
 
-<section>
+<section class='break'>
   <h3>Pattern matching inside functions</h3>
 
   <p>

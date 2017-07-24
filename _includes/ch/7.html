@@ -1,5 +1,5 @@
 
-<section>
+<section class='break'>
   <h2 id='chapter-7'>Intermission: Recap</h2>
 
   <p>
@@ -39,6 +39,7 @@ iex> "Hello #{place}!"
 <pre><code>iex> greeting = fn (name) -> "Hello, #{name}!" end
 <span class='console-yellow'>#Function&lt;6.52032458/1 in :erl_eval.expr/5&gt;</span></code></pre>
 
+<div class='grouped'>
   <p>
     And in the last chapter we saw that we could do pattern matching:
   </p>
@@ -49,6 +50,7 @@ iex> name
 <span class='console-green'>"Roberto"</span>
 iex> age
 <span class='console-green'>"30ish"</span></code></pre>
+</div>
 
   <p>
     But what if I told you that it could do more than this simple math, string interpolation, remembering functions and pattern matching? What if I told you that Elixir already provided some functions that used all of the above things to aid you in building your programs if only you had asked to use them?
