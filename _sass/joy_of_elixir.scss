@@ -3,6 +3,9 @@ $light-purple: #B559D1;
 
 body {
   font: 14pt "Pavanam";
+  @media only screen and (max-device-width: 750px) {
+    font-size: 20pt;
+  }
   @media screen {
     background: linear-gradient(145deg, #E1C2EA, darken(#E1C2EA, 25)) ;
   }
