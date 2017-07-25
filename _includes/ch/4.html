@@ -30,11 +30,17 @@
 %{<span class='console-green'>"age"</span> => <span class='console-green'>"30ish"</span>, <span class='console-green'>"gender"</span> => <span class='console-green'>"Male"</span>, <span class='console-green'>"name"</span> => <span class='console-green'>"Roberto"</span>}</code></pre>
 
   <p>
-    In a map, we structure data using <em>keys</em> and <em>values</em>. The thing to the <em>left</em> of the <code>=></code> is called a <em>key</em> and the thing to the <em>right</em> is called a <em>value</em>.
+    In a map, we structure data using <em>keys</em> and <em>values</em>. The thing to the <em>left</em> of the <code>=></code> is called a <em>key</em> and the thing to the <em>right</em> is called a <em>value</em>. Unlike strings and maps where we can use a single character at the start and end to show Elixir where the starts and ends are, we need to use <code>%{</code> to tell Elixir where a map starts and <code>}</code> to show where it ends.
   </p>
 
   <p>
-    You might notice here that the computer has taken in our map and returned the keys in a different order to the one that we specified. The order of keys doesn't matter in a map at all, unlike in lists where order <em>does</em> matter. We could specify the keys in any order we wish, and the map would be the same:
+    You might notice here that the computer has taken in our map and returned the keys in a different order to the one that we specified. The order of keys doesn't matter in a map at all, unlike in lists where order <em>does</em> matter. It would be pretty strange to spend all the time ordering the list only for Elixir to return it in a non-sensical order. For instance, if we had a list like this:
+  </p>
+
+<pre><code>favourite_people = ["The Reader", "Roberto", ...]</code></pre>
+
+  <p>
+    This list indicates that "The Reader" is the 1st favourite person, and that Roberto is a (close) second. The order here matters. For maps, it doesn't matter what order the keys and their corresponding values are in because the map would still be the same:
   </p>
 
 <pre>
@@ -48,13 +54,15 @@
   <div class='todo'>TODO: Skilltester image goes here.</div>
 
   <p>
-    For instance, if we wanted to get out the value of <code>"name"</code> for <code>person</code> we can do:
+    Unlike a skilltester, these square brackets won't drop the value mere inches from the chute; these brackets have an iron grip. For instance, if we wanted to get out the value of <code>"name"</code> for <code>person</code> we can do:
   </p>
 
 <pre><code>iex> person["name"]
 <span class='console-green'>"Roberto"</span></code></pre>
 
-  And if we want to get the age, we would use the <code>"age"</code> key:
+  <p>
+    And if we want to get the age, we would use the <code>"age"</code> key:
+  </p>
 
 <pre><code>iex> person["age"]
 <span class='console-green'>"30ish"</span></code></pre>

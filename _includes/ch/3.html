@@ -32,9 +32,11 @@ iex> third = "eggs"
 [<span class='console-green'>"fish"</span>, <span class='console-green'>"ham"</span>, <span class='console-green'>"eggs"</span>, <span class='console-green'>"bread"</span>]</code></pre>
 
   <p>
-    The computer will now remember our entire shopping list in one variable, rather than remembering it across multiple variables. Now we have a one-stop-shop that we can go to for our shopping list.
+    Just like we need to start and end a string with double quotes, we need to start and end a list with square brackets (<code>[]</code>).
   </p>
 
+  <p>The computer will now remember our entire shopping list in one variable (<code>shopping_list</code>), rather than remembering it across multiple variables. Now we have a one-stop-shop that we can go to for our shopping list.
+  </p>
 
   <p>
     Roberto, impressed with Elixir's ability to keep a list of anything his heart desires, has started taking the names down of the people who are in the crowd. His computer materialised from nowhere, or perhaps from somewhere in the throng nearby. It was too quick to really notice. He starts taking down names, fingers flying across the keyboard:
@@ -76,7 +78,9 @@ iex> third = "eggs"
 ...> ["Roberto", "30ish", "Male"]
 ...> ]</code></pre>
 
-  These lists-inside-of-lists would be called <em>sub-lists</em>. You would then have to keep in mind that the first item in each sublist is the name, the second is the age and the third is the gender. What if you lost track of this and started adding in people, but you flipped the age and their gender?
+  <p>
+   These lists-inside-of-lists would be called <em>sub-lists</em>. You would then have to keep in mind that the first item in each sublist is the name, the second is the age and the third is the gender. What if you lost track of this and started adding in people, but you flipped the age and their gender?
+  </p>
 
 <pre>
 <code>iex> those_who_are_assembled = [
