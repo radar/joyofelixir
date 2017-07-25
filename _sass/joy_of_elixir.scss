@@ -93,34 +93,15 @@ footer {
 }
 
 .intro {
-  min-height: 500px;
-  @media only screen and (min-device-width: 750px) {
-    display: flex;
-  }
-
   .cover {
-    @media only screen and (min-device-width: 750px) {
-      float: left;
-      min-width: 50%;
-    }
-
-    @media only screen and (max-device-width: 750px) {
-      display: block;
-      width: 100%;
-    }
-    margin-right: 20px;
-
     text-align: center;
-
-    img {
-      flex: 1 0 auto;
-      max-width: 100%;
-      @media only screen and (max-device-width: 750px) {
-        max-width: 400px;
-      }
+  }
+  .cover img {
+    max-width: 100%;
+    @media only screen and (min-width: 34em) {
+      max-height: 300px;
     }
   }
-
   .buy {
     border-radius: 3px;
     border: 3px solid darken($purple, 5);
