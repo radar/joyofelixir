@@ -1,21 +1,20 @@
 ---
 ---
 
-#navig a::after { content: leader(".") target-counter(attr(href), page); }
-
-
-body, code {
-  font-size: 13pt;
-}
-
-@page {
-  margin: 25mm 10mm;
+body {
+  font-size: 12pt;
 }
 
 article {
-  code {
-    font-size: 10pt;
+  pre {
+    code {
+      font-size: 10pt;
+    }
   }
+}
+
+@page {
+  margin: 10mm 20mm;
 }
 
 p, aside, section.major, pre, .todo, .grouped {
@@ -28,6 +27,12 @@ section.major {
 
 nav, footer {
   display: none;
+}
+
+.part-header {
+  page-break-before: always;
+  page-break-after: always;
+  text-align: center;
 }
 
 .break {

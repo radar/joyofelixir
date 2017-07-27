@@ -3,7 +3,8 @@ $light-purple: #B559D1;
 
 body {
   font: 14pt "Pavanam";
-  @media only screen and (max-device-width: 750px) {
+  -webkit-text-size-adjust: 100%;
+  @media only screen and (max-device-width: 750px) and (orientation: portrait) {
     font-size: 20pt;
   }
   @media screen {
@@ -16,9 +17,21 @@ h1, h2, h3, h4 {
   color: $purple;
 }
 
+h1 {
+  font-size: 3rem;
+}
+
 h2 {
-  font-size: 150%;
+  font-size: 2rem;
   font-weight: bold;
+}
+
+h3 {
+  font-size: 1.5rem;
+}
+
+p {
+  line-height: 133%;
 }
 
 a {
@@ -31,11 +44,12 @@ article {
   }
 
   code {
-    font: 12pt "Anonymous Pro";
+    font-family: "Anonymous Pro";
   }
 
   pre {
     code {
+      font-size: 1rem;
       line-height: 133%;
     }
   }
@@ -46,7 +60,7 @@ article {
 
     header {
       font-weight: bold;
-      font-size: 125%;
+      font-size: 1.5rem;
     }
   }
 
@@ -76,10 +90,6 @@ footer {
   padding: 2.5% 5%;
 }
 
-.center {
-  text-align: center;
-}
-
 .toc {
   font-size: 125%;
   line-height: 200%;
@@ -92,6 +102,14 @@ footer {
   font-weight: bold;
 }
 
+.large {
+  font-size: 3.5rem;
+}
+
+.center {
+  text-align: center;
+}
+
 .intro {
   .cover {
     text-align: center;
@@ -99,7 +117,7 @@ footer {
   .cover img {
     max-width: 100%;
     @media only screen and (min-width: 34em) {
-      max-height: 300px;
+      max-height: 500px;
     }
   }
   .buy {

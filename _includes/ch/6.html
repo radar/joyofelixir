@@ -1,12 +1,16 @@
 <section class='break'>
-  <h2 id='chapter-6'>Pattern matching</h2>
+  <h2 id='chapter-6'>6. Pattern matching</h2>
 
   <p>
     Back in <a href='/2-where-did-i-put-that-value'>Chapter 2</a> you saw that the equals sign (<code>=</code>) made the computer remember things.
   </p>
 
-<pre><code>iex> sentence = "A really long and complex sentence we'd rather not repeat."
-<span class='console-green'>"A really long and complex sentence we'd rather not repeat."</span>
+<pre><code>iex> sentence = "A really long and complex &#9166;
+sentence we'd rather not repeat."
+
+<span class='console-green'>"A really long and complex &#9166;
+sentence we'd rather not repeat."</span>
+
 iex> score = 2 / 5 * 100
 <span class='console-yellow'>40</span></code></pre>
 
@@ -19,7 +23,7 @@ iex> score = 2 / 5 * 100
   <h3>Equals is not just for equality</h3>
 
   <p>
-    The equals sign isn't just about assigning things to make the computer remember them, but it can also be used for <em>matching</em> things. You can think of it like the equals sign in mathematics, where the left-hand-side must match the right-hand-side.
+    The equals sign isn't just about assigning things to make the computer remember them, but it can also be used for <em>matching</em> things. You can think of it like the equals sign in mathematics, where the left-hand-side must equal (or "match") the right-hand-side for the equation to be valid.
   </p>
 
   <p>
@@ -103,6 +107,7 @@ iex> others
 <pre><code>iex> [first, second, third | remainder] = others
 <span class="console-green">"Roberto"</span></code></pre>
 
+<div class='grouped'>
   <p>
     Now when we check the values of <code>first</code>, <code>second</code> and <code>third</code> they'll be the names of the next 3 people in the list:
   </p>
@@ -114,6 +119,7 @@ iex> second
 iex> third
 <span class="console-green">"Bobalina"</span>
 </code></pre>
+</div>
 
   <p>
     And our <code>remainder</code> variable will be the remaining names in the list, which are just the two Charlies:
@@ -127,7 +133,7 @@ iex> third
   </p>
 
 <pre><code>iex> [first, second, third | those_still_remaining] = remainder
-<span class='console-red'>** (MatchError) no match of right hand side value:
+<span class='console-red'>** (MatchError) no match of right hand side value:&#9166;
    ["Charlie", "Charlie (no relation)"]</span>
 </code></pre>
 
@@ -159,15 +165,18 @@ iex> third
 iex> person["age"]
 <span class='console-green'>"30ish"</span></code></pre>
 
+<div class='grouped'>
   <p>
     But what if we wanted to pull out both of these values <em>at the same time</em>? Or even in the shortest possible code? Well, for that we have this <em>pattern matching</em> thing that I've been banging on about for over a page. Let's take a look at how pattern matching can help get both the name and the age out of the <code>person</code> map.
   </p>
 
 <pre><code>iex> %{"name" => name, "age" => age} = person</code></pre>
+</div>
 
   <p>
     "Hey, what gives? The left-hand-side here is <em>clearly</em> not the same as the right hand side!", cries Roberto. Yes, you're absolutely right. On the right hand side here we have a map which has a <code>"name"</code> key which points to a value of <code>"Roberto"</code>, but on the left hand side that <code>"name"</code> key points to a value of <code>name</code>. This is a trick of pattern matching: the left-hand-side can be used to assign multiple variables; it doesn't have to match the right-hand-side exactly.
   </p>
+
 
 <div class='grouped'>
   <p>
@@ -185,7 +194,7 @@ iex> age
 </div>
 </section>
 
-<section class='break'>
+<section>
   <h3>Pattern matching inside functions</h3>
 
   <p>
@@ -219,7 +228,7 @@ iex> road.("low")
   </p>
 
 <pre><code>iex> road.("middle")
-<span class='console-red'>** (FunctionClauseError) no function clause matching
+<span class='console-red'>** (FunctionClauseError) no function clause matching&#9166;
   in :erl_eval."-inside-an-interpreted-fun-"/1</span></code></pre>
 
   <p>
@@ -330,7 +339,8 @@ end</code></pre>
   </p>
 
 <pre><code>iex> road.("middle")
-<span class="console-red">** (FunctionClauseError) no function clause matching in :erl_eval."-inside-an-interpreted-fun-"/1</span></code></pre>
+<span class="console-red">** (FunctionClauseError) no function clause matching in &#9166;
+:erl_eval."-inside-an-interpreted-fun-"/1</span></code></pre>
 
   <p>
     What if instead of this error we could get the function to tell whoever was running it that they have to supply either "high" or "low" as the argument? Elixir allows us to do this by using an underscore (<code>_</code>) as the argument in a new function clause:
@@ -359,6 +369,18 @@ end</code></pre>
 iex> road.(["high", "low"])
 <span class='console-green'>"Take the 'high' road or the 'low' road, thanks!"</span>
 </code></pre>
+
+<div class='grouped'>
+  <p>
+    What this does is skip the first two clauses of the function, and so the third clause will be used instead:
+  </p>
+
+<pre><code>iex> road = fn
+  <span class='unused-clause'>"high" -> "You take the high road!"</span>
+  <span class='unused-clause'>"low" -> "I'll take the low road! (and I'll get there before you)"</span>
+  _ -> "Take the 'high' road or the 'low' road, thanks!"
+end</code></pre>
+</div>
 
   <p>
     This helps keep people in line when it comes to providing the right arguments to the function, without Elixir blowing up in their face when they provide the wrong ones.

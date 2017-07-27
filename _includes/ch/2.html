@@ -1,13 +1,17 @@
 
 <section class='break'>
-  <h2 id='chapter-2'>Now, where did I put that value?</h2>
+  <h2 id='chapter-2'>2. Now, where did I put that value?</h2>
 
   <p>
     We've now seen that Elixir can handle words and numbers easily. But what else can it do? Well, it can remember things.
   </p>
 
-<pre><code>iex> sentence = "A really long and complex sentence we'd rather not repeat."
-<span class='console-green'>"A really long and complex sentence we'd rather not repeat."</span>
+<pre><code>iex> sentence = "A really long and complex &#9166;
+sentence we'd rather not repeat."
+
+<span class='console-green'>"A really long and complex &#9166;
+sentence we'd rather not repeat."</span>
+
 iex> score = 2 / 5 * 100
 <span class='console-yellow'>40</span></code></pre>
 
@@ -67,6 +71,10 @@ iex> score
   <p>
     What on earth are those funky characters around <code>place</code>? You can think of them as a placeholder. Nerdier-types would call it <em>interpolation</em>. It tells the computer that we want to put the <code>place</code> variable <em>riiiiight</em> here, right after <code>Hello</code> and the space, and right before <code>!</code>.
   </p>
+
+  <div class='todo'>
+    Interpolation image explanation goes here
+  </div>
 
   <p>
     The computer takes the sentence that we give it, realises that there's that funky <code>#{}</code> placeholder indicator, and it remembers what <code>place</code> was and puts it right there. Pretty nifty, eh?

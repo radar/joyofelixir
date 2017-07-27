@@ -1,16 +1,19 @@
 <section class='break'>
-  <h2 id='chapter-1'>Appeasing the masses with code</h2>
+  <h2 id='chapter-1'>1. Appeasing the masses with code</h2>
 
   <p>
-    OK, here's some code:
+    The masses have sat through the best part of a chapter (at least) absorbing everything that we've talked about. But they're a little rowdy because we've been talking about programming languages without actually doing any programming. Well, that's completely understandable! I would be just as annoyed if I wasn't the one writing the book. I know what's coming but they don't.
+  </p>
+
+  <p>OK, let's try appeasing the masses. Here's some code:
   </p>
 
   <center>
-    <pre style='white-space: inherit;'><code style='font-size: 36pt;'><span class='console-green'>"Hello, World!"</span></code></pre>
+    <pre><code class='large'><span class='console-green'>"Hello, World!"</span></code></pre>
   </center>
 
   <p>
-    The masses are silent. Their stares harden. Their spokesman -- who they've nominated while I thought of this snippet -- says, systematically tearing down the fourth wall: "That's just a bunch of quoted words! Just like this one that I'm speaking."
+    The masses are silent. Their stares harden. Their spokesman -- who they've nominated while I thought of this snippet -- says (while systematically tearing down the fourth wall): "That's just a bunch of quoted words! Just like this one that I'm speaking."
   </p>
 
   <p>
@@ -22,13 +25,18 @@
   </p>
 
   <p>
-    The crowd of humans arrayed before us know the words and that the words have <em>meaning</em> behind them and form an understandable sentence. The computer knows only the words, and cares not that they have a meaning or that they form an understandable sentence. "Those things are only important to the humans", it thinks, without acknowledging the <a href='http://whatis.techtarget.com/definition/machine-learning'>Machine Learning</a> zeitgeist.
+    The crowd of humans arrayed before us know the words and that the words have <em>meaning</em> behind them and form an understandable sentence. The computer knows only the words, and cares not that the words have a meaning or that the words form an understandable sentence. "Those things are only important to the humans", it thinks, without acknowledging the <a href='http://whatis.techtarget.com/definition/machine-learning'>Machine Learning</a> zeitgeist.
   </p>
 
   <p>
-    When we say the sentence to the masses, they can easily repeat it back to us. To speak to the computer, we need to open up a <em>prompt</em> for the particular language we want to use to converse. Diffeent languages have different prompts. In this case, we want to talk Elixir and so we can open a prompt with the <code>iex</code> command. <code>iex</code> stands for "Interactive EliXir". Let's open up one now by typing <code>iex</code> and pressing <kbd>Enter</kbd>.
+    When we say the sentence to the masses, they can easily repeat it back to us. To speak to the computer, we need to open up a <em>prompt</em> for the particular language we want to use to converse. Different languages have different prompts. We can't just speak to the computer to program it. Not yet, anyway.
   </p>
 
+  <p>
+    In this case, we want to talk Elixir and so we can open a prompt with the <code>iex</code> command. <code>iex</code> stands for "Interactive EliXir". Let's open up a prompt now by opening our terminal application and typing <code>iex</code> and pressing <kbd>Enter</kbd>.
+  </p>
+
+<div class='grouped'>
   <p>
     When it starts, the prompt says:
   </p>
@@ -36,11 +44,33 @@
 
 <pre><code class="hljs text">Erlang/OTP 19 [erts-8.1] [source] ...
 
-Interactive Elixir (1.4.5) - press Ctrl+C to exit (type h() ENTER for help)</code>
+Interactive Elixir (1.5.0) - &#9166;
+  press Ctrl+C to exit (type h() ENTER for help)</code>
 </pre>
+</div>
+
+  <aside>
+    <header>That little <code>&#9166;</code> character</header>
+
+    <p>
+      You won't see <code>&#9166;</code> in your <code>iex</code> prompt, but you do see it here. So what gives?
+    </p>
+
+    <p>
+       I've put it there to indicate that the line is split over two lines in this book. This is done so that the whole line fits into the book. If I didn't do this, the end of the output would be hidden by the page margin. That'd be no fun for anyone! You should be seeing it as one continuous line in your <code>iex</code> prompt.
+    </p>
+
+    <p>
+      So when you see <code>&#9166;</code> just think of it as "this is all one line in real life, but spread over <em>two</em> lines in the book."
+    </p>
+  </aside>
 
   <p>
-    We can safely ignore this output. It is just giving us some nerdy information. The last line shown here tells us that we're running Interactive Elixir "1.4.5". This tells us that we're running the 1.4.5 version of Elixir. It tells us that we can hit <kbd>Ctrl+C</kbd> to exit (stop the <code>iex</code> command). The next thing the computer says is:
+    We can safely ignore the output from the prompt so far. It is just giving us some nerdy information. The last line shown here tells us that we're running Interactive Elixir "1.5.0". This tells us that we're running the 1.5.0 version of Elixir. It tells us that we can hit <kbd>Ctrl+C</kbd> to exit -- this will stop the <code>iex</code> prompt and return us back to our terminal's prompt).
+  </p>
+
+  <p>
+    The next thing the computer says is:
   </p>
 
 <pre><code>iex(1)></code></pre>
@@ -64,29 +94,27 @@ Interactive Elixir (1.4.5) - press Ctrl+C to exit (type h() ENTER for help)</cod
   </p>
 
   <p>
-    The masses are now getting fidgety. And the computer is prompting us with this line.
+    The masses are now getting fidgety. So far we've shown just the one line of code. Twice, yes, but it's still just one line of code. And the computer is prompting us with this line.
   </p>
 
 <pre><code>iex(2)></code></pre>
 
   <p>
-    The computer hungers for more input. The masses want to see more of what this language can do. Fortunately for me (and you), computers can do much more than parrot.
+    The computer hungers for more input. The masses hunger, too. Fortunately for me (and you), Elixir can do much more than parrot.
   </p>
 
   <aside>
     <header>"We just saw a REPL!" "A what now?"</header>
 
     <p>
-      Nerdier types would call this "prompt" of ours a REPL. If those nerdier types have been using the word "REPL" to describe prompts like iex, you now know what they mean. REPL = prompt. You know that it has nothing to do with descending from a height suspended by a double coiled rope (rappel).
+      Nerdier types would call this "prompt" of ours a REPL. If those nerdier types have been using the word "REPL" to describe prompts like iex, you now know what they mean: REPL = prompt. You know that it has nothing to do with descending from a height suspended by a double coiled rope (rappel).
     </p>
 
     <p>
       "But hey REPL looks like an acronym!", I hear you say. Gold star for you. It <em>is</em> an acronym and it stands for <strong>R</strong>ead, <strong>E</strong>valuate, <strong>P</strong>rint, and <strong>L</strong>oop.
     </p>
 
-    <p>The <code>iex</code> prompt prompts us for input. This is the "read" step. Once we give it input, it then <em>evaluates</em> what we've given it to determine if the computer is capable of running our program. If it is, then the computer runs our program and "<em>prints</em>" the output back to the prompt to show us what the computer has done. And then it prompts us again because it is <em>looping</em>. Hence: read, evaluate, print, loop: REPL.</p>
-
-    <p>
+    <p>The <code>iex</code> prompt prompts us for input. This is the "read" step. Once we give it input, it then <em>evaluates</em> what we've given it to determine if the computer is capable of running our program. If it is, then the computer runs our program and "<em>prints</em>" the output back to the prompt to show us what the computer has done. And then it prompts us again because it is <em>looping</em>. Hence: read, evaluate, print, loop: REPL. And now you know!</p>
   </aside>
 
   <aside>
@@ -97,17 +125,16 @@ Interactive Elixir (1.4.5) - press Ctrl+C to exit (type h() ENTER for help)</cod
     </p>
 
     <p>
-      Just a quick note: examples that use <code>iex</code> from here on out are going to be missing their numbers from the prompt. Instead of showing <code>iex(3)></code> for the next prompt, you'll just see <code>iex></code>. This makes it easier for this author to move things around in the book without having to re-number things. I hope you don't mind.
+      Just a quick note: examples that use <code>iex</code> from here on out are going to be missing their numbers from the prompt. Instead of showing <code>iex(3)></code> for the next prompt, you'll just see <code>iex></code>. This makes it easier for this author to move code examples around in the book without having to re-number the <code>iex(3)</code> lines. I hope you don't mind.
     </p>
   </aside>
 </section>
 
-
-<section class='break'>
+<section>
   <h2>Mathematical!</h2>
 
   <p>
-    How about we ask the computer to do some mathematical equations?
+    Ok, so the computer can parrot things. But what else can it do? How about we ask the computer to do some simple mathematics?
   </p>
 
 <pre><code>iex> 2 + 4
@@ -118,6 +145,14 @@ iex> 4 * 12345
 <span class='console-yellow'>49380</span>
 iex> 1234 / 4 + 2 - 12 * 3
 <span class='console-yellow'>274.5</span></code></pre>
+
+<p>
+  This appeases the masses, slightly. They're a fickle bunch. The computer is now no longer parroting things back to us. It's instead calculating the not-so-advance mathematical equations we're giving it, and then giving us the right numbers.
+</p>
+
+<p>
+  They realise that Elixir is now built for more things than simple parroting. Elixir can do calculations too! We've used the symbols <code>+</code>, <code>-</code>, <code>*</code>, and <code>/</code> here, asking the computer to add, subtract, multiply and divide, in that order.
+</p>
 
   <aside>
     <header>Why are numbers yellow, but strings green?</header>
@@ -145,17 +180,9 @@ iex> 1234 / 4 + 2 - 12 * 3
       Well, there is no particular reason for strings being green and numbers being yellow; the colours don't mean much else than to serve as useful indicators of the different kinds of data. Strings are one kind of data, and numbers are a different kind. We'll see more kinds as we continue on our journey. These different colours just help differentiate the types of values we're seeing in the prompt.
     </p>
   </aside>
-
-  <p>
-    This appeases the masses, slightly. They're a fickle bunch. The computer is now no longer parroting things back to us. It's instead calculating the not-so-advance mathematical equations we're giving it, and then giving us the right numbers.
-  </p>
-
-  <p>
-    They realise that Elixir is now built for more things than simple parroting. Elixir can do calculations too! We've used the symbols <code>+</code>, <code>-</code>, <code>*</code>, and <code>/</code> here, asking the computer to add, subtract, multiply and divide, in that order.
-  </p>
 </section>
 
-<section>
+<section class='grouped'>
   <h3>Exercises</h3>
 
   <ul>
