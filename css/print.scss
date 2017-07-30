@@ -1,20 +1,13 @@
 ---
 ---
 
+
 @page {
-  size: letter;
+  size: A4;
 }
 
 body {
-  font-size: 8pt;
-}
-
-article {
-  pre {
-    code {
-      font-size: 8pt;
-    }
-  }
+  font-size: 12pt;
 }
 
 p, aside, section.major, pre, .todo, .grouped {

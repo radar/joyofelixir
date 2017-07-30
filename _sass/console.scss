@@ -1,21 +1,23 @@
-$console-green: #c4d264;
-$console-yellow: #eccd58;
-$console-red: #ff4c41;
+@import "colours";
 
 .console-green {
-  color: $console-green;
+  color: $green;
 }
 
 .console-yellow {
-  color: $console-yellow;
+  color: $yellow;
 }
 
 .console-red {
-  color: $console-red;
+  color: $red;
 
   span[class^="hljs-"] {
-    color: $console-red;
+    color: $red;
   }
+}
+
+.console-blue {
+  color: $blue;
 }
 
 .unused-clause {
@@ -23,5 +25,5 @@ $console-red: #ff4c41;
 }
 
 .hljs-number {
- color: $console-yellow;
+ color: $yellow;
 }

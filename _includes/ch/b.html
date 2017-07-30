@@ -1,11 +1,98 @@
 <section class='break'>
-  <h2 id='chapter-b'>Wherein the buzzwords are explained</h2>
+  <h2>Buzzwords explained</h2>
 
-  <div class='todo'>
-    Explain the following:
+  <p>
+    In this chapter, we'lll dissect what that darned Wikipedia description meant. You know the one. The one that perplexed us back in <a href='/ii-isnt-that-something-you-drink'>"Elixir? Isn't that something you drink?"</a>.
+  </p>
 
-    Elixir is a functional, concurrent, general-purpose programming language that runs on the Erlang virtual machine (BEAM).
+  <h3>That darn Wikipedia description</h3>
 
-    Particiularly: Functional, concurrent, Erlang, virtual machine, BEAM
-  </div>
+  <p>
+    Let's take another look at that description:
+  </p>
+
+  <blockquote>
+    <p>
+      Elixir is a functional, concurrent, general-purpose programming language that runs on the Erlang virtual machine (BEAM).
+    </p>
+  </blockquote>
+
+  <p>
+    Yeah, it's still not quite clear, is it? How about if we did this:
+  </p>
+
+  <blockquote>
+    <p>
+      Elixir is a <span class='dotted dotted-red'>functional</span>, <span class='dotted dotted-yellow'>concurrent</span>, <span class='dotted dotted-green'>general-purpose programming language</span> that runs on the <span class='dotted dotted-blue'>Erlang virtual machine (BEAM)</span>.
+    </p>
+  </blockquote>
+
+  <p>
+    This is better because we have each concept neatly isolated from all the other concepts. Let's go through them one by one.
+  </p>
+
+  <section>
+    <h3>Functional</h3>
+
+    <p>
+      When we talk about Elixir being a "functional" language we don't mean to call it that because it operates correctly; using one of the traditional meanings of the word "functional". We don't mean that it "designed to be practical and useful, rather than attractive" -- to quote the macOS dictionary -- although it certainly is all three of those things.
+    </p>
+
+    <p>
+      What is meant by this is that Elixir does what it does with a heavy reliance on functions. <em>To understand how functions work is to understand how Elixir works</em>. If you've read <a href='/5-funky-functions'>Chapter 5: Funky Functions</a> (or further) already, you will have seen these in action. Here's the first example from that chapter:
+    </p>
+
+<pre><code>iex> greeting = fn (place) -> "Hello, #{place}!" end
+<span class='console-yellow'>#Function&lt;6.52032458/1 in :erl_eval.expr/5&gt;</span></code></pre>
+
+    <p>
+      In this example, a function is defined and assigned to the variable called <code>greeting</code>. This function performs a certain action here, in this case that action is to generate a string beginning with "Hello" and then finishing with a place, which we provide to the function when we run the function.
+    </p>
+
+    <p>
+      Elixir doesn't do anything with the function until we run some other code to tell it to.
+    </p>
+
+<pre><code>iex> greeting.("World")
+<span class='console-green'>"Hello, World!"</span></code></pre>
+
+    <p>
+      When we run the <code>greeting</code> and pass it the string <code>"World"</code> it combines the string from inside the function and the string passed as an argument into one string and then returns that.
+    </p>
+
+    <p>
+      This is just one little example of how Elixir uses functions to work. Another example is the built-in functions that we show first in <a href='/8/strings-input-and-output'>Chapter 8: Strings, input, and output</a>:
+    </p>
+
+<pre><code>iex> String.reverse("reverse this")
+<span class='console-green'>"siht esrever"</span></code></pre>
+
+    <p>
+      In this example, we're running the <code>reverse/1</code> function from the <code>String</code> module. Elixir has some code already defined that knows how to perform the task of reversing a string. All we need to do to use it is to specify the function and the required arguments and Elixir handles the rest.
+    </p>
+
+    <p>
+      These are just two small examples of why Elixir is called a <em>functional</em> language. It is called a functional language because you use functions to make it perform actions.
+    </p>
+  </section>
+
+
+
+  </section>
+
+  <section>
+    <h3>Concurrent</h3>
+  </section>
+
+  <section>
+    <h3>General-purpose programming language</h3>
+  </section>
+
+  <section>
+    <h3>Erlang virtual machine (BEAM)</h3>
+  </section>
 </section>
+
+
+
+

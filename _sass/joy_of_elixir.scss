@@ -1,6 +1,4 @@
-$purple: #791E94;
-$light-purple: #B559D1;
-$lighter-purple: #E1C2EA;
+@import "colours";
 
 html {
   height: 100%;
@@ -11,9 +9,6 @@ body {
 
   font: 14pt "Pavanam";
   -webkit-text-size-adjust: 100%;
-  @media only screen and (max-device-width: 750px) and (orientation: portrait) {
-    font-size: 20pt;
-  }
   @media screen {
     background: linear-gradient(145deg, $lighter-purple, darken($lighter-purple, 25));
     background-repeat: no-repeat;
@@ -27,20 +22,20 @@ h1, h2, h3, h4 {
 }
 
 h1 {
-  font-size: 3rem;
+  font-size: 2rem;
 }
 
 h2 {
-  font-size: 2rem;
+  font-size: 1.5rem;
   font-weight: bold;
 }
 
 h3 {
-  font-size: 1.5rem;
+  font-size: 1.25rem;
 }
 
 p {
-  line-height: 133%;
+  line-height: 150%;
 }
 
 a {
@@ -64,8 +59,8 @@ article {
   }
 
   aside {
-    background: #C7EBF0;
-    padding: 15px;
+    border-color: #80DED9;
+    background: lighten(#80DED9, 25);
 
     header {
       font-weight: bold;
@@ -77,9 +72,20 @@ article {
     margin-top: 20px;
   }
 
-  blockquote {
-    background: #C7EBF0;
+  aside, blockquote {
+    border-width: 5px;
+    border-style: solid;
+    border-radius: 15px;
     padding: 15px;
+
+    p:last-child {
+      margin-bottom: 0px;
+    }
+  }
+
+  blockquote {
+    border-color: #9DD1F1;
+    background: lighten(#9DD1F1, 15);
 
     p {
       margin: 0;
@@ -100,8 +106,8 @@ footer {
 }
 
 .toc {
-  font-size: 125%;
-  line-height: 200%;
+  font-size: 1.2rem;
+  line-height: 150%;
 }
 
 .todo {
@@ -125,7 +131,8 @@ footer {
   }
   .cover img {
     max-width: 100%;
-    @media only screen and (min-width: 34em) {
+    max-height: 200px;
+    @media only screen and (min-width: 48em) {
       max-height: 500px;
     }
   }
@@ -137,4 +144,24 @@ footer {
     color: white;
     background: linear-gradient(125deg, $purple, lighten($purple, 25));
   }
+}
+
+.dotted {
+  padding: 0 2px;
+}
+
+.dotted-red {
+  border: 3px dashed $red;
+}
+
+.dotted-yellow {
+  border: 3px dashed $yellow;
+}
+
+.dotted-green {
+  border: 3px dashed $green;
+}
+
+.dotted-blue {
+  border: 3px dashed $blue;
 }
