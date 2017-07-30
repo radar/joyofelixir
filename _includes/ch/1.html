@@ -32,6 +32,32 @@
     When we say the sentence to the masses, they can easily repeat it back to us. To speak to the computer, we need to open up a <em>prompt</em> for the particular language we want to use to converse. Different languages have different prompts. We can't just speak to the computer to program it. Not yet, anyway.
   </p>
 
+  <aside>
+    <header>Installing Elixir</header>
+
+    <p>
+      You might not have installed Elixir yet and we're just about to need it to be installed. If you don't have it installed, pretty much everything after this point won't work.
+    </p>
+
+    <p>
+      A good way to check to see if Elixir is installed is by running this command in your terminal:
+    </p>
+
+<pre><code>elixir -v</code></pre>
+
+    <p>
+      If this command says something like this:
+    </p>
+
+<pre><code class='hljs text'>Erlang/OTP 19 [erts-8.1] [source] [64-bit] [smp:4:4] [async-threads:10] [hipe] [kernel-poll:false] [dtrace]
+
+Elixir 1.5.0</code></pre>
+
+    <p>
+      Then that means Elixir is installed and you can carry on. If it says something like "command not found", then head over to <a href='/a-setup-and-install'>Appendix A: Setup and Install</a> and follow the steps in there first.
+    </p>
+  </aside>
+
   <p>
     In this case, we want to talk Elixir and so we can open a prompt with the <code>iex</code> command. <code>iex</code> stands for "Interactive EliXir". Let's open up a prompt now by opening our terminal application and typing <code>iex</code> and pressing <kbd>Enter</kbd>.
   </p>
@@ -44,16 +70,16 @@
 
 <pre><code class="hljs text">Erlang/OTP 19 [erts-8.1] [source] ...
 
-Interactive Elixir (1.5.0) - &#9166;
+Interactive Elixir (1.5.0) - ⏎
   press Ctrl+C to exit (type h() ENTER for help)</code>
 </pre>
 </div>
 
   <aside>
-    <header>That little <code>&#9166;</code> character</header>
+    <header>That little <code>⏎</code> character</header>
 
     <p>
-      You won't see <code>&#9166;</code> in your <code>iex</code> prompt, but you do see it here. So what gives?
+      You won't see <code>⏎</code> in your <code>iex</code> prompt, but you do see it here. So what gives?
     </p>
 
     <p>

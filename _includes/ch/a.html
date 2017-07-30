@@ -1,11 +1,80 @@
-<section class=break'>
-  <h2 id='chapter-a'>Wherein the buzzwords are explained</h2>
+<section class='break'>
+  <h2 id='chapter-a'>Appendix A: Setup and Install</h2>
 
-  <div class='todo'>
-    Explain the following:
+  <p>
+    The way you install Elixir is different on each operating system. It would be very nice if we could all agree on the One True Way™ to install software, but alas, we do not. So below are the three major operating systems and their installation instructions, for your convienience.
+  </p>
 
-    Elixir is a functional, concurrent, general-purpose programming language that runs on the Erlang virtual machine (BEAM).
+  <ul>
+    <li><a href='#mac-install'>Mac OS X</a></li>
+    <li><a href='#windows-install'>Windows Install</a></li>
+    <li><a href='#linux-install'>Linux Install</a></li>
+  </ul>
 
-    Particiularly: Functional, concurrent, Erlang, virtual machine, BEAM
-  </div>
+  <section>
+    <h3>Code Editor</h3>
+
+    <p>
+      In this book you're going to need to have something to edit code with. I recommend <a href='https://www.sublimetext.com/3'>Sublime Text 3</a> because it is easy-to-use and works across all the major operating systems. You should install it now.
+    </p>
+  </section>
+
+  <section>
+    <h3 id='mac-install'>macOS</h3>
+
+    <p>
+      There's some <a href='https://elixir-lang.org/install.html#mac-os-x'>official instructions on how to install Elixir</a> but they're missing one key step: installing either Homebrew or Macports first.
+    </p>
+
+    <p>
+      Homebrew and Macports are tools that help installing software packages on macOS. Homebrew is the more modern option, and so that's the one I would really recommend using here.
+    </p>
+
+    <p>
+      To install Homebrew, copy the line from <a href='https://brew.sh/'>Homebrew's homepage</a> into your Terminal and run it. If you don't know where to find your Terminal, it's located in the Applications directory &#8594; Utilties &#8594; Terminal.
+    </p>
+
+    <p>
+      Once you've run that command to install Homebrew and it has finished, then run this one to install Elixir:
+    </p>
+
+<pre><code>brew install elixir</code></pre>
+  </section>
+
+  <section>
+    <h3 id='windows-install'>Windows Install</h3>
+
+    <p>
+      Windows is by far the easiest to install Elixir on. The <a href='https://elixir-lang.org/install.html#windows'>offical Elixir install guide</a> recommends using the Elixir installer. All you have to do is to download it, click next a couple of times and then finish once and Elixir should be installed.
+    </p>
+  </section>
+
+
+  <section>
+    <h3 id='linux-install'>Linux Install</h3>
+
+    <p>
+      There are too many varieties of Linux to list here, so instead I will link to the <a href='https://elixir-lang.org/install.html#unix-and-unix-like'>official Elixir installation instructions for Linux</a>. Follow those to get Elixir installed on your Linux operating system.
+    </p>
+  </section>
+
+  <section>
+    <h3>Verifying Elixir is installed</h3>
+
+    <p>No matter how you installed Elixir, verifying it is installed is done the same way across all operating systems. To verify that Elixir was installed correctly, run this command:</p>
+
+    <pre><code>elixir -v</code></pre>
+
+    <p>
+      If this command says something like this:
+    </p>
+
+<pre><code class='hljs text'>Erlang/OTP 19 [erts-8.1] [source] [64-bit] [smp:4:4] [async-threads:10] [hipe] [kernel-poll:false] [dtrace]
+
+Elixir 1.5.0</code></pre>
+
+    <p>
+      Then that means Elixir has been successfully installed.
+    </p>
+  </section>
 </section>

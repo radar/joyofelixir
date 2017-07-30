@@ -1,14 +1,23 @@
 $purple: #791E94;
 $light-purple: #B559D1;
+$lighter-purple: #E1C2EA;
+
+html {
+  height: 100%;
+}
 
 body {
+  height: 100%;
+
   font: 14pt "Pavanam";
   -webkit-text-size-adjust: 100%;
   @media only screen and (max-device-width: 750px) and (orientation: portrait) {
     font-size: 20pt;
   }
   @media screen {
-    background: linear-gradient(145deg, #E1C2EA, darken(#E1C2EA, 25)) ;
+    background: linear-gradient(145deg, $lighter-purple, darken($lighter-purple, 25));
+    background-repeat: no-repeat;
+    background-attachment: fixed;
   }
   margin: 0;
 }
