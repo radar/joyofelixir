@@ -1,6 +1,7 @@
 <section>
   <h2 id='chapter-9'>9. Built-in functions: lists, maps and more</h2>
 
+
   <h3>Working with lists</h3>
 
   <p>
@@ -30,7 +31,11 @@ List.reverse(animals_or_derivatives_of_animals)
     <header>Roberto asks: "Hey, what's that <code>/1</code> after the function?"</header>
 
     <p>
-      Glad you asked! It's indicating the <em>arity</em> of the function. Elixir functions can not only differ by <em>name</em> but also by the number of arguments that the function takes. This error message is telling us that we tried to call the <code>List.reverse/1</code> function, and if we passed two arguments instead of one it would tell us that we tried to call the <code>List.reverse/2</code> function instead.
+      Glad you asked! It's indicating the <em>arity</em> of the function. We saw the word <em>arity</em> back in Chapter 5, and to refresh your memory, arity is another way of saying "the number of arguments".
+    </p>
+
+    <p>
+      Elixir functions can not only differ by <em>name</em> but also by the number of arguments that the function takes. This error message is telling us that we tried to call the <code>List.reverse/1</code> function. It's showing the <code>/1</code> at the end because we only passed one argument. If we passed two arguments instead of one it would tell us that we tried to call the <code>List.reverse/2</code> function instead.
     </p>
 
 <pre><code>iex> List.reverse(animals_or_derivatives_of_animals, [1, 2, 3])
@@ -55,14 +60,14 @@ List.reverse(animals_or_derivatives_of_animals, [1, 2, 3])
   </p>
 
   <p>
-    At this point it's also worth mentioning that the <code>String.reverse</code> function we called earlier has a proper name of <code>String.reverse/1</code>. Just like <code>/2</code> indicates the function takes two arguments, the <code>/1</code> here indicates that this function takes one argument.
+    At this point it's also worth mentioning that the <code>String.reverse</code> function we used back in the last chapter has a proper name of <code>String.reverse/1</code>. Just like <code>/2</code> indicates the function takes two arguments, the <code>/1</code> here indicates that this function takes one argument. When referring to Elixir functions, make sure to include the arity as well as the function's name.
   </p>
 
   <p>
     This is an important distinction to make in Elixir, and so I'll say it again, this time a bit bigger:
   </p>
 
-  <p style='font-size: 150%; text-align: center;'><strong>Functions not only differ by name, but by the number of arguments that they take.</strong></p>
+  <p style='font-size: 150%; text-align: center;'><strong>Functions not only differ by name, but also by the number of arguments that they take.</strong></p>
   </aside>
 
   <p>
@@ -71,10 +76,16 @@ List.reverse(animals_or_derivatives_of_animals, [1, 2, 3])
 
   <h3>Thank you Reader, but our <s>princess</s> function is in another <s>castle</s> module</h3>
 
-  <h4>Another brief interlude, this time about enumerables</h4>
+  <p>
+    The short version of why the <code>List.reverse/1</code> function doesn't exist is because it lives in a separate module; A function with that name exists, but it doesn't exist within the <code>List</code> module. It exists in a separate module called <code>Enum</code>. The name <code>Enum</code> is short for <code>Enumerable</code>, and it's done that way because nobody has the time to write out <code>Enumerable</code> correctly every single time. Even as this book's author I have a hard time spelling it correctly each time!
+  </p>
 
   <p>
-    Lists are a type of data in Elixir called an <em>enumerable</em>. Maps are also <em>enumerable</em>. This means that they can be <em>enumerated</em> through, and you can do something which each item in the list or map. For instance, if we were to write out our list on a piece of paper, it might look something like this:
+    "What on earth is an Enum?", Roberto cries out. Hold your horses, Roberto. We're getting to that.
+  </p>
+
+  <p>
+    Lists are a type of data in Elixir called an <em>enumerable</em>. Maps are also <em>enumerables</em>. This means that they can be <em>enumerated</em> through; which means that you can do something which each item in the enumerable object (a list or a map). For instance, if we were to write out our list on a piece of paper, it might look something like this:
   </p>
 
   <ul>
@@ -85,7 +96,7 @@ List.reverse(animals_or_derivatives_of_animals, [1, 2, 3])
   </ul>
 
   <p>
-    It's possible to write each item from the list separately from the other items in the list. We could try to do the same thing for a number (like 1,354), but it wouldn't make sense:
+    It's possible to write each item from the list separately from the other items in the list. Because we're able to do this we can safely say that this list is <em>enumerable</em>. We could try to do the same thing for a number (like 1,354), but it wouldn't make sense:
   </p>
 
   <ul>
@@ -96,7 +107,11 @@ List.reverse(animals_or_derivatives_of_animals, [1, 2, 3])
   </ul>
 
   <p>
-    Numbers are not enumerable because it doesn't make sense for them to be, unlike our list. We can go through each of this list of animals one-at-a-time if we wish. Similar to this, we could <em>enumerate</em> through a map. If we were to take one of our maps from earlier...
+    Numbers are not enumerable because it doesn't make sense for them to be written like this, unlike our list.
+  </p>
+
+  <p>
+    Similar to this, we could <em>enumerate</em> through a map. If we were to take one of our maps from earlier...
   </p>
 
 <pre><code>%{<span class='console-green'>"name"</span> => <span class='console-green'>"Roberto"</span>, <span class='console-green'>"age"</span> => <span class='console-green'>"30ish"</span>, <span class='console-green'>"gender"</span> => <span class='console-green'>"Male"</span>}</code></pre>
@@ -115,14 +130,14 @@ List.reverse(animals_or_derivatives_of_animals, [1, 2, 3])
     Again, it makes sense for a map to be an enumerable because you can <em>enumerate</em> through each of the key and value pairs in the map.
   </p>
 
-  <h4>Ok, but where is <code>List.reverse/1</code>?</h4>
+  <h4>And now for the big reveal</h4>
 
   <p>
-    We need to keep in mind that when we're working with <em>enumerable</em> things in Elixir the function that we need might live elsewhere. Sometimes, we need to look in the <code>Enum</code> module / drawer too. <code>Enum</code> is short for <code>Enumerable</code>, and it's done that way because nobody has the time to write out <code>Enumerable</code> correctly every single time. Even as this book's author I have a hard time spelling it correctly each time!
+    We need to keep in mind that when we're working with <em>enumerable</em> things in Elixir the function that we need might live elsewhere. Sometimes, we need to look in the <code>Enum</code> module / drawer too.
   </p>
 
   <p>
-    We tried looking in the <code>List</code> module to find the <code>reverse/1</code> function so that we could turn our list around but it wasn't there. So let's look in the <code>Enum</code> module instead. Before that, let's get our list in Elixir form again. It's been a while since we've seen it that way:
+    We tried looking in the <code>List</code> module to find the <code>reverse/1</code> function so that we could turn our list around but it wasn't there. We found out a short while ago that the function is actually within the <code>Enum</code> module, so let's try using that function. Before that, let's get our list in Elixir form again. It's been a while since we've seen it that way:
   </p>
 
 <pre><code>iex> animals_or_derivatives_of_animals = ["cat", "dog", "cow", "turducken"]</code></pre>
@@ -138,26 +153,19 @@ List.reverse(animals_or_derivatives_of_animals, [1, 2, 3])
     Hooray! We were able to reverse our list.
   </p>
 
-  <aside>
-    <header>That function <em>might</em> be in the Enum module instead</header>
-    <p>
-      <small>(I thought I would put this in an aside so it's more visible. I know it's not a traditional aside, but it's an important concept and needs highlighting. So with the actual aside-ing out of the way:)</small>
-    </p>
-
-    <p>
-      It's important to keep in mind that when we're working with enumerable objects such as lists and maps that we might not be able to find the function in the <code>List</code> or <code>Map</code> modules because the function might be inside the <code>Enum</code> module instead. If you can't find it where you think it might be, make sure you remember to look at <code>Enum</code> too!
-    </p>
-  </aside>
+  <p>
+    Roberto's features relax from intense concentration to a more neutral setting and he asks, "Hey, you mentioned before you could <em>enumerate</em> through a list or a map, but you didn't show an example of that. What gives?" You're absolutely right, Roberto. I was too distracted with explaining why <code>List.reverse/1</code> didn't exist to explain how to enumerate through an enumerable.
+  </p>
 
   <p>
-    Roberto emerges from his deep thought trance to ask another question: "Hey, you mentioned before you could <em>enumerate</em> through a list or a map, but you didn't show an example of that. What gives?" You're absolutely right, Roberto. I was too distracted with explaining why <code>List.reverse/1</code> didn't exist to explain how to enumerate through an enumerable. Let's all now take a look at how to do that before we move onto other functions. We've talked about enums briefly and it would be a shame to stop so early.
+    Let's all now take a look at how to do that before we move onto other functions. We've talked about enums briefly and it would be a shame to stop so early when you can do so much more with them than reverse them.
   </p>
 
 
   <h3>Enumerating the enumerables</h3>
 
   <p>
-    To appease Roberto (and the masses that he leads), we're going to need to look at how to enumerate through enumerables. What this means is that we're going to get an enumerable (a list or a map) and we're going to go through each of the enumerable's items and do something with them.
+    To appease Roberto (and the masses that he leads) yet again, we're going to need to look at how to enumerate through enumerables. What this means is that we're going to get an enumerable (a list or a map) and we're going to go through each of the enumerable's items and do something with them.
   </p>
 
   <p>
@@ -176,12 +184,13 @@ List.reverse(animals_or_derivatives_of_animals, [1, 2, 3])
     The first argument here is our list of seasons. The second argument is the function that we want to run for each element in this list: specifically the built-in <code>IO.puts/1</code> function.
   </p>
 
+  <p>
+    Need to explain &IO.puts/1 syntax here...
+  </p>
+
   <div class='todo'>
     Finish explaining Enum.each
   </div>
-
-
-
 
 
 
