@@ -18,6 +18,10 @@
 
 .console-blue {
   color: $blue;
+
+  span[class^="hljs-"] {
+    color: $blue;
+  }
 }
 
 .unused-clause {

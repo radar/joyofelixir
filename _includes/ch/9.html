@@ -5,17 +5,27 @@
   <h3>Working with lists</h3>
 
   <p>
+    Just like there is a <code>String</code> module for working with strings, there is also a <code>List</code> module for working with lists. This module includes functions like <code>first</code> that will tell you what the first item in a list is:
+  </p>
+
+<pre><code>List.first([1, 2, 3, 4])
+<span class='console-yellow'>1</span></code></pre>
+
+  <p>
+    And it also lets you figure out what the last item is too:
+  </p>
+
+<pre><code>List.last([1, 2, 3, 4])
+<span class='console-yellow'>4</span></code></pre>
+
+  <p>
     We looked earlier at how we could reverse a string, but how about if we wanted to reverse something else, like this list?
   </p>
 
 <pre><code>iex> animals_or_derivatives_of_animals = ["cat", "dog", "cow", "turducken"]</code></pre>
 
   <p>
-    We wouldn't reach into the <code>String</code> drawer to work with a <em>list</em>, because strings are not lists and lists are not strings! Just like we wouldn't reach into the top drawer in your kitchen to pull out the milk: it's in the fridge, silly!
-  </p>
-
-  <p>
-    We should reach into the <code>List</code> drawer instead, right? Let's try that:
+    We would think that just like <code>first</code> and <code>last</code> that there should be a <code>reverse</code> too! Let's try it out:
   </p>
 
 <pre><code>iex> List.reverse(animals_or_derivatives_of_animals)
@@ -24,7 +34,11 @@ List.reverse(animals_or_derivatives_of_animals)
     (elixir) List.reverse(["cat", "dog", "cow", "turducken"])</span></code></pre>
 
   <p>
-    Uh oh, there's that red text again. The computer is telling us that Elixir doesn't know about a function called <code>List.reverse</code>, or the function is "<em>private</em>". The computer (slyly) won't tell us which one of non-existence or privateness it is, but we'll assume the first case here: that the function is undefined.
+    Uh oh, there's that red text again. It seems like that this function doesn't exist, even though we thought it did. We are lacking the superpower of being able to will functions into being at this current point in time, so we'll have to do some sleuthing to figure out why it's missing.
+  </p>
+
+  <p>
+    The computer is telling us that Elixir doesn't know about a function called <code>List.reverse</code>, or the function is "<em>private</em>". The computer (slyly) won't tell us which one of non-existence or privateness it is, but we'll assume the first case here: that the function is undefined. (We'll come back to private functions a little later on in the book.)
   </p>
 
   <aside>
@@ -60,7 +74,7 @@ List.reverse(animals_or_derivatives_of_animals, [1, 2, 3])
   </p>
 
   <p>
-    At this point it's also worth mentioning that the <code>String.reverse</code> function we used back in the last chapter has a proper name of <code>String.reverse/1</code>. Just like <code>/2</code> indicates the function takes two arguments, the <code>/1</code> here indicates that this function takes one argument. When referring to Elixir functions, make sure to include the arity as well as the function's name.
+    At this point it's also worth mentioning that the <code>String.capitalize</code> function we used back in the last chapter has a proper name of <code>String.capitalize/1</code>. Just like <code>/2</code> indicates the function takes two arguments, the <code>/1</code> here indicates that this function takes one argument. When referring to Elixir functions, make sure to include the arity as well as the function's name.
   </p>
 
   <p>
@@ -77,11 +91,11 @@ List.reverse(animals_or_derivatives_of_animals, [1, 2, 3])
   <h3>Thank you Reader, but our <s>princess</s> function is in another <s>castle</s> module</h3>
 
   <p>
-    The short version of why the <code>List.reverse/1</code> function doesn't exist is because it lives in a separate module; A function with that name exists, but it doesn't exist within the <code>List</code> module. It exists in a separate module called <code>Enum</code>. The name <code>Enum</code> is short for <code>Enumerable</code>, and it's done that way because nobody has the time to write out <code>Enumerable</code> correctly every single time. Even as this book's author I have a hard time spelling it correctly each time!
+    The short version of why the <code>List.reverse/1</code> function doesn't exist is because it lives in a separate module; it exists in the <code>Enum</code> module. The name <code>Enum</code> is short for <code>Enumerable</code>, and it's done that way because nobody has the time to write out <code>Enumerable</code> correctly every single time. Even as this book's author I have a hard time spelling it correctly each time! Thank goodness for autocomplete.
   </p>
 
   <p>
-    "What on earth is an Enum?", Roberto cries out. Hold your horses, Roberto. We're getting to that.
+    "What on earth is an enumerable?", Roberto cries out. Hold your horses, Roberto. We're getting to that.
   </p>
 
   <p>
@@ -181,26 +195,95 @@ List.reverse(animals_or_derivatives_of_animals, [1, 2, 3])
 <pre><code>iex> Enum.each(seasons, &amp;IO.puts/1)</code></pre>
 
   <p>
-    The first argument here is our list of seasons. The second argument is the function that we want to run for each element in this list: specifically the built-in <code>IO.puts/1</code> function.
+    The first argument here is our list of seasons. The second argument is the function that we want to run for each item in this list: specifically the built-in <code>IO.puts/1</code> function. As we saw in the last chapter, <code>IO.puts/1</code> will output a string to the terminal during a program's execution.
   </p>
 
   <p>
-    Need to explain &IO.puts/1 syntax here...
+    Let's take a look at what this combination of <code>Enum.each</code>, <code>seasons</code> and <code>&amp;IO.puts/1</code> does:
   </p>
 
-  <div class='todo'>
-    Finish explaining Enum.each
-  </div>
+<pre><code>iex> Enum.each(seasons, &amp;IO.puts/1)
+summer
+fall
+winter
+spring
+<span class='console-blue'>:ok</span></code></pre>
 
+  <p>
+    This particular combination of those three things has made Elixir output each season on a single line in our <code>iex</code> prompt. Then there's one more thing: that little blue <code>:ok</code> at the end of our output. This indicates to us that the iterating with <code>Enum.each/2</code> worked successfully.
+  </p>
 
+  <aside>
+    <header>Try this one as a program too</header>
 
+    <p>
+      You should try running the above example as an Elixir script too. Save this file at <code>seasons.exs</code> and run it with <code>elixir seasons.exs</code>.
+    </p>
 
+    <p>
+      What you'll see will mostly be the same: all the seasons are output on their own lines. What you won't see is that final <code>:ok</code>. This is because when we run a function in the <code>iex</code> prompt, the function will always tell us what its result is.
+    </p>
 
+    <p>
+      However when we get to the "big time" of running an actual program, Elixir will only generate output once we tell it to; with something such as <code>IO.puts/1</code>. This is why when you run this script you're <em>not</em> going to see <code>:ok</code>.
+    </p>
+  </aside>
 
+  <p>
+    Let's take a closer look at what this is doing. Specifically: what <code>&amp;IO.puts/1</code> is doing. You know in Elixir that functions can take arguments and you might have in your head that those arguments could be strings, lists or maps becuase this is what we've seen done previously. But function arguments can also be other functions. This is what's happening here when we're using <code>&amp;IO.puts/1</code>. We're passing that function as an argument to <code>Enum.each/2</code>.
+  </p>
 
+  <p>
+    To get an idea of how <code>Enum.each/2</code> is able to take the <code>IO.puts/1</code> function and do something with it, we can use this code in the <code>iex</code> prompt:
+  </p>
 
+<pre><code>iex> puts = &amp;IO.puts/1
+puts.("summer")
+"summer"
+<span class='console-blue'>:ok</span>
+</code></pre>
 
+  <p>
+    With this code, we've assigned the <code>IO.puts/1</code> function to a variable called <code>puts</code>. This is similar to what's going on inside the <code>Enum.each/2</code> function: whatever function we pass as the second argument will be stored with a particular name. Then <code>Enum.each/2</code> goes through each of the items and calls the provided function on it, just like we've done above.
+  </p>
 
+  <p>
+    "That last line looks exactly like how we ran functions back in Chapter 5", Roberto exclaims. Yes, Roberto! That is exactly right. Back in that chapter we defined a <code>greeting</code> function like this:
+  </p>
+
+<pre><code>iex> greeting = fn (place) -> "Hello, #{place}!" end
+<span class='console-yellow'>#Function&lt;6.52032458/1 in :erl_eval.expr/5&gt;</span></code></pre>
+
+  <p>
+    We then made Elixir run this function using this syntax:
+  </p>
+
+<pre><code>iex> greeting.("World")
+<span class='console-green'>"Hello, World!"</span></code></pre>
+
+  <p>
+    What we're doing different here with our <code>puts = &amp;IO.puts/1</code> is that we're using an inbuilt function rather than constructing one of our own. We can do this with any inbuilt function we please. Here's another example, using <code>String.capitalize/1</code>:
+  </p>
+
+<pre><code>iex> cap = &amp;String.capitalize/1
+cap.("summer")
+<span class='console-green'>"Summer"</span>
+</code></pre>
+
+  <p>
+    Here, the <code>String.capitalize/1</code> function takes a string and turns the first letter into a capital letter. In this code example, we're making it so that we can call the <code>String.capitalize/1</code> as if it were a function called <code>cap</code>. However, if we wanted to capitalise the names of our season using the <code>String.capitalize/1</code> function with <code>Enum.each/2</code> it wouldn't do very much:
+  </p>
+
+<pre><code>iex> Enum.each(seasons, &amp;String.capitalize/1)
+<span class='console-blue'>:ok</span></code></pre>
+
+  <p>
+    Nothing is output here besides <code>:ok</code> because we're not telling Elixir to output anything. It will dutifully run the function <code>String.capitalize/1</code> for each item in the list, and then just as dutifully "forget" to tell us anything about the result.
+  </p>
+
+  <p>
+    If we want to see what the result would be from evaluating <code>String.capitalize/1</code> for each item in the list, we're going to have to use a different function.
+  </p>
 
   <h4>Map, but not the kind that you know already</h4>
 
@@ -211,18 +294,11 @@ List.reverse(animals_or_derivatives_of_animals, [1, 2, 3])
 <pre><code>["Summer", "Fall", "Winter", "Spring"]</code></pre>
 
   <p>
-    What we want to do in this case is to enumerate through each item in the list and to capitalize the first letter of each word, leaving all the others as lower case. There's a function to do this called <code>String.capitalize/1</code>, and for a single string we can call it like this:
-  </p>
-
-<pre><code>iex> String.capitalize("summer")
-  <span class='console-green'>"Summer"</span></code></pre>
-
-  <p>
-    "But how do we run that function on each item in a list?", Roberto asks. He then cries: "I don't want to have to rewrite the whole list!" Roberto is being a little dramatic &mdash; given it is a small list of four items &mdash; but I can see his point. We <em>could</em> rewrite the list to make it what we want it to be, but we're <em>computer programmers</em>, so let's program the computer to do our bidding instead.
+    We tried using <code>Enum.each/2</code> to give us this list of capitalised seasons, but that just told us <code>:ok</code>.
   </p>
 
   <p>
-    We're going to need a function that goes through each item in the list and applies <code>String.capitalize/1</code>; something that would turn our existing list into a list like this one:
+    We're going to need a function that goes through each item in the list and applies <code>String.capitalize/1</code>, and then shows us the result of each application of that function. Something that would turn our existing <code>seasons</code> list into a list like this one:
   </p>
 
 <pre><code>iex> seasons = [
@@ -234,7 +310,7 @@ List.reverse(animals_or_derivatives_of_animals, [1, 2, 3])
   [<span class='console-green'>"Summer"</span>, <span class='console-green'>"Fall"</span>, <span class='console-green'>"Winter"</span>, <span class='console-green'>"Spring"</span>]</code></pre>
 
   <p>
-    But since we've already got a list we're going to have to do <em>something</em> to that list to turn it into what we want. That something is to use another function from the <code>Enum</code> module called <code>Enum.map/2</code>. This <code>map</code> function is different from the map kind of data (<code>%{"name" => "Roberto"}</code>), in that it will take the specified enumerable and function, enumerate through each item in the list and run that function for each item, and then return the result.
+    But since we've already got a list we're going to have to do <em>something</em> to that list to turn it into what we want. That something is to use another function from the <code>Enum</code> module called <code>Enum.map/2</code>. This <code>map</code> function is different from the map kind of data (<code>%{"name" => "Roberto"}</code>), in that the function-called-map will take the specified enumerable and another function as arguments, then enumerate through each item in the list and run that other function for each item, and then return the result of each function run.
   </p>
 
   <p>
@@ -247,6 +323,24 @@ List.reverse(animals_or_derivatives_of_animals, [1, 2, 3])
   <p>
     Hooray! Each of our seasons now has a correctly capitalized name. What's happened here is that we've told the <code>map</code> function that we want it to run another function -- that'd be the <code>String.capitalize/1</code> function -- on each item of the <code>seasons</code> list. This is how we've been able to go from our existing list with non-capitalized season names to a new list with capitalized names.
   </p>
+
+  <h4>BYO functions</h4>
+
+  <p>
+    One more quick example. When using <code>Enum.each/2</code> or <code>Enum.map/2</code> we don't necessarily need to pass a built-in function as the second argument. We could choose to pass our own function instead. Let's say that we had a list of numbers like this:
+  </p>
+
+<pre><code>iex> numbers = [4, 8, 15, 16, 23, 42]</code></pre>
+
+  <p>
+    And then we wanted to multiply each number by a different number, let's say 42. We're lazy and we want the computer to do the heavy lifting, and so we can pass <code>Enum.map/2</code> a function of our own design to acheive this goal:
+  </p>
+
+<pre><code>Enum.map(numbers, fn (x) -> x * 2 end)</code></pre>
+
+  <div class='todo'>
+    Cover reduce?
+  </div>
 
   <h3>Working with maps</h3>
 
