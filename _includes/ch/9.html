@@ -294,7 +294,7 @@ cap.("summer")
 <pre><code>["Summer", "Fall", "Winter", "Spring"]</code></pre>
 
   <p>
-    We tried using <code>Enum.each/2</code> to give us this list of capitalised seasons, but that just told us <code>:ok</code>.
+    We tried using <code>Enum.each/2</code> to give us this list of capitalized seasons, but that just told us <code>:ok</code> and it didn't give us back a list of capitalized season names.
   </p>
 
   <p>
@@ -324,6 +324,22 @@ cap.("summer")
     Hooray! Each of our seasons now has a correctly capitalized name. What's happened here is that we've told the <code>map</code> function that we want it to run another function -- that'd be the <code>String.capitalize/1</code> function -- on each item of the <code>seasons</code> list. This is how we've been able to go from our existing list with non-capitalized season names to a new list with capitalized names.
   </p>
 
+  <aside>
+    <header>But is why is it called "map"?</header>
+
+    <p>
+      Truth be told, I didn't really give the name "map" much thought before I wrote this section of this book. I've always known it to be "map", but never really thought about why. I wanted to answer it right here, but I didn't know myself and <a href='https://twitter.com/ryanbigg/status/892334810416402433'>so I asked about why it's called map on Twitter</a>.
+    </p>
+
+    <p>
+      The consensus from the Twitter hivemind (nestmind? flockmind?) seems to be that this is a math-y term which gets its meaning from the cartographer map -- wherein the dimensions of the Earth are represented graphically on a map. I found that kind of fascinating, to be quite honest.
+    </p>
+
+    <p>
+      In math, the term "map" means to take a set of numbers and then to apply a function across them to transform them into a new set of numbers. Hey, that's like what we're doing here -- except we've got a set of words, and not numbers. We're taking a list of strings and then transforming them into a new list of strings.
+    </p>
+  </aside>
+
   <h4>BYO functions</h4>
 
   <p>
@@ -336,7 +352,12 @@ cap.("summer")
     And then we wanted to multiply each number by a different number, let's say 42. We're lazy and we want the computer to do the heavy lifting, and so we can pass <code>Enum.map/2</code> a function of our own design to acheive this goal:
   </p>
 
-<pre><code>Enum.map(numbers, fn (x) -> x * 2 end)</code></pre>
+<pre><code>iex> Enum.map(numbers, fn (number) -> number * 2 end)
+[8, 16, 30, 32, 46, 84]</code></pre>
+
+  <p>
+    With our own function here, we're taking each element of the list -- represented inside the function as the variable <code>number</code> -- and then multiplying it by 42. When <code>Enum.map/2</code> has finished going through the list, it outputs a new list showing us the result of running that function on all items in the list.
+  </p>
 
   <div class='todo'>
     Cover reduce?
