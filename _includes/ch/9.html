@@ -332,11 +332,11 @@ cap.("summer")
     </p>
 
     <p>
-      The consensus from the Twitter hivemind (nestmind? flockmind?) seems to be that this is a math-y term which gets its meaning from the cartographer map -- wherein the dimensions of the Earth are represented graphically on a map. I found that kind of fascinating, to be quite honest.
+     The consensus from the Twitter hivemind (nestmind? flockmind?) seems to be that this is a math-y term which gets its meaning from the cartographer map -- wherein the dimensions of the Earth are represented graphically on a map. When you resize one part of the map, you have to resize all the other parts by making the same transformation, otherwise the map no longer makes sense. I found that kind of fascinating, to be quite honest.
     </p>
 
     <p>
-      In math, the term "map" means to take a set of numbers and then to apply a function across them to transform them into a new set of numbers. Hey, that's like what we're doing here -- except we've got a set of words, and not numbers. We're taking a list of strings and then transforming them into a new list of strings.
+      In math, the term "map" means to take a set of numbers and then to apply the same function across them to transform them into a new set of numbers. Hey, that's like what we're doing here -- except we've got a set of words, and not numbers. We're taking a list of strings and then transforming them into a new list of strings.
     </p>
   </aside>
 
@@ -352,21 +352,23 @@ cap.("summer")
     And then we wanted to multiply each number by a different number, let's say 42. We're lazy and we want the computer to do the heavy lifting, and so we can pass <code>Enum.map/2</code> a function of our own design to acheive this goal:
   </p>
 
-<pre><code>iex> Enum.map(numbers, fn (number) -> number * 2 end)
+<pre><code>iex&gt; Enum.map(numbers, fn (number) -&gt; number * 2 end)
 [8, 16, 30, 32, 46, 84]</code></pre>
 
   <p>
     With our own function here, we're taking each element of the list -- represented inside the function as the variable <code>number</code> -- and then multiplying it by 42. When <code>Enum.map/2</code> has finished going through the list, it outputs a new list showing us the result of running that function on all items in the list.
   </p>
 
+  <h4>Reducing an enumerable</h4>
+
   <div class='todo'>
-    Cover reduce?
+    Cover reduce and ranges?
   </div>
 
   <h3>Working with maps</h3>
 
   <p>
-    Now that we've looked at enumerating through lists, let's look at enumerating through the other kind of enumerable that we've seen: maps. We spoke a little while ago about doing so:
+    Now that we've looked at enumerating through lists and ranges, let's look at enumerating through the other kind of enumerable that we've seen: maps. We spoke a little while ago about doing so:
   </p>
 
   <blockquote>
@@ -403,7 +405,7 @@ iex> Enum.each(person, fn ({k, v}) -> IO.puts v end)
 
 
   * Explain enumerating through maps here, showing that kv pairs are returned as tuples.
-  * Explain what tuples are and how they differ from lists. (iirc, tuples cannot be appended to or iterated (or can they?))
+  * Explain what tuples are and how they differ from lists. (iirc, tuples are not enumerable)
 
   <h3>Where to find more functions</h3>
 
