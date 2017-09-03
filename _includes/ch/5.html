@@ -70,7 +70,7 @@ iex> greeting.("Motherland")
     Each time we run the function here we give it a new value for <code>place</code>. We don't have to set <code>place</code> ourselves, as the function takes care of that. But what of our <code>place</code> variable from yesteryear (line 9 in <code>iex</code>)? Has that changed?
   </p>
 
-  <pre><code>iex> place
+<pre><code>iex> place
 <span class='console-green'>"World"</span></code></pre>
 </div>
 
@@ -78,6 +78,35 @@ iex> greeting.("Motherland")
     The computer knows that the <code>place</code> from <em>outside</em> the function is different to the place <em>inside</em> the function, and so it keeps the two separate. The computer is smart enough to know that <code>place</code> on the outside may not exist and so it shouldn't rely on it being present. The function contains everything it needs to run inside itself.
   </p>
 
+  <p>
+    Our functions so far have just taken a string and put it inside another string, but functions are capable of executing <em>any</em> code, so let's have a quick look at another function. This function will convert a temperature in the sensible Celcius unit to the wacky Fahrenheit equivalent:
+  </p>
+
+<pre><code>iex> c_to_f = fn (c) -> c * 1.8 + 32 end</code></pre>
+
+  <p>
+    The mathematical equation to convert celcius to fahrenheit is to multiply by 1.8 and then add 32, which is exactly what we're doing in our function: we take <code>c</code> representing the number in celcius, multiply (<code>*></code>) it by 1.8, and then add (<code>+</code>) 32.
+  </p>
+
+  <p>
+    Let's run our function with some celcius temperatures:
+  </p>
+
+<pre><code>iex> c_to_f.(20)
+<span class='console-yellow'>68.0</span>
+iex> c_to_f.(24)
+<span class='console-yellow'>75.2</span>
+iex> c_to_f.(40)
+<span class='console-yellow'>104.0</span>
+</code></pre>
+
+  <p>
+    If you want to check these, plug these into the all-knowing Google using a search time like "20 celcius in fahrenheit" and Google will confirm these answers.
+  </p>
+</section>
+
+<section>
+  <h3>Multiple-argument functions</h3>
   <p>
     One more handy thing about functions is that they're not limited to just one argument. You can define a function that accepts as many arguments as you wish:
   </p>
@@ -135,6 +164,7 @@ iex> greeting.("Motherland")
   <h3>Exercises</h3>
 
   <ul>
+    <li>Make a function which turns fahrenheit temperatures into celcius.</li>
     <li>Make a function which returns the number of seconds in the specified amount of days. For example, <code>seconds.(2)</code> should tell us how many seconds there are in 2 days.</li>
     <li>Make a function which takes two maps with <code>"age"</code> keys in them and returns the average age.</li>
     <li>Save either of these two solutions in their own file and run them through the <code>elixir</code> command-line tool.</li>
