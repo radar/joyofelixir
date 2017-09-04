@@ -79,9 +79,15 @@
     To collect data about all the people assembled here before us, we can create a <em>list of maps</em>:
   </p>
 
-<pre><code>iex> [
-...> %{age: "30ish", gender: "Male", name: "Roberto"},
-...> %{age: "30ish", gender: "Male", name: "The Author"},
+<pre><code>iex> those_who_are_assembled = [
+...> %{"age" => "30ish", "gender" => "Male", "name" => "Roberto"},
+...> %{"age" => "30ish", "gender" => "Male", "name" => "The Author"},
+...> %{"age" => "Unknowable", "gender" => "Unknowable", "name" => "The Reader"},
+...> %{"age" => "38", "gender" => "Female", "name" => "Juliet"},
+...> %{"age" => "21", "gender" => "Female", "name" => "Mary"},
+...> %{"age" => "67", "gender" => "Female", "name" => "Bobalina"},
+...> %{"age" => "54", "gender" => "Male", "name" => "Charlie"},
+...> %{"age" => "10", "gender" => "Male", "name" => "Charlie (no relation)"},
 ...> ]</code></pre>
 
   <p>

@@ -59,23 +59,25 @@ iex> score = 2 / 5 * 100
   <h3>Pattern matching with lists</h3>
 
   <p>
-    Let's say we have a list of all the people assembled here, like we had back in Chapter 3:
+    Let's say we have a list of all the people assembled here, like we had back at the end of Chapter 4:
   </p>
 
 <pre><code>iex> those_who_are_assembled = [
-"Roberto",
-"The Author",
-"The Reader",
-"Juliet",
-"Mary",
-"Bobalina",
-"Charlie",
-"Charlie (no relation)"
-]
-[<span class='console-green'>"Roberto"</span>, ...]</code></pre>
+...> %{"age" => "30ish", "gender" => "Male", "name" => "Roberto"},
+...> %{"age" => "30ish", "gender" => "Male", "name" => "The Author"},
+...> %{"age" => "Unknowable", "gender" => "Unknowable", "name" => "The Reader"},
+...> %{"age" => "38", "gender" => "Female", "name" => "Juliet"},
+...> %{"age" => "21", "gender" => "Female", "name" => "Mary"},
+...> %{"age" => "67", "gender" => "Female", "name" => "Bobalina"},
+...> %{"age" => "54", "gender" => "Male", "name" => "Charlie"},
+...> %{"age" => "10", "gender" => "Male", "name" => "Charlie (no relation)"},
+...> ]
+[%{"age" => "30ish", "gender" => "Male", "name" => "Roberto"},
+ %{"age" => "30ish", "gender" "Male", "name" => "The Author"}
+...]</code></pre>
 
   <p>
-    And let's also say that we wanted to grab the names of the first 3 people in this list, but then ignore the remainder -- given that the first three are clearly the most important people here. We can use some pattern matching on this list:
+    And let's also say that we wanted to grab first 3 people in this list, but then ignore the remainder -- given that the first three are clearly the most important people here. We can use some pattern matching on this list:
   </p>
 
 <pre><code>iex> [first, second, third | others] = those_who_are_assembled</code></pre>
@@ -90,13 +92,13 @@ iex> score = 2 / 5 * 100
   </p>
 
 <pre><code>iex> first
-<span class="console-green">"Roberto"</span>
+%{"age" => "30ish", "gender" => "Male", "name" => "Roberto"}
 iex> second
-<span class="console-green">"The Author"</span>
+%{"age" => "30ish", "gender" => "Male", "name" => "The Author"}
 iex> third
-<span class="console-green">"The Reader"</span>
+%{"age" => "Unknowable", "gender" => "Unknowable", "name" => "Roberto"}
 iex> others
-[<span class="console-green">"Juliet"</span>, <span class="console-green">"Mary"</span>, <span class="console-green">"Bobalina"</span>, <span class="console-green">"Charlie"</span>, <span class="console-green">"Charlie (no relation)"</span>]
+[%{"age" => "38", "gender" => "Female", "name" => "Juliet"}, ...]
 </code></pre>
 </div>
 
@@ -105,7 +107,7 @@ iex> others
   </p>
 
 <pre><code>iex> [first, second, third | remainder] = others
-<span class="console-green">"Roberto"</span></code></pre>
+[%{"age" => "38", "gender" => "Female", "name" => "Juliet"}, ...]</code></pre>
 
 <div class='grouped'>
   <p>
@@ -113,11 +115,11 @@ iex> others
   </p>
 
 <pre><code>iex> first
-<span class="console-green">"Juliet"</span>
+%{"age" => "38", "gender" => "Female", "name" => "Juliet"},
 iex> second
-<span class="console-green">"Mary"</span>
+%{"age" => "21", "gender" => "Female", "name" => "Mary"},
 iex> third
-<span class="console-green">"Bobalina"</span>
+%{"age" => "67", "gender" => "Female", "name" => "Bobalina"},
 </code></pre>
 </div>
 
@@ -126,19 +128,26 @@ iex> third
   </p>
 
 <pre><code>iex> remainder
-[<span class="console-green">"Charlie"</span>, <span class="console-green">"Charlie (no relation)"</span>]</code></pre>
+[
+  %{"age" => "54", "gender" => "Male", "name" => "Charlie"},
+  %{"age" => "10", "gender" => "Male", "name" => "Charlie (no relation)"},
+]</code></pre>
 
   <p>
-    If we now try to pull out the next 3 people in the list, Elixir won't be able to do that because there are only two names left in the <code>remainder</code> list:
+    If we now try to pull out the next 3 people in the list, Elixir won't be able to do that because there are only two names left in the <code>remainder</code> list. I've shortened the output in the below example, but I think you'll get the gist:
   </p>
 
 <pre><code>iex> [first, second, third | those_still_remaining] = remainder
-<span class='console-red'>** (MatchError) no match of right hand side value:&#9166;
-   ["Charlie", "Charlie (no relation)"]</span>
+<span class='console-red'>** (MatchError) no match of right hand side value: ... &#9166;
+   [%{"name" => "Charlie"}, %{"name" => "Charlie (no relation)"}]</span>
 </code></pre>
 
   <p>
-    It's always a good idea to be careful here with pattern matching lists with the right number of expected items to avoid <code>MatchErrors</code> like these.
+    It's always a good idea to be careful here with pattern matching lists with the right number of expected items to avoid <code>MatchErrors</code> like these. Normally when we would work through each item of the list, we would do so not in groups of three, but one at a time.
+  </p>
+
+  <p>
+    We'll see two examples of working through each item in a list one-at-a-time, <a href='/9-lists-maps-more#enumerating-enumerables'>once in Chapter 9</a> and once within Chapter 10. We'll need to build up to those, so let's not worry too much about those yet.
   </p>
 
   <p>
@@ -190,6 +199,61 @@ iex> age
 
     <p>
       Well, would you look at that? We were able to pull out these two values <em>at the same time</em>. The crowd cheers as if we've just performed a magic trick. Just wait until you see our next trick!
+    </p>
+
+    <p>
+      Let's look at our previous example, where we had maps inside of a list:
+    </p>
+
+<pre><code>iex> those_who_are_assembled = [
+...> %{"age" => "30ish", "gender" => "Male", "name" => "Roberto"},
+...> %{"age" => "30ish", "gender" => "Male", "name" => "The Author"},
+...> %{"age" => "Unknowable", "gender" => "Unknowable", "name" => "The Reader"},
+...> %{"age" => "38", "gender" => "Female", "name" => "Juliet"},
+...> %{"age" => "21", "gender" => "Female", "name" => "Mary"},
+...> %{"age" => "67", "gender" => "Female", "name" => "Bobalina"},
+...> %{"age" => "54", "gender" => "Male", "name" => "Charlie"},
+...> %{"age" => "10", "gender" => "Male", "name" => "Charlie (no relation)"},
+...> ]
+[%{"age" => "30ish", "gender" => "Male", "name" => "Roberto"},
+ %{"age" => "30ish", "gender" "Male", "name" => "The Author"}
+...]</code></pre>
+
+    <p>
+      Let's say that we wanted to get the name of the first person from this list. We can combine both the list pattern matching and the map pattern matching together:
+    </p>
+
+<pre><code>
+  [first_person = %{"name" => first_name} | others] = those_who_are_assembled
+</code></pre>
+
+    <p>
+      Here we're matching the first item from the list, and putting the rest in an <code>others</code> variable. We're grabbing just the first person from the list of those who are assembled. Inside that match, we're assigning that first person to <code>first_person</code>. We're then expecting that the first item of this list to match the pattern of <code>%{"name" => first_name}</code>. This will set the variable of <code>first_name</code> to be the value of the first item's <code>name</code> key. Phew, that was a long description. Let's go and see what we now have in the console:
+    </p>
+
+<pre><code>iex> first_person
+%{"age" => "30ish", "gender" => "Male", "name" => "Roberto"}
+iex> first_name
+"Roberto"
+</code>
+</pre>
+
+    <p>
+      This can be tricky to wrap your head around at first since there's a lot going on here. It might take a few tries to read it and understand. It did for me when I first read an example like this! Take your time, it's OK to not get it first try.
+    </p>
+
+    <p>
+      What we're doing here is pulling out 3 distinct values from this one single line:
+    </p>
+
+    <ul>
+      <li>The <code>first_person</code> variable, which contains all the information we have on Roberto in map form.</li>
+      <li>The <code>first_name</code> variable, which has stored the string <code>"Roberto"</code></li>
+      <li>The <code>others</code> variable, which stored the remaining people in the list.</li>
+    </ul>
+
+    <p>
+      As you can see from this short example, pattern matching is very powerful within Elixir and one of its most useful features.
     </p>
 </div>
 </section>
