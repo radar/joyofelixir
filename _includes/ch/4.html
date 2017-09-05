@@ -29,12 +29,20 @@
 <code>iex> person = %{"name" => "Roberto", "age" => "30ish", "gender" => "Male"}
 %{<span class='console-green'>"age"</span> => <span class='console-green'>"30ish"</span>, <span class='console-green'>"gender"</span> => <span class='console-green'>"Male"</span>, <span class='console-green'>"name"</span> => <span class='console-green'>"Roberto"</span>}</code></pre>
 
-  <div class='todo'>
-    Image explanation of key and value
+  <p>
+    In a map, we structure data using <em>keys</em> and <em>values</em>. The thing to the <em>left</em> of the <code>=></code> is called a <em>key</em> and the thing to the <em>right</em> is called a <em>value</em>.
+  </p>
+
+  <div class='center'>
+    <img src='/images/4/key-value.png'>
   </div>
 
   <p>
-    In a map, we structure data using <em>keys</em> and <em>values</em>. The thing to the <em>left</em> of the <code>=></code> is called a <em>key</em> and the thing to the <em>right</em> is called a <em>value</em>. Unlike strings and maps where we can use a single character at the start and end to show Elixir where the starts and ends are, we need to use <code>%{</code> to tell Elixir where a map starts and <code>}</code> to show where it ends.
+    Just like on a map of something like a mall, a key here tells us where to find a particular value. If, for instance, we wanted to know the age of this person, we can use the key "age" to pluck out that value. We'll see that in a moment.
+  </p>
+
+  <p>
+    Unlike strings and lists where we can use a single character at the start and end to show Elixir where the starts and ends are -- double quotes for strings, square brackets for lists -- we need to use <code>%{</code> to tell Elixir where a map starts and <code>}</code> to show where it ends.
   </p>
 
   <p>
@@ -52,13 +60,19 @@
 %{<span class='console-green'>"age"</span> => <span class='console-green'>"30ish"</span>, <span class='console-green'>"gender"</span> => <span class='console-green'>"Male"</span>, <span class='console-green'>"name"</span> => <span class='console-green'>"Roberto"</span>}</code></pre>
 
   <p>
-    You may now be thinking about how to get the data back out of a map once you've put it in. In order to access a value from a map we need to know the corresponding key. Once we know the corresponding key, then we can use <code>[]</code> to pluck that value out of the map. Think of it like the claw from a skilltester, diving in to pick out the value.
+    The position of the <code>"name"</code> key within a map has no meaning. The keys for a map can be in any order.
   </p>
 
-  <div class='todo'>TODO: Skilltester image goes here.</div>
+  <p>
+    You may now be thinking about how to get the data back out of a map once you've put it in. We talked about how to "pluck" that value out before, but didn't see an example yet. In order to access a value from a map we need to know the corresponding key. Once we know the corresponding key, then we can use <code>[]</code> to pluck that value out of the map. Think of it like the claw from a skilltester, diving in to pick out the value.
+  </p>
+
+  <div class='center'>
+    <img src='/images/4/skilltester.png' alt='skilltester'>
+  </div>
 
   <p>
-    Unlike a skilltester, these square brackets won't drop the value mere inches from the chute; these brackets have an iron grip. For instance, if we wanted to get out the value of <code>"name"</code> for <code>person</code> we can do:
+    Unlike a skilltester, these square brackets aren't rigged to drop the value mere inches from the chute; these square brackets have an iron grip. For instance, if we wanted to get out the value of <code>"name"</code> for <code>person</code> we can do:
   </p>
 
 <pre><code>iex> person["name"]

@@ -223,19 +223,17 @@ iex> age
       Let's say that we wanted to get the name of the first person from this list. We can combine both the list pattern matching and the map pattern matching together:
     </p>
 
-<pre><code>
-  [first_person = %{"name" => first_name} | others] = those_who_are_assembled
+<pre><code>[first_person = %{"name" => first_name} | others] = those_who_are_assembled
 </code></pre>
 
-    <p>
-      Here we're matching the first item from the list, and putting the rest in an <code>others</code> variable. We're grabbing just the first person from the list of those who are assembled. Inside that match, we're assigning that first person to <code>first_person</code>. We're then expecting that the first item of this list to match the pattern of <code>%{"name" => first_name}</code>. This will set the variable of <code>first_name</code> to be the value of the first item's <code>name</code> key. Phew, that was a long description. Let's go and see what we now have in the console:
-    </p>
+  <p>
+    Here we're matching the first item from the list, and putting the rest in an <code>others</code> variable. We're grabbing just the first person from the list of those who are assembled. Inside that match, we're assigning that first person to <code>first_person</code>. We're then expecting that the first item of this list to match the pattern of <code>%{"name" => first_name}</code>. This will set the variable of <code>first_name</code> to be the value of the first item's <code>name</code> key. Phew, that was a long description. Let's go and see what we now have in the console:
+  </p>
 
 <pre><code>iex> first_person
 %{"age" => "30ish", "gender" => "Male", "name" => "Roberto"}
 iex> first_name
-"Roberto"
-</code>
+"Roberto"</code>
 </pre>
 
     <p>
@@ -246,6 +244,8 @@ iex> first_name
       What we're doing here is pulling out 3 distinct values from this one single line:
     </p>
 
+    <img src="/images/6/complex-matching.png">
+
     <ul>
       <li>The <code>first_person</code> variable, which contains all the information we have on Roberto in map form.</li>
       <li>The <code>first_name</code> variable, which has stored the string <code>"Roberto"</code></li>
@@ -253,7 +253,7 @@ iex> first_name
     </ul>
 
     <p>
-      As you can see from this short example, pattern matching is very powerful within Elixir and one of its most useful features.
+      As you can see from this short example, pattern matching is very flexible and allows you to match more than one thing at a time, and also allows you to set more than one variable.
     </p>
 </div>
 </section>
