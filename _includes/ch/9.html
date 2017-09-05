@@ -396,17 +396,49 @@ cap.("summer")
 
 <pre><code>iex> person = %{"name" => "Roberto", "age" => "30ish", "gender" => "Male"}
 %{<span class='console-green'>"name"</span> => <span class='console-green'>"Roberto"</span>, <span class='console-green'>"age"</span> => <span class='console-green'>"30ish"</span>, <span class='console-green'>"gender"</span> => <span class='console-green'>"Male"</span>}
-iex> Enum.each(person, fn ({k, v}) -> IO.puts v end)
+iex> Enum.each(person, fn ({key, value}) -> IO.puts value end)
 </code></pre>
 
+
   <p>
-    Before I can go any further, Roberto interrupts. "Hey, those curly braces are weird! It looks like a map but it's not a map. And it's not a list because the curliness of the brackets. So what is it?"
+    Before I can go any further, Roberto interrupts. "Hey, those curly braces are weird! It looks like a map but it's not a map because it doesn't have the <code>%</code> before it. And it's not a list because the curliness of the brackets; a list has square brackets. So what is it?"
   </p>
 
+  <p>
+    The <code>{k, v}</code> here indicates a type of data in Elixir that we haven't seen before called a <em>tuple</em>. Tuples work like lists in that the order of the elements inside them matters, but you can't enumerate through them like you can with lists; said another way, tuples are not enumerable.
+  </p>
 
+  <p>
+    In this function passed to <code>each</code>, a tuple is used instead of two function arguments (i.e. <code>fn(key, value) -></code>) to indicate that the <code>key</code> and the <code>value</code> share a connection. This <code>key</code> and <code>value</code> are not represented as a list (i.e. <code>fn([key, value]) -></code>) because of this connection.
+  </p>
 
-  * Explain enumerating through maps here, showing that kv pairs are returned as tuples.
-  * Explain what tuples are and how they differ from lists. (iirc, tuples are not enumerable)
+  <aside>
+    <header>More on tuples coming up real soon</header>
+    <p>
+      We'll see a lot more tuples when we get to <a href='/11-working-with-files'>Chapter 11 "Working with Files"</a>.
+    </p>
+  </aside>
+
+  <p>
+    Let's take another look at how we used <code>Enum.each/2</code> and what the output was:
+  </p>
+
+<pre><code>iex> Enum.each(person, fn ({key, value}) -> IO.puts value end)
+30ish
+Male
+Roberto
+:ok</code></pre>
+
+  <p>
+    Our use of <code>Enum.each/2</code> goes through each <code>key</code> and <code>value</code>, ignores the key and outputs the value with <code>IO.puts/1</code>. This is almost identical to our previous example of <code>Enum.each/2</code>, where we used a list of seasons with the <code>IO.puts/1</code> function:
+  </p>
+
+<pre><code>iex> Enum.each(seasons, &amp;IO.puts/1)</code></pre>
+
+  <p>
+    In the list example, we were able to use <code>&amp;IO.puts/1</code>. In the map example though, we had to pull out the value by using the tuple, and then we needed to use the expanded version of <code>IO.puts/1</code> (<code>IO.puts(value)</code>) to output that value.
+  </p>
+
 
   <h3>Where to find more functions</h3>
 
