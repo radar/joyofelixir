@@ -7,7 +7,8 @@ html {
 body {
   height: 100%;
 
-  font: 14pt "Pavanam";
+  font: 13pt "Oxygen";
+  font-weight: 100;
   -webkit-text-size-adjust: 100%;
   @media screen {
     background: linear-gradient(145deg, $lighter-purple, darken($lighter-purple, 25));
@@ -49,6 +50,12 @@ article {
 
   code {
     font-family: "Anonymous Pro";
+  }
+
+  p code {
+    background: #FBECFF;
+    border-radius: 3px;
+    padding: 3px;
   }
 
   pre {
