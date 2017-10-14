@@ -362,8 +362,48 @@ cap.("summer")
 
   <h4>Reducing an enumerable</h4>
 
+  <p>
+    We've now looked at how to use two functions from <code>Enum</code>, <code>each/2</code> and <code>map/2</code>. These are two of the most commonly used functions from this module, and that's why we looked at them. But there's a third function that I'd like to tell you about too: <code>Enum.reduce/2</code>. It's a very helpful function!
+  </p>
+
+  <p>
+    <code>Enum.reduce/2</code> allows us to iterate through a list and gradually apply a function to each element in that list to get a final value. Think of it like when you're cooking: you're <em>reducing</em> all the ingredients into a meal. You don't think of a spaghetti bolognese as it being a combination of onion, garlic, beef mince, tomatoes, herbs and spaghetti. You think of it as a complete meal. When we want to combine values in Elixir to produce one final value, we would use <code>Enum.reduce/2</code>. Let's take a look at it now.
+  </p>
+
+  <p>
+    We might want Elixir to tell us what the average of a list of numbers is. For instance, we might want to calculate the average of some scores, say for a test. Hey look, here are some handy score numbers now:
+  </p>
+
+  <pre><code>iex> scores = [86, 60, 66, 62, 72, 84, 76, 95]</code></pre>
+
+  <p>
+    To calculate the average for these scores, we might want to reach for a calculator. The way that we would do this calculation on a calculator is that we would add each number up, one at a time, to calculate the sum:
+  </p>
+
+  <pre><code>86 + 60 + 66 + 62 + 72 + 84 + 76 + 95</code></pre>
+
+  <p>
+    The calculator would then tell us that the sum of these numbers is <code>601</code>. Go ahead and check this in your <code>iex</code> console too if you'd like; after all, it's just a super-powered calculator.
+  </p>
+
+  <p>
+    Once we have the sum, then we need to divide that sum by the amount of numbers that we summed in order to get the average. Here, we have 8 numbers. So the average is <code>601 / 8</code>, which a calculator or the <code>iex</code> prompt should both tell you: <code>75.125</code>. If we wanted to write this whole operation in Elixir code, it would be very simple:
+  </p>
+
+  <pre><code>iex> (86 + 60 + 66 + 62 + 72 + 84 + 76 + 95) / 8</code></pre>
+
+  <p>
+    We sum up all the numbers, then divide it by how many scores we had. Easy! It's easy here because there are only 8 numbers. But what if we had scores from hundreds of people? We wouldn't want to enter all this into our calculator or the <code>iex</code> prompt, now would we? "No way!", contributes Roberto. Exactly! So let's look at how we could use <code>Enum.reduce/2</code> to do the summing up for us, to save us having to work it out all ourselves.
+  </p>
+
+  <pre><code>
+    iex> scores = [86, 60, 66, 62, 72, 84, 76, 95]
+    [86, 60, 66, 62, 72, 84, 76, 95]
+    Enum.reduce(scores, fn (score, acc) -> acc + x end)
+  </code></pre>
+
   <div class='todo'>
-    Cover reduce and ranges?
+    Need to finish this explanation of reduce.
   </div>
 
   <h3>Working with maps</h3>
@@ -438,7 +478,6 @@ Roberto
   <p>
     In the list example, we were able to use <code>&amp;IO.puts/1</code>. In the map example though, we had to pull out the value by using the tuple, and then we needed to use the expanded version of <code>IO.puts/1</code> (<code>IO.puts(value)</code>) to output that value.
   </p>
-
 
   <h3>Where to find more functions</h3>
 
