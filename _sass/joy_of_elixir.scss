@@ -52,10 +52,12 @@ article {
     font-family: "Anonymous Pro";
   }
 
-  p code {
-    background: #FBECFF;
-    border-radius: 3px;
-    padding: 3px;
+  p, ul {
+    code {
+      background: #FBECFF;
+      border-radius: 3px;
+      padding: 3px;
+    }
   }
 
   pre {
@@ -124,6 +126,10 @@ footer {
   padding: 25px;
   color: white;
   font-weight: bold;
+}
+
+.todo + .todo {
+  margin-top: 25px;
 }
 
 .large {

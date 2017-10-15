@@ -1,8 +1,9 @@
 <section>
-  <h2 id='chapter-9'>9. Built-in functions: lists, maps and more</h2>
+  <h2 id='chapter-9'>9. Built-in functions: Lists</h2>
 
-
-  <h3>Working with lists</h3>
+  <p>
+    In this chapter, we'll cover some functions that Elixir has helpfully got built-in to the language to help us work with lists.
+  </p>
 
   <p>
     Just like there is a <code>String</code> module for working with strings, there is also a <code>List</code> module for working with lists. This module includes functions like <code>first</code> that will tell you what the first item in a list is:
@@ -371,129 +372,131 @@ cap.("summer")
   </p>
 
   <p>
-    We might want Elixir to tell us what the average of a list of numbers is. For instance, we might want to calculate the average of some scores, say for a test. Hey look, here are some handy score numbers now:
+    We might want Elixir to tell us what the average of a list of numbers is. For instance, we might want to calculate the average of some scores, say for a test. Hey look, here are some handy score numbers now (out of 100):
   </p>
 
-  <pre><code>iex> scores = [86, 60, 66, 62, 72, 84, 76, 95]</code></pre>
+  <pre><code>iex> scores = [74, 79, 89, 32, 79, 70, 32, 69, 76, 73, 88, 73, 82, 31]</code></pre>
 
   <p>
-    To calculate the average for these scores, we might want to reach for a calculator. The way that we would do this calculation on a calculator is that we would add each number up, one at a time, to calculate the sum:
+    I wanted to keep writing numbers above but 14 numbers just felt right for some reason. It looks like most people in this test did particularly well. Good on them! A few didn't do so great and only scored 32 and one scored 31. Anyway, let's not look too closely at the data. What we're trying to do is to calculate the average for these scores and to do that we might want to reach for a calculator. The way that we would do this calculation on a calculator is that we would add each number up, one at a time, to calculate the sum:
   </p>
 
-  <pre><code>86 + 60 + 66 + 62 + 72 + 84 + 76 + 95</code></pre>
+  <pre><code>74 + 79 + 89 + 32 + 79 + 70 + 32 + 69 + 76 + 73 + 88 + 73 + 82 + 31</code></pre>
 
   <p>
-    The calculator would then tell us that the sum of these numbers is <code>601</code>. Go ahead and check this in your <code>iex</code> console too if you'd like; after all, it's just a super-powered calculator.
+    The calculator would then tell us that the sum of these numbers is <code>947</code>. Go ahead and check this in your <code>iex</code> console too if you'd like; after all, it's just a super-powered calculator.
   </p>
 
   <p>
-    Once we have the sum, then we need to divide that sum by the amount of numbers that we summed in order to get the average. Here, we have 8 numbers. So the average is <code>601 / 8</code>, which a calculator or the <code>iex</code> prompt should both tell you: <code>75.125</code>. If we wanted to write this whole operation in Elixir code, it would be very simple:
+    Once we have the sum, then we need to divide that sum by the amount of numbers that we summed in order to get the average. Here, we have 14 numbers. So the average is <code>947 / 14</code>, which a calculator or the <code>iex</code> prompt should both tell you: <code>67.64285714285714</code>. The calculator may not have as many decimal places. If we wanted to write this whole operation in Elixir code, it would be very simple:
   </p>
 
-  <pre><code>iex> (86 + 60 + 66 + 62 + 72 + 84 + 76 + 95) / 8</code></pre>
+  <pre><code>iex> (74 + 79 + 89 + 32 + 79 + 70 + 32 + 69 + 76 + 73 + 88 + 73 + 82 + 31) / 14</code></pre>
 
   <p>
     We sum up all the numbers, then divide it by how many scores we had. Easy! It's easy here because there are only 8 numbers. But what if we had scores from hundreds of people? We wouldn't want to enter all this into our calculator or the <code>iex</code> prompt, now would we? "No way!", contributes Roberto. Exactly! So let's look at how we could use <code>Enum.reduce/2</code> to do the summing up for us, to save us having to work it out all ourselves.
   </p>
 
-  <pre><code>
-    iex> scores = [86, 60, 66, 62, 72, 84, 76, 95]
-    [86, 60, 66, 62, 72, 84, 76, 95]
-    Enum.reduce(scores, fn (score, acc) -> acc + x end)
-  </code></pre>
+<pre><code>iex> scores = [74, 79, 89, 32, 79, 70, 32, 69, 76, 73, 88, 73, 82, 31]
+[74, 79, 89, 32, 79, 70, 32, 69, 76, 73, 88, 73, 82, 31]
+iex> Enum.reduce(scores, fn (score, sum) -> sum + score end)</code></pre>
+
+  <p>
+    The <code>reduce/2</code> function here does exactly the same calculations as our earlier prompt: it returns 947. It does this by taking the first number, then it adds the second, third, forth and so on to get the sum. How does it do this? Well, let's walk through what this function is doing.
+  </p>
+
+  <p>
+    First, we pass <code>reduce/2</code> the list of scores that we want to sum up. Then we pass it another function which takes two arguments: <code>score</code> and <code>sum</code>. Inside this function, we add these two arguments together. But what values do <code>score</code> and <code>sum</code> have inside this function? One easy way to figure that out is to get Elixir to output their values every time this function inside <code>reduce/2</code> is used:
+  </p>
+
+<pre><code>iex> Enum.reduce(scores, fn (score, sum) ->
+  IO.puts(sum)
+  IO.puts(score)
+  IO.puts("---")
+  sum + score
+end)</code></pre>
+
+  <p>
+    Even though the order of the arguments inside the function are <code>score</code> and <code>sum</code>, we're outputting them here as <code>sum</code> and <code>score</code> for reasons that will become clear soon. When we run this new variant of our <code>reduce/2</code> function, this will be the output:
+  </p>
+
+<pre><code>74
+79
+---
+153
+89
+---
+242
+32
+---
+274
+79
+---
+353
+70
+---
+423
+32
+---
+455
+69
+---
+524
+76
+---
+600
+73
+---
+673
+88
+---
+761
+73
+---
+834
+82
+---
+916
+31
+---
+947</code></pre>
+
+  <p>
+    The first number that we're outputting is the <code>sum</code> and the second number is the <code>score</code>. If we look at the first four lines of our output we'll see three numbers: 74, 79 and 153.
+  </p>
+
+<pre><code>74
+79
+---
+153</code></pre>
+
+  <p>
+    If we look back at our <code>scores</code> list definition, we can see that its first two numbers are 74 and 79.
+  </p>
+
+<pre><code>iex> scores = [74, 79, ...]</code></pre>
+
+  <p>
+    So then where does 153 come from? The answer is easy: <code>74 + 79 = 153</code>. So we can tell from the output here that our <code>reduce/2</code> function is taking the first item from our list and making that the initial <code>sum</code> argument for our inner function. The second item then becomes the <code>score</code> argument. In the function, we're adding these two values together, and that results in 153. The <code>reduce/2</code> function keeps going through the remaining numbers in the list, adding them one-at-a-time until we get the final result.
+  </p>
 
   <div class='todo'>
-    Need to finish this explanation of reduce.
+    IMAGE GOES HERE
   </div>
 
-  <h3>Working with maps</h3>
-
   <p>
-    Now that we've looked at enumerating through lists and ranges, let's look at enumerating through the other kind of enumerable that we've seen: maps. We spoke a little while ago about doing so:
+    So that's the wonderful <code>reduce/2</code> function, or at least one example of it. As you can see, it's very handy for when we want to combine (or <em>reduce</em>) several items into one item.
   </p>
+</section>
 
-  <blockquote>
-    <p>
-      Similar to this, we could <em>enumerate</em> through a map. If we were to take one of our maps from earlier...
-    </p>
-
-<pre><code>%{<span class='console-green'>"name"</span> => <span class='console-green'>"Roberto"</span>, <span class='console-green'>"age"</span> => <span class='console-green'>"30ish"</span>, <span class='console-green'>"gender"</span> => <span class='console-green'>"Male"</span>}</code></pre>
-
-    <p>
-      ...and write each key and value pair down, they may look something like this:
-    </p>
-
-    <dl>
-      <dt><strong>Name</strong></dt><dd>Roberto</dd>
-      <dt><strong>Age</strong></dt><dd>30ish</dd>
-      <dt><strong>Gender</strong></dt><dd>Male</dd>
-    </dl>
-  </blockquote>
-
-  <p>
-    To enumerate through each item in the map we can use the same function as when we were enumerating through each item in a list: <code>Enum.each/2</code>. Here's an example:
-  </p>
-
-<pre><code>iex> person = %{"name" => "Roberto", "age" => "30ish", "gender" => "Male"}
-%{<span class='console-green'>"name"</span> => <span class='console-green'>"Roberto"</span>, <span class='console-green'>"age"</span> => <span class='console-green'>"30ish"</span>, <span class='console-green'>"gender"</span> => <span class='console-green'>"Male"</span>}
-iex> Enum.each(person, fn ({key, value}) -> IO.puts value end)
-</code></pre>
-
-
-  <p>
-    Before I can go any further, Roberto interrupts. "Hey, those curly braces are weird! It looks like a map but it's not a map because it doesn't have the <code>%</code> before it. And it's not a list because the curliness of the brackets; a list has square brackets. So what is it?"
-  </p>
-
-  <p>
-    The <code>{k, v}</code> here indicates a type of data in Elixir that we haven't seen before called a <em>tuple</em>. Tuples work like lists in that the order of the elements inside them matters, but you can't enumerate through them like you can with lists; said another way, tuples are not enumerable.
-  </p>
-
-  <p>
-    In this function passed to <code>each</code>, a tuple is used instead of two function arguments (i.e. <code>fn(key, value) -></code>) to indicate that the <code>key</code> and the <code>value</code> share a connection. This <code>key</code> and <code>value</code> are not represented as a list (i.e. <code>fn([key, value]) -></code>) because of this connection.
-  </p>
-
-  <aside>
-    <header>More on tuples coming up real soon</header>
-    <p>
-      We'll see a lot more tuples when we get to <a href='/11-working-with-files'>Chapter 11 "Working with Files"</a>.
-    </p>
-  </aside>
-
-  <p>
-    Let's take another look at how we used <code>Enum.each/2</code> and what the output was:
-  </p>
-
-<pre><code>iex> Enum.each(person, fn ({key, value}) -> IO.puts value end)
-30ish
-Male
-Roberto
-:ok</code></pre>
-
-  <p>
-    Our use of <code>Enum.each/2</code> goes through each <code>key</code> and <code>value</code>, ignores the key and outputs the value with <code>IO.puts/1</code>. This is almost identical to our previous example of <code>Enum.each/2</code>, where we used a list of seasons with the <code>IO.puts/1</code> function:
-  </p>
-
-<pre><code>iex> Enum.each(seasons, &amp;IO.puts/1)</code></pre>
-
-  <p>
-    In the list example, we were able to use <code>&amp;IO.puts/1</code>. In the map example though, we had to pull out the value by using the tuple, and then we needed to use the expanded version of <code>IO.puts/1</code> (<code>IO.puts(value)</code>) to output that value.
-  </p>
-
-  <h3>Where to find more functions</h3>
-
-  <div class='todo'>
-    Talk about the <code>h</code> helper in the iex prompt.
-
-    Talk about tab complete here too?
-
-    TODO: Link to https://hexdocs.pm/elixir/
-
-  </div>
+<section>
 
 
   <h3>Exercises</h3>
 
   <ul>
+    <li>Use a combination of <code>Enum.map/2</code> and <code>String.replace/3</code> to replace all the e's in these words with another letter of your choosing: <code>["a", "very", "fine", "collection", "of", "words", "enunciated"]</code></li>
+    <li>Use <code>Enum.reduce/2</code> to multiply these numbers together: <code>[5, 12, 9, 24, 9, 18]</code></li>
   </ul>
 </section>
 

@@ -50,14 +50,47 @@ greeting.("world")</code></pre>
   <h4>Splitting a string</h4>
 
   <p>
-    What about if we wanted to split a string into its individual words? For that, we can use the <code>split</code> function:
+    What about if we wanted to split a string into its individual words? For that, we can use the <code>String.split</code> function:
   </p>
 
 <pre><code>iex> String.split("split my string into pieces")
 [<span class='console-green'>"split"</span>, <span class='console-green'>"my"</span>, <span class='console-green'>"string"</span>, <span class='console-green'>"into"</span>, <span class='console-green'>"pieces"</span>]</code></pre>
 
   <p>
-    We now have a list of the words in the string. We'll see what we could do with such a list a little later in the chapter. For now, let's look at what else is in this <code>String</code> module.
+    We now have a list of the words in the string. We'll see what we could do with such a list in the next chapter. For now, let's look at what else is in this <code>String</code> module.
+  </p>
+
+  <h4>Replacing parts of a string</h4>
+
+  <p>
+    What about if we wanted to replace all the occurrences of a particular letter in a string with another one? For that, Elixir has the <code>String.replace</code> function:
+  </p>
+
+<pre><code>iex> String.replace("moo", "o", "e")
+"mee"</code></pre>
+
+  <p>
+    This function takes three arguments:
+  </p>
+
+  <ol>
+    <li>The string we want to modify</li>
+    <li>The part of the string we want to change</li>
+    <li>What we want it to change to</li>
+  </ol>
+
+  <p>
+    The way we've used the function here means that it will change all the "o"s in the string into "e"s.
+
+  <p>
+    It's worth noting that we can change more than single character at a time too:
+  </p>
+
+  <pre><code>iex> String.replace("the cow jumped over the moon", "oo", "ee")
+"the cow jumped over the meen"</code></pre>
+
+  <p>
+    Notice here that it didn't change the "o" in the word "cow" or the other "o" in the word "over". This is because we told the function to look for <em>two</em> "o"s in a row.
   </p>
 
   <h4>Making all the letters of a string uppercase</h4>
@@ -80,10 +113,6 @@ greeting.("world")</code></pre>
 
   <p>
     So as you can see, the <code>String</code> module has some helpful functions that can help us whenever we need to split a string, turn it all into upper / lower ("down") case. There's plenty more functions in the <code>String</code> module, and we'll see some of those in due time.
-  </p>
-
-  <p>
-    Let's take a look at working with something brand new that we have never worked with before: input and output.
   </p>
 </section>
 
@@ -200,6 +229,42 @@ Hello, Reader! You're 30ish? That's so old!</code></pre>
 
   <p>
     This is just a small example of what we can do with <code>IO.gets</code> and <code>IO.puts</code>. We could use any number of <code>IO.gets</code> and <code>IO.puts</code> function calls to build up a program that took user input and generated some output from it.
+  </p>
+</section>
+
+
+<section>
+  <h3>The unchanging world</h3>
+
+  <p>
+    Now's a good time as any to introduce to you to another feature of Elixir, called <em>immutability</em>. Immutability is another one of those big computer science-y fancy word which is used to describe things that do not change over time. "Do not change over time" made a whole load more sense to me than "immutability" when I first heard the word, to be perfectly honest.
+  </p>
+
+  <p>
+    We're talking about it in this chapter because nearly everything you've worked with so far in Elixir is <em>immutable</em>; unchanging and unchangeable. Most things in Elixir cannot be changed, modified, altered, messed with or any other synonym for those terms, and the way we talk about this particular attribute for these things is to say that these things are <em>immutable</em>.
+  </p>
+
+  <p>
+    When we've called a function such as <code>String.downcase</code> or <code>String.upcase</code>, we pass these functions strings as arguments and then we get back another string from the function; two completely different strings. All functions in Elixir behave this way: they can not modify what they're given. Let's look at a quick example:
+  </p>
+
+<pre><code>iex> sentence = "perfectly normal sentence"
+"perfectly normal sentence"
+iex> upcased_sentence = String.upcase(sentence)
+"PERFECTLY NORMAL SENTENCE"
+iex> sentence
+"perfectly normal sentence"
+</code></pre>
+
+  <p>
+    By running <code>String.upcase</code> on the sentence, it doesn't change what the <code>sentence</code> is -- it's still exactly as we defined it. The data stored in the <code>sentence</code> variable is <em>immutable</em>. The only way we could change what is in that variable is if we re-assigned that variable:
+  </p>
+
+<pre><code>iex> sentence = "another, even more perfectly normal sentence"
+"another, even more perfectly normal sentence"</code></pre>
+
+  <p>
+    It's important to know in Elixir that calling functions on data will never change that data. What will happen instead is that we'll get back some new... thing as a result of that function. This will become more apparent the more Elixir code you write, but I thought it best to mention it here before you get too deep and someone mentions that big fancy word. Now you're -- as they say -- "in the know" too.
   </p>
 </section>
 
