@@ -378,13 +378,21 @@ cap.("summer")
   <pre><code>iex> scores = [74, 79, 89, 32, 79, 70, 32, 69, 76, 73, 88, 73, 82, 31]</code></pre>
 
   <p>
-    I wanted to keep writing numbers above but 14 numbers just felt right for some reason. It looks like most people in this test did particularly well. Good on them! A few didn't do so great and only scored 32 and one scored 31. Anyway, let's not look too closely at the data. What we're trying to do is to calculate the average for these scores and to do that we might want to reach for a calculator. The way that we would do this calculation on a calculator is that we would add each number up, one at a time, to calculate the sum:
+    I wanted to keep writing numbers above but 14 numbers just felt right for some reason. It looks like most people in this test did particularly well. Good on them! A few didn't do so great and only scored 32 and one scored 31. Anyway, let's not look too closely at the data. What we're trying to do is to calculate the average for these scores and to do that we might try to sum these numbers up ourselves on a piece of paper
+  </p>
+
+  <figure>
+    <img src='/9-lists/images/reduce-sum.png'>
+    <figcaption>Adding together numbers manually</figcaption>
+  </figure>
+
+  Or we might try using a calculator instead, as that's less error-prone. The way that we would do this calculation on a calculator is exactly as above: we would add each number up, one at a time, to calculate the sum. Our input into the calculator would be this:
   </p>
 
   <pre><code>74 + 79 + 89 + 32 + 79 + 70 + 32 + 69 + 76 + 73 + 88 + 73 + 82 + 31</code></pre>
 
   <p>
-    The calculator would then tell us that the sum of these numbers is <code>947</code>. Go ahead and check this in your <code>iex</code> console too if you'd like; after all, it's just a super-powered calculator.
+    The calculator would then tell us that the sum of these numbers is <code>947</code>, as our on-paper working out should've shown us too. Go ahead and check this in your <code>iex</code> console too if you'd like; after all, it's just a super-powered calculator.
   </p>
 
   <p>
@@ -480,18 +488,28 @@ end)</code></pre>
     So then where does 153 come from? The answer is easy: <code>74 + 79 = 153</code>. So we can tell from the output here that our <code>reduce/2</code> function is taking the first item from our list and making that the initial <code>sum</code> argument for our inner function. The second item then becomes the <code>score</code> argument. In the function, we're adding these two values together, and that results in 153. The <code>reduce/2</code> function keeps going through the remaining numbers in the list, adding them one-at-a-time until we get the final result.
   </p>
 
-  <div class='todo'>
-    IMAGE GOES HERE
-  </div>
-
   <p>
     So that's the wonderful <code>reduce/2</code> function, or at least one example of it. As you can see, it's very handy for when we want to combine (or <em>reduce</em>) several items into one item.
+  </p>
+
+  <p>
+    It's at this point that I should probably mention one more function in the <code>Enum</code> toolbox called <code>sum/1</code>. This function takes a list and sums up all the items in it, just like our <code>reduce/2</code> function. These two functions are identical in how they work:
+  </p>
+
+<pre><code>
+iex> scores = [74, 79, 89, 32, 79, 70, 32, 69, 76, 73, 88, 73, 82, 31]
+[74, 79, 89, 32, 79, 70, 32, 69, 76, 73, 88, 73, 82, 31]
+iex> Enum.sum(scores)
+947
+iex> Enum.reduce(scores, fn (score, sum) -> sum + score end)
+947</code></pre>
+
+  <p>
+    So if you're wanting to sum up a list of numbers, it's better to use <code>Enum.sum/1</code>, than to use to <code>Enum.reduce/2</code>, just because it's less code. If you want to do another operation other than summing, like subtraction, multiplication, division and so on, then it's better to use <code>Enum.reduce/2</code>.
   </p>
 </section>
 
 <section>
-
-
   <h3>Exercises</h3>
 
   <ul>

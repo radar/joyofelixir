@@ -102,6 +102,18 @@ article {
       margin: 0;
     }
   }
+
+  figure {
+    text-align: center;
+
+    img {
+      border: 1px solid #D7D7D7;
+    }
+
+    figcaption {
+      font-size: 85%;
+    }
+  }
 }
 
 footer {
@@ -134,10 +146,6 @@ footer {
 
 .large {
   font-size: 3.5rem;
-}
-
-.center {
-  text-align: center;
 }
 
 .intro {
