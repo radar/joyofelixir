@@ -294,12 +294,16 @@ iex> road.("low")
     But what happens if it's neither? We can find out with a touch of experimentation in our iex prompt:
   </p>
 
-<pre><code>iex> road.("middle")
-<span class='console-red'>** (FunctionClauseError) no function clause matching&#9166;
-  in :erl_eval."-inside-an-interpreted-fun-"/1</span></code></pre>
+<pre><code class='hljs text'>iex> road.("middle")
+<span class='console-red'>** (FunctionClauseError) no function clause matching in :erl_eval."-inside-an-interpreted-fun-"/1</span>
+
+    The following arguments were given to :erl_eval."-inside-an-interpreted-fun-"/1:
+
+        # 1
+        <span class='console-green'>"middle"</span></code></pre>
 
   <p>
-    Elixir here is showing us an error that we've never seen before: a <code>FunctionClauseError</code>. This error happens when we call a function giving it arguments that it doesn't expect. In the case of our <code>road</code> function, it's expecting either <code>"high"</code> or <code>"low"</code>, but we gave it <code>"middle"</code>. Both clauses of the function don't match the value of "middle", and so we see this error.
+    Elixir here is showing us an error that we've never seen before: a <code>FunctionClauseError</code>. This error happens when we call a function giving it arguments that it doesn't expect. In the case of our <code>road</code> function, it's expecting either <code>"high"</code> or <code>"low"</code>, but we gave it <code>"middle"</code>. Both clauses of the function don't match the value of "middle", and so we see this error. To be extra helpful, Elixir is showing us the argument that we passed here.
   </p>
 
   <p>

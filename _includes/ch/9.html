@@ -191,7 +191,16 @@ List.reverse(animals_or_derivatives_of_animals, [1, 2, 3])
 <pre><code>iex> seasons = ["summer", "fall", "winter", "spring"]</code></pre>
 
   <p>
-    The simplest way of enumerating through a list in Elixir is to use the <code>Enum.each</code> function. This function takes two arguments: the thing we want to enumerate through and a function to run for each of the items. Let's take a look at an example:
+    The simplest way of enumerating through a list in Elixir is to use the <code>Enum.each/2</code> function. Remember that the <code>/2</code> here means that the function takes two arguments. Those two arguments are:
+  </p>
+
+  <ol>
+    <li>The thing we want to enumerate over; and</li>
+    <li>a function to run for each of the items.</li>
+  </ol>
+
+  <p>
+    Let's take a look at an example:
   </p>
 
 <pre><code>iex> Enum.each(seasons, &amp;IO.puts/1)</code></pre>
