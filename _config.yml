@@ -20,14 +20,15 @@ url: "" # the base hostname & protocol for your site, e.g. http://example.com
 exclude:
   - pdf.rb
   - book.pdf
+  - spec
+  - Rakefile
+  - Gemfile
+  - Gemfile.lock
 
 # Build settings
 markdown: kramdown
 sass:
     sass_dir: _sass
-exclude:
-  - Gemfile
-  - Gemfile.lock
 
 
 elixir_version: 1.5.2
