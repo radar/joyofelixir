@@ -21,3 +21,11 @@ group :jekyll_plugins do
 end
 
 gem 'minima'
+
+gem 'rake'
+gem 'minitest'
+gem 'capybara'
+gem 'launchy'
+gem 'chromedriver-helper'
+gem 'selenium-webdriver'
+
