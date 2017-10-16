@@ -71,7 +71,7 @@ List.reverse(animals_or_derivatives_of_animals, [1, 2, 3])
 ["Hell", ", W", "rld!"]</code></pre>
 
   <p>
-    The second argument to <code>String.split/2</code> tells the computer where to split the string. With the single argument version, the computer assumed we wanted to split on the spaces between the words. With the two argument version -- that is, the <code>/2</code> version -- we tell it that we want to split on the <code>"o"</code> character instead.
+    The second argument to <code>String.split/2</code> tells the computer where to split the string. With the single argument version, the computer assumed we wanted to split on the spaces between the words. With the two argument version &mdash; that is, the <code>/2</code> version &mdash; we tell it that we want to split on the <code>"o"</code> character instead.
   </p>
 
   <p>
@@ -334,7 +334,7 @@ cap.("summer")
 [<span class='console-green'>"Summer"</span>, <span class='console-green'>"Fall"</span>, <span class='console-green'>"Winter"</span>, <span class='console-green'>"Spring"</span>]</code></pre>
 
   <p>
-    Hooray! Each of our seasons now has a correctly capitalized name. What's happened here is that we've told the <code>map</code> function that we want it to run another function -- that'd be the <code>String.capitalize/1</code> function -- on each item of the <code>seasons</code> list. This is how we've been able to go from our existing list with non-capitalized season names to a new list with capitalized names.
+    Hooray! Each of our seasons now has a correctly capitalized name. What's happened here is that we've told the <code>map</code> function that we want it to run another function &mdash; that'd be the <code>String.capitalize/1</code> function &mdash; on each item of the <code>seasons</code> list. This is how we've been able to go from our existing list with non-capitalized season names to a new list with capitalized names.
   </p>
 
   <aside>
@@ -345,11 +345,11 @@ cap.("summer")
     </p>
 
     <p>
-     The consensus from the Twitter hivemind (nestmind? flockmind?) seems to be that this is a math-y term which gets its meaning from the cartographer map -- wherein the dimensions of the Earth are represented graphically on a map. When you resize one part of the map, you have to resize all the other parts by making the same transformation, otherwise the map no longer makes sense. I found that kind of fascinating, to be quite honest.
+     The consensus from the Twitter hivemind (nestmind? flockmind?) seems to be that this is a math-y term which gets its meaning from the cartographer map &mdash; wherein the dimensions of the Earth are represented graphically on a map. When you resize one part of the map, you have to resize all the other parts by making the same transformation, otherwise the map no longer makes sense. I found that kind of fascinating, to be quite honest.
     </p>
 
     <p>
-      In math, the term "map" means to take a set of numbers and then to apply the same function across them to transform them into a new set of numbers. Hey, that's like what we're doing here -- except we've got a set of words, and not numbers. We're taking a list of strings and then transforming them into a new list of strings.
+      In math, the term "map" means to take a set of numbers and then to apply the same function across them to transform them into a new set of numbers. Hey, that's like what we're doing here &mdash; except we've got a set of words, and not numbers. We're taking a list of strings and then transforming them into a new list of strings.
     </p>
   </aside>
 
@@ -369,7 +369,7 @@ cap.("summer")
 [8, 16, 30, 32, 46, 84]</code></pre>
 
   <p>
-    With our own function here, we're taking each element of the list -- represented inside the function as the variable <code>number</code> -- and then multiplying it by 42. When <code>Enum.map/2</code> has finished going through the list, it outputs a new list showing us the result of running that function on all items in the list.
+    With our own function here, we're taking each element of the list &mdash; represented inside the function as the variable <code>number</code> &mdash; and then multiplying it by 42. When <code>Enum.map/2</code> has finished going through the list, it outputs a new list showing us the result of running that function on all items in the list.
   </p>
 
   <h4>Reducing an enumerable</h4>
