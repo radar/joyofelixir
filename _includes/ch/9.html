@@ -224,22 +224,6 @@ spring
     This particular combination of those three things has made Elixir output each season on a single line in our <code>iex</code> prompt. Then there's one more thing: that little blue <code>:ok</code> at the end of our output. This indicates to us that the iterating with <code>Enum.each/2</code> worked successfully.
   </p>
 
-  <aside>
-    <header>Try this one as a program too</header>
-
-    <p>
-      You should try running the above example as an Elixir script too. Save this file at <code>seasons.exs</code> and run it with <code>elixir seasons.exs</code>.
-    </p>
-
-    <p>
-      What you'll see will mostly be the same: all the seasons are output on their own lines. What you won't see is that final <code>:ok</code>. This is because when we run a function in the <code>iex</code> prompt, the function will always tell us what its result is.
-    </p>
-
-    <p>
-      However when we get to the "big time" of running an actual program, Elixir will only generate output once we tell it to; with something such as <code>IO.puts/1</code>. This is why when you run this script you're <em>not</em> going to see <code>:ok</code>.
-    </p>
-  </aside>
-
   <p>
     Let's take a closer look at what this is doing. Specifically: what <code>&amp;IO.puts/1</code> is doing. You know in Elixir that functions can take arguments and you might have in your head that those arguments could be strings, lists or maps becuase this is what we've seen done previously. But function arguments can also be other functions. This is what's happening here when we're using <code>&amp;IO.puts/1</code>. We're passing that function as an argument to <code>Enum.each/2</code>.
   </p>
@@ -257,6 +241,24 @@ puts.("summer")
   <p>
     With this code, we've assigned the <code>IO.puts/1</code> function to a variable called <code>puts</code>. This is similar to what's going on inside the <code>Enum.each/2</code> function: whatever function we pass as the second argument will be stored with a particular name. Then <code>Enum.each/2</code> goes through each of the items and calls the provided function on it, just like we've done above.
   </p>
+
+
+
+  <aside>
+    <header>Try this one as a program too</header>
+
+    <p>
+      You should try running the above example as an Elixir script too. Save this file at <code>seasons.exs</code> and run it with <code>elixir seasons.exs</code>.
+    </p>
+
+    <p>
+      What you'll see will mostly be the same: all the seasons are output on their own lines. What you won't see is that final <code>:ok</code>. This is because when we run a function in the <code>iex</code> prompt, the function will always tell us what its result is.
+    </p>
+
+    <p>
+      However when we get to the "big time" of running an actual program, Elixir will only generate output once we tell it to; with something such as <code>IO.puts/1</code>. This is why when you run this script you're <em>not</em> going to see <code>:ok</code>.
+    </p>
+  </aside>
 
   <p>
     "That last line looks exactly like how we ran functions back in Chapter 5", Roberto exclaims. Yes, Roberto! That is exactly right. Back in that chapter we defined a <code>greeting</code> function like this:
