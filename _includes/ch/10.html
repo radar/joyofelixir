@@ -90,18 +90,148 @@ Roberto
 <section>
   <h3>Mapping over maps</h3>
 
+  <p>
+    I wonder what map we could use this time. We've used the <code>person</code> map quite a few times already:
+  </p>
+
+<pre>
+<code>iex> person = %{"name" => "Roberto", "age" => "30ish", "gender" => "Male"}</code></pre>
+
+  <p>
+    We should try to use another map for this section. Hmmmm. How about a map with the days of the week and their expected temperatures? Here's what the week ahead looks like in Melbourne at this current point of writing:
+  </p>
+
+<pre><code>%{
+  "Monday" => 28,
+  "Tuesday" => 29,
+  "Wednesday" => 29,
+  "Thursday" => 24,
+  "Friday" => 16,
+  "Saturday" => 16,
+  "Sunday" => 20
+}</code></pre>
+
+  <p>
+    These expected temperatures aren't just random numbers. That's just Melbourne for you. It just can't make up its mind. Now what if for our American friends we represented these numbers in their familiar &mdash; but wacky &mdash; farenheit? Otherwise they might read the numbers and think that Melbourne is a frigid hellscape, which <a href='https://www.theguardian.com/australia-news/2017/aug/16/melbourne-worlds-most-liveable-city-for-seventh-year-running'>it most certainly is not</a>.
+  </p>
+
+  <p>
+    So we want to convert these temperatures from their celcius amounts into the farenheit equivalents, turning the map into this:
+  </p>
+
+<pre><code>%{
+  "Monday" => 82.4,
+  "Tuesday" => 84.2,
+  "Wednesday" => 84.2,
+  "Thursday" => 75.2,
+  "Friday" => 60.8,
+  "Saturday" => 60.8,
+  "Sunday" => 68
+}</code></pre>
+
+  <p>
+    We know already how to convert these numbers if it was simply list of those numbers, without the days of the week, like this:
+  </p>
+
+<pre><code>[28, 29, 29, 24, 16, 16, 20]</code></pre>
+
+  <p>
+    We would use <code>Enum.map/2</code> to run a function on each of these numbers to convert the numbers to farenheit (using that function that we saw back in <a href='/5-funky-functions'>Chapter 5</a>:
+  </p>
+
+<pre><code>iex> forecast = [28, 29, 29, 24, 16, 16, 20]
+  [28, 29, 29, 24, 16, 16, 20]
+  iex> Enum.map(forecast, fn (temp) -> temp * 1.8 + 32 end)
+  [82.4, 84.2, 84.2, 75.2, 60.8, 60.8, 68.0]</code></pre>
+
+  <p>
+    So what if we just tried using <code>Enum.map/2</code> on our forecast map instead of on a list? What would that look like? Let's see:
+  </p>
+
+<pre><code>iex> forecast = %{
+  "Monday" => 28,
+  "Tuesday" => 29,
+  "Wednesday" => 29,
+  "Thursday" => 24,
+  "Friday" => 16,
+  "Saturday" => 16,
+  "Sunday" => 20
+}
+%{"Friday" => 16, ...}
+iex> Enum.map(forecast, fn ({day, temp}) -> {day, temp * 1.8 + 32} end)
+[
+  {"Friday", 60.8},
+  {"Monday", 82.4},
+  {"Saturday", 60.8},
+  {"Sunday", 68.0},
+  {"Thursday", 75.2},
+  {"Tuesday", 84.2},
+  {"Wednesday", 84.2}
+]</code></pre>
+
+  <p>
+    "Hey, that's no map! That's a list!", Roberto exclaims, seemingly adapting a quote from a relatively niche space opera series. That's right, Roberto. When we call <code>Enum.map/2</code> on either a list or a map we're going to get back a list regardless. This has to do with how Elixir thinks of maps: it thinks of them as a list of key-value tuples, rather than the friendly <code>%{}</code> syntax that we know and love. To get this data back into the format that we're familiar with, we're going to need to use another function from the <code>Enum</code> toolbox, called <code>Enum.into/2</code>.
+  </p>
+
+  <p>
+    Let's run our <code>Enum.map/2</code> line again, but this time we'll assign the output to a variable.
+  </p>
+
+<pre><code>iex> new_forecast = Enum.map(forecast, fn ({day, temp}) -> {day, temp * 1.8 + 32} end)
+[
+  {"Friday", 60.8},
+  {"Monday", 82.4},
+  {"Saturday", 60.8},
+  {"Sunday", 68.0},
+  {"Thursday", 75.2},
+  {"Tuesday", 84.2},
+  {"Wednesday", 84.2}
+]</code></pre>
+
+  <p>
+    Then we can use <code>Enum.into/2</code> to convert this list of tuples back into a map:
+  </p>
+
+<pre><code>iex> Enum.into(new_forecast, %{})
+%{"Friday" => 60.8, "Monday" => 82.4, "Saturday" => 60.8, "Sunday" => 68.0,
+  "Thursday" => 75.2, "Tuesday" => 84.2, "Wednesday" => 84.2}</code></pre>
+
+  <p>
+    That's better! Our data is back into the shape of a map... but the days of the week have lost their ordering. That'll be a problem that I'll leave as an exercise for you to fix at the end of this chapter.
+  </p>
+
+  <p>
+    So here we've seen how to use the <code>Enum.map/2</code> and <code>Enum.into/2</code> functions to iterate through a map's elements to run a function on each of those elements.
+  </p>
+
+  <p>
+    However, there is a cleaner way of writing the above code and that's with the help of one of the best Elixir features: the pipe operator. Let's spend a little while looking at the pipe operator now.
+  </p>
 </section>
 
 <section>
-  <h3>Reducing maps</h3>
+  <h3>The wonderful pipe operator</h3>
 
+  <div class='todo'>
+    Cover above <code>Enum.map/2</code> and <code>Enum.into/2</code> example with the pipe operator.
+  </div>
+</section>
+
+<section>
+
+<section>
+  <h3>Mapping and reducing maps</h3>
+
+  <div class='todo'>
+    Cover forecast example here, first mapping to farenheit, then using sum, then dividing to get the average.
+  </div>
 </section>
 
 <section>
   <h3>Other map functions</h3>
 
   <div class='todo'>
-    Cover <code>Map</code> functions like <code>Map.get</code>, <code>Map.put</code> and <code>Map.merge</code>.
+    Cover <code>Map</code> functions like <code>Map.get</code>, <code>Map.put</code> and <code>Map.merge</code>. We could use the pipe operator some more here too.
   </div>
 </section>
 
@@ -116,4 +246,15 @@ Roberto
     TODO: Link to https://hexdocs.pm/elixir/
 
   </div>
+</section>
+
+<section>
+  <h3>Exercises</h3>
+
+  <p>After mapping through our forecast map early in the chapter and converting its numbers from celcius to farenheit, we lost the proper ordering of the days of the week.</p>
+
+<pre><code>%{"Friday" => 60.8, "Monday" => 82.4, "Saturday" => 60.8, "Sunday" => 68.0,
+  "Thursday" => 75.2, "Tuesday" => 84.2, "Wednesday" => 84.2}</code></pre>
+
+  <p>Can you find a function in <code>Enum</code> that would let us output the days of the week and their temperatures in the right order?</p>
 </section>
