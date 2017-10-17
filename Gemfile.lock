@@ -17,6 +17,7 @@ GEM
     chromedriver-helper (1.1.0)
       archive-zip (~> 0.7.0)
       nokogiri (~> 1.6)
+    coderay (1.1.2)
     colorator (1.1.0)
     ffi (1.9.18)
     forwardable-extended (2.6.0)
@@ -44,15 +45,17 @@ GEM
       rb-fsevent (~> 0.9, >= 0.9.4)
       rb-inotify (~> 0.9, >= 0.9.7)
     mercenary (0.3.6)
+    method_source (0.9.0)
     mini_mime (0.1.4)
     mini_portile2 (2.3.0)
-    minima (2.1.1)
-      jekyll (~> 3.3)
     minitest (5.10.3)
     nokogiri (1.8.1)
       mini_portile2 (~> 2.3.0)
     pathutil (0.14.0)
       forwardable-extended (~> 2.6)
+    pry (0.11.1)
+      coderay (~> 1.1.0)
+      method_source (~> 0.9.0)
     public_suffix (2.0.5)
     rack (2.0.3)
     rack-test (0.7.0)
@@ -79,8 +82,8 @@ DEPENDENCIES
   chromedriver-helper
   jekyll (= 3.4.3)
   launchy
-  minima
   minitest
+  pry
   rake
   sass
   selenium-webdriver

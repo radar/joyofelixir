@@ -20,8 +20,7 @@ gem "sass"
 group :jekyll_plugins do
 end
 
-gem 'minima'
-
+gem 'pry'
 gem 'rake'
 gem 'minitest'
 gem 'capybara'

@@ -12,6 +12,14 @@ class TestBook < Minitest::Test
     visit "http://localhost:4000/toc"
   end
 
+  def click_next_link
+    first(:link, "Next").click
+  end
+
+  def click_previous_link
+    first(:link, "Previous").click
+  end
+
   def test_home_about_link
     go_home
     click_link "About Joy of Elixir"
@@ -100,6 +108,59 @@ class TestBook < Minitest::Test
     go_toc
     click_link "Setup and install"
     assert page.has_content?("Appendix A: Setup and Install")
+  end
+
+  def test_walkthrough_forwards
+    visit "http://localhost:4000/i-but-who-is-this-book-for-really/"
+    click_next_link
+    assert page.has_content?("II. Elixir? Isn't that something you drink?")
+    click_next_link
+    assert page.has_content?("1. Appeasing the masses with code")
+    click_next_link
+    assert page.has_content?("2. Now, where did I put that value?")
+    click_next_link
+    assert page.has_content?("3. Lovely lists")
+    click_next_link
+    assert page.has_content?("4. Marvellous maps")
+    click_next_link
+    assert page.has_content?("5. Funky functions")
+    click_next_link
+    assert page.has_content?("6. Pattern matching")
+    click_next_link
+    assert page.has_content?("7. Intermission: Recap")
+    click_next_link
+    assert page.has_content?("8. Working with strings, input and output")
+    click_next_link
+    assert page.has_content?("9. Working with lists")
+    click_next_link
+    assert page.has_content?("10. Working with maps")
+  end
+
+    def test_walkthrough_backwards
+    visit "http://localhost:4000/10-maps"
+    assert page.has_content?("10. Working with maps")
+    click_previous_link
+    assert page.has_content?("9. Working with lists")
+    click_previous_link
+    assert page.has_content?("8. Working with strings, input and output")
+    click_previous_link
+    assert page.has_content?("7. Intermission: Recap")
+    click_previous_link
+    assert page.has_content?("6. Pattern matching")
+    click_previous_link
+    assert page.has_content?("5. Funky functions")
+    click_previous_link
+    assert page.has_content?("4. Marvellous maps")
+    click_previous_link
+    assert page.has_content?("3. Lovely lists")
+    click_previous_link
+    assert page.has_content?("2. Now, where did I put that value?")
+    click_previous_link
+    assert page.has_content?("1. Appeasing the masses with code")
+    click_previous_link
+    assert page.has_content?("II. Elixir? Isn't that something you drink?")
+    click_previous_link
+    assert page.has_content?("I. But who is this book for, really?")
   end
 
   def teardown
