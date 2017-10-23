@@ -169,22 +169,26 @@ footer {
   }
 }
 
-.dotted {
-  padding: 0 2px;
+.highlight {
+  padding: 2px 3px;
 }
 
-.dotted-red {
-  border: 3px dashed $red;
+.highlight-red {
+  background: $red;
+  color: lighten($red, 30);
 }
 
-.dotted-yellow {
-  border: 3px dashed $yellow;
+.highlight-yellow {
+  background: $yellow;
+  color: lighten($yellow, 30);
 }
 
-.dotted-green {
-  border: 3px dashed $green;
+.highlight-green {
+  background: $green;
+  color: lighten($green, 30);
 }
 
-.dotted-blue {
-  border: 3px dashed $blue;
+.highlight-blue {
+  background: $blue;
+  color: lighten($blue, 25);
 }
