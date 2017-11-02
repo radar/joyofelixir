@@ -31,7 +31,7 @@
 %{<span class='console-green'>"age"</span> => <span class='console-green'>"30ish"</span>, <span class='console-green'>"gender"</span> => <span class='console-green'>"Male"</span>, <span class='console-green'>"name"</span> => <span class='console-green'>"Roberto"</span>}</code></pre>
 
   <p>
-    In a map, we structure data using <em>keys</em> and <em>values</em>. The thing to the <em>left</em> of the <code>=></code> is called a <em>key</em> and the thing to the <em>right</em> is called a <em>value</em>.
+  Maps start with a <code>%</code> and enclose their data in a warm curly-brace cuddle. In a map, we structure data using <em>keys</em> and <em>values</em>. The thing to the <em>left</em> of the <code>=></code> is called a <em>key</em> and the thing to the <em>right</em> is called a <em>value</em>.
   </p>
 
   <figure>
@@ -40,7 +40,7 @@
   </figure>
 
   <p>
-    Just like on a map of something like a mall, a key here tells us where to find a particular value. If, for instance, we wanted to know the age of this person, we can use the key "age" to pluck out that value. We'll see that in a moment.
+    Just like on a map of something like a city or a walking trail, a key here tells us where to find a particular value. If, for instance, we wanted to know the age of this person, we can use the key "age" to pluck out that value. We'll see that in a moment.
   </p>
 
   <p>
@@ -97,14 +97,17 @@
 
 <pre><code>iex> those_who_are_assembled = [
 ...> %{"age" => "30ish", "gender" => "Male", "name" => "Roberto"},
-...> %{"age" => "30ish", "gender" => "Male", "name" => "The Author"},
-...> %{"age" => "Unknowable", "gender" => "Unknowable", "name" => "The Reader"},
-...> %{"age" => "38", "gender" => "Female", "name" => "Juliet"},
-...> %{"age" => "21", "gender" => "Female", "name" => "Mary"},
-...> %{"age" => "67", "gender" => "Female", "name" => "Bobalina"},
-...> %{"age" => "54", "gender" => "Male", "name" => "Charlie"},
-...> %{"age" => "10", "gender" => "Male", "name" => "Charlie (no relation)"},
+...> %{"gender" => "Male", "name" => "The Author", "age" => "30ish"},
+...> %{"name" => "The Reader", "gender" => "Unknowable", "age" => "Unknowable"},
 ...> ]</code></pre>
+
+  <p>
+    We don't just have to use strings as the items inside of lists. We can use maps too!
+  </p>
+
+  <p>
+    This list of maps containing the information of those who are assembled is immune to the problem we were seeing at the start of this chapter. It doesn't matter what order the key-value combinations of age, name or gender are placed -- the maps will contain the right information at the right spots. As an additional bonus, we can refer to these values with their keys, rather than having to remember their positions.
+  </p>
 
   <p>
     Roberto excitedly disappears into the crowd again with this new knowledge.

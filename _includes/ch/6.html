@@ -64,17 +64,9 @@ iex> score = 2 / 5 * 100
 
 <pre><code>iex> those_who_are_assembled = [
 ...> %{"age" => "30ish", "gender" => "Male", "name" => "Roberto"},
-...> %{"age" => "30ish", "gender" => "Male", "name" => "The Author"},
-...> %{"age" => "Unknowable", "gender" => "Unknowable", "name" => "The Reader"},
-...> %{"age" => "38", "gender" => "Female", "name" => "Juliet"},
-...> %{"age" => "21", "gender" => "Female", "name" => "Mary"},
-...> %{"age" => "67", "gender" => "Female", "name" => "Bobalina"},
-...> %{"age" => "54", "gender" => "Male", "name" => "Charlie"},
-...> %{"age" => "10", "gender" => "Male", "name" => "Charlie (no relation)"},
-...> ]
-[%{"age" => "30ish", "gender" => "Male", "name" => "Roberto"},
- %{"age" => "30ish", "gender" "Male", "name" => "The Author"}
-...]</code></pre>
+...> %{"gender" => "Male", "name" => "The Author", "age" => "30ish"},
+...> %{"name" => "The Reader", "gender" => "Unknowable", "age" => "Unknowable"},
+...> ]</code></pre>
 
   <p>
     And let's also say that we wanted to grab first 3 people in this list, but then ignore the remainder -- given that the first three are clearly the most important people here. We can use some pattern matching on this list:
@@ -207,17 +199,9 @@ iex> age
 
 <pre><code>iex> those_who_are_assembled = [
 ...> %{"age" => "30ish", "gender" => "Male", "name" => "Roberto"},
-...> %{"age" => "30ish", "gender" => "Male", "name" => "The Author"},
-...> %{"age" => "Unknowable", "gender" => "Unknowable", "name" => "The Reader"},
-...> %{"age" => "38", "gender" => "Female", "name" => "Juliet"},
-...> %{"age" => "21", "gender" => "Female", "name" => "Mary"},
-...> %{"age" => "67", "gender" => "Female", "name" => "Bobalina"},
-...> %{"age" => "54", "gender" => "Male", "name" => "Charlie"},
-...> %{"age" => "10", "gender" => "Male", "name" => "Charlie (no relation)"},
-...> ]
-[%{"age" => "30ish", "gender" => "Male", "name" => "Roberto"},
- %{"age" => "30ish", "gender" "Male", "name" => "The Author"}
-...]</code></pre>
+...> %{"gender" => "Male", "name" => "The Author", "age" => "30ish"},
+...> %{"name" => "The Reader", "gender" => "Unknowable", "age" => "Unknowable"},
+...> ]</code></pre>
 
     <p>
       Let's say that we wanted to get the name of the first person from this list. We can combine both the list pattern matching and the map pattern matching together:
