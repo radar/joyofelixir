@@ -66,6 +66,8 @@
 
 ### Immutability
 
+* What is immutability?
+
 ## Chapter 9: Working with lists
 
 * List.first/1
@@ -78,3 +80,44 @@
 * BYO functions
 * Enum.reduce/2
 * Enum.sum/1
+
+## Chapter 10: Working with maps
+
+* Enum.each/2, with a map
+* Tuple syntax
+* Enum.map/2, with a map
+* Enum.into/2
+* The pipe operator
+* Map.get/2
+* Map.put/3
+* Map.delete/2
+
+## Chapter 11: Working with files
+
+* Reading
+* Writing
+* Deleting
+
+## Chapter 12: Finding more functions
+
+* h helper in iex prompt
+* Tab complete 
+* Elixir docs link
+
+## Chapter 13: Mixing it up
+
+* Introduction to Mix, similar in approach to the official guide, but using concepts just from this book. No agents.
+
+
+## Chapter 14: Where to from here?
+
+* Link to other resources, like Programming Elixir
+
+## (?) Multi-process chapter
+
+THOUGHT: Is this too advanced also?
+
+## (?) Concurrency chapter
+
+THOUGHT: Is this too advanced for a beginners book?
+
