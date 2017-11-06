@@ -113,11 +113,10 @@
 
 * Link to other resources, like Programming Elixir
 
-## (?) Multi-process chapter
-
-THOUGHT: Is this too advanced also?
-
 ## (?) Concurrency chapter
 
 THOUGHT: Is this too advanced for a beginners book?
 
+## (?) Multi-process chapter
+
+THOUGHT: Is this too advanced also?
