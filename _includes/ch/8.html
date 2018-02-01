@@ -165,7 +165,7 @@ What is your name? The Reader
 <span class='console-green'>"The Reader"</span></code></pre>
 
   <p>
-    That's much better! Now we have our name with that pesky new line character suffixed. What <code>String.trim</code> does is remove all the extra spacing from the end of a string, giving us just the important parts.
+    That's much better! Now we have our name without that pesky new line character suffixed. What <code>String.trim</code> does is remove all the extra spacing from the end of a string, giving us just the important parts.
   </p>
 </section>
 
@@ -237,7 +237,7 @@ Hello, Reader! You're 30ish? That's so old!</code></pre>
   <h3>The unchanging world</h3>
 
   <p>
-    Now's a good time as any to introduce to you to another feature of Elixir, called <em>immutability</em>. Immutability is another one of those big computer science-y fancy word which is used to describe things that do not change over time. "Do not change over time" made a whole load more sense to me than "immutability" when I first heard the word, to be perfectly honest.
+    Now's a good time as any to introduce to you to another feature of Elixir, called <em>immutability</em>. Immutability is another one of those big computer science-y fancy words which is used to describe things that do not change over time. "Do not change over time" made a whole load more sense to me than "immutability" when I first heard the word, to be perfectly honest.
   </p>
 
   <p>
@@ -245,7 +245,7 @@ Hello, Reader! You're 30ish? That's so old!</code></pre>
   </p>
 
   <p>
-    When we've called a function such as <code>String.downcase</code> or <code>String.upcase</code>, we pass these functions strings as arguments and then we get back another string from the function; two completely different strings. All functions in Elixir behave this way: they can not modify what they're given. Let's look at a quick example:
+    When we've called a function such as <code>String.downcase</code> or <code>String.upcase</code>, we pass these functions strings as arguments and then we get back another string from the function; two completely different strings. All functions in Elixir behave this way: they cannot modify what they're given. Let's look at a quick example:
   </p>
 
 <pre><code>iex> sentence = "perfectly normal sentence"
