@@ -50,7 +50,7 @@ List.reverse(animals_or_derivatives_of_animals)
     </p>
 
     <p>
-      Elixir functions can not only differ by <em>name</em> but also by the number of arguments that the function takes. This error message is telling us that we tried to call the <code>List.reverse/1</code> function. It's showing the <code>/1</code> at the end because we only passed one argument. If we passed two arguments instead of one it would tell us that we tried to call the <code>List.reverse/2</code> function instead.
+      Elixir functions not only differ by <em>name</em> but also by the number of arguments that the function takes. This error message is telling us that we tried to call the <code>List.reverse/1</code> function. It's showing the <code>/1</code> at the end because we only passed one argument. If we passed two arguments instead of one it would tell us that we tried to call the <code>List.reverse/2</code> function instead.
     </p>
 
 <pre><code>iex> List.reverse(animals_or_derivatives_of_animals, [1, 2, 3])
@@ -100,7 +100,7 @@ List.reverse(animals_or_derivatives_of_animals, [1, 2, 3])
   </p>
 
   <p>
-    Lists are a type of data in Elixir called an <em>enumerable</em>. Maps are also <em>enumerables</em>. This means that they can be <em>enumerated</em> through; which means that you can do something with each item in the enumerable object (a list or a map). For instance, if we were to write out our list on a piece of paper, it might look something like this:
+    Lists are a type of data in Elixir called an <em>enumerable</em>. Maps are also <em>enumerables</em>. This means that they can be <em>enumerated</em> through, which means that you can do something with each item in the enumerable object (a list or a map). For instance, if we were to write out our list on a piece of paper, it might look something like this:
   </p>
 
   <ul>
@@ -148,11 +148,11 @@ List.reverse(animals_or_derivatives_of_animals, [1, 2, 3])
   <h4>And now for the big reveal</h4>
 
   <p>
-  We need to keep in mind that when we're working with <em>enumerable</em> things in Elixir the function that we need might live elsewhere. While there is most certainly a <code>List</code> and a <code>Map</code> module (which we'll see in <a href='/10-maps'>the next chapter</a>) -- sometimes, we need to look in the <code>Enum</code> module too for the function we want.
+  We need to keep in mind that when we're working with <em>enumerable</em> things in Elixir the function that we need might live elsewhere. While there is most certainly a <code>List</code> and a <code>Map</code> module (which we'll see in <a href='/10-maps'>the next chapter</a>) &mdash; sometimes, we need to look in the <code>Enum</code> module too for the function we want.
   </p>
 
   <p>
-    We tried looking in the <code>List</code> module to find the <code>reverse/1</code> function so that we could turn our list around but it wasn't there. We found out a short while ago that the function is actually within the <code>Enum</code> module, so let's try using that function. Before that, let's get our list in Elixir form again. It's been a while since we've seen it that way:
+    We tried looking in the <code>List</code> module to find the <code>reverse/1</code> function so that we could turn our list around, but it wasn't there. We found out a short while ago that the function is actually within the <code>Enum</code> module, so let's try using that function. Before that, let's get our list in Elixir form again. It's been a while since we've seen it that way:
   </p>
 
 <pre><code>iex> animals_or_derivatives_of_animals = ["cat", "dog", "cow", "turducken"]</code></pre>
@@ -185,10 +185,10 @@ List.reverse(animals_or_derivatives_of_animals, [1, 2, 3])
   </p>
 
   <p>
-    Let's start with a list. How about a list of the seasons, just for something different?
+    Let's start with a list. How about a list of some days of the week, just for something different?
   </p>
 
-<pre><code>iex> seasons = ["summer", "fall", "winter", "spring"]</code></pre>
+<pre><code>iex> days = ["wednesday", "thursday", "friday"]</code></pre>
 
   <p>
     The simplest way of enumerating through a list in Elixir is to use the <code>Enum.each/2</code> function. Remember that the <code>/2</code> here means that the function takes two arguments. Those two arguments are:
@@ -203,25 +203,24 @@ List.reverse(animals_or_derivatives_of_animals, [1, 2, 3])
     Let's take a look at an example:
   </p>
 
-<pre><code>iex> Enum.each(seasons, &amp;IO.puts/1)</code></pre>
+<pre><code>iex> Enum.each(days, &amp;IO.puts/1)</code></pre>
 
   <p>
-    The first argument here is our list of seasons. The second argument is the function that we want to run for each item in this list: specifically the built-in <code>IO.puts/1</code> function. As we saw in the last chapter, <code>IO.puts/1</code> will output a string to the terminal during a program's execution.
+    The first argument here is our list of days. The second argument is the function that we want to run for each item in this list: specifically the built-in <code>IO.puts/1</code> function. As we saw in the last chapter, <code>IO.puts/1</code> will output a string to the terminal during a program's execution.
   </p>
 
   <p>
-    Let's take a look at what this combination of <code>Enum.each</code>, <code>seasons</code> and <code>&amp;IO.puts/1</code> does:
+    Let's take a look at what this combination of <code>Enum.each</code>, <code>days</code> and <code>&amp;IO.puts/1</code> does:
   </p>
 
-<pre><code>iex> Enum.each(seasons, &amp;IO.puts/1)
-summer
-fall
-winter
-spring
+<pre><code>iex> Enum.each(days, &amp;IO.puts/1)
+wednesday
+thursday
+friday
 <span class='console-blue'>:ok</span></code></pre>
 
   <p>
-    This particular combination of those three things has made Elixir output each season on a single line in our <code>iex</code> prompt. Then there's one more thing: that little blue <code>:ok</code> at the end of our output. This indicates to us that the iterating with <code>Enum.each/2</code> worked successfully.
+    This particular combination of those three things has made Elixir output each day on a single line in our <code>iex</code> prompt. Then there's one more thing: that little blue <code>:ok</code> at the end of our output. This indicates to us that the iterating with <code>Enum.each/2</code> worked successfully.
   </p>
 
   <p>
@@ -233,8 +232,8 @@ spring
   </p>
 
 <pre><code>iex> puts = &amp;IO.puts/1
-puts.("summer")
-"summer"
+puts.("wednesday")
+"wednesday"
 <span class='console-blue'>:ok</span>
 </code></pre>
 
@@ -248,11 +247,11 @@ puts.("summer")
     <header>Try this one as a program too</header>
 
     <p>
-      You should try running the above example as an Elixir script too. Save this file at <code>seasons.exs</code> and run it with <code>elixir seasons.exs</code>.
+      You should try running the above example as an Elixir script too. Save this file at <code>days.exs</code> and run it with <code>elixir days.exs</code>.
     </p>
 
     <p>
-      What you'll see will mostly be the same: all the seasons are output on their own lines. What you won't see is that final <code>:ok</code>. This is because when we run a function in the <code>iex</code> prompt, the function will always tell us what its result is.
+      What you'll see will mostly be the same: all the days are output on their own lines. What you won't see is that final <code>:ok</code>. This is because when we run a function in the <code>iex</code> prompt, the function will always tell us what its result is.
     </p>
 
     <p>
@@ -279,15 +278,15 @@ puts.("summer")
   </p>
 
 <pre><code>iex> cap = &amp;String.capitalize/1
-cap.("summer")
-<span class='console-green'>"Summer"</span>
+cap.("wednesday")
+<span class='console-green'>"Wednesday"</span>
 </code></pre>
 
   <p>
-    Here, the <code>String.capitalize/1</code> function takes a string and turns the first letter into a capital letter. In this code example, we're making it so that we can call the <code>String.capitalize/1</code> as if it were a function called <code>cap</code>. However, if we wanted to capitalise the names of our season using the <code>String.capitalize/1</code> function with <code>Enum.each/2</code> it wouldn't do very much:
+    Here, the <code>String.capitalize/1</code> function takes a string and turns the first letter into a capital letter. In this code example, we're making it so that we can call the <code>String.capitalize/1</code> as if it were a function called <code>cap</code>. However, if we wanted to capitalise the names of our days using the <code>String.capitalize/1</code> function with <code>Enum.each/2</code> it wouldn't do very much:
   </p>
 
-<pre><code>iex> Enum.each(seasons, &amp;String.capitalize/1)
+<pre><code>iex> Enum.each(days, &amp;String.capitalize/1)
 <span class='console-blue'>:ok</span></code></pre>
 
   <p>
@@ -301,26 +300,25 @@ cap.("summer")
   <h4>Map, but not the kind that you know already</h4>
 
   <p>
-    The names of these seasons should be capitalized because they are nouns, but whoever created this list neglected to capitalize them. Oops! What we should have is a list with proper capitalization:
+    The names of these days should be capitalized because they are proper nouns, but whoever created this list neglected to capitalize them. Oops! What we should have is a list with proper capitalization:
   </p>
 
-<pre><code>["Summer", "Fall", "Winter", "Spring"]</code></pre>
+<pre><code>["Wednesday", "Thursday", "Friday"]</code></pre>
 
   <p>
-    We tried using <code>Enum.each/2</code> to give us this list of capitalized seasons, but that just told us <code>:ok</code> and it didn't give us back a list of capitalized season names.
+    We tried using <code>Enum.each/2</code> to give us this list of capitalized days, but that just told us <code>:ok</code> and it didn't give us back a list of capitalized day names.
   </p>
 
   <p>
-    We're going to need a function that goes through each item in the list and applies <code>String.capitalize/1</code>, and then shows us the result of each application of that function. Something that would turn our existing <code>seasons</code> list into a list like this one:
+    We're going to need a function that goes through each item in the list and applies <code>String.capitalize/1</code>, and then shows us the result of each application of that function. Something that would turn our existing <code>days</code> list into a list like this one:
   </p>
 
-<pre><code>iex> seasons = [
-    String.capitalize("summer"),
-    String.capitalize("fall"),
-    String.capitalize("winter"),
-    String.capitalize("spring"),
+<pre><code>iex> days = [
+    String.capitalize("wednesday"),
+    String.capitalize("thursday"),
+    String.capitalize("friday"),
   ]
-  [<span class='console-green'>"Summer"</span>, <span class='console-green'>"Fall"</span>, <span class='console-green'>"Winter"</span>, <span class='console-green'>"Spring"</span>]</code></pre>
+  [<span class='console-green'>"Wednesday"</span>, <span class='console-green'>"Thursday"</span>, <span class='console-green'>"Friday"</span>]</code></pre>
 
   <p>
     But since we've already got a list we're going to have to do <em>something</em> to that list to turn it into what we want. That something is to use another function from the <code>Enum</code> module called <code>Enum.map/2</code>. This <code>map</code> function is different from the map kind of data (<code>%{"name" => "Roberto"}</code>), in that the function-called-map will take the specified enumerable and another function as arguments, then enumerate through each item in the list and run that other function for each item, and then return the result of each function run.
@@ -330,11 +328,11 @@ cap.("summer")
     Enough jibber-jabber. Let's see this in actual practice:
   </p>
 
-<pre><code>iex> Enum.map(seasons, &amp;String.capitalize/1)
-[<span class='console-green'>"Summer"</span>, <span class='console-green'>"Fall"</span>, <span class='console-green'>"Winter"</span>, <span class='console-green'>"Spring"</span>]</code></pre>
+<pre><code>iex> Enum.map(days, &amp;String.capitalize/1)
+[<span class='console-green'>"Wednesday"</span>, <span class='console-green'>"Thursday"</span>, <span class='console-green'>"Friday"</span>]</code></pre>
 
   <p>
-    Hooray! Each of our seasons now has a correctly capitalized name. What's happened here is that we've told the <code>map</code> function that we want it to run another function &mdash; that'd be the <code>String.capitalize/1</code> function &mdash; on each item of the <code>seasons</code> list. This is how we've been able to go from our existing list with non-capitalized season names to a new list with capitalized names.
+    Hooray! Each of our days now has a correctly capitalized name. What's happened here is that we've told the <code>map</code> function that we want it to run another function &mdash; that'd be the <code>String.capitalize/1</code> function &mdash; on each item of the <code>days</code> list. This is how we've been able to go from our existing list with non-capitalized day names to a new list with capitalized names.
   </p>
 
   <aside>
@@ -369,7 +367,7 @@ cap.("summer")
 [8, 16, 30, 32, 46, 84]</code></pre>
 
   <p>
-    With our own function here, we're taking each element of the list &mdash; represented inside the function as the variable <code>number</code> &mdash; and then multiplying it by 42. When <code>Enum.map/2</code> has finished going through the list, it outputs a new list showing us the result of running that function on all items in the list.
+    With our own function here, we're taking each element of the list &mdash; represented inside the function as the variable <code>number</code> &mdash; and then multiplying it by 2. When <code>Enum.map/2</code> has finished going through the list, it outputs a new list showing us the result of running that function on all items in the list.
   </p>
 
   <h4>Reducing an enumerable</h4>
@@ -393,11 +391,12 @@ cap.("summer")
   </p>
 
   <figure>
-    <img src='/9-lists/images/reduce-sum.png'>
+    <img src='/9-lists/images/reduce-sum.png' alt="multiple numbers being added together, one after the other">
     <figcaption>Adding together numbers manually</figcaption>
   </figure>
 
-  Or we might try using a calculator instead, as that's less error-prone. The way that we would do this calculation on a calculator is exactly as above: we would add each number up, one at a time, to calculate the sum. Our input into the calculator would be this:
+  <p>
+    Or we might try using a calculator instead, as that's less error-prone. The way that we would do this calculation on a calculator is exactly as above: we would add each number up, one at a time, to calculate the sum. Our input into the calculator would be this:
   </p>
 
   <pre><code>74 + 79 + 89 + 32 + 79 + 70 + 32 + 69 + 76 + 73 + 88 + 73 + 82 + 31</code></pre>
@@ -413,7 +412,7 @@ cap.("summer")
   <pre><code>iex> (74 + 79 + 89 + 32 + 79 + 70 + 32 + 69 + 76 + 73 + 88 + 73 + 82 + 31) / 14</code></pre>
 
   <p>
-    We sum up all the numbers, then divide it by how many scores we had. Easy! It's easy here because there are only 8 numbers. But what if we had scores from hundreds of people? We wouldn't want to enter all this into our calculator or the <code>iex</code> prompt, now would we? "No way!", contributes Roberto. Exactly! So let's look at how we could use <code>Enum.reduce/2</code> to do the summing up for us, to save us having to work it out all ourselves.
+    We sum up all the numbers, then divide it by how many scores we had. Easy! It's easy here because there are only 14 numbers. But what if we had scores from hundreds of people? We wouldn't want to enter all this into our calculator or the <code>iex</code> prompt, now would we? "No way!", contributes Roberto. Exactly! So let's look at how we could use <code>Enum.reduce/2</code> to do the summing up for us, to save us having to work it out all ourselves.
   </p>
 
 <pre><code>iex> scores = [74, 79, 89, 32, 79, 70, 32, 69, 76, 73, 88, 73, 82, 31]
