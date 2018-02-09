@@ -138,7 +138,7 @@ Roberto
 }</code></pre>
 
   <p>
-    We know already how to convert these numbers if it was simply list of those numbers, without the days of the week, like this:
+    We know already how to convert these numbers if it was simply a list of those numbers, without the days of the week, like this:
   </p>
 
 <pre><code>[28, 29, 29, 24, 16, 16, 20]</code></pre>
@@ -351,7 +351,7 @@ iex> Enum.into(new_forecast, %{})
     function automatically. The only argument on <code>Enum.map/2</code> here
     is just the function that we use to convert the temperature values. We
     still refer to this function as <code>Enum.map/2</code>, because it is
-    taking in two arguments: the piped-in value and the function.</l>
+    taking in two arguments: the piped-in value and the function.</li>
     <li><em>And then</em> we <em>pipe</em> the result of this
       <code>Enum.map/2</code> call into <code>Enum.into/2</code>, and the
       result of <code>Enum.map/2</code> becomes the first argument of
@@ -365,7 +365,7 @@ iex> Enum.into(new_forecast, %{})
   </p>
 
   <figure>
-    <img src='/10-maps/images/pipe-flow.png'>
+    <img alt="a flow chart from a Map datum to Enum.map to Enum.into to IO.inspect" src='/10-maps/images/pipe-flow.png'>
     <figcaption>How data flows from one function to another</figcaption>
   </figure>
 
@@ -377,7 +377,10 @@ iex> Enum.into(new_forecast, %{})
   </p>
 
   <p>
-    So that's the wonderful pipe operator! How handy! We started this chapter talking about the <code>Enum</code> module's functions though, and we promised to talk about <code>each/2</code>, <code>map/2</code> and now we've done that. The next thing that was promised was to talk about some functions from the <code>Map</code> module. We might even find another excuse to use the pipe operator again.
+    So that's the wonderful pipe operator! How handy!
+  </p>
+  <p>
+    We started this chapter by making some promises, though. We've already fulfilled one promise&mdash;we've talked about the <code>Enum</code> module's functions <code>each/2</code> and <code>map/2</code>. But we also promised to talk about some functions from the <code>Map</code> module. Let's get into it. We might even find another excuse to use the pipe operator.
   </p>
 </section>
 
@@ -515,7 +518,7 @@ iex> person["name"]
 <pre><code>iex> Map.put(roberto, "age", "40ish")
 %{"age" => "40ish", "gender" => "Male", "name" => "Roberto"}</code></pre>
 
-<p>Ah that's so much better! We can now update the <code>"age"</code> key without having to rewrite the whole map.</code></p>
+<p>Ah that's so much better! We can now update the <code>"age"</code> key without having to rewrite the whole map.</p>
 
 
 
