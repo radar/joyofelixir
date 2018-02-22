@@ -3,14 +3,14 @@
   <h2 id='chapter-4'>4. Marvellous maps</h2>
 
   <p>
-    Back in the last chapter, Roberto tried tracking information about the people assembled using some lists within another list:
+    Back in the last chapter, Izzy tried tracking information about the people assembled using some lists within another list:
   </p>
 
 <pre>
 <code>iex> those_who_are_assembled = [
-...> ["Roberto", "30ish", "Male"],
+...> ["Izzy", "30ish", "Female"],
   ... a long time passes ...
-...> ["Young Roberto", "Male", "20ish"],
+...> ["Izzy the Younger", "Female", "20ish"],
 ...> ]</code>
 </pre>
 
@@ -23,12 +23,12 @@
   </p>
 
   <p>
-    Let's look at how we could collect a single person's data using a map:
+    Let's look at how we could collect a single person's data using a map, using another random member of the crowd as an example:
   </p>
 
 <pre>
-<code>iex> person = %{"name" => "Roberto", "age" => "30ish", "gender" => "Male"}
-%{<span class='console-green'>"age"</span> => <span class='console-green'>"30ish"</span>, <span class='console-green'>"gender"</span> => <span class='console-green'>"Male"</span>, <span class='console-green'>"name"</span> => <span class='console-green'>"Roberto"</span>}</code></pre>
+<code>iex> person = %{"name" => "Roberto", "age" => 56, "gender" => "Male"}
+%{<span class='console-green'>"age"</span> => <span class='console-yellow'>56</span>, <span class='console-green'>"gender"</span> => <span class='console-green'>"Male"</span>, <span class='console-green'>"name"</span> => <span class='console-green'>"Roberto"</span>}</code></pre>
 
   <p>
   Maps start with a <code>%</code> and enclose their data in a warm curly-brace cuddle. In a map, we structure data using <em>keys</em> and <em>values</em>. The thing to the <em>left</em> of the <code>=></code> is called a <em>key</em> and the thing to the <em>right</em> is called a <em>value</em>.
@@ -44,26 +44,25 @@
   </p>
 
   <p>
-    Unlike strings and lists where we can use a single character at the start and end to show Elixir where the starts and ends are -- double quotes for strings, square brackets for lists -- we need to use <code>%{</code> to tell Elixir where a map starts and <code>}</code> to show where it ends.
+    Unlike strings and lists where we can use a single character at the start and end to show Elixir where the starts and ends are -- double quotes for strings, square brackets for lists -- we need to use that "curly-brace cuddle" for maps. We need to use <code>%{</code> to tell Elixir where a map starts and <code>}</code> to show where it ends.
   </p>
 
   <p>
     You might notice here that the computer has taken in our map and returned the keys in a different order to the one that we specified. The order of keys doesn't matter in a map at all, unlike in lists where order <em>does</em> matter. It would be pretty strange to spend all the time ordering the list only for Elixir to return it in a non-sensical order. For instance, if we had a list like this:
   </p>
 
-<pre><code>favourite_people = ["The Reader", "Roberto", ...]</code></pre>
+<pre><code>favourite_people = ["The Reader", "Izzy", ...]</code></pre>
 
   <p>
-    This list indicates that "The Reader" is the 1st favourite person, and that Roberto is a (close) second. The order here matters. For maps, it doesn't matter what order the keys and their corresponding values are in because the map would still be the same:
+    This list indicates that "The Reader" is the 1st favourite person, and that Izzy is a (close) second. The order here matters. For maps, it doesn't matter what order the keys and their corresponding values are in because the map would still be the same:
   </p>
 
 <pre>
-<code>iex> person = %{"gender" => "Male", "age" => "30ish", "name" => "Roberto"}
-%{<span class='console-green'>"age"</span> => <span class='console-green'>"30ish"</span>, <span class='console-green'>"gender"</span> => <span class='console-green'>"Male"</span>, <span class='console-green'>"name"</span> => <span class='console-green'>"Roberto"</span>}</code></pre>
+<code>iex> person = %{"gender" => "Male", "age" => 56, "name" => "Roberto"}
+%{<span class='console-green'>"age"</span> => <span class='console-yellow'>56</span>, <span class='console-green'>"gender"</span> => <span class='console-green'>"Male"</span>, <span class='console-green'>"name"</span> => <span class='console-green'>"Roberto"</span>}</code></pre>
 
   <p>
     The position of the <code>"name"</code> key within a map has no meaning. The keys for a map can be in any order.
-  </p>
 
   <p>
     You may now be thinking about how to get the data back out of a map once you've put it in. We talked about how to "pluck" that value out before, but didn't see an example yet. In order to access a value from a map we need to know the corresponding key. Once we know the corresponding key, then we can use <code>[]</code> to pluck that value out of the map. Think of it like the claw from a skilltester, diving in to pick out the value.
@@ -74,7 +73,7 @@
   </figure>
 
   <p>
-    Unlike a skilltester, these square brackets aren't rigged to drop the value mere inches from the chute; these square brackets have an iron grip. For instance, if we wanted to get out the value of <code>"name"</code> for <code>person</code> we can do:
+    Unlike a regular skilltester, these square brackets aren't rigged to drop the value mere inches from the chute; these square brackets have an iron grip. For instance, if we wanted to get out the value of <code>"name"</code> for <code>person</code> we can do:
   </p>
 
 <pre><code>iex> person["name"]
@@ -85,10 +84,10 @@
   </p>
 
 <pre><code>iex> person["age"]
-<span class='console-green'>"30ish"</span></code></pre>
+<span class='console-green'>56</span></code></pre>
 
   <p>
-    Roberto lets out a thoughtful "Mmmmmmmmmm" in something very close to an agreement. He likes maps. Now Roberto can know the exact data that we're collecting about the assembled masses, without a concern for how the data ordered, and then use that for later on. We don't know yet what Roberto has in mind for the data, but he's collecting it for a reason. Or at least, it seems that way.
+    Izzy lets out a thoughtful "Mmmmmmmmmm" in something very close to an agreement. She likes maps. Now Izzy can know the exact data that we're collecting about the assembled masses, without a concern for how the data ordered, and then use that for later on. We don't know yet what Izzy has in mind for the data, but she's collecting it for a reason. Or at least, it seems that way.
   </p>
 
   <p>
@@ -96,20 +95,22 @@
   </p>
 
 <pre><code>iex> those_who_are_assembled = [
-...> %{"age" => "30ish", "gender" => "Male", "name" => "Roberto"},
+...> %{"age" => "30ish", "gender" => "Female", "name" => "Izzy"},
 ...> %{"gender" => "Male", "name" => "The Author", "age" => "30ish"},
 ...> %{"name" => "The Reader", "gender" => "Unknowable", "age" => "Unknowable"},
 ...> ]</code></pre>
 
   <p>
-    We don't just have to use strings as the items inside of lists. We can use maps too!
+    We don't just have to use strings as the items inside of lists. We can use maps too! In fact, any other bit of data can live inside of lists as a list item. We could even have a list of numbers if we wanted to:
+  </p>
+
+<pre><code>iex> numbers = [4, 8, 15, 16, 23, 42]</code></pre>
+
+  <p>
+    But let's talk about the list of people rather than that list of numbers. This list of maps containing the information of those who are assembled is immune to the problem we were seeing at the start of this chapter. It doesn't matter what order the key-value combinations of age, name or gender are placed -- the maps will contain the right information at the right spots. As an additional bonus, we can refer to these values with their keys, rather than having to remember their positions.
   </p>
 
   <p>
-    This list of maps containing the information of those who are assembled is immune to the problem we were seeing at the start of this chapter. It doesn't matter what order the key-value combinations of age, name or gender are placed -- the maps will contain the right information at the right spots. As an additional bonus, we can refer to these values with their keys, rather than having to remember their positions.
-  </p>
-
-  <p>
-    Roberto excitedly disappears into the crowd again with this new knowledge.
+    Izzy excitedly disappears into the crowd again with this new knowledge and starts collecting people's information again.
   </p>
 </section>

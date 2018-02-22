@@ -43,7 +43,7 @@ List.reverse(animals_or_derivatives_of_animals)
   </p>
 
   <aside>
-    <header>Roberto asks: "Hey, what's that <code>/1</code> after the function?"</header>
+    <header>Izzy asks: "Hey, what's that <code>/1</code> after the function?"</header>
 
     <p>
       Glad you asked! It's indicating the <em>arity</em> of the function. We saw the word <em>arity</em> back in Chapter 5, and to refresh your memory, arity is another way of saying "the number of arguments".
@@ -86,7 +86,7 @@ List.reverse(animals_or_derivatives_of_animals, [1, 2, 3])
   </aside>
 
   <p>
-    Ok, so we've talked about what <code>/1</code> means (Roberto is now deep in thought), so let's talk about why <code>List.reverse/1</code> doesn't exist.
+    Ok, so we've talked about what <code>/1</code> means (Izzy is now deep in thought), so let's talk about why <code>List.reverse/1</code> doesn't exist.
   </p>
 
   <h3>Thank you Reader, but our <s>princess</s> function is in another <s>castle</s> module</h3>
@@ -96,7 +96,7 @@ List.reverse(animals_or_derivatives_of_animals, [1, 2, 3])
   </p>
 
   <p>
-    "What on earth is an enumerable?", Roberto cries out. Hold your horses, Roberto. We're getting to that.
+    "What on earth is an enumerable?", Izzy cries out. Hold your horses, Izzy. We're getting to that.
   </p>
 
   <p>
@@ -129,16 +129,16 @@ List.reverse(animals_or_derivatives_of_animals, [1, 2, 3])
     Similar to this, we could <em>enumerate</em> through a map. If we were to take one of our maps from earlier...
   </p>
 
-<pre><code>%{<span class='console-green'>"name"</span> => <span class='console-green'>"Roberto"</span>, <span class='console-green'>"age"</span> => <span class='console-green'>"30ish"</span>, <span class='console-green'>"gender"</span> => <span class='console-green'>"Male"</span>}</code></pre>
+<pre><code>%{<span class='console-green'>"name"</span> => <span class='console-green'>"Izzy"</span>, <span class='console-green'>"age"</span> => <span class='console-green'>"30ish"</span>, <span class='console-green'>"gender"</span> => <span class='console-green'>"Female"</span>}</code></pre>
 
   <p>
     ...and write each key and value pair down, they may look something like this:
   </p>
 
   <dl>
-    <dt><strong>Name</strong></dt><dd>Roberto</dd>
+    <dt><strong>Name</strong></dt><dd>Izzy</dd>
     <dt><strong>Age</strong></dt><dd>30ish</dd>
-    <dt><strong>Gender</strong></dt><dd>Male</dd>
+    <dt><strong>Gender</strong></dt><dd>Female</dd>
   </dl>
 
   <p>
@@ -169,7 +169,7 @@ List.reverse(animals_or_derivatives_of_animals, [1, 2, 3])
   </p>
 
   <p>
-    Roberto's features relax from intense concentration to a more neutral setting and he asks, "Hey, you mentioned before you could <em>enumerate</em> through a list or a map, but you didn't show an example of that. What gives?" You're absolutely right, Roberto. I was too distracted with explaining why <code>List.reverse/1</code> didn't exist to explain how to enumerate through an enumerable.
+  Izzy's features relax from intense concentration to a more neutral setting and she asks, "Hey, you mentioned before you could <em>enumerate</em> through a list or a map, but you didn't show an example of that. What gives?" You're absolutely right, Izzy. I was too distracted with explaining why <code>List.reverse/1</code> didn't exist to explain how to enumerate through an enumerable. I'm glad that <em>someone</em> is paying attention.
   </p>
 
   <p>
@@ -181,7 +181,7 @@ List.reverse(animals_or_derivatives_of_animals, [1, 2, 3])
   <h3>Enumerating the enumerables</h3>
 
   <p>
-    To appease Roberto (and the masses that he leads) yet again, we're going to need to look at how to enumerate through enumerables. What this means is that we're going to get an enumerable (a list or a map) and we're going to go through each of the enumerable's items and do something with them.
+    To appease Izzy (and the masses that she leads) yet again, we're going to need to look at how to enumerate through enumerables. What this means is that we're going to get an enumerable (a list or a map) and we're going to go through each of the enumerable's items and do something with them.
   </p>
 
   <p>
@@ -261,7 +261,7 @@ puts.("summer")
   </aside>
 
   <p>
-    "That last line looks exactly like how we ran functions back in Chapter 5", Roberto exclaims. Yes, Roberto! That is exactly right. Back in that chapter we defined a <code>greeting</code> function like this:
+    "That last line looks exactly like how we ran functions back in Chapter 5", Izzy exclaims. Yes, Izzy! That is exactly right. Back in that chapter we defined a <code>greeting</code> function like this:
   </p>
 
 <pre><code>iex> greeting = fn (place) -> "Hello, #{place}!" end
@@ -323,7 +323,7 @@ cap.("summer")
   [<span class='console-green'>"Summer"</span>, <span class='console-green'>"Fall"</span>, <span class='console-green'>"Winter"</span>, <span class='console-green'>"Spring"</span>]</code></pre>
 
   <p>
-    But since we've already got a list we're going to have to do <em>something</em> to that list to turn it into what we want. That something is to use another function from the <code>Enum</code> module called <code>Enum.map/2</code>. This <code>map</code> function is different from the map kind of data (<code>%{"name" => "Roberto"}</code>), in that the function-called-map will take the specified enumerable and another function as arguments, then enumerate through each item in the list and run that other function for each item, and then return the result of each function run.
+    But since we've already got a list we're going to have to do <em>something</em> to that list to turn it into what we want. That something is to use another function from the <code>Enum</code> module called <code>Enum.map/2</code>. This <code>map</code> function is different from the map kind of data (<code>%{"name" => "Izzy"}</code>), in that the function-called-map will take the specified enumerable and another function as arguments, then enumerate through each item in the list and run that other function for each item, and then return the result of each function run.
   </p>
 
   <p>
@@ -413,7 +413,7 @@ cap.("summer")
   <pre><code>iex> (74 + 79 + 89 + 32 + 79 + 70 + 32 + 69 + 76 + 73 + 88 + 73 + 82 + 31) / 14</code></pre>
 
   <p>
-    We sum up all the numbers, then divide it by how many scores we had. Easy! It's easy here because there are only 8 numbers. But what if we had scores from hundreds of people? We wouldn't want to enter all this into our calculator or the <code>iex</code> prompt, now would we? "No way!", contributes Roberto. Exactly! So let's look at how we could use <code>Enum.reduce/2</code> to do the summing up for us, to save us having to work it out all ourselves.
+    We sum up all the numbers, then divide it by how many scores we had. Easy! It's easy here because there are only 8 numbers. But what if we had scores from hundreds of people? We wouldn't want to enter all this into our calculator or the <code>iex</code> prompt, now would we? "No way!", contributes Izzy. Exactly! So let's look at how we could use <code>Enum.reduce/2</code> to do the summing up for us, to save us having to work it out all ourselves.
   </p>
 
 <pre><code>iex> scores = [74, 79, 89, 32, 79, 70, 32, 69, 76, 73, 88, 73, 82, 31]

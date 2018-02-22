@@ -14,16 +14,16 @@
       Similar to this, we could <em>enumerate</em> through a map. If we were to take one of our maps from earlier...
     </p>
 
-<pre><code>%{<span class='console-green'>"name"</span> => <span class='console-green'>"Roberto"</span>, <span class='console-green'>"age"</span> => <span class='console-green'>"30ish"</span>, <span class='console-green'>"gender"</span> => <span class='console-green'>"Male"</span>}</code></pre>
+<pre><code>%{<span class='console-green'>"name"</span> => <span class='console-green'>"Izzy"</span>, <span class='console-green'>"age"</span> => <span class='console-green'>"30ish"</span>, <span class='console-green'>"gender"</span> => <span class='console-green'>"Female"</span>}</code></pre>
 
     <p>
       ...and write each key and value pair down, they may look something like this:
     </p>
 
     <dl>
-      <dt><strong>Name</strong></dt><dd>Roberto</dd>
+      <dt><strong>Name</strong></dt><dd>Izzy</dd>
       <dt><strong>Age</strong></dt><dd>30ish</dd>
-      <dt><strong>Gender</strong></dt><dd>Male</dd>
+      <dt><strong>Gender</strong></dt><dd>Female</dd>
     </dl>
   </blockquote>
 
@@ -31,14 +31,14 @@
     But we never got around to actually showing you how this was done! Well, enough dilly-dallying, here's an example:
   </p>
 
-<pre><code>iex> person = %{"name" => "Roberto", "age" => "30ish", "gender" => "Male"}
-%{<span class='console-green'>"name"</span> => <span class='console-green'>"Roberto"</span>, <span class='console-green'>"age"</span> => <span class='console-green'>"30ish"</span>, <span class='console-green'>"gender"</span> => <span class='console-green'>"Male"</span>}
+<pre><code>iex> person = %{"name" => "Izzy", "age" => "30ish", "gender" => "Female"}
+%{<span class='console-green'>"name"</span> => <span class='console-green'>"Izzy"</span>, <span class='console-green'>"age"</span> => <span class='console-green'>"30ish"</span>, <span class='console-green'>"gender"</span> => <span class='console-green'>"Female"</span>}
 iex> Enum.each(person, fn ({key, value}) -> IO.puts value end)
 </code></pre>
 
 
   <p>
-    Before I can go any further, Roberto interrupts. "Hey, those curly braces inside the function passed to <code>each</code> are weird! It looks like a map but it's not a map because it doesn't have the <code>%</code> before it. And it's not a list because the curliness of the brackets; a list has square brackets. So what is it?". Roberto is calling out this code specifically:
+    Before I can go any further, Izzy interrupts. "Hey, those curly braces inside the function passed to <code>each</code> are weird! It looks like a map but it's not a map because it doesn't have the <code>%</code> before it. And it's not a list because the curliness of the brackets; a list has square brackets. So what is it?". Izzy is calling out this code specifically:
   </p>
 
 <pre><code>fn ({key, value}) ...</code></pre>
@@ -64,8 +64,8 @@ iex> Enum.each(person, fn ({key, value}) -> IO.puts value end)
 
 <pre><code>iex> Enum.each(person, fn ({key, value}) -> IO.puts value end)
 30ish
-Male
-Roberto
+Female
+Izzy
 :ok</code></pre>
 
   <p>
@@ -103,7 +103,7 @@ Roberto
   </p>
 
 <pre>
-<code>iex> person = %{"name" => "Roberto", "age" => "30ish", "gender" => "Male"}</code></pre>
+<code>iex> person = %{"name" => "Izzy", "age" => "30ish", "gender" => "Female"}</code></pre>
 
   <p>
     We should try to use another map for this section. Hmmmm. How about a map with the days of the week and their expected temperatures? Here's what the week ahead looks like in Melbourne at this current point of writing:
@@ -178,7 +178,7 @@ iex> Enum.map(forecast, fn ({day, temp}) -> {day, temp * 1.8 + 32} end)
 ]</code></pre>
 
   <p>
-    "Hey, that's no map! That's a list!", Roberto exclaims, seemingly adapting a quote from a relatively niche space opera series. That's right, Roberto. When we call <code>Enum.map/2</code> on either a list or a map we're going to get back a list regardless. This has to do with how Elixir thinks of maps: it thinks of them as a list of key-value tuples, rather than the friendly <code>%{}</code> syntax that we know and love. To get this data back into the format that we're familiar with, we're going to need to use another function from the <code>Enum</code> toolbox, called <code>Enum.into/2</code>.
+    "Hey, that's no map! That's a list!", Izzy exclaims, seemingly adapting a quote from a relatively niche space opera series. That's right, Izzy. When we call <code>Enum.map/2</code> on either a list or a map we're going to get back a list regardless. This has to do with how Elixir thinks of maps: it thinks of them as a list of key-value tuples, rather than the friendly <code>%{}</code> syntax that we know and love. To get this data back into the format that we're familiar with, we're going to need to use another function from the <code>Enum</code> toolbox, called <code>Enum.into/2</code>.
   </p>
 
   <p>
@@ -338,7 +338,7 @@ iex> Enum.into(new_forecast, %{})
 }</code></pre>
 
   <p>
-    I've put each key and value onto its own line, but you can see here that the output is the same as before in our <code>iex</code> console, and the code is neater to boot! "Amazing", utters Roberto. So what's happened here? Let's run through it:
+    I've put each key and value onto its own line, but you can see here that the output is the same as before in our <code>iex</code> console, and the code is neater to boot! "Amazing", utters Izzy. So what's happened here? Let's run through it:
   </p>
 
   <ol>
@@ -361,7 +361,7 @@ iex> Enum.into(new_forecast, %{})
   </ol>
 
   <p>
-    "Wow, that's a lot of text!", says Roberto, looking a little stunned. "Do you have an image that I could look at instead?". Sure I do!
+    "Wow, that's a lot of text!", says Izzy, looking a little stunned. "Do you have an image that I could look at instead?". Sure I do!
   </p>
 
   <figure>
@@ -401,8 +401,8 @@ iex> Enum.into(new_forecast, %{})
     In <a href='/4-marvellous-maps'>Chapter 4: Marvellous Maps</a> we saw that we could fetch the value of a particular key by using square brackets.
   </p>
 
-<pre><code>iex> person = %{"gender" => "Male", "age" => "30ish", "name" => "Roberto"}
-%{"age" => "30ish", "gender" => "Male", "name" => "Roberto"}
+<pre><code>iex> person = %{"gender" => "Female", "age" => "30ish", "name" => "Izzy"}
+%{"age" => "30ish", "gender" => "Izzy", "name" => "Izzy"}
 iex> person["name"]
 "Roberto"</code></pre>
 
@@ -429,7 +429,7 @@ iex> person["name"]
   </p>
 
 <pre><code>%{
-  "people" => ["Roberto", "The Author"],
+  "people" => ["Izzy", "The Author"],
   "robots" => ["Roboto", "TARS"]
 }</code></pre>
 
@@ -496,39 +496,31 @@ iex> person["name"]
   <p>
     You might want to use this function if you've got a map
     containing data that you want to update. For instance, like the
-    data that we have on Roberto so far:
+    data that we have on Izzy so far:
   </p>
 
-<pre><code>iex> roberto = %{"name" => "Roberto", "age" => "30ish", "gender" => "Male"}</code></pre>
+<pre><code>iex> roberto = %{"name" => "Izzy", "age" => "30ish", "gender" => "Female"}</code></pre>
 
   <p>
-    With this data, we're unclear about Roberto's age. Perhaps we've gotten to
-    know him better throughout the course of this book and he tells us that
-    he's actually 40ish instead of 30ish. This is surprising to us, considering his
+    With this data, we're unclear about Izzy's age. Perhaps we've gotten to
+    know her better throughout the course of this book and she tells us that
+    she's actually 40ish instead of 30ish. This is surprising to us, considering her
     youthful visage. Nevertheless, our data is wrong. We need to update it. We
     could simply redefine the map:
   </p>
 
-<pre><code>iex> roberto = %{<span class='unfocussed'>"name" => "Roberto"</span>, "age" => "40ish", <span class='unfocussed'>"gender" => "Male"</span>}</code></pre>
+<pre><code>iex> roberto = %{<span class='unfocussed'>"name" => "Izzy"</span>, "age" => "40ish", <span class='unfocussed'>"gender" => "Female"</span>}</code></pre>
 
   <p>
   But that seems like an awful lot of typing just to update one key. Let's look at how we could update this key using <code>Map.put/2</code>:
   </p>
 
-<pre><code>iex> Map.put(roberto, "age", "40ish")
-%{"age" => "40ish", "gender" => "Male", "name" => "Roberto"}</code></pre>
+<pre><code>iex> Map.put(izzy, "age", "40ish")
+%{"age" => "40ish", "gender" => "Female", "name" => "Izzy"}</code></pre>
 
-<p>Ah that's so much better! We can now update the <code>"age"</code> key without having to rewrite the whole map.</p>
-
-
-
-
-
-
-
+  <p>Ah that's so much better! We can now update the <code>"age"</code> key without having to rewrite the whole map.</p>
 
 </section>
-
 
 <section>
   <h3>Exercises</h3>

@@ -13,59 +13,73 @@ sentence we'd rather not repeat."
 sentence we'd rather not repeat."</span>
 
 iex> score = 2 / 5 * 100
-<span class='console-yellow'>40</span></code></pre>
+<span class='console-yellow'>40</span>
+
+iex> x = "not for multiplication"
+<span class='console-green'>"not for multiplication"</span>
+
+</code></pre>
 
   <p>
-    As long as we leave <code>iex</code> running, Elixir will remember that <code>sentence</code> is <code>"A really long and complex sentence we'd rather not repeat."</code> and <code>score</code> is <code>40</code>. At any point in time, we can ask it what <code>sentence</code> or <code>score</code> is and it will tell us:
+    As long as we leave <code>iex</code> running, Elixir will remember that <code>sentence</code> is <code>"A really long and complex sentence we'd rather not repeat."</code> and <code>score</code> is <code>40</code>, and <code>x</code> is <code>"not for multiplication"</code>. At any point in time, we can ask it what <code>sentence</code> or <code>score</code> or <code>x</code> is and it will tell us:
   </p>
 
 <pre><code>iex> sentence
 <span class='console-green'>"A really long and complex sentence we'd rather not repeat."</span>
 iex> score
-<span class='console-yellow'>40</span></code></pre>
+<span class='console-yellow'>40</span>
+iex> x
+<span class='console-green'>"not for multiplication"</span>
+</code></pre>
 
   <p>
-    <code>sentence</code> and <code>score</code> here are <em>variables</em>, and they're given that particular name because the thing that the computer remembers with that name of <code>sentence</code> or <code>score</code> can <em>vary</em>. We can tell the computer to forget its previous definition of <code>sentence</code> and give it a new one like this:
+    <code>sentence</code>, <code>score</code> and <code>x</code> here are <em>variables</em>, and they're given that particular name because the thing that the computer remembers with that name of <code>sentence</code> or <code>score</code> or <code>x</code> can <em>vary</em>. Remember when we talked about multiplying numbers and we saw that we couldn't use <code>x</code> to multiply? The reason for this is because Elixir would read <code>x</code> as a variable, not as a suggestion to multiply the numbers on either side. So we will continue using <code>*</code> instead.
   </p>
 
-<pre><code>iex> sentence = "An even longer and significantly more complex sentence
-   that we might be ok with repeating, if the mood takes us."
-<span class='console-green'>"An even longer and significantly more complex sentence
-   that we might be ok with repeating, if the mood takes us."</span></code></pre>
+  <p>
+    We can tell the computer to replace its definition of a variable with another one. This is often referred to as <em>re-assignment</em>. Let's replace (or <em>re-assign</em>) the <code>sentence</code> variable's defintion:
+  </p>
 
-  Then when we ask the computer what <code>sentence</code> is, it will have forgotten the old <code>sentence</code> and will only know the new one:
+<pre><code>iex> sentence = "An even longer and significantly more complex sentence &#9166;
+that we might be ok with repeating, if the mood takes us."
+<span class='console-green'>"An even longer and significantly more complex sentence &#9166;
+that we might be ok with repeating, if the mood takes us."</span></code></pre>
+
+  <p>
+    Then when we ask the computer what <code>sentence</code> is, it will have forgotten the old <code>sentence</code> and will only know the new one:
+  </p>
 
 <pre><code>iex> sentence
-<span class='console-green'>"An even longer and significantly more complex sentence
-   that we might be ok with repeating, if the mood takes us."
+<span class='console-green'>"An even longer and significantly more complex sentence &#9166;
+that we might be ok with repeating, if the mood takes us."
 </span></code></pre>
 
-<div class='grouped'>
-  <p>
-    Now the masses are looking chirpier. Some are even smiling! Isn't that wonderful? Let's create another variable called <code>place</code>:
-  </p>
+  <div class='grouped'>
+    <p>
+      Now the masses are looking chirpier. Some are even smiling! Isn't that wonderful? Let's create another variable called <code>place</code>:
+    </p>
 
-  <pre><code>iex> place = "World"
+    <pre><code>iex> place = "World"
   <span class='console-green'>"World"</span></code></pre>
-</div>
+  </div>
 
   <p>
-    The computer will now remember that <code>place</code> is <code>"World"</code>. "But what's the use of just <em>setting</em> a variable like this? Why make the computer remember at all?", Roberto (the spokesman) says. By the way, we have since learned the spokesman's name is Roberto, and so we've done some variable creation of our own in our own brain: <code>spokesman = "Roberto"</code>. Woah.
+    The computer will now remember that <code>place</code> is <code>"World"</code>. "But what's the use of just <em>setting</em> a variable like this? Why make the computer remember at all?", Isodora (the spokeswoman) says. "Spokesperson, thanks", says Isodora, breaking the 4th wall again. Okay, Isodora (the spokeswoman) said those things. By the way, we have since learned the spokes<s>woman</s>person's name is Isodora, and so we've done some variable creation of our own in our own brain: <code>spokesperson = "Isodora"</code>. Woah. "Just call me Izzy", says <s>Isodora</s>Izzy. Ok, we will -- making our brains reassign the <code>spokesperson</code> variable: <code>spokesperson = "Izzy"</code>.
   </p>
 
   <p>
-    Ok, Roberto's right. We should do something meaningful with this variable. Ok, Roberto, how about this? <em>[cracks knuckles]</em>
+    Ok, Izzy's right. We should do something meaningful with this variable. Ok, Izzy, how about this? <em>[cracks knuckles]</em>
   </p>
 
 <pre><code>iex> "Hello, #{place}!"
 <span class='console-green'>"Hello, World!"</span></code></pre>
 
   <p>
-    The masses go nuts. It's pandemonium! Then after a few shushing motions with my hands, they're (mostly) quiet again.
+    The masses go nuts. It's pandemonium! Then after a few shushing motions with my hands (which are completely ineffectual) and a quick "OI!" from Izzy, they're (mostly) quiet again.
   </p>
 
   <p>
-    "What just happened?", asks Roberto? But <em>you</em>, Dear Reader, had asked that question already. Roberto didn't hear because of the crowd and the <em>sheer, unbounded</em> pandemonium.
+    "What just happened?", asks Izzy? But <em>you</em>, Dear Reader, had asked that question already. Izzy didn't hear because of the crowd and the <em>sheer, unbounded</em> pandemonium.
   </p>
 
   <p>

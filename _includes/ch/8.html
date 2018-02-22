@@ -21,7 +21,7 @@
 <span class='console-green'>"siht esrever"</span></code></pre>
 
   <p>
-    Roberto elicits a noticeable "wooooowww, that's so cool" at this. "What else does Elixir have?", he asks quickly. We'll get to that, Roberto. Let's take the time now to understand what's happening here first.
+    Izzy elicits a noticeable "wooooowww, that's so cool" at this. "What else does Elixir have?", she asks quickly. We'll get to that, Izzy. Let's take the time now to understand what's happening here first.
   </p>
 
   <p>
@@ -143,7 +143,7 @@ greeting.("world")</code></pre>
   What is your name?</code></pre>
 
   <p>
-    "Hey what happened to our <code>iex&gt;</code> prompt?", Roberto asks. Good question! We're using <code>gets</code> and passing it a string. This string then becomes a new prompt. This prompt is asking us for our name. Let's type in our name and press enter:
+    "Hey what happened to our <code>iex&gt;</code> prompt?", Izzy asks. Good question! We're using <code>gets</code> and passing it a string. This string then becomes a new prompt. This prompt is asking us for our name. Let's type in our name and press enter:
   </p>
 
 <pre><code>iex> name = IO.gets "What is your name?"
@@ -158,7 +158,7 @@ What is your name? The Reader
 <span class='console-green'>"The Reader\n"</span></code></pre>
 
   <p>
-    Roberto continues asking questions: "What's that <code>\n</code> on the end?". That is a <em>new line character</em> and tells the computer that we pressed enter. While the <code>IO.gets</code> function stopped prompting us after we pressed enter, it still kept the enter in case we wanted it too. In this particular case we don't really want that character. We can get rid of it by using another function from the <code>String</code> module, called <code>trim</code>.
+    Izzy continues asking great questions: "What's that <code>\n</code> on the end?". That is a <em>new line character</em> and tells the computer that we pressed enter. While the <code>IO.gets</code> function stopped prompting us after we pressed enter, it still kept the enter in case we wanted it too. In this particular case we don't really want that character. We can get rid of it by using another function from the <code>String</code> module, called <code>trim</code>.
   </p>
 
 <pre><code>iex> name = String.trim(name)

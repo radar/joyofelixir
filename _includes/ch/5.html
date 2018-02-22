@@ -2,11 +2,11 @@
   <h2 id='chapter-5'>5. Funky functions</h2>
 
   <p>
-    After about half an hour, Roberto re-appears from seemingly nowhere. His computer screen glows with the information he has collected from the crowd. We're not quite sure how long he's been back for, but the moment our attention fixes on him, he speaks: "Okay, so you can represent different... <em>kinds</em> of things in Elixir &mdash; strings, numbers, lists, maps &mdash; but what is the point of doing that at all? What can you <em>do</em> with them? Do I need to write code to work with these different kinds of things all the time? Can the computer remember code too?"
+    After about half an hour, Izzy re-appears from seemingly nowhere. Her computer screen glows with the information she has collected from the crowd. We're not quite sure how long she's been back for, but the moment our attention fixes on her, she speaks: "Okay, so you can represent different... <em>kinds</em> of things in Elixir &mdash; strings, numbers, lists, maps &mdash; but what is the point of doing that at all? What can you <em>do</em> with them? Do I need to write code to work with these different kinds of things all the time? Can the computer remember code too?"
   </p>
 
   <p>
-    Well Roberto, that was a very clever and completely unintentional segue into this next part of the book. Thank you for doing that.
+    Well Izzy, that was a very clever and completely unintentional segue into this next part of the book. Thank you for doing that.
   </p>
 
   <p>
@@ -45,11 +45,11 @@
 <span class='console-yellow'>#Function&lt;6.52032458/1 in :erl_eval.expr/5&gt;</span></code></pre>
 
   <p>
-    We've assigned our function to the <code>greeting</code> variable and so that's what the computer will remember the function as. "How do we use this function?", Roberto asks keenly, suddenly impressed about the computer's ability to remember functions. I'm sure you're asking the same thing, dear reader.
+    We've assigned our function to the <code>greeting</code> variable and so that's what the computer will remember the function as. "How do we use this function?", Izzy asks keenly, suddenly impressed about the computer's ability to remember functions. I'm sure you're asking the same thing, dear reader.
   </p>
 
   <p>
-  Well, Roberto (and dearest reader), we need to use some new and exciting code that we've not seen yet:
+  Well, Izzy (and dearest reader), we need to use some new and exciting code that we've not seen yet:
   </p>
 
 <pre><code>iex> greeting.("World")
@@ -114,7 +114,7 @@ iex> c_to_f.(40)
 
 <pre>
 <code>iex> greeting = fn (name, gender, age) ->
-...>   "Hello, #{name}! I see you're a #{gender} and you're #{age} years old."
+...>   "Hello, #{name}! I see you're #{gender} and you're #{age} years old."
 ...> end
 <span class='console-yellow'>#Function&lt;18.52032458/3 in :erl_eval.expr/5&gt;</span></code></pre>
 
@@ -123,21 +123,21 @@ iex> c_to_f.(40)
   </p>
 
 <pre>
-<code>iex> greeting.("Roberto", "Male", "30ish")
-<span class='console-green'>"Hello, Roberto! I see you're a Male and you're 30ish years old!"</span></code></pre>
+<code>iex> greeting.("Izzy", "Female", "30ish")
+<span class='console-green'>"Hello, Izzy! I see you're Female and you're 30ish years old!"</span></code></pre>
 
   <p>We can go nuts with the number of arguments that a function is defined with. However, we need to take a modicum of caution when running the functions. If we specify the wrong number of arguments, Elixir will tell us off with big red text:</p>
 
-<pre><code>iex> greeting.("Roberto")
+<pre><code>iex> greeting.("Izzy")
 <span class='console-red'>** (BadArityError) #Function&lt;18.52032458/3 in :erl_eval.expr/5&gt;&#9166;
-  with arity 3 called with 1 argument ("Roberto")</span></code></pre>
+  with arity 3 called with 1 argument ("Izzy")</span></code></pre>
 
   <p>
     Oh no the computer is angry with us. Well, if the computer felt any emotion from brutal indifference it would <em>probably</em> be some version of angry, or at least disappointed. We've just made a happy little accident here by specifying 3 arguments. The computer is reprimanding us: telling us that we caused a <code>BadArityError</code> and that means that we had a "&lt;function&gt; with arity 3 called with 1 argument".
   </p>
 
   <p>
-    "What on earth is an 'arity'?", Roberto asks, clearly flummoxed (and perhaps a bit affronted) by the word. Unlike the computer, Roberto is not brutally indifferent when it comes to these things. After all, Roberto thought he was getting a handle on this Elixir thing.
+    "What on earth is an 'arity'?", Izzy asks, clearly flummoxed (and perhaps a bit affronted) by the word. Unlike the computer, Izzy is not brutally indifferent when it comes to these things. After all, Izzy thought she was getting a handle on this Elixir thing.
   </p>
 
   <p>
