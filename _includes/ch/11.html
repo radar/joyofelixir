@@ -1,7 +1,59 @@
 <h2 id='chapter-11'>11. Working with files</h2>
 
-<div class='todo'>
-  Work in progress.
+<p>
+  So far, we've worked with data that we've defined ourselves in the <code>iex</code> prompt. This has been incredibly handy because it has allowed us (and Izzy) to experiment with Elixir's features. When we program in the real world, data typically comes from sources external to our code. One of those sources is files from the <a href='https://en.wikipedia.org/wiki/File_system'>file system</a>.
+</p>
 
-  Will cover <code>IO</code>, <code>File</code> and what tuples and atoms are.
-</div>
+<p>
+  In this chapter, we'll look at how we can read existing files, create new ones and even delete files using functions that are built-in to Elixir.
+</p>
+
+<section>
+  <h3>Reading a file</h3>
+
+  <p>
+    The first thing we're going to take a look at here is how to read a file's contents. Certain files may contain data that we can use in our Elixir programs.
+  </p>
+  
+  <p>
+    Izzy pipes up: "Hey Mr. Author guy. I've got a confession: I outsourced the collection of data on this crowd. Remember, the end of Chapter 4? It was too big a task for me to do. Here's a file of the first 100 people from one of my volunteers." Izzy hands us a USB key. Or USB stick. Whatever you want to call it. It's a small rectangle of plastic with a metal USB plug on the end, and allegedly contains a file of the people in the crowd. Well, at least 100 of those people.
+  </p>
+
+  <p>
+    We plug in the USB stick and surely enough, there's a file there called `crowd.csv`. We open this file in our text editor and its first couple of rows look like this:
+  </p>
+
+<pre><code>
+age, gender, name
+30, Female, Izzy
+30ish, Male, The Author
+Unknowable, Unknowable, The Reader
+</code></pre>
+
+  <p>
+    Hey, this is the same data that we had in Chapter 4, but it looks different. Its _format_ is different, but represents the data in distinct columns and rows. This format is called "Comma-Separated Values" or `csv`. This is why the file is called `crowd.csv`, it contains data about the crowd in the `csv` format. The first row contains the title of each of the columns: `age`, `gender` and `name`. Each subsequent row contains the values associated with each person in this file.
+  </p>
+
+  <p>
+    Izzy apologetically says: "Sorry that this file doesn't use Elixir code. I can rewrite into Elixir for you." Thanks, Izzy, but that won't be necessary. We have the _power of programming_ to help us here.
+  </p>
+
+  <p>
+    This file format gives us a great excuse to practice reading files using Elixir. Once we've read this file, we can take a look at how we can convert this data back into a list of Elixir maps like the one we had back in Chatper 4.
+  </p>
+
+<pre><code>iex> those_who_are_assembled = [
+...> %{"age" => "30ish", "gender" => "Female", "name" => "Izzy"},
+...> %{"gender" => "Male", "name" => "The Author", "age" => "30ish"},
+...> %{"name" => "The Reader", "gender" => "Unknowable", "age" => "Unknowable"},
+...> ]</code></pre>
+
+</section>
+
+<section>
+  <h3>Writing to a file</h3>
+</section>
+
+<section>
+  <h3>Deleting a file</h3>
+</section>
