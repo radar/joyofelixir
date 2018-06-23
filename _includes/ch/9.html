@@ -362,14 +362,14 @@ cap.("summer")
 <pre><code>iex> numbers = [4, 8, 15, 16, 23, 42]</code></pre>
 
   <p>
-    And then we wanted to multiply each number by a different number, let's say 42. We're lazy and we want the computer to do the heavy lifting, and so we can pass <code>Enum.map/2</code> a function of our own design to acheive this goal:
+    And then we wanted to multiply each number by a different number, let's say 2. We're lazy and we want the computer to do the heavy lifting, and so we can pass <code>Enum.map/2</code> a function of our own design to acheive this goal:
   </p>
 
 <pre><code>iex&gt; Enum.map(numbers, fn (number) -&gt; number * 2 end)
 [8, 16, 30, 32, 46, 84]</code></pre>
 
   <p>
-    With our own function here, we're taking each element of the list &mdash; represented inside the function as the variable <code>number</code> &mdash; and then multiplying it by 42. When <code>Enum.map/2</code> has finished going through the list, it outputs a new list showing us the result of running that function on all items in the list.
+    With our own function here, we're taking each element of the list &mdash; represented inside the function as the variable <code>number</code> &mdash; and then multiplying it by 2. When <code>Enum.map/2</code> has finished going through the list, it outputs a new list showing us the result of running that function on all items in the list.
   </p>
 
   <h4>Reducing an enumerable</h4>
