@@ -140,14 +140,14 @@ greeting.("world")</code></pre>
   </p>
 
 <pre><code>iex> name = IO.gets "What is your name?"
-  What is your name?</code></pre>
+What is your name?</code></pre>
 
   <p>
     "Hey what happened to our <code>iex&gt;</code> prompt?", Izzy asks. Good question! We're using <code>gets</code> and passing it a string. This string then becomes a new prompt. This prompt is asking us for our name. Let's type in our name and press enter:
   </p>
 
 <pre><code>iex> name = IO.gets "What is your name?"
-What is your name? The Reader
+What is your name?The Reader
 <span class='console-green'>"The Reader\n"</span></code></pre>
 
   <p>
@@ -193,7 +193,7 @@ IO.puts "Hello, #{String.trim(name)}! You're #{String.trim(age)}? That's so old!
   </p>
 
   <p>
-    There's some more new syntax that we've never seen before either. We've seen that we could interpolate variables into strings, but we've never seen that we could call functions while interpolating too. It's absolutely something you can do in Elixir. When interpolating inside a string you can put any code inside the interpolation brackets (<code>#{}</code>) &mdash; but as a general rule-of-thumb it's good to keep this interpolated code as short and simple as possible.
+    There's some more new syntax that we've never seen before either. We've seen that we could interpolate variables into strings, but we've never seen that we could call functions while interpolating too. It's absolutely something you can do in Elixir. When interpolating inside a string you can put any code inside the interpolation brackets (<code>#{}</code>) &mdash; but as a general rule-of-thumb it's good to keep this interpolated code as short and simple as possible. Normally, you would only interpolate variables. We're making a small exception here to interpolate a function instead.
   </p>
 
   <p>
@@ -264,7 +264,7 @@ iex> sentence
 "another, even more perfectly normal sentence"</code></pre>
 
   <p>
-    It's important to know in Elixir that calling functions on data will never change that data. What will happen instead is that we'll get back some new... thing as a result of that function. This will become more apparent the more Elixir code you write, but I thought it best to mention it here before you get too deep and someone mentions that big fancy word. Now you're &mdash; as they say &mdash; "in the know" too.
+    It's important to know in Elixir that calling functions on data will never change that data. What will happen instead is that we'll get back some new... thing as a result of that function. This will become more apparent the more Elixir code you write, but I thought it best to mention it here before you get too deep and someone mentions that big fancy word &mdash; "immutable". Now you're, as they say, "in the know" too.
   </p>
 </section>
 

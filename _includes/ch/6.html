@@ -64,8 +64,13 @@ iex> score = 2 / 5 * 100
 
 <pre><code>iex> those_who_are_assembled = [
 ...> %{"age" => "30ish", "gender" => "Female", "name" => "Izzy"},
-...> %{"gender" => "Male", "name" => "The Author", "age" => "30ish"},
-...> %{"name" => "The Reader", "gender" => "Unknowable", "age" => "Unknowable"},
+...> %{"age" => "30ish", "gender" => "Male", "name" => "The Author"},
+...> %{"age" => "56", "gender" => "Male", "name" => "Roberto"},
+...> %{"age" => "38", "gender" => "Female", "name" => "Juliet"},
+...> %{"age" => "21", "gender" => "Female", "name" => "Mary"},
+...> %{"age" => "67", "gender" => "Female", "name" => "Bobalina"},
+...> %{"age" => "54", "gender" => "Male", "name" => "Charlie"},
+...> %{"age" => "10", "gender" => "Male", "name" => "Charlie (no relation)"},
 ...> ]</code></pre>
 
   <p>
@@ -88,7 +93,7 @@ iex> score = 2 / 5 * 100
 iex> second
 %{"age" => "30ish", "gender" => "Male", "name" => "The Author"}
 iex> third
-%{"age" => "Unknowable", "gender" => "Unknowable", "name" => "Roberto"}
+%{"age" => "56", "gender" => "Male", "name" => "Roberto"}
 iex> others
 [%{"age" => "38", "gender" => "Female", "name" => "Juliet"}, ...]
 </code></pre>

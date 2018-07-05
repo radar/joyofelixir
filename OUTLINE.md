@@ -20,7 +20,7 @@
 
 * Why maps?
 * Map syntax
-* `[]` -- accessing a value from a map 
+* `[]` -- accessing a value from a map
 * A list containing maps
 
 ## Chapter 5: Funky functions
@@ -94,19 +94,25 @@
 
 ## Chapter 11: Working with files
 
-* Reading
-* Writing
-* Deleting
+* IO module
+* Reading files
+* Writing files
+* Deleting files
+* Atoms
+* Tuples
 
 ## Chapter 12: Finding more functions
 
 * h helper in iex prompt
-* Tab complete 
+* Tab complete
 * Elixir docs link
 
 ## Chapter 13: Mixing it up
 
 * Introduction to Mix, similar in approach to the official guide, but using concepts just from this book. No agents.
+* Demonstrate defining Modules
+* (?) Structs?
+* (?) Introduce automated testing
 
 
 ## Chapter 14: Where to from here?

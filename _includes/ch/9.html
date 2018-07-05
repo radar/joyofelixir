@@ -26,7 +26,7 @@
 <pre><code>iex> animals_or_derivatives_of_animals = ["cat", "dog", "cow", "turducken"]</code></pre>
 
   <p>
-    We would think that just like <code>first</code> and <code>last</code> that there should be a <code>reverse</code> too! Let's try it out:
+    We would think that just like <code>first</code> and <code>last</code> that there should be a <code>reverse</code> too! We might think this because Elixir provides us a way to reverse strings -- with `String.reverse("string")` -- so why not lists too? Let's try it out:
   </p>
 
 <pre><code>iex> List.reverse(animals_or_derivatives_of_animals)
@@ -69,6 +69,10 @@ List.reverse(animals_or_derivatives_of_animals, [1, 2, 3])
 
 <pre><code>iex> String.split("Hello, World!", "o")
 ["Hell", ", W", "rld!"]</code></pre>
+
+  <p>
+    The function name doesn't change, but the number of arguments changes, and that alters how the function behaves.
+  </p>
 
   <p>
     The second argument to <code>String.split/2</code> tells the computer where to split the string. With the single argument version, the computer assumed we wanted to split on the spaces between the words. With the two argument version &mdash; that is, the <code>/2</code> version &mdash; we tell it that we want to split on the <code>"o"</code> character instead.
@@ -320,7 +324,7 @@ cap.("summer")
     String.capitalize("winter"),
     String.capitalize("spring"),
   ]
-  [<span class='console-green'>"Summer"</span>, <span class='console-green'>"Fall"</span>, <span class='console-green'>"Winter"</span>, <span class='console-green'>"Spring"</span>]</code></pre>
+[<span class='console-green'>"Summer"</span>, <span class='console-green'>"Fall"</span>, <span class='console-green'>"Winter"</span>, <span class='console-green'>"Spring"</span>]</code></pre>
 
   <p>
     But since we've already got a list we're going to have to do <em>something</em> to that list to turn it into what we want. That something is to use another function from the <code>Enum</code> module called <code>Enum.map/2</code>. This <code>map</code> function is different from the map kind of data (<code>%{"name" => "Izzy"}</code>), in that the function-called-map will take the specified enumerable and another function as arguments, then enumerate through each item in the list and run that other function for each item, and then return the result of each function run.
@@ -507,8 +511,7 @@ end)</code></pre>
     It's at this point that I should probably mention one more function in the <code>Enum</code> toolbox called <code>sum/1</code>. This function takes a list and sums up all the items in it, just like our <code>reduce/2</code> function. These two functions are identical in how they work:
   </p>
 
-<pre><code>
-iex> scores = [74, 79, 89, 32, 79, 70, 32, 69, 76, 73, 88, 73, 82, 31]
+<pre><code>iex> scores = [74, 79, 89, 32, 79, 70, 32, 69, 76, 73, 88, 73, 82, 31]
 [74, 79, 89, 32, 79, 70, 32, 69, 76, 73, 88, 73, 82, 31]
 iex> Enum.sum(scores)
 947

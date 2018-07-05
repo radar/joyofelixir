@@ -44,7 +44,7 @@ iex> Enum.each(person, fn ({key, value}) -> IO.puts value end)
 <pre><code>fn ({key, value}) ...</code></pre>
 
   <p>
-    The <code>{k, v}</code> here indicates a type of data in Elixir that we haven't seen before called a <em>tuple</em>. Tuples work like lists in that the order of the elements inside them matters, but you can't enumerate through them like you can with lists; said another way: tuples are <em>not</em> enumerable.
+    The <code>{key, value}</code> here indicates a type of data in Elixir that we haven't seen before called a <em>tuple</em>. Tuples work like lists in that the order of the elements inside them matters, but you can't enumerate through them like you can with lists; said another way: tuples are <em>not</em> enumerable. Tuples are used to represent ordered, linked data. In this example, each tuple represents a key <em>and</em> its linked value.
   </p>
 
   <p>
@@ -86,7 +86,7 @@ Izzy
 <span class='console-red'>** (Protocol.UndefinedError) protocol String.Chars not implemented for {"age", "30ish"}</span></code></pre>
 
   <p>
-    Uh oh, the computer is mad at us again. This cryptic error message is a complicated way of saying that <code>IO.puts/1</code> doesn't know how to output a tuple. We just need to be careful that we pass <code>IO.puts/1</code> string values only. If we give something that isn't a string to <code>IO.puts/1</code>, it won't know how to output it, and so it will show this error.
+    Uh oh, the computer is mad at us again. This cryptic error message is a complicated way of saying that <code>IO.puts/1</code> doesn't know how to output a tuple. We just need to be careful that we pass <code>IO.puts/1</code> only things it can handle. If we give something that <code>IO.puts/1</code> can't handle, it won't know how to output it, and so it will show this error.
   </p>
 
   <p>
@@ -205,8 +205,7 @@ iex> Enum.map(forecast, fn ({day, temp}) -> {day, temp * 1.8 + 32} end)
   "Thursday" => 75.2, "Tuesday" => 84.2, "Wednesday" => 84.2}</code></pre>
 
   <p>
-    That's better! Our data is back into the shape of a map... but the days of the week have lost their ordering. That'll be a problem that I'll leave as an exercise for you to fix at the end of this chapter.
-  </p>
+    That's better! Our data is back into the shape of a map... but the days of the week have lost their ordering. But that's okay because we don't care about ordering in maps: we access values in our maps by their matching key, not by their position.
 
   <p>
     So here we've seen how to use the <code>Enum.map/2</code> and <code>Enum.into/2</code> functions to iterate through a map's elements to run a function on each of those elements.
@@ -224,8 +223,7 @@ iex> Enum.map(forecast, fn ({day, temp}) -> {day, temp * 1.8 + 32} end)
     I've just shown you one way to use <code>Enum.map/2</code> to go over a map's values and to apply a function to each of those values. Here it is again, in case you missed it:
   </p>
 
-<pre><code>
-iex> forecast = %{
+<pre><code>iex> forecast = %{
   "Monday" => 28,
   "Tuesday" => 29,
   "Wednesday" => 29,
@@ -307,8 +305,7 @@ iex> Enum.into(new_forecast, %{})
     Rather than continuing to look at fictional code, let's switch back to a real example. Here's some code that uses the pipe operator ("and then") that is functionally identical to the code from the previous section, where we have a forecast in celcius and we convert it to farenheit:
   </p>
 
-<pre><code>
-%{
+<pre><code>%{
   "Monday" => 28,
   "Tuesday" => 29,
   "Wednesday" => 29,
@@ -404,7 +401,7 @@ iex> Enum.into(new_forecast, %{})
 <pre><code>iex> person = %{"gender" => "Female", "age" => "30ish", "name" => "Izzy"}
 %{"age" => "30ish", "gender" => "Izzy", "name" => "Izzy"}
 iex> person["name"]
-"Roberto"</code></pre>
+"Izzy"</code></pre>
 
   <p>
     We compared it to a skilltester reaching in to pluck out the relevant item:
@@ -484,12 +481,16 @@ iex> person["name"]
     code like <code>people["name"]</code>.
   </p>
 
+  <p>
+    I want to show you three more functions from <code>Map</code> which I think are
+  as important to know as <code>Map.get/2</code> and those are
+  <code>Map.put/2</code>, <code>Map.merge/2</code> and <code>Map.delete/2</code>.
+  </p>
+
   <h4>put</h4>
 
   <p>
-    I want to show you one more function from <code>Map</code> which I think is
-    as important to know as <code>Map.get/2</code> and that is
-    <code>Map.put/2</code>. This function lets you update a map to add a key or
+    The <code>Map.put/2</code> function lets you update a map to add a key or
     update an existing key.
   </p>
 
@@ -499,36 +500,113 @@ iex> person["name"]
     data that we have on Izzy so far:
   </p>
 
-<pre><code>iex> roberto = %{"name" => "Izzy", "age" => "30ish", "gender" => "Female"}</code></pre>
+<pre><code>iex> izzy = %{"name" => "Izzy", "age" => "30ish", "gender" => "Female"}</code></pre>
 
   <p>
-    With this data, we're unclear about Izzy's age. Perhaps we've gotten to
-    know her better throughout the course of this book and she tells us that
-    she's actually 40ish instead of 30ish. This is surprising to us, considering her
-    youthful visage. Nevertheless, our data is wrong. We need to update it. We
-    could simply redefine the map:
+    Recently, we've found out that Izzy is from Australia. That would explain
+  the accent and the cork hat. We've also found out that Izzy is "40ish" rather
+  than "30ish". This is surprising to us, considering her youthful visage.
+  Based on this new information, we'll add a new key to our map called
+  <code>country</code> and update the <code>age</code> key with the more
+  correct value. We could just type it all out again:
   </p>
 
-<pre><code>iex> roberto = %{<span class='unfocussed'>"name" => "Izzy"</span>, "age" => "40ish", <span class='unfocussed'>"gender" => "Female"</span>}</code></pre>
+<pre><code>iex> izzy = %{
+  <span class='unfocussed'>"name" => "Izzy"</span>,
+  "age" => "40ish",
+  <span class='unfocussed'>"gender" => "Female",</span>
+  "country" => "Australia",
+}</code></pre>
 
   <p>
-  But that seems like an awful lot of typing just to update one key. Let's look at how we could update this key using <code>Map.put/2</code>:
+  But that seems like an awful lot of typing just to update one key. Let's look
+  at how we could update the <code>age</code> key and add in the
+  <code>country</code> key by using <code>Map.put/2</code>:
   </p>
 
-<pre><code>iex> Map.put(izzy, "age", "40ish")
+<pre><code>iex> izzy = Map.put(izzy, "age", "40ish")
 %{"age" => "40ish", "gender" => "Female", "name" => "Izzy"}</code></pre>
 
-  <p>Ah that's so much better! We can now update the <code>"age"</code> key without having to rewrite the whole map.</p>
+  <p>
+    Ah that's so much better than writing the whole map from scratch! We can
+    now update the <code>"age"</code> key without having to rewrite the whole
+    map.
+  </p>
 
+  <p>
+    Now let's say that we wanted to update this <code>age</code> key and the
+    <code>country</code> key at the same time. We can use
+    <code>Map.put/2</code> and the pipe operator to chain the two operations
+    together:
+  </p>
+
+<pre><code>izzy
+|> Map.put("age", "40ish")
+|> Map.put("country", "Australia")
+%{"age" => "40ish", "country" => "Australia", "gender" => "Female", "name" => "Izzy"}</code></pre>
+
+  <p>
+  This is another great example of the pipe operator in action, but we can
+  write the code in a shorter fashion with the next <code>Map</code> function:
+  <code>merge/2</code>.
+  </p>
+
+<h4>merge</h4>
+
+  <p>
+    Let's change the data that we have on Izzy back to what it was at the start of this chapter:
+  </p>
+
+<pre><code>izzy = %{"name" => "Izzy", "age" => "30ish", "gender" => "Female"}</code></pre>
+
+  <p>
+  This'll make it easier to show what <code>Map.merge/2</code> does.
+  <code>Map.merge/2</code> takes two maps and merges them together. Let's take
+  our last <code>Map.put/2</code> example and rewrite it with
+  <code>Map.merge/2</code> to demonstrate this:
+  </p>
+
+<pre><code>izzy = Map.merge(izzy, %{"age" => "40ish", "country" => "Australia"})
+%{
+  "age" => "40ish",
+  "country" => "Australia",
+  "gender" => "Female",
+  "name" => "Izzy"
+}</code></pre>
+
+  <p>
+    This results in the same map as our <code>Map.put/2</code> example, except we
+  only have to call one function once instead of twice. The
+  <code>Map.merge/2</code> function takes two maps as arguments, and then:
+  </p>
+
+  <ul>
+    <li>Takes the keys from the second map that are not present in the first map adds them to the first map</li>
+    <li>Overwrites keys in the first map that are present in the second map</li>
+  </ul>
+
+  <p>
+    In this example, it has replaced the "old" <code>age</code> value ("30ish")
+  with the "new" one ("40ish"), and it has added a key called
+  <code>country</code> to this map.
+  </p>
+
+<h4>delete</h4>
+
+  <p>
+    We've now looked at how to add new keys or update keys in a map. The only
+    thing left to look at is how to delete them. We can delete keys in a map by
+    using the <code>Map.delete/2</code> function. Let's say we didn't really
+    care what country Izzy came from. We can delete that data, but keep
+    everything else, by using <code>Map.delete/2</code>
+  </p>
+
+<pre><code>izzy = Map.delete(izzy, "country")
+%{"age" => "40ish", "gender" => "Female", "name" => "Izzy"}
+</code></pre>
+
+  <p>
+    This function takes a map as its first argument, and then a key as its second argument. When the function acts, it removes that key from the map.
+  </p>
 </section>
 
-<section>
-  <h3>Exercises</h3>
-
-  <p>After mapping through our forecast map early in the chapter and converting its numbers from celcius to farenheit, we lost the proper ordering of the days of the week.</p>
-
-<pre><code>%{"Friday" => 60.8, "Monday" => 82.4, "Saturday" => 60.8, "Sunday" => 68.0,
-  "Thursday" => 75.2, "Tuesday" => 84.2, "Wednesday" => 84.2}</code></pre>
-
-  <p>Can you find a function in <code>Enum</code> that would let us output the days of the week and their temperatures in the right order?</p>
-</section>
