@@ -272,7 +272,7 @@ iex> Enum.into(new_forecast, %{})
   </p>
 
   <p>
-    The way to write shorter code here is by using the <em>pipe operator</em>, <code>|&gt;</code>. The pipe operator allows us to chain together actions within Elixir, passing the result of one function on to the next. Unfortunately, unlike <a href='https://en.wikipedia.org/wiki/Tony_Hawk%27s_Pro_Skater'>Tony Hawk's Pro Skater</a>, we do not get thousands of points for chaining together sick combos. But we still do get the great sense of satisfaction when it all works together!
+    The way to write shorter code here is by using the <em>pipe operator</em>, <code>|&gt;</code>. The pipe operator allows us to chain together actions within Elixir, passing the result of one function on to the next. It's called the <em>pipe operator</em> because it connects the functions together in a linear fashion, with data flowing from one function to the next; like water through a pipe. Unfortunately, unlike <a href='https://en.wikipedia.org/wiki/Tony_Hawk%27s_Pro_Skater'>Tony Hawk's Pro Skater</a>, we do not get thousands of points for chaining together sick combos. But we still do get the great sense of satisfaction when it all works together!
   </p>
 
   <p>
@@ -489,8 +489,7 @@ iex> person["name"]
   <h4>put</h4>
 
   <p>
-    The <code>Map.put/2</code> function lets you update a map to add a key or
-    update an existing key.
+    The <code>Map.put/3</code> function takes three arguments: a map, a key and a value. It will then return an updated version of the original map. How that map gets updated depends on what the key was: if it was an existing key, only the value for that key is updated. If it's a new key, then both the key and value are added. Let's look at some examples to get a clearer understanding.
   </p>
 
   <p>
@@ -520,7 +519,7 @@ iex> person["name"]
   <p>
   But that seems like an awful lot of typing just to update one key. Let's look
   at how we could update the <code>age</code> key and add in the
-  <code>country</code> key by using <code>Map.put/2</code>:
+  <code>country</code> key by using <code>Map.put/3</code>:
   </p>
 
 <pre><code>iex> izzy = Map.put(izzy, "age", "40ish")
@@ -539,13 +538,29 @@ iex> person["name"]
     together:
   </p>
 
-<pre><code>izzy
-|> Map.put("age", "40ish")
-|> Map.put("country", "Australia")
+<pre><code>izzy |> Map.put("age", "40ish") |> Map.put("country", "Australia")
 %{"age" => "40ish", "country" => "Australia", "gender" => "Female", "name" => "Izzy"}</code></pre>
 
   <p>
-  This is another great example of the pipe operator in action, but we can
+    This time, we've updated the value under the <code>age</code> key, <em>and</em> we've also added a new key here called <code>country</code>. It's important to note here that the original <code>izzy</code> map isn't changed at all:
+  </p>
+
+<pre><code>izzy
+%{"age" => "30ish", "gender" => "Female", "name" => "Izzy"}</code></pre>
+
+  <p>
+    This is because of that <em>immutability</em> thing we talked about a few chapters ago. Data in Elixir never changes unless we re-assign the variable it is associated with. In the above <code>Map.put/3</code> code, <code>izzy</code> stays the same, even though the functions run. If we wanted to update the <code>izzy</code> variable with new data, we could re-assign that variable:
+  </p>
+
+<pre><code>izzy = izzy |> Map.put("age", "40ish") |> Map.put("country", "Australia")
+%{"age" => "40ish", "country" => "Australia", "gender" => "Female", "name" => "Izzy"}</code></pre>
+
+  <p>
+    From that point onwards, our code would know that Izzy is 40ish and from Australia. Phew.
+  </p>
+
+  <p>
+    How we've used <code>Map.put/3</code> here is another great example of the pipe operator in action, but we can
   write the code in a shorter fashion with the next <code>Map</code> function:
   <code>merge/2</code>.
   </p>
@@ -561,7 +576,7 @@ iex> person["name"]
   <p>
   This'll make it easier to show what <code>Map.merge/2</code> does.
   <code>Map.merge/2</code> takes two maps and merges them together. Let's take
-  our last <code>Map.put/2</code> example and rewrite it with
+  our last <code>Map.put/3</code> example and rewrite it with
   <code>Map.merge/2</code> to demonstrate this:
   </p>
 
@@ -574,7 +589,7 @@ iex> person["name"]
 }</code></pre>
 
   <p>
-    This results in the same map as our <code>Map.put/2</code> example, except we
+    This results in the same map as our <code>Map.put/3</code> example, except we
   only have to call one function once instead of twice. The
   <code>Map.merge/2</code> function takes two maps as arguments, and then:
   </p>
@@ -608,4 +623,42 @@ iex> person["name"]
     This function takes a map as its first argument, and then a key as its second argument. When the function acts, it removes that key from the map.
   </p>
 </section>
+
+<section>
+  <h3>Summary</h3>
+
+  <p>
+    In this chapter, we've seen a couple of ways of working with maps. We saw that we could go through each key-value pair in the map with <code>Enum.each/2</code>. We also used <code>Enum.map/2</code> and <code>Enum.into/2</code> to change the values inside the maps to other values, converting temperature numbers to farenheit ones.
+  </p>
+
+  <p>
+    When we looked at <code>Enum.map/2</code> and <code>Enum.into/2</code>, we discovered that we could write the code in a shorter way with the <em>pipe operator</em>: <code>|&gt;</code>. This operator allows us to pass the result of one function call to the next, allowing us to write cleaner Elixir code.
+  </p>
+
+  <p>
+    We rounded out the chapter by looking at some common functions from the <code>Map</code> module.
+  </p>
+
+  <p>
+    We saw <code>Map.get/2</code> which allowed us to pick out a particular value based on a key's name. We knew we could already do this with code like <code>person["name"]</code>, but, as we saw, <code>Map.get/2</code> is useful if we're in the middle of a piping operation and need to pick out a value from a map.
+  </p>
+
+  <p>
+    We then looked at <code>Map.put/3</code> which gave us the ability to create a new map with new keys from an existing map. This function took a map, a key and a value and then gave us back a new map with the changes we asked for.
+  </p>
+
+  <p>
+    If we were applying multiple changes with <code>Map.put/3</code> at the same time, we learned that it wasn't smart to do that and so we then learned about <code>Map.merge/2</code>. We saw that this function takes two maps and merges them together, with the 2nd maps keys taking precedence over the first map's keys.
+  </p>
+
+  <p>
+    The last thing we saw in this chapter was how to get back a map without certain keys with <code>Map.delete/2</code>. It's a good way of removing data from a map if we don't need it anymore.
+  </p>
+
+  <p>
+    We're now moving out of the <code>Enum</code>, <code>List</code> and <code>Map</code> woods into something brand new to us: using Elixir to interact with files on our computer.
+  </p>
+</section>
+
+
 
