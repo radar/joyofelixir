@@ -90,7 +90,23 @@ We could go in to the file and correct this ourselves, but we're <em>programmers
   <pre><code>iex> {:ok, contents} = File.read("haiku.txt")</code></pre>
 
   <p>
-    Go ahead and try this code out in your <code>iex</code> prompt. You'll see exactly the same values come back as when we did the first <code>File.read/1</code> invocation:
+    Go ahead and try this code out in your <code>iex</code> prompt. Also try it with the wrong path too and see what happens. If you give it the wrong path, you should see it fail like this:
+  </p>
+
+  <pre><code><span class='console-red'>** (MatchError) no match of right hand side value: {:error, :enoent}</span></code></pre>
+
+  <p>
+    This error happens because we're telling Elixir to expect that the tuple returned from this call contains an <code>:ok</code> atom at the start, but it doesn't. Pattern matching can be a useful way of stopping your program in its tracks like this.
+  </p>
+
+  <p>
+    Let's look back at the successful read:
+  </p>
+
+    <pre><code>iex> {:ok, contents} = File.read("haiku.txt")</code></pre>
+
+  <p>
+    You'll see exactly the same values come back as when we did the first <code>File.read/1</code> invocation:
   </p>
 
   <pre><code>{:ok, "I evol rixilE\nnrael ot ysae os si tI\nedoc lanoitcnuf taerG\n"}</code></pre>
