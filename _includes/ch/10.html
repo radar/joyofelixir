@@ -289,9 +289,7 @@ iex> Enum.into(new_forecast, %{})
     We can't convert the data to farenheit unless we have it already, and we can't send it to our American friend -- or <em>shouldn't</em> -- before converting it to farenheit. We have to do these steps in order for them to make sense. If we were to write the above in Elixir code with the pipe operator, it might look like this:
   </p>
 
-<pre><code>get_forecast_data
-|> convert_to_farenheit
-|> send_to_american_friend</code></pre>
+<pre><code>get_forecast_data |> convert_to_farenheit |> send_to_american_friend</code></pre>
 
 
   <p>
@@ -338,8 +336,11 @@ iex> Enum.into(new_forecast, %{})
   </p>
 
   <ol>
-    <li>We define a map containing the days of the week and their expected temperatures. We <em>don't</em> assign this to a variable.</li>
-    <li><em>And then</em> we <em>pipe</em> this map using the <em>pipe
+    <li>
+      We define a map containing the days of the week and their expected temperatures. We <em>don't</em> assign this to a variable.
+    </li>
+    <li>
+      <em>And then</em> we <em>pipe</em> this map using the <em>pipe
         operator</em> (<code>|&gt;</code>) into <code>Enum.map/2</code>. This
       makes the map the first argument of <code>Enum.map/2</code>, so this
       removes the need to define a <code>forecast</code> variable and to pass
@@ -347,13 +348,18 @@ iex> Enum.into(new_forecast, %{})
     function automatically. The only argument on <code>Enum.map/2</code> here
     is just the function that we use to convert the temperature values. We
     still refer to this function as <code>Enum.map/2</code>, because it is
-    taking in two arguments: the piped-in value and the function.</li>
-    <li><em>And then</em> we <em>pipe</em> the result of this
+    taking in two arguments: the piped-in value and the function.
+    </li>
+    <li>
+      <em>And then</em> we <em>pipe</em> the result of this
       <code>Enum.map/2</code> call into <code>Enum.into/2</code>, and the
       result of <code>Enum.map/2</code> becomes the first argument of
       <code>Enum.into/2</code>. The second argument to <code>Enum.into/2</code>
-    is still an empty map.</li>
-    <li>Finally, we <em>pipe</em> the result of <code>Enum.into/2</code> into a function we've not seen before called <code>IO.inspect/1</code>. This outputs the map in a human-friendly way. We're not using <code>IO.puts/1</code> here because it only works with strings, and what we have at this point of the code after <code>Enum.into/2</code> is a map, not a string. <code>IO.inspect/1</code> will work with any form of data that we give it.
+    is still an empty map.
+    </li>
+    <li>
+      Finally, we <em>pipe</em> the result of <code>Enum.into/2</code> into a function we've not seen before called <code>IO.inspect/1</code>. This outputs the map in a human-friendly way. We're not using <code>IO.puts/1</code> here because it only works with strings, and what we have at this point of the code after <code>Enum.into/2</code> is a map, not a string. <code>IO.inspect/1</code> will work with any form of data that we give it.
+    </li>
   </ol>
 
   <p>
