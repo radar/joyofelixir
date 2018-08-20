@@ -114,7 +114,6 @@
 * (?) Structs?
 * (?) Introduce automated testing
 
-
 ## Chapter 14: Where to from here?
 
 * Link to other resources, like Programming Elixir

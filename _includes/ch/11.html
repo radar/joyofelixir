@@ -12,8 +12,150 @@
   <h3>Reading a file</h3>
 
   <p>
-    The first thing we're going to take a look at here is how to read a file's contents. Certain files may contain data that we can use in our Elixir programs.
+    The first thing we're going to take a look at here is how to read a file's contents and then use Elixir to do something with those contents.
   </p>
+
+  <p>
+    Certain files may contain data that we can use in our Elixir programs. Elixir can read any file you throw at it. In this chapter, just for simplicity, we're going to stick to two particular formats for files: text and comma separated.
+  </p>
+
+  <p>
+    A text file is just a file with a bunch of words in it. You probably have a file like that on your computer right now. You could open it in your text editor and read what was written in it. If for some weird reason you don't have one of these, you can take this content and put it in a new file called <code>haiku.txt</code>:
+  </p>
+
+<pre><code>rixilE evol I
+nrael ot ysae os si tI
+code functional Great</code></pre>
+
+  <p>
+    Izzy squints at the haiku. "Um... This haiku looks a little... backwards". Yes, Izzy! Each line is written backwards! The poem should read:
+  </p>
+
+<pre><code>I love Elixir
+It is so easy to learn
+Great functional code</code></pre>
+
+  <p>
+We could go in to the file and correct this ourselves, but we're <em>programmers</em> learning a super-duper-awesome programming language and by golly if we aren't going to use it to solve every problem we come across. To solve this problem, we're going to use the power of Elixir.
+  </p>
+
+  <p>
+    What we're going to do is to read this haiku into Elixir, and then we're going to reverse the order of words in each line. I make it sound so easy, and that's because it is. Really!
+  </p>
+
+  <p>
+    To read this file, we'll need to open an <code>iex</code> prompt where the file is, and then we can use this code to read it:
+  </p>
+
+<pre><code>iex> File.read("haiku.txt")</code></pre>
+
+  <p>
+    This code tells Elixir to read a file by calling the <code>File.read/1</code> function. Calling this function will give us the following output:
+  </p>
+
+  <pre><code>{:ok, "I evol rixilE\nnrael ot ysae os si tI\nedoc lanoitcnuf taerG\n"}</code></pre>
+
+  <p>
+    In this output, there's not <em>one</em> but <em>two</em> new concepts. You've gotten so far through the book that you're now so great at learning and that means I can introduce things rapid-fire and you'll pick 'em up with no effort.
+  </p>
+
+  <p>
+    The first of these is the curly brackets. Did you notice them? They wrap all of the output from the <code>File.read/1</code>. Did you notice that these curly brackets, unlike all the other curly brackets we've seen before, are <em>not</em> prefixed with a percent-sign (<code>%</code>)?
+  </p>
+
+  <p>
+    This particular concept in Elixir is called a <em>tuple</em>. You can think of tuples as a fixed-length list and they're used to link a bunch of information together in a particular order. In this case, it's telling us that the file operation was <code>:ok</code>, and then it's giving us a string containing all the file's information.
+  </p>
+
+  <p>
+    Izzy pipes up: "What's that <code>:ok</code> thing and why does it have a colon before it?". Good spot, Izzy. That is called an <code>atom</code>. Atoms are used to provide informational messages, like in this case. Atoms names are their values. This is unlike strings, maps and lists where we would assign to a variable in order to give a meaningful name to. This atom is telling us that the operation we asked <code>File.read/1</code> to perform went "ok"; we were able to read the file successfully.
+  </p>
+
+  <p>
+    If we specified a file that wasn't present, <code>File.read/1</code> would give us a different atom in that first place:
+  </p>
+
+  <pre><code>iex> File.read("haiboo.txt")
+{:error, :enoent}
+</code></pre>
+
+  <p>
+    This cryptic error message uses a tuple containing <em>two</em> atoms, <code>:error</code> and <code>:enoent</code>. The first one is self-explanatory -- there was an error loading this file. The second one gives us a non-regular-human-friendly error message: <code>:enoent</code>. This is computer-lingo for "I couldn't find that file you were looking for, sorry."
+  </p>
+
+  <p>
+    The best part about these tuples and atoms being returned from the <code>File.read/1</code> call is that we can use <em>pattern matching</em> (<a href='/6-pattern-matching'>Chapter 6</a>). If we want to only proceed if our <code>File.read/1</code> function executes successfully, we can pattern match like this:
+  </p>
+
+  <pre><code>iex> {:ok, contents} = File.read("haiku.txt")</code></pre>
+
+  <p>
+    Go ahead and try this code out in your <code>iex</code> prompt. You'll see exactly the same values come back as when we did the first <code>File.read/1</code> invocation:
+  </p>
+
+  <pre><code>{:ok, "I evol rixilE\nnrael ot ysae os si tI\nedoc lanoitcnuf taerG\n"}</code></pre>
+
+  <p>
+    The difference is: this time, we've got the contents of the file in a <code>contents</code> variable. Oooh, that was sneaky! Let's get back to the task at hand: we still need to correct this haiku back to its proper form. We've now got the contents of this file and we need to reverse each line. To do that, we need some way of splitting apart the string so that we can process each line separately from each other line. To do this, we can use our old friend, <code>String.split/3</code>:
+  </p>
+
+  <pre><code>iex> contents |> String.split("\n", trim: true)</code></pre>
+
+  <p>
+    This code takes the string stored in <code>contents</code> and passes it as the first argument to <code>String.split/3</code>. The other two arguments are: 2) the string <code>"\n"</code> and 3) the option <code>trim: true</code>. The 2nd argument tells <code>String.split/3</code> to split the string on the newline characters (<code>\n</code>), and the 3rd argument tells <code>String.split/3</code> to remove any trailing space at the end.
+  </p>
+
+  <p>
+    When this function does its thing, we'll see this output:
+  </p>
+
+  <pre><code>["rixilE evol I", "nrael ot ysae os si tI", "edoc lanoitcnuf taerG"]</code></pre>
+
+  <p>
+    Yay! We've now got a list of strings here. We need each string here to be reversed. Izzy sticks her hand up and wiggles it around. "Ooh ooh ooh I know how to do this! <code>String.reverse/1</code>!", she says, monospaced font and all. Impressive. Yes, Izzy is correct! We can reverse a string by calling <code>String.reverse/1</code> as we first saw back in <a href='/8-strings-input-and-output'>Chapter 8</a>. We know we can do it with a single string like this:
+  </p>
+
+  <pre><code>iex> "rixilE evol I" |> String.reverse
+"I love Elixir</code></pre>
+
+  <p>
+    But we don't have a single string here, we have three strings within a list. But we have knowledge on our side. We have special skills that we built up in <a href='/9-lists'>Chapter 9</a>, and with those special skills we know that we can call <code>Enum.map/2</code> to apply a function to multiple elements within a list. We've done exactly this back in Chapter 9:
+  </p>
+
+  <pre><code>iex> Enum.map(seasons, &amp;String.capitalize/1)</code></pre>
+
+  <p>
+    So let's take our list, adapt this code a little bit to use the pipe operator and <code>String.reverse/1</code> and reverse each string with this code:
+  </p>
+
+  <pre><code>iex> contents |> String.split("\n", trim: true) |> Enum.map(&amp;String.reverse/1)</code></pre>
+
+  <p>
+    This code will give us back a list of strings that now look like proper English:
+  </p>
+
+  <pre><code>["I love Elixir", "It is so easy to learn", "Great functional code"]</code></pre>
+
+  <p>
+    All we need to do now is to put the file back into a big string, which we can do with a new-to-us function called <code>Enum.join/2</code>:
+  </p>
+
+  <pre><code>iex> contents |> String.split("\n", trim: true) |> Enum.map(&amp;String.reverse/1) |> Enum.join("\n")
+"I love Elixir\nIt is so easy to learn\nGreat functional code"</code></pre>
+
+  <p>
+    Excellent! We've now got our file's text around the right way. We did this with a combination of quite a few functions and that is really demonstrating the repertoire of things that we know how to do with Elixir now.
+  </p>
+
+  <p>
+    We have the string in Elixir, but it would be really handy if we could take this string out of Elixir and put it into a new file. That's what we'll be looking at next!
+  </p>
+
+
+
+
+
+
 </section>
 
 <section>
