@@ -16,11 +16,11 @@
   </p>
 
   <p>
-    Certain files may contain data that we can use in our Elixir programs. Elixir can read any file you throw at it. In this chapter, just for simplicity, we're going to stick to two particular formats for files: text and comma separated.
+    Certain files may contain data that we can use in our Elixir programs. Elixir can read any file you throw at it. In this chapter, just for simplicity, we're going to stick to a single file format: text files.
   </p>
 
   <p>
-    A text file is just a file with a bunch of words in it. You probably have a file like that on your computer right now. You could open it in your text editor and read what was written in it. If for some weird reason you don't have one of these, you can take this content and put it in a new file called <code>haiku.txt</code>:
+    A text file is just a file with a bunch of words in it. You probably have a file like that on your computer right now. You could open one of these files in your text editor and read what was written in that file. If for some weird reason you don't have one of these, you can take this content and put it in a new file called <code>haiku.txt</code>:
   </p>
 
 <pre><code>rixilE evol I
@@ -28,7 +28,7 @@ nrael ot ysae os si tI
 edoc lanoitcnuf taerG</code></pre>
 
   <p>
-    Izzy squints at the haiku. "Um... This haiku looks a little... backwards". Yes, Izzy! Each line is written backwards! The poem should read:
+    Izzy squints at the haiku. "Um... This haiku looks a little... backwards". Yes, Izzy! Each line is written backwards! The haiku should read:
   </p>
 
 <pre><code>I love Elixir
@@ -144,10 +144,22 @@ We could go in to the file and correct this ourselves, but we're <em>programmers
     So let's take our list, adapt this code a little bit to use the pipe operator and <code>String.reverse/1</code> and reverse each string with this code:
   </p>
 
+  <pre><code>iex> contents \
+|> String.split("\n", trim: true) \
+|> Enum.map(&amp;String.reverse/1)</code></pre>
+
+  <p>
+    We're using a multi-line pipe operator chain here to accomplish what we want. Because we're in <code>iex</code>, we need to put a backslash (<code>\</code>) on the end of every line to tell Elixir to treat all these lines as one long line and one chain of operations. If we were writing code in an Elixir file, we wouldn't need to do this. <code>iex</code> is a little special in this regard. Another way we could've written the code is like this:
+  </p>
+
   <pre><code>iex> contents |> String.split("\n", trim: true) |> Enum.map(&amp;String.reverse/1)</code></pre>
 
   <p>
-    This code will give us back a list of strings that now look like proper English:
+    But it is considered best practice to split long pipe chains up onto multiple lines when they're really long just to help with readability. Think of it as the same rule that applies when you're writing a book: you split logical breaks into separate paragraphs to make it easier for people to read here. We're applying almost that same rule to our Elixir code.
+  </p>
+
+  <p>
+    This code (in either the one-line or three-line form) will give us back a list of strings that now look like proper English:
   </p>
 
   <pre><code>["I love Elixir", "It is so easy to learn", "Great functional code"]</code></pre>
@@ -156,28 +168,118 @@ We could go in to the file and correct this ourselves, but we're <em>programmers
     All we need to do now is to put the file back into a big string, which we can do with a new-to-us function called <code>Enum.join/2</code>:
   </p>
 
-  <pre><code>iex> contents |> String.split("\n", trim: true) |> Enum.map(&amp;String.reverse/1) |> Enum.join("\n")
+  <pre><code>iex> fixed_contents = contents \
+|> String.split("\n", trim: true) \
+|> Enum.map(&amp;String.reverse/1) \
+|> Enum.join("\n")
 "I love Elixir\nIt is so easy to learn\nGreat functional code"</code></pre>
 
   <p>
-    Excellent! We've now got our file's text around the right way. We did this with a combination of quite a few functions and that is really demonstrating the repertoire of things that we know how to do with Elixir now.
+    Excellent! We've now got our file's text around the right way. We did this with a combination of quite a few functions and that is really demonstrating the repertoire of things that we know how to do with Elixir now. We have used <code>File.read/1</code> function to read this file's contents and to bring them into our Elixir code. Once we have the contents there, we can do whatever we wish with them.
   </p>
+
+  <p>
+    Before we move on, I want to show you another way that Elixir has for reading files.
+  </p>
+</section>
+
+<section>
+  <h3>Streaming a file</h3>
+
+  <p>
+    Elixir provides us at least one very clear way to read a file: <code>File.read/1</code>. We know how this works. But there is <em>another</em> function that Elixir gives us which can also be used to read files. That function is called <code>File.stream!/1</code>.
+  </p>
+
+  <p>
+    This function works by reading a file <em>one line at a time</em>. This is useful in cases where we might be reading very large files. If we used <code>File.read/1</code> to load a large file, it might take a long time for Elixir to read it all in and it might take up a lot of our computer's resources. On the contrary, <code>File.stream!</code> can be used to read an entire file, but will read a file line-by-line.
+  </p>
+
+  <p>
+    We call this type of thing in programming parlance "eagerness" or "laziness". The <code>File.read/1</code> function can be said to be <em>eager</em>: it <em>eagerly</em> loads the whole file without a care in the world if we're going to use the whole lot or not. While the <code>File.stream!/1</code> function is its more chilled out cousin: it will <em>lazily</em> read a single line at a time from the file.
+  </p>
+
+  <p>
+    Think of it in terms of your favourite internet streaming service. When you stream from that service, you don't have to wait for every single episode of your favourite Scandi Noir TV series to download. You don't even have to wait for a single episode to fully download because it only sends through a small part of the episode at a time. This is what <code>File.stream/1</code> does: gives us the file line-by-line.
+  </p>
+
+  <p>
+    Ok, I think we've talked enough about what <code>File.stream/1</code> does! It's time to see this in action. Let's use this code to start reading our <code>haiku.txt</code> file again:
+  </p>
+
+  <pre><code>iex> File.stream!("haiku.txt")
+%File.Stream{
+  line_or_bytes: :line,
+  modes: [:raw, :read_ahead, :binary],
+  path: "haiku.txt",
+  raw: true
+}</code></pre>
+
+  <p>
+    This time, we're not given back the contents of the file. We're given back something we've never seen before: a <em>struct</em>.
+  </p>
+
+  <p>
+    We can think of structs as maps that follow a particular set of rules. Just like maps, structs have key-value pairs, as we can see from the output here. If we removed the <code>File.Stream</code> part of this output, the syntax would be a map:
+  </p>
+
+  <pre><code>iex> %{
+  line_or_bytes: :line,
+  modes: [:raw, :read_ahead, :binary],
+  path: "haiku.txt",
+  raw: true
+}</code></pre>
+
+
+</section>
 
   <p>
     We have the string in Elixir, but it would be really handy if we could take this string out of Elixir and put it into a new file. That's what we'll be looking at next!
   </p>
-
-
-
-
-
-
 </section>
 
 <section>
-  <h3>Writing to a file</h3>
+  <h3>Creating and writing to a new file</h3>
+
+  <p>
+    We now have the re-arranged contents of our haiku stored within a variable called <code>fixed_contents</code>. If you've lost this since the last section, you can use this code to get it back:
+  </p>
+
+  <pre><code>iex> {:ok, contents} = File.read("haiku.txt")
+{:ok, "rixilE evol I\nnrael ot ysae os si tI\nedoc lanoitcnuf taerG\n"}
+iex> fixed_contents = contents \
+|> String.split("\n", trim: true) \
+|> Enum.map(&amp;String.reverse/1) \
+|> Enum.join("\n")
+</code></pre>
+
+  <p>
+    Now we want to write these contents to a new file. We saw that we could read a file with <code>File.read/1</code>, so it would make sense for there to be a <code>File.write</code> function too. It definitely does exist, and it's called <code>File.write/2</code>. It takes two arguments: 1) the path we want to write to 2) the contents that we want to put in the file. It works like this:
+  </p>
+
+  <pre><code>iex> File.write("fixed-haiku.txt", fixed_contents)
+:ok</code></pre>
+
+  <p>
+    Elixir dutifully takes the file path and the fixed contents and puts them into a file called <code>fixed-haiku.txt</code>. Well, we assume so. All that we know about this operation is that Elixir thought it went OK, as indicated by the atom that it returned: <code>:ok</code>.
+  </p>
+
+  <p>
+    If we want to make sure that the <code>fixed-haiku.txt</code> file is definitely there and contains what we expect it to contain, we could simply find that file in the file browser on our computers and double click on it. That would be the easiest way. But, because we're programmers and we've got powerful new skills up our sleeves, we can use what we know to check this. Let's use <code>File.read/1</code> to see if that file is there:
+  </p>
+
+  <pre><code>iex> File.read("fixed-haiku.txt")
+{:ok, "I love Elixir\nIt is so easy to learn\nGreat functional code"}</code></pre>
+
+  <p>
+    Great! Our file has definitely been written with the right content. Our haiku is in the right order.
+  </p>
 </section>
+
 
 <section>
   <h3>Deleting a file</h3>
+</section>
+
+<section>
+  <h3>case and with statements</h3>
 </section>
