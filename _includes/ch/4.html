@@ -31,11 +31,11 @@
 %{<span class='console-green'>"age"</span> => <span class='console-yellow'>56</span>, <span class='console-green'>"gender"</span> => <span class='console-green'>"Male"</span>, <span class='console-green'>"name"</span> => <span class='console-green'>"Roberto"</span>}</code></pre>
 
   <p>
-  Maps start with a <code>%</code> and enclose their data in a warm curly-brace cuddle. In a map, we structure data using <em>keys</em> and <em>values</em>. The thing to the <em>left</em> of the <code>=></code> is called a <em>key</em> and the thing to the <em>right</em> is called a <em>value</em>.
+    Maps start with a <code>%</code> and enclose their data in a warm curly-brace cuddle. In a map, we structure data using <em>keys</em> and <em>values</em>. The thing to the <em>left</em> of the <code>=></code> is called a <em>key</em> and the thing to the <em>right</em> is called a <em>value</em>.
   </p>
 
   <figure>
-    <img src='/images/4/key-value.png'>
+    <img src='/images/4/key-value.png' alt="a key and its value"/>
     <figcaption>A key and its value</figcaption>
   </figure>
 
@@ -63,6 +63,7 @@
 
   <p>
     The position of the <code>"name"</code> key within a map has no meaning. The keys for a map can be in any order.
+  </p>
 
   <p>
     You may now be thinking about how to get the data back out of a map once you've put it in. We talked about how to "pluck" that value out before, but didn't see an example yet. In order to access a value from a map we need to know the corresponding key. Once we know the corresponding key, then we can use <code>[]</code> to pluck that value out of the map. Think of it like the claw from a skilltester, diving in to pick out the value.
@@ -101,13 +102,89 @@
 ...> ]</code></pre>
 
   <p>
-    We don't just have to use strings as the items inside of lists. We can use maps too! In fact, any other bit of data can live inside of lists as a list item. We could even have a list of numbers if we wanted to:
+    We don't just have to use strings as the items inside of lists. We can use maps too! In fact, any other bit of data can live inside of lists as an item in that list. We could even have a list of numbers if we wanted to:
   </p>
 
 <pre><code>iex> numbers = [4, 8, 15, 16, 23, 42]</code></pre>
 
   <p>
     But let's talk about the list of people rather than that list of numbers. This list of maps containing the information of those who are assembled is immune to the problem we were seeing at the start of this chapter. It doesn't matter what order the key-value combinations of age, name or gender are placed -- the maps will contain the right information at the right spots. As an additional bonus, we can refer to these values with their keys, rather than having to remember their positions.
+  </p>
+</section>
+
+<section>
+  <h3>Other types of keys</h3>
+
+  <p>
+    Before we go onwards, I'd like us to dwell a bit longer on maps. So far, we've seen that maps are comprised of a series of keys and values. Those keys in our maps have only been strings, but the values have been a mixture of strings (for <code>name</code> and <code>gender</code>) and numbers (for <code>age</code>). This kind of hints at what maps are capable of storing, but I would like to cover a few more cases so we can really get the hang of these map things.
+  </p>
+
+  <p>
+    Truth be told, in Elixir the keys and values can be whatever you wish them to be. Keys can be numbers, strings, lists, and more. Values can be anything as well. Let's say we asked ten people to pick a number within the range of 1 to 5. You can use number keys to represent the numbers that people picked:
+  </p>
+
+  <pre><code>iex> choices = %{
+  1 => 4,
+  2 => 1,
+  3 => 2,
+  4 => 2,
+  5 => 1,
+}
+%{1 => 4, 2 => 1, 3 => 2, 4 => 2, 5 => 1}</code></pre>
+
+  <p>
+    Then you can very easily find out how many people chose the numbers 1 or 2 by using those skilltester-claw-like square-brackets:
+  </p>
+
+  <pre><code>iex> choices[1]
+4
+iex> choices[2]
+1</code></pre>
+
+  <p>
+    So as we can see here, we can easily use numbers as both the keys and values within a map and Elixir is totally cool with that. But what else can we use?
+  </p>
+
+  <p>
+    One common occurence in Elixir code that you might see around is maps that look like this:
+  </p>
+
+  <pre><code>iex> person = %{
+  name: "Izzy",
+  age: "30ish",
+  gender: "Female"
+}</code></pre>
+
+  <p>
+    This is a short-hand way of writing:
+  </p>
+
+  <pre><code>iex> person = %{
+  :name => "Izzy",
+  :age => "30ish",
+  :gender => "Female"
+}</code></pre>
+
+  <p>
+    The keys in both these examples here are neither numbers or strings. But they look sorta like strings, right? These keys are called <em>atoms</em>. They're a type of data in Elixir that is commonly used to represent names of things, like in this case. We can access the values associated with these atom keys by using the square brackets like this:
+  </p>
+
+  <pre><code>iex> person[:name]
+"Izzy"</code></pre>
+
+  <p>
+    This is a little less typing than <code>person["name"]</code>, and the way we define the map is a little shorter too, and so it is generally preferred to use atoms over strings for keys within maps. There's one more advantage to using atoms as keys over strings: we can use an even shorter syntax to read out the values:
+  </p>
+
+  <pre><code>iex> person.name
+"Izzy"</code></pre>
+
+  <p>
+    This is a full <em>three characters shorter</em> than any other way we've seen to access a map's values. Typing less is always a good thing. And the code looks neater to boot!
+  </p>
+
+  <p>
+    So from here on out, we'll be using mostly atoms for keys within maps just because it's less typing and makes our code a little cleaner to work with.
   </p>
 
   <p>
