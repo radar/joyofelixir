@@ -5,30 +5,30 @@
     Elixir would be pretty hard to do if you had to write all the code for your programs by yourself. We have already seen that if you want to add, subtract, multiply or divide numbers, Elixir has your back:
   </p>
 
-<pre><code>iex> 2 + 4
-<span class='console-yellow'>6</span>
+<pre><code class="elixir">iex> 2 + 4
+6
 iex> 3 - 6
-<span class='console-yellow'>-3</span>
+-3
 iex> 4 * 12345
-<span class='console-yellow'>49380</span>
+49380
 iex> 1234 / 4
-<span class='console-yellow'>308.5</span></code></pre>
+308.5</code></pre>
 
   <p>We also saw that it can run code inside of some other code, through string interpolation:</p>
 
 <pre><code>iex> place = "World"
 iex> "Hello #{place}!"
-<span class='console-green'>"Hello, World!"</span></code></pre>
+"Hello, World!"</code></pre>
 
   <p>We saw that it can handle lists:</p>
 
 <pre><code>iex> ["chicken", "beef", "and so on"]
-[<span class='console-green'>"chicken"</span>, <span class='console-green'>"beef"</span>, <span class='console-green'>"and so on"</span>]</code></pre>
+["chicken", "beef", "and so on"]</code></pre>
 
   <p>And it can also handle maps:</p>
 
 <pre>
-<code>iex> person = %{"name" => "Izzy", "age" => "30ish", "gender" => "Female"}</code></pre>
+<code>iex> person = %{name: "Izzy", age: "30ish", gender: "Female"}</code></pre>
 
 
   <p>
@@ -36,15 +36,15 @@ iex> "Hello #{place}!"
   </p>
 
 <pre><code>iex> greeting = fn (name) -> "Hello, #{name}!" end
-<span class='console-yellow'>#Function&lt;6.52032458/1 in :erl_eval.expr/5&gt;</span></code></pre>
+#Function&lt;6.52032458/1 in :erl_eval.expr/5&gt;</code></pre>
 
 <div class='grouped'>
   <p>
     And in the last chapter we saw that we could do pattern matching:
   </p>
 
-<pre><code>iex> %{"name" => name, "age" => age} = %{"name" => "Izzy", "age" => "30ish"}
-%{<span class='console-green'>"name"</span> => <span class='console-green'>"Izzy"</span>, <span class='console-green'>"age"</span> => <span class='console-green'>"30ish"</span>}
+<pre><code>iex> %{name: name, age: age} = %{name: "Izzy", age: "30ish"}
+%{name: "Izzy", age: "30ish"}
 iex> name
 <span class='console-green'>"Izzy"</span>
 iex> age

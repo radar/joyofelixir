@@ -63,14 +63,14 @@ iex> score = 2 / 5 * 100
   </p>
 
 <pre><code>iex> those_who_are_assembled = [
-...> %{"age" => "30ish", "gender" => "Female", "name" => "Izzy"},
-...> %{"age" => "30ish", "gender" => "Male", "name" => "The Author"},
-...> %{"age" => "56", "gender" => "Male", "name" => "Roberto"},
-...> %{"age" => "38", "gender" => "Female", "name" => "Juliet"},
-...> %{"age" => "21", "gender" => "Female", "name" => "Mary"},
-...> %{"age" => "67", "gender" => "Female", "name" => "Bobalina"},
-...> %{"age" => "54", "gender" => "Male", "name" => "Charlie"},
-...> %{"age" => "10", "gender" => "Male", "name" => "Charlie (no relation)"},
+...> %{age: "30ish", gender: "Female", name: "Izzy"},
+...> %{age: "30ish", gender: "Male", name: "The Author"},
+...> %{age: "56", gender: "Male", name: "Roberto"},
+...> %{age: "38", gender: "Female", name: "Juliet"},
+...> %{age: "21", gender: "Female", name: "Mary"},
+...> %{age: "67", gender: "Female", name: "Bobalina"},
+...> %{age: "54", gender: "Male", name: "Charlie"},
+...> %{age: "10", gender: "Male", name: "Charlie (no relation)"},
 ...> ]</code></pre>
 
   <p>
@@ -89,13 +89,13 @@ iex> score = 2 / 5 * 100
   </p>
 
 <pre><code>iex> first
-%{"age" => "30ish", "gender" => "Female", "name" => "Izzy"}
+%{age: "30ish", gender: "Female", name: "Izzy"}
 iex> second
-%{"age" => "30ish", "gender" => "Male", "name" => "The Author"}
+%{age: "30ish", gender: "Male", name: "The Author"}
 iex> third
-%{"age" => "56", "gender" => "Male", "name" => "Roberto"}
+%{age: "56", gender: "Male", name: "Roberto"}
 iex> others
-[%{"age" => "38", "gender" => "Female", "name" => "Juliet"}, ...]
+[%{age: "38", gender: "Female", name: "Juliet"}, ...]
 </code></pre>
 </div>
 
@@ -104,7 +104,7 @@ iex> others
   </p>
 
 <pre><code>iex> [first, second, third | remainder] = others
-[%{"age" => "38", "gender" => "Female", "name" => "Juliet"}, ...]</code></pre>
+[%{age: "38", gender: "Female", name: "Juliet"}, ...]</code></pre>
 
 <div class='grouped'>
   <p>
@@ -112,11 +112,11 @@ iex> others
   </p>
 
 <pre><code>iex> first
-%{"age" => "38", "gender" => "Female", "name" => "Juliet"},
+%{age: "38", gender: "Female", name: "Juliet"},
 iex> second
-%{"age" => "21", "gender" => "Female", "name" => "Mary"},
+%{age: "21", gender: "Female", name: "Mary"},
 iex> third
-%{"age" => "67", "gender" => "Female", "name" => "Bobalina"},
+%{age: "67", gender: "Female", name: "Bobalina"},
 </code></pre>
 </div>
 
@@ -126,8 +126,8 @@ iex> third
 
 <pre><code>iex> remainder
 [
-  %{"age" => "54", "gender" => "Male", "name" => "Charlie"},
-  %{"age" => "10", "gender" => "Male", "name" => "Charlie (no relation)"},
+  %{age: "54", gender: "Male", name: "Charlie"},
+  %{age: "10", gender: "Male", name: "Charlie (no relation)"},
 ]</code></pre>
 
   <p>
@@ -136,7 +136,7 @@ iex> third
 
 <pre><code>iex> [first, second, third | those_still_remaining] = remainder
 <span class='console-red'>** (MatchError) no match of right hand side value: ... &#9166;
-   [%{"name" => "Charlie"}, %{"name" => "Charlie (no relation)"}]</span>
+   [%{name: "Charlie"}, %{name: "Charlie (no relation)"}]</span>
 </code></pre>
 
   <p>
@@ -159,16 +159,16 @@ iex> third
     Let's say that we have a map containing a person's information:
   </p>
 
-<pre><code>iex> person = %{"name" => "Izzy", "age" => "30ish"}
-%{<span class='console-green'>"name"</span> => <span class='console-green'>"Izzy"</span>, <span class='console-green'>"age"</span> => <span class='console-green'>"30ish"</span>}</code></pre>
+<pre><code>iex> person = %{name: "Izzy", age: "30ish"}
+%{name: "Izzy", age: "30ish"}</code></pre>
 
   <p>
-    We've seen before that we could pull out the value attached to <code>"name"</code> or <code>"age"</code> at whim:
+    We've seen before that we could pull out the value attached to <code>name:</code> or <code>age:</code> at whim by using this syntax:
   </p>
 
-<pre><code>iex> person["name"]
+<pre><code>iex> person.name
 <span class='console-green'>"Izzy"</span>
-iex> person["age"]
+iex> person.age
 <span class='console-green'>"30ish"</span></code></pre>
 
 <div class='grouped'>
@@ -176,7 +176,7 @@ iex> person["age"]
     But what if we wanted to pull out both of these values <em>at the same time</em>? Or even in the shortest possible code? Well, for that we have this <em>pattern matching</em> thing that I've been banging on about for over a page. Let's take a look at how pattern matching can help get both the name and the age out of the <code>person</code> map.
   </p>
 
-<pre><code>iex> %{"name" => name, "age" => age} = person</code></pre>
+<pre><code>iex> %{<span class='console-blue'>name:</span> name, <span class='console-blue'>age:</span> age} = person</code></pre>
 </div>
 
   <p>
@@ -203,24 +203,24 @@ iex> age
     </p>
 
 <pre><code>iex> those_who_are_assembled = [
-...> %{"age" => "30ish", "gender" => "Female", "name" => "Izzy"},
-...> %{"gender" => "Male", "name" => "The Author", "age" => "30ish"},
-...> %{"name" => "The Reader", "gender" => "Unknowable", "age" => "Unknowable"},
+...> %{age: "30ish", gender: "Female", name: "Izzy"},
+...> %{gender: "Male", name: "The Author", age: "30ish"},
+...> %{name: "The Reader", gender: "Unknowable", age: "Unknowable"},
 ...> ]</code></pre>
 
     <p>
       Let's say that we wanted to get the name of the first person from this list. We can combine both the list pattern matching and the map pattern matching together:
     </p>
 
-<pre><code>[first_person = %{"name" => first_name} | others] = those_who_are_assembled
+<pre><code>[first_person = %{<span class='console-blue'>name:</span> first_name} | others] = those_who_are_assembled
 </code></pre>
 
   <p>
-    Here we're matching the first item from the list, and putting the rest in an <code>others</code> variable. We're grabbing just the first person from the list of those who are assembled. Inside that match, we're assigning that first person to <code>first_person</code>. We're then expecting that the first item of this list to match the pattern of <code>%{"name" => first_name}</code>. This will set the variable of <code>first_name</code> to be the value of the first item's <code>name</code> key. Phew, that was a long description. Let's go and see what we now have in the console:
+    Here we're matching the first item from the list, and putting the rest in an <code>others</code> variable. We're grabbing just the first person from the list of those who are assembled. Inside that match, we're assigning that first person to <code>first_person</code>. We're then expecting that the first item of this list to match the pattern of <code>%{name: first_name}</code>. This will set the variable of <code>first_name</code> to be the value of the first item's <code>name</code> key. Phew, that was a long description. Let's go and see what we now have in the console:
   </p>
 
 <pre><code>iex> first_person
-%{"age" => "30ish", "gender" => "Female", "name" => "Izzy"}
+%{age: "30ish", gender: "Female", name: "Izzy"}
 iex> first_name
 "Izzy"</code>
 </pre>
@@ -245,7 +245,11 @@ iex> first_name
     </ul>
 
     <p>
-      As you can see from this short example, pattern matching is very flexible and allows you to match more than one thing at a time, and also allows you to set more than one variable.
+      As you can see from this short example, pattern matching is very flexible and allows you to match more than one thing at a time, and also allows you to set more than one variable. Programmers often refer to this sort of thing as <em>destructuring</em>: you're looking into the structure of the data and then pulling out only the things you want.
+    </p>
+
+    <p>
+      Pattern matching can be used for even more things than picking out the keys of a map or the items out of a list. We can also use it inside of functions!
     </p>
 </div>
 </section>
@@ -254,7 +258,7 @@ iex> first_name
   <h3>Pattern matching inside functions</h3>
 
   <p>
-    Pattern matching can be used for even more things than picking out the keys of a map or the items out of a list. We can also use it when we define our functions too, making them respond differently depending on the arguments passed. For instance, we could define a function which took the kind of road that we took; either the "high" road or the "low" road, and get it to respond differently depending on which was passed.
+    We can use pattern matching inside our functions to make them respond differently depending on the arguments passed in. For instance, we could define a function which took the kind of road that we took; either the "high" road or the "low" road, and get it to respond differently depending on which was passed.
   </p>
 
 <pre><code>iex> road = fn
@@ -308,7 +312,7 @@ iex> road.("low")
   </p>
 
 <pre><code>iex> greeting = fn
-  %{"name" => name} -> "Hello, #{name}!"
+  %{name: name} -> "Hello, #{name}!"
   %{} -> "Hello, Anonymous Stranger!"
 end</code></pre>
 
@@ -316,7 +320,7 @@ end</code></pre>
     "Oooh that's fancy! What is the empty map is for?", Izzy asks. Soon, Izzy. Soon. Let's see what happens if we call this <code>greeting</code> function with a map which has a <code>"name"</code> key:
   </p>
 
-<pre><code>iex> greeting.(%{"name" => "Izzy"})
+<pre><code>iex> greeting.(%{name: "Izzy"})
 <span class='console-green'>"Hello, Izzy!"</span>
 </code></pre>
 
@@ -325,7 +329,7 @@ end</code></pre>
   </p>
 
 <pre><code>iex> greeting = fn
-  <strong><span class='console-green'>%{"name" => name} -> "Hello, #{name}!"</span></strong>
+  <strong><span class='console-green'>%{name: name} -> "Hello, #{name}!"</span></strong>
   <span class='unused-clause'>%{} -> "Hello, Anonymous Stranger!"</span>
 end</code></pre>
 
@@ -343,7 +347,7 @@ end</code></pre>
   </p>
 
 <pre><code>iex> greeting = fn
-  <span class='unused-clause'>%{"name" => name} -> "Hello, #{name}!"</span>
+  <span class='unused-clause'>%{name: name} -> "Hello, #{name}!"</span>
   <strong><span class='console-green'>%{} -> "Hello, Anonymous Stranger!"</span></strong>
 end</code></pre>
 
@@ -351,7 +355,7 @@ end</code></pre>
     Ok, so what would you expect to happen here if you supplied neither a map with a <code>"name"</code> key or an empty map, but a map with a different key in it? "Based on the string test, I would expect it to fail with a FunctionClauseError!", Izzy proudly proclaims. Looks like someone has been paying attention. Dear Izzy, that is what I expected to happen too when I learned Elixir. However, maps are matched differently to strings in Elixir. Let's look:
   </p>
 
-<pre><code>iex> greeting.(%{"age" => "30ish"})
+<pre><code>iex> greeting.(%{age: "30ish"})
 <span class='console-green'>"Hello, Anonymous Stranger!"</span></code></pre>
 
   <p>
@@ -361,7 +365,7 @@ end</code></pre>
   <p>Well, in Elixir when you match two maps together it will always match on subset of the map. Let's take a look using our trusty equals sign (<code>=</code>) again:
   </p>
 
-<pre><code>iex> %{} = %{"name" => "Izzy"}
+<pre><code>iex> %{} = %{name: "Izzy"}
 %{<span class='console-green'>"name"</span> => <span class='console-green'>"Izzy"</span>}</code></pre>
 
   <p>
@@ -373,7 +377,7 @@ end</code></pre>
   </p>
 
 <pre><code>iex> greeting = fn
-  <span class='console-green'>%{"name" => name} -> "Hello, #{name}!"</span>
+  <span class='console-green'>%{name: name} -> "Hello, #{name}!"</span>
   <span class='unused-clause'>%{} -> "Hello, Anonymous Stranger!"</span>
 end</code></pre>
 

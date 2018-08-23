@@ -206,7 +206,7 @@ We could go in to the file and correct this ourselves, but we're <em>programmers
     Ok, I think we've talked enough about what <code>File.stream/1</code> does! It's time to see this in action. Let's use this code to start reading our <code>haiku.txt</code> file again:
   </p>
 
-  <pre><code>iex> File.stream!("haiku.txt")
+  <pre><code>iex> stream = File.stream!("haiku.txt")
 %File.Stream{
   line_or_bytes: :line,
   modes: [:raw, :read_ahead, :binary],
@@ -229,11 +229,44 @@ We could go in to the file and correct this ourselves, but we're <em>programmers
   raw: true
 }</code></pre>
 
-
-</section>
+  <p>
+    What makes a struct different here is that it is <em>named</em> and structs with the same name always have the same keys. Every time we call <code>File.stream!</code>, we'll see a <code>File.Stream</code> struct come back with exactly the same keys.
+  </p>
 
   <p>
-    We have the string in Elixir, but it would be really handy if we could take this string out of Elixir and put it into a new file. That's what we'll be looking at next!
+    The keys in this particular struct tell Elixir what this file stream is all about. It tells Elixir that we're going to read from the <code>haiku.txt</code> (<code>path</code>) file line-by-line (<code>line_or_bytes</code>). I won't go into what <code>modes</code> and <code>raw</code> are for here.
+  </p>
+
+  <p>
+    At this point, all we have this <code>File.Stream</code> struct. Consider it as an "intent to read" the file. No reading has occurred at this point yet. To trigger this reading, we can pipe this stream into any <code>Enum</code> method. For instance, we could trim all the newline characters (<code>\n</code>) off each line like this:
+  </p>
+
+  <pre><code>fixed_contents = stream \
+|> Enum.map(&String.trim/1)
+["rixilE evol I", "nrael ot ysae os si tI", "edoc lanoitcnuf taerG"]
+</code></pre>
+
+  <p>
+    That's a good start. We're not going to be able to peer into exactly what Elixir is doing here, so you'll have to take my word for it that Elixir is now reading each line in this file one at a time and sending it through to <code>Enum.map/2</code>. The output from calling <code>Enum.map/2</code> is good, but what we really need is a list of sentences the right way around. We can flip these by piping the output again:
+  </p>
+
+  <pre><code>fixed_contents = stream \
+|> Enum.map(&String.trim/1) \
+|> Enum.map(&String.reverse/1)
+["I love Elixir", "It is so easy to learn", "Great functional code"]</code></pre>
+
+  <p>
+    That's getting better! Now we need to join these back together again and put line breaks in between them with <code>Enum.join/2</code> again:
+  </p>
+
+  <pre><code>fixed_contents = stream \
+  |> Enum.map(&String.trim/1) \
+  |> Enum.map(&String.reverse/1) \
+  |> Enum.join("\n")
+  "I love Elixir\nIt is so easy to learn\nGreat functional code"</code></pre>
+
+  <p>
+    Excellent! We now have the fixed haiku in string form inside Elixir, but it would be really handy if we could take this string out of Elixir and put it into a new file so that nobody else has to read a backwards haiku. That's what we'll be looking at next!
   </p>
 </section>
 
@@ -273,6 +306,10 @@ iex> fixed_contents = contents \
   <p>
     Great! Our file has definitely been written with the right content. Our haiku is in the right order.
   </p>
+</section>
+
+<section>
+  <h3>Moving a file</h3>
 </section>
 
 

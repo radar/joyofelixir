@@ -96,19 +96,17 @@
   </p>
 
 <pre><code>iex> those_who_are_assembled = [
-...> %{"age" => "30ish", "gender" => "Female", "name" => "Izzy"},
-...> %{"gender" => "Male", "name" => "The Author", "age" => "30ish"},
-...> %{"name" => "The Reader", "gender" => "Unknowable", "age" => "Unknowable"},
+...> %{"name" => "Izzy", "age" => "30ish", "gender" => "Female"},
+...> %{"name" => "The Author", "age" => "30ish", "gender" => "Male"},
+...> %{"name" => "The Reader", "age" => "Unknowable", "gender" => "Unknowable"},
 ...> ]</code></pre>
 
   <p>
-    We don't just have to use strings as the items inside of lists. We can use maps too! In fact, any other bit of data can live inside of lists as an item in that list. We could even have a list of numbers if we wanted to:
+    As we can see from this example, lists can contain more than just numbers and strings: we can use maps too!
   </p>
 
-<pre><code>iex> numbers = [4, 8, 15, 16, 23, 42]</code></pre>
-
   <p>
-    But let's talk about the list of people rather than that list of numbers. This list of maps containing the information of those who are assembled is immune to the problem we were seeing at the start of this chapter. It doesn't matter what order the key-value combinations of age, name or gender are placed -- the maps will contain the right information at the right spots. As an additional bonus, we can refer to these values with their keys, rather than having to remember their positions.
+    This list of maps containing the crowd's information  is immune to the problem we were seeing at the start of this chapter. It doesn't matter what order the key-value combinations of age, name or gender are placed -- the maps will contain the right information at the right spots. As an additional bonus, we can refer to these values with their keys, rather than having to remember their positions.
   </p>
 </section>
 
@@ -124,29 +122,29 @@
   </p>
 
   <pre><code>iex> choices = %{
-  1 => 4,
-  2 => 1,
-  3 => 2,
-  4 => 2,
-  5 => 1,
+  <span class='console-green'>1</span> => <span class='console-green'>4</span>,
+  <span class='console-green'>2</span> => <span class='console-green'>1</span>,
+  <span class='console-green'>3</span> => <span class='console-green'>2</span>,
+  <span class='console-green'>4</span> => <span class='console-green'>2</span>,
+  <span class='console-green'>5</span> => <span class='console-green'>1</span>,
 }
-%{1 => 4, 2 => 1, 3 => 2, 4 => 2, 5 => 1}</code></pre>
+%{<span class='console-green'>1</span> => <span class='console-green'>4</span>, <span class='console-green'>2</span> => <span class='console-green'>1</span>, <span class='console-green'>3</span> => <span class='console-green'>2</span>, <span class='console-green'>4</span> => <span class='console-green'>2</span>, <span class='console-green'>5</span> => <span class='console-green'>1</span></code></pre>
 
   <p>
     Then you can very easily find out how many people chose the numbers 1 or 2 by using those skilltester-claw-like square-brackets:
   </p>
 
-  <pre><code>iex> choices[1]
-4
-iex> choices[2]
-1</code></pre>
+  <pre><code>iex> choices[<span class='console-green'>1</span>]
+<span class='console-green'>4</span>
+iex> choices[<span class='console-green'>2</span>]
+<span class='console-green'>1</span></code></pre>
 
   <p>
-    So as we can see here, we can easily use numbers as both the keys and values within a map and Elixir is totally cool with that. But what else can we use?
+    So as we can see here, we can easily use numbers as both the keys and values within a map and Elixir is totally cool with that. Just like we can use anything as items within a list, Elixir also lets us use anything as the keys and values within a map.
   </p>
 
   <p>
-    One common occurence in Elixir code that you might see around is maps that look like this:
+    Now that we've established that, I want to introduce you to one more type of data within Elixir by way of a little code example. One common occurence in Elixir code that you might see around is maps that look like this:
   </p>
 
   <pre><code>iex> person = %{
@@ -166,21 +164,29 @@ iex> choices[2]
 }</code></pre>
 
   <p>
-    The keys in both these examples here are neither numbers or strings. But they look sorta like strings, right? These keys are called <em>atoms</em>. They're a type of data in Elixir that is commonly used to represent names of things, like in this case. We can access the values associated with these atom keys by using the square brackets like this:
+    The keys in both these examples here are neither numbers, strings, lists or maps. But they look sorta like strings, right? So what are they? These keys are called <em>atoms</em>. They're a type of data in Elixir that is commonly used to represent names of things, like in this case. They're a simple name, and nothing more. We'll see a lot more of them as we go through this book, and so it's helpful to know what they are now.
+  </p>
+
+  <p>
+    Just as we were able to access values associated with strings and numbers, we can also access the values associated with atom keys by using the square brackets like this:
   </p>
 
   <pre><code>iex> person[:name]
 "Izzy"</code></pre>
 
   <p>
-    This is a little less typing than <code>person["name"]</code>, and the way we define the map is a little shorter too, and so it is generally preferred to use atoms over strings for keys within maps. There's one more advantage to using atoms as keys over strings: we can use an even shorter syntax to read out the values:
+    This is a little less typing than <code>person["name"]</code>, and the way we define the map is a little shorter too, and so it is generally preferred to use atoms over strings for keys within maps. This is why you might see it a lot in other people's Elixir code too.
+  </p>
+
+  <p>
+    There's one more advantage to using atoms as keys over strings: we can use an even shorter syntax to read out the values:
   </p>
 
   <pre><code>iex> person.name
 "Izzy"</code></pre>
 
   <p>
-    This is a full <em>three characters shorter</em> than any other way we've seen to access a map's values. Typing less is always a good thing. And the code looks neater to boot!
+    This is a full <em>three characters shorter</em> than any other way we've seen to work with a map. Typing less is always a good thing. And the code looks neater to boot without all that pesky punctuation.
   </p>
 
   <p>
@@ -188,6 +194,16 @@ iex> choices[2]
   </p>
 
   <p>
-    Izzy excitedly disappears into the crowd again with this new knowledge and starts collecting people's information again.
+    And now to come back around to collecting information on who is gathered here today. For this, we can use a list of maps and have those maps have keys that are atoms, and values that are strings:
+  </p>
+
+  <pre><code>iex> those_who_are_assembled = [
+  ...> %{name: "Izzy", age: "30ish", gender: "Female"},
+  ...> %{name: "The Author", gender: "Male", age: "30ish"},
+  ...> %{name: "The Reader", gender: "Unknowable", age: "Unknowable"},
+  ...> ]</code></pre>
+
+  <p>
+    Izzy excitedly disappears into the crowd again with this new map knowledge and starts collecting people's information again.
   </p>
 </section>

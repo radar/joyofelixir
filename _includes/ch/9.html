@@ -133,7 +133,7 @@ List.reverse(animals_or_derivatives_of_animals, [1, 2, 3])
     Similar to this, we could <em>enumerate</em> through a map. If we were to take one of our maps from earlier...
   </p>
 
-<pre><code>%{<span class='console-green'>"name"</span> => <span class='console-green'>"Izzy"</span>, <span class='console-green'>"age"</span> => <span class='console-green'>"30ish"</span>, <span class='console-green'>"gender"</span> => <span class='console-green'>"Female"</span>}</code></pre>
+<pre><code>%{name: "Izzy", age: "30ish", gender: "Female"}</code></pre>
 
   <p>
     ...and write each key and value pair down, they may look something like this:
@@ -222,14 +222,14 @@ summer
 fall
 winter
 spring
-<span class='console-blue'>:ok</span></code></pre>
+:ok</code></pre>
 
   <p>
-    This particular combination of those three things has made Elixir output each season on a single line in our <code>iex</code> prompt. Then there's one more thing: that little blue <code>:ok</code> at the end of our output. This indicates to us that the iterating with <code>Enum.each/2</code> worked successfully.
+    This particular combination of those three things has made Elixir output each season on a single line in our <code>iex</code> prompt. Then there's one more thing: that little blue <code>:ok</code> at the end of our output. That's a little atom value and it indicates to us that the iterating with <code>Enum.each/2</code> worked successfully. We saw atoms like this used for keys in maps in previous chapters, but they can also be used in Elixir code like this too.
   </p>
 
   <p>
-    Let's take a closer look at what this is doing. Specifically: what <code>&amp;IO.puts/1</code> is doing. You know in Elixir that functions can take arguments and you might have in your head that those arguments could be strings, lists or maps because this is what we've seen done previously. But function arguments can also be other functions. This is what's happening here when we're using <code>&amp;IO.puts/1</code>. We're passing that function as an argument to <code>Enum.each/2</code>.
+    Let's take a closer look at what this <code>Enum.each/2</code> code is doing. Specifically: what <code>&amp;IO.puts/1</code> is doing. You know in Elixir that functions can take arguments and you might have in your head that those arguments could be strings, lists or maps because this is what we've seen done previously. But function arguments can also be other functions. This is what's happening here when we're using <code>&amp;IO.puts/1</code>. We're passing that function as an argument to <code>Enum.each/2</code>.
   </p>
 
   <p>
@@ -239,7 +239,7 @@ spring
 <pre><code>iex> puts = &amp;IO.puts/1
 puts.("summer")
 "summer"
-<span class='console-blue'>:ok</span>
+:ok
 </code></pre>
 
   <p>
@@ -327,7 +327,7 @@ cap.("summer")
 [<span class='console-green'>"Summer"</span>, <span class='console-green'>"Fall"</span>, <span class='console-green'>"Winter"</span>, <span class='console-green'>"Spring"</span>]</code></pre>
 
   <p>
-    But since we've already got a list we're going to have to do <em>something</em> to that list to turn it into what we want. That something is to use another function from the <code>Enum</code> module called <code>Enum.map/2</code>. This <code>map</code> function is different from the map kind of data (<code>%{"name" => "Izzy"}</code>), in that the function-called-map will take the specified enumerable and another function as arguments, then enumerate through each item in the list and run that other function for each item, and then return the result of each function run.
+    But since we've already got a list we're going to have to do <em>something</em> to that list to turn it into what we want. That something is to use another function from the <code>Enum</code> module called <code>Enum.map/2</code>. This <code>map</code> function is different from the map kind of data (<code>%{name: "Izzy"}</code>), in that the function-called-map will take the specified enumerable and another function as arguments, then enumerate through each item in the list and run that other function for each item, and then return the result of each function run.
   </p>
 
   <p>

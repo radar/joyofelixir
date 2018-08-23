@@ -13,7 +13,7 @@
       Similar to this, we could <em>enumerate</em> through a map. If we were to take one of our maps from earlier...
     </p>
 
-<pre><code>%{<span class='console-green'>"name"</span> => <span class='console-green'>"Izzy"</span>, <span class='console-green'>"age"</span> => <span class='console-green'>"30ish"</span>, <span class='console-green'>"gender"</span> => <span class='console-green'>"Female"</span>}</code></pre>
+<pre><code>%{name: "Izzy", age: "30ish", gender: "Female"}</code></pre>
 
     <p>
       ...and write each key and value pair down, they may look something like this:
@@ -30,8 +30,8 @@
     But we never got around to actually showing you how this was done! Well, enough dilly-dallying, here's an example:
   </p>
 
-<pre><code>iex> person = %{"name" => "Izzy", "age" => "30ish", "gender" => "Female"}
-%{<span class='console-green'>"name"</span> => <span class='console-green'>"Izzy"</span>, <span class='console-green'>"age"</span> => <span class='console-green'>"30ish"</span>, <span class='console-green'>"gender"</span> => <span class='console-green'>"Female"</span>}
+<pre><code>iex> person = %{name: "Izzy", age: "30ish", gender: "Female"}
+ %{age: "30ish", gender: "Female", name: "Izzy"}
 iex> Enum.each(person, fn ({key, value}) -> IO.puts value end)
 </code></pre>
 
@@ -102,7 +102,7 @@ Izzy
   </p>
 
 <pre>
-<code>iex> person = %{"name" => "Izzy", "age" => "30ish", "gender" => "Female"}</code></pre>
+<code>iex> person = %{name: "Izzy", age: "30ish", gender: "Female"}</code></pre>
 
   <p>
     We should try to use another map for this section. Hmmmm. How about a map with the days of the week and their expected temperatures? Here's what the week ahead looks like in Melbourne at this current point of writing:
@@ -426,7 +426,7 @@ iex> person["name"]
     Now this might not seem very useful. After all, why not just use the old
     fashioned way: <code>person["name"]</code>? Well, one place where this
     might come in handy is if you want to find a particular key in the middle
-    of a pipe chain. Imagine you have a function called
+    of a pipe chain. Imagine you have a variable called
     <code>get_attendees</code> that gives you data that looks like this:
   </p>
 
@@ -485,6 +485,45 @@ iex> person["name"]
     just wanted to access a value in a map regularly, I'd still say stick with
     code like <code>people["name"]</code>.
   </p>
+
+  <aside>
+    <header>Pattern matching would work here too</header>
+    <p>
+      Readers with impressive memory spans may remember an example back in Chapter 6 which used pattern matching to find a person's name from a list of people. I've shortened the example below to just the important bits:
+    </p>
+
+    <pre><code>iex> those_who_are_assembled = [
+  %{age: "30ish", gender: "Female", name: "Izzy"}
+]
+iex> [first_person = %{name: first_name} | others] = those_who_are_assembled
+[%{age: "30ish", gender: "Female", name: "Izzy"}]
+iex> first_name
+"Izzy"</code></pre>
+
+    <p>
+      We could <em>absolutely</em> do the same sort of thing here to pull out the first human attendee's name instead of <code>Map.get/2</code>
+    </p>
+
+    <pre><code>iex> %{"people" => [first_person | others]} = get_attendees()
+%{"people" => ["Izzy", "The Author"], "robots" => ["Roboto", "TARS"]}
+iex> first_person
+"Izzy"</code></pre>
+
+    <p>
+      But then... is this really cleaner than <code>Map.get/2</code>and <code>List.first/1</code>? Let's put the two side-by-side:
+    </p>
+
+    <pre><code>get_attendees() |> Map.get("people") |> List.first</code></pre>
+
+    <p>
+      I would argue that it is not cleaner, and therefore not "better" than <code>Map.get/2</code> and <code>List.first/1</code>. It accomplishes the same task, but the complexity of the code means that it isn't worthwhile to use pattern matching here too. The "get and first" example reads better, flowing very easily from left-to-right.
+    </p>
+
+    <p>
+      Code readability is something to be treasured in all programming languages. The pipe version here is distinctly more readable. You'll see cases like this within any Elixir code you write. There is almost universally more than one way of writing code, and in some cases more than one <em>right</em> way of writing code that does the same thing. As you write more code yourself, you'll start to develop a judgement about these sorts of things too.
+    </p>
+  </aside>
+
 
   <p>
     I want to show you three more functions from <code>Map</code> which I think are
