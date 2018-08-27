@@ -395,8 +395,53 @@ Great functional code</code></pre>
     </p>
 
     <p>
-      "RM? Like <a href='https://www.rmwilliams.com.au/'>R.M. Williams</a>, the world famous Australian manufacturer of leather things? What does leather shoes and belts have to do with removing files?", Izzy asks with quite the perplexed look on her face, cork hat bobbling quizzically along. Woah, slow down there Izzy. Elixir's <code>File.rm/1</code> has nothing to do with boots, although that would be cool if it did.
+      "RM? Like <a href='https://www.rmwilliams.com.au/'>R.M. Williams</a>, the world famous Australian manufacturer of leather things? What does leather shoes and belts have to do with removing files?", Izzy asks with quite the perplexed look on her face, cork hat bobbling quizzically along. Woah, slow down there Izzy. Elixir's <code>File.rm/1</code> has nothing to do with boots!
     </p>
+
+    <p>
+      This <code>File.rm/1</code> file is called <code>rm</code> as a shorthand for "<strong>r</strong>e<strong>m</strong>ove". We can use this function to remove any file we like. We would like to keep our haiku files, so let's create a separate file that we can remove later by using <code>File.write/2</code> first, and then we'll delete it with <code>File.rm/1</code>. Let's do this slow so that we can see that the file definitely does exist before we delete it. Let's start with creating the file:
+    </p>
+
+    <pre><code>iex> File.write("remove-me.txt", "remove me")
+:ok</code></pre>
+
+    <p>
+      If we look in our directory, we can see that this file definitely exists:
+    </p>
+
+    <figure>
+      <img src='/11-files/images/delete-me.png'>
+      <figcaption>Figure 11.5: The <code>remove-me.txt</code> file exists.</figcaption>
+    </figure>
+
+    <p>
+      Let's try removing this file now:
+    </p>
+
+    <pre><code>iex> File.rm("remove-me.txt")
+:ok
+</code></pre>
+
+    <p>
+      Elixir says that removing this file was successful. Let's take a look at the directory:
+    </p>
+
+    <figure>
+      <img src='/11-files/images/the-haiku-is-fixed-the-people-rejoiced-worldwide-everything-is-good.png'>
+      <figcaption>Figure 11.6: The <code>remove-me.txt</code> file is gone!</figcaption>
+    </figure>
+
+    <p>
+      The file is gone!
+    </p>
+
+    <aside>
+      <header><code>File.rm/1</code> is destructive</header>
+
+      <p>
+        You should take care when using <code>File.rm/1</code> because once a file has been removed using this function it is gone for good! There is no getting this file back at all. The <code>File.rm/1</code> function will delete the file without moving it to your recycling bin or trash. It will be gone, baby, gone.
+      </p>
+    </aside>
   </section>
 
   <section>
