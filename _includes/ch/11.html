@@ -85,7 +85,11 @@ Great functional code</code></pre>
     </p>
 
     <p>
-      Izzy pipes up: "What's that <code>:ok</code> thing and why does it have a colon before it?". Good spot, Izzy. That is called an <code>atom</code>. Atoms are used to provide informational messages, like in this case. Atoms names are their values. This is unlike strings, maps and lists where we would assign to a variable in order to give a meaningful name to. This atom is telling us that the operation we asked <code>File.read/1</code> to perform went "ok"; we were able to read the file successfully.
+      Izzy pipes up: "What's that <code>:ok</code> thing and why does it have a colon before it?". Good spot, Izzy. That is called an <code>atom</code>. We first saw these back in <a href='/4-marvellous-maps'>Chapter 4</a> when they were used as keys in maps.
+    </p>
+
+    <p>
+      We've seen atoms since then, but here's a refresher: Atoms are used to provide informational messages, like in this case. Atoms names are their values. This is unlike strings, maps and lists where we would assign to a variable in order to give a meaningful name to. This atom is telling us that the operation we asked <code>File.read/1</code> to perform went "ok"; we were able to read the file successfully.
     </p>
 
     <p>
@@ -442,9 +446,30 @@ Great functional code</code></pre>
         You should take care when using <code>File.rm/1</code> because once a file has been removed using this function it is gone for good! There is no getting this file back at all. The <code>File.rm/1</code> function will delete the file without moving it to your recycling bin or trash. It will be gone, baby, gone.
       </p>
     </aside>
+
+    <p>
+      We've now got our head around some of the essential things that we can do with files with Elixir. We know that we can read existing files with <code>File.read/1</code>, write completely new ones with <code>File.write/2</code> and delete existing files with <code>File.rm/1</code>. For good measure, we also learned that these functions may return tuples that indicate errors, like <code>{:error, :enoent}</code>, which tells us that files do not exist.
+    </p>
+
+    <p>
+      We've now encountered a situation (well, <em>situations</em>) in Elixir where we can call code and get different outcomes depending on external factors like whether files exist or not. The code that we've written so far hasn't been particularly resilient to this sort of thing. We've become accustomed to running code and always seeing the same result.
+    </p>
+
+    <p>
+      But the rules have changed. We now will need to account for this sort of thing. In the chapter I will show you a few ways that we can make our code more resilient by making it behave differently, depending on the circumstances.
+    </p>
   </section>
 
   <section>
-    <h3>case and with statements</h3>
+    <h3>Exercises</h3>
+
+    <ul>
+      <li>
+        Can you make Elixir write a program for itself? Put this code into a file called <code>script.ex</code> with <code>File.write/2</code>: <code>IO.puts "This file was generated from Elixir"</code> and then make it run by running <code>elixir that-file.ex</code>.
+      </li>
+      <li>
+        Figure out what happens if you try to delete a file that doesn't exist with <code>File.rm/1</code>. Is this what you expected to happen?
+      </li>
+    </ul>
   </section>
 </section>

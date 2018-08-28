@@ -1,10 +1,37 @@
-<h2 id='chapter-12'>12. Finding more functions</h2>
+<section class='break'>
+  <h2 id='chapter-12'>12. Conditional code</h2>
 
-<div class='todo'>
-  Talk about the <code>h</code> & <code>i</code> and <code>v</code> helpers in the iex prompt.
+  <p>
+    In <a href='/11-files'>the last chapter</a>, we have encountered a situation where our code can have different outcomes. Outcomes that we cannot predict from within the code itself. As an example, when we call <code>File.read/1</code> we could have two main outcomes:
+  </p>
 
-  Talk about tab complete here too?
+  <ol>
+    <li>The file exists, and so the file is read successfully. We get back an <code>{:ok, contents}</code> tuple.</li>
+    <li>The file does not exist, and so we get back a <code>{:error, :enoent}</code> tuple instead.</li>
+  </ol>
 
-  TODO: Link to https://hexdocs.pm/elixir/
+  <p>
+    We have dealt with this in the past by making our program crash if we don't get an expected value. We do this by pattern matching on the outcome that we expect.
+  </p>
 
-</div>
+  <pre><code>iex> {:ok, contents} = File.read("haiku.txt")</code></pre>
+
+  <p>
+    In this example, if <code>File.read/1</code> succeeds then everyone is happy. We're <em>expecting</em> to get back a tuple here with two elements: 1) an <code>:ok</code> atom, and 2) the contents of the file.
+  </p>
+
+  <p>
+    But if our expectations aren't met because the <code>haiku.txt</code> file is missing, then things aren't so great:
+  </p>
+
+  <pre><code>{:ok, contents} = File.read("haiku.txt")
+<span class='console-red'>** (MatchError) no match of right hand side value: {:error, :enoent}</span></code></pre>
+
+  <p>
+    Elixir tells us that something went wrong and will refuse to do anything more about it until we give it different instructions.
+  </p>
+
+  <p>
+    We need to cater for this sort of thing happening in the Elixir programs that we write. Sometimes, files are missing. The way that we can handle this is by using some <em>conditional code</em> within Elixir. Conditional code allows us to give Elixir different instructions depending on what happens during the running of any Elixir program. Elixir has three main constructs for this: <code>case</code>, <code>cond</code> and <code>if</code>.
+  </p>
+</section>
