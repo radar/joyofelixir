@@ -32,6 +32,254 @@
   </p>
 
   <p>
-    We need to cater for this sort of thing happening in the Elixir programs that we write. Sometimes, files are missing. The way that we can handle this is by using some <em>conditional code</em> within Elixir. Conditional code allows us to give Elixir different instructions depending on what happens during the running of any Elixir program. Elixir has three main constructs for this: <code>case</code>, <code>cond</code> and <code>if</code>.
+    We need to cater for this sort of thing happening in the Elixir programs that we write. Sometimes, files are missing. The way that we can handle this is by using some <em>conditional code</em> within Elixir. Elixir has four main helpers for conditional code. They are: <code>case</code>, <code>cond</code>,<code>if</code>, and <code>with</code>. Conditional code allows us to give Elixir different instructions depending on what happens during the running of any Elixir program. Let's look at some examples.
   </p>
+
+  <section>
+    <h3>case</h3>
+
+    <p>
+      As we just talked about, we saw a case where file reading <em>could</em> fail. When we call this function, it can have two outcomes:
+    </p>
+
+    <ol>
+      <li>The file exists, and so the file is read successfully. We get back an <code>{:ok, contents}</code> tuple.</li>
+      <li>The file does not exist, and so we get back a <code>{:error, :enoent}</code> tuple instead.</li>
+    </ol>
+
+    <p>
+      In both cases, we get back a tuple, but what we can do with that tuple is dependent on what's inside. If we get back <code>{:ok, contents}</code> then we can carry on working with that file. But if we get <code>{:error, :enoent}</code> then we will have to make our program stop.
+    </p>
+
+    <p>
+      One of the ways to get Elixir to behave this way is to use <code>case</code>:
+    </p>
+
+  <pre><code>iex> case File.read("haiku.txt") do
+  {:ok, contents} ->
+    contents
+    |> String.split("\n", trim: true)
+    |> Enum.map(&String.reverse/1)
+    |> Enum.join("\n")
+  {:error, :enoent} ->
+    IO.puts "Could not find haiku.txt"
+end</code></pre>
+
+  <aside>
+    <header>Where did the backslashes go?</header>
+    <p>
+      Note that we don't need use backslashes (<code>\</code>) in this code for the piping lines (the ones with <code>|&gt;</code>) because Elixir will wait until the <code>end</code> of the <code>case</code> to run this code. Elixir can't know what to do until it sees that <code>end</code>.
+    </p>
+
+    <p>
+      If we left off the backslashes in code from previous chapters, Elixir would choose to run those lines one-by-one. This is opposite to what we want. We want it to chain the functions together in a pipe-chain.
+    </p>
+  </aside>
+
+  <p>
+    This case statement uses much of the same code we saw in the previous chapter, but now goes different routes depending on the output of <code>File.read/1</code>. If <code>File.read/1</code> returns something that matches the pattern of <code>{:ok, contents}</code>, then our file's code will be parsed and reversed correctly, resulting in this output:
+  </p>
+
+  <pre><code>"I love Elixir\nIt is so easy to learn\nGreat functional code"</code></pre>
+
+  <p>
+    However, if that <code>File.read/1</code> call results in something that matches <code>{:error, :enoent}</code>, then we will see an error message telling us that we couldn't find that file.
+  </p>
+
+  <pre><code>Could not find haiku.txt</code></pre>
+
+  <p>
+    These two "forks in the road" for this <code>case</code> statement are referred to as <em>clauses</em>.
+  </p>
+
+  <p>
+    You might recognise this code as being similar to a function we defined back in Chapter 6:
+  </p>
+
+  <pre><code>iex> road = fn
+  "high" -> "You take the high road!"
+  "low" -> "I'll take the low road! (and I'll get there before you)"
+  _ -> "Take the 'high' road or the 'low' road, thanks!"
+end</code></pre>
+
+  <p>
+    This is because it is the same underlying principle. We're using pattern matching inside the <code>case</code> in this chapter to determine what to do, just like we did in that function 6 chapters ago. Before the <code>-&gt;</code> we tell Elixir what we want to match. Then after that, we tell it what we want to do once that match happens. In our case statement, we put that "after" code on separate lines and this is just to increase readability of the code. We could've done the same in our function too:
+  </p>
+
+  <pre><code>iex> road = fn
+  "high" ->
+    "You take the high road!"
+  "low" ->
+    "I'll take the low road! (and I'll get there before you)"
+  _ ->
+    "Take the 'high' road or the 'low' road, thanks!"
+end</code></pre>
+
+  <p>
+    You might notice that in this function block, we have the catch-all clause at the end (<code>_ -></code>). This is the last-ditch effort for the function to do something. It's worth knowing that we could do the same thing in our <code>case</code> statements too:
+  </p>
+
+  <pre><code>iex> case File.read("haiku.txt") do
+  {:ok, contents} ->
+    contents
+    |> String.split("\n", trim: true)
+    |> Enum.map(&String.reverse/1)
+    |> Enum.join("\n")
+  {:error, :enoent} ->
+    IO.puts "Could not find haiku.txt"
+  _ ->
+    IO.puts "Something unexpected happened, please try again."
+end</code></pre>
+
+  <p>
+    In this code, if Elixir sees something that is not known to the <code>case</code> statement then it will give us a completely different message. While we're on this topic of catch-all clauses, I want to show you one more precise way of doing this too:
+  </p>
+
+  <pre><code>iex> case File.read("haiku.txt") do
+  {:ok, contents} ->
+    contents
+    |> String.split("\n", trim: true)
+    |> Enum.map(&String.reverse/1)
+    |> Enum.join("\n")
+  {:error, :enoent} ->
+    IO.puts "Could not find haiku.txt"
+  {:error, _} ->
+    IO.puts "Something unexpected happened, please try again."
+end</code></pre>
+
+  <p>
+    This time, our last clause will <em>not</em> match everything and anything. It will only match tuples that have <em>exactly</em> two items in them, and the first item <em>must</em> be <code>:error</code>. As we can see here, this is using the <em>pattern matching</em> feature in Elixir that we've seen a few times throughout this book already. The tuple for the last clause isn't <em>exactly</em> <code>{:error, _}</code>, but it is something that is in the same pattern. This pattern matching is why the last clause would match any other error that may be returned from <code>File.read/1</code>.
+  </p>
+
+  <p>
+    This is a better approach, because it is clearer to anyone else seeing this code what we might expect when something unexpected happens.
+  </p>
+
+  <p>
+    Now we know Elixir has two places where these clauses are used: functions and <code>case</code> blocks. We're about to see another one.
+  </p>
+
+  </section>
+
+  <section>
+    <h3>cond</h3>
+
+    <p>
+      The <code>case</code> statement is good to use if you want to compare the outcome of one particular action and do different things depending on whatever that outcome is. In the last section, that outcome was the output of a <code>File.read/1</code> function call.
+    </p>
+    
+    <p>
+      What we'll see in this section is that <code>case</code> has a cousin called <code>cond</code> which provides us a way of checking multiple conditions (<code>cond</code> is short for "condition"), and then running some code for whatever clause is true. Here's a quick example:
+    </p>
+
+    <pre><code>iex> num = 50
+50
+iex> cond do
+  num &lt; 50 -> IO.puts "Number is less than 50"
+  num &gt; 50 -> IO.puts "Number is greater than 50"
+  num == 50 -> IO.puts "Number is exactly 50"
+end
+Number is exactly 50
+:ok</code></pre>
+
+  <p>
+    Izzy asks: "What does <code>&lt;</code>, <code>&gt;</code> and <code>==</code> mean? We've never seen those before!" Yes! This is the first time in twelve chapters that we've seen these things. Now is a great time to cover what they do. <code>&lt;</code>, <code>&gt;</code> and <code>==</code> are ways to compare two values in Elixir. You can probably guess from the code that <code>&lt;</code> means "less than", <code>&gt;</code> means "greater than", and that <code>==</code> is "exactly equal to". But what is this code actually doing?
+  </p>
+
+  <p>
+    If we take the comparisons out of the <code>cond</code> and run them individually, we'll have a clearer picture of what this code is doing:
+  </p>
+
+  <pre><code>iex> num &gt; 50
+false
+iex> num &lt; 50
+false
+iex> num == 50
+true</code></pre>
+
+  <p>
+    These comparisons are going to compare the two values and then tell us if those comparisons are <code>true</code> or <code>false</code>. This is our first exposure to code that outputs either <code>true</code> or <code>false</code>. Think of it like this: if we were to ask the question of "is <code>num</code> equal to 50", what would the answer be? We would normally say "yes, it is equal". Elixir's version of an answer to this question is <code>true</code>.
+  </p>
+
+  <p>
+    When we use these comparisons in <code>cond</code>, the first clause where the comparison results in <code>true</code> will execute that clause's code. Go ahead and change the number in the <code>cond</code> code above to see how it might react to those changes.
+  </p>
+
+  </section>
+
+  <section>
+    <h3>if, else and unless</h3>
+
+    <p>
+      Now that we've seen what <code>case</code> and <code>cond</code> can do, let's look at two more related conditional statements: <code>if</code> and <code>unless</code> and their compatriot <code>else</code>.
+    </p>
+
+    <p>
+      The <code>cond</code> statement was really helpful if we had multiple conditions to compare against. In the previous code, we wanted to check if the number was less than, greater than or exactly equal to 50:
+    </p>
+
+    <pre><code>iex> num = 50
+50
+iex> cond do
+       num &lt; 50 -> IO.puts "Number is less than 50"
+       num &gt; 50 -> IO.puts "Number is greater than 50"
+       num == 50 -> IO.puts "Number is exactly 50"
+     end
+Number is exactly 50
+:ok</code></pre>
+
+    <p>
+      But what if we only wanted to check if the number was exactly 50? Well, we could remove the first two clauses from this <code>cond</code> statement:
+    </p>
+
+  <pre><code>iex> cond do
+       num == 50 -> IO.puts "Number is exactly 50"
+     end
+Number is exactly 50
+:ok</code></pre>
+
+    <p>
+      This is one way of writing this code and it will work perfectly fine. However, if the number was <em>not</em> 50, then we would see an error come from this code:
+    </p>
+
+  <pre><code>iex> num = 10
+10
+iex> cond do
+       num == 50 -> IO.puts "Number is exactly 50"
+     end
+<span class="console-red">** (CondClauseError) no cond clause evaluated to a true value</span></code></pre>
+
+    <p>
+      This is happening because <code>cond</code> always requires at least one of its conditions to evaluate to a <code>true</code> value. In the code we've just attempted, <code>num == 50</code> will be <code>false</code>, not <code>true</code>, and because it is the only clause in this <code>cond</code> we will see this error.
+    </p>
+
+    <p>
+      If we've got code like this in Elixir where we're running code conditionally and we don't want Elixir to show us big scary error messages like this one, we should be using <code>if</code> instead. Let's look at how we could attempt the same code with <code>if</code>:
+    </p>
+
+  <pre><code>iex> num = 10
+10
+iex> if num == 50 do
+        IO.puts "Number is exactly 50"
+      end
+nil</code></pre>
+
+    <p>
+      
+    </p>
+
+    
+
+  </section>
+
+  <section>
+    <h3>with</h3>
+
+    <p>
+
+    </p>
+
+  </section>
+
+
 </section>
