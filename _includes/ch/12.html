@@ -167,7 +167,7 @@ end</code></pre>
     <p>
       The <code>case</code> statement is good to use if you want to compare the outcome of one particular action and do different things depending on whatever that outcome is. In the last section, that outcome was the output of a <code>File.read/1</code> function call.
     </p>
-    
+
     <p>
       What we'll see in this section is that <code>case</code> has a cousin called <code>cond</code> which provides us a way of checking multiple conditions (<code>cond</code> is short for "condition"), and then running some code for whatever clause is true. Here's a quick example:
     </p>
@@ -265,11 +265,78 @@ iex> if num == 50 do
 nil</code></pre>
 
     <p>
-      
+      Becuase the condition here is not <code>true</code>, nothing happens. The way that Elixir represents nothing is with <code>nil</code>. We asked Elixir to only execute code if the condition is true, but it wasn't. So <code>nil</code> is the outcome.
     </p>
 
-    
+    <h4>unless</h4>
 
+    <p>
+      Now we've seen how to do something if a particular condition is true, but what happens if we want to do something if it is false? For this, Elixir gives us <code>unless</code>:
+    </p>
+
+    <pre><code>iex> num = 10
+10
+iex> unless num == 50 do
+        IO.puts "Number is not 50"
+      end
+Number is not 50
+:ok</code></pre>
+
+    <p>
+      In this short example, Elixir will output our "Number is not 50" message if the number is not 50. If the number is 50, then nothing (<code>nil</code>) will be the result of this code.
+    </p>
+
+    <p>
+      If you're unsure of whether to use <code>if</code> or <code>unless</code>, try reading the code out loud. Does it make more sense to say "unless the number is equal to 50"? In this case, yes it does. But let's try another example:
+    </p>
+
+    <pre><code>iex> num = 10
+10
+iex> unless num != 50 do
+        IO.puts "Number is 50"
+      end
+Number is 50
+:ok</code></pre>
+
+    <p>
+      This time, the code reads in English as "unless the number is not equal (<code>!=</code>) to 50". This sentence contains a double negative with the use of "unless" and "not", and so using <code>unless</code> in this example is unsuitable. The code should use an <code>if</code> instead:
+    </p>
+
+    <pre><code>iex> num = 50
+50
+iex> if num == 50 do
+       IO.puts "Number is 50"
+     end
+Number is 50
+:ok</code></pre>
+
+    <p>
+      Now the code reads as "if the number is equal to 50", and that makes a lot more sense!
+    </p>
+
+    <h4>else</h4>
+
+    <p>
+      We've now seen <code>if</code> and its opposite <code>unless</code>, but what if we wanted to do <code>if</code> <em>and</em> <code>unless</code> at the same time? What if we wanted Elixir to do some code if a particular condition was true, but then do some other code if it wasn't true?
+    </p>
+
+    <p>
+      For this, Elixir gives us <code>else</code>:
+    </p>
+
+        <pre><code>iex> num = 10
+10
+iex> if num == 50 do
+       IO.puts "Number is 50"
+     else
+       IO.puts "Number is not 50"
+     end
+Number is not 50
+:ok</code></pre>
+
+    <p>
+      This would read like: "if the number is 50, show 'Number is 50', otherwise, show 'Number is not 50'". In this code, our number is <em>not</em> 50, and so we see Elixir tell us that.
+    </p>
   </section>
 
   <section>

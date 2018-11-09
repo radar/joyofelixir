@@ -28,8 +28,6 @@ class TestBook < Minitest::Test
 
   def test_home_read_it_online_link
     go_home
-    click_link "read it online"
-    assert page.has_content?("Table of Contents")
   end
 
   def test_toc_navigation_i
