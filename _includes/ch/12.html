@@ -76,6 +76,18 @@ end</code></pre>
     </p>
   </aside>
 
+  <aside>
+    <header>Blocks of code</header>
+
+    <p>
+      In the last aside, I mentioned that Elixir will wait until the <code>end</code> to execute the code, but it might be helpful to know where it starts waiting from too. Elixir starts waiting from the <code>do</code> at the end of our <code>case</code> line.
+    </p>
+
+    <p>
+      This <code>do</code> and <code>end</code> combination is often referred to as a <em>block</em>. You can think of blocks as another type of argument in Elixir. It might be helpful to know this word when reading what other people write about Elixir, as it comes up from time to time.
+    </p>
+  </aside>
+
   <p>
     This case statement uses much of the same code we saw in the previous chapter, but now goes different routes depending on the output of <code>File.read/1</code>. If <code>File.read/1</code> returns something that matches the pattern of <code>{:ok, contents}</code>, then our file's code will be parsed and reversed correctly, resulting in this output:
   </p>
@@ -343,9 +355,54 @@ Number is not 50
     <h3>with</h3>
 
     <p>
+      There's one more feature of Elixir to do with conditional code that I would love to show you before we finish off this chapter. It is called <code>with</code>. The <code>with</code> feature allows us to chain together multiple operations, and only continue if each of those operations is successful. Before we look at how to use <code>with</code>, let's look at the type of problem it is good at solving.
+    </p>
+
+    <p>
+      Let's say that we're building a small program which will read files like our <code>haiku.txt</code> file from the previous chapter. We'll put this program in a new file called <code>reverser.ex</code>, because we'll want to run it multiple times to test the output. In this section, we'll use a few concepts from some past chapters to construct the example for <code>with</code>.
+    </p>
+
+    <p>
+      Rather than always reading from a file called <code>haiku.txt</code>, this program will first ask the user for the name of the file. We can do this with <code>IO.gets/1</code>, which we last saw in Chapter 8. Let's put this code in <code>reverser.ex</code> now, in the same directory as the <code>haiku.txt</code> file we created last chapter:
+    </p>
+
+    <pre><code>file = IO.gets("What is the name of the file?\n")
+IO.inspect file</code></pre>
+
+    <p>
+      It's been a few chapters since we saw <code>IO.gets/1</code>, so we might be a bit rusty on its behaviour by now. This <code>IO.gets/1</code> function prompts a user for some input. Whatever the user enters in this case, will be stored in the <code>file</code> variable. We then use <code>IO.inspect/1</code> to output what we took as input through <code>IO.gets/1</code>.
+    </p>
+
+    <p>
+      We can run this program with <code>elixir reverser.ex</code>. It will prompt us for some input. If we type <code>haiku.txt</code> and press enter, we'll see this as the complete output from our program:
+    </p>
+
+    <pre><code>What's the name of the file?
+haiku.txt
+"haiku.txt\n"</code></pre>
+
+    <p>
+      Now that we have some way of getting the name of the file, our next step is to read that file, which we can do with <code>File.read/1</code>:
+    </p>
+
+    <pre><code>IO.gets("What is the name of the file?\n")
+|> File.read
+|> IO.inspect</code></pre>
+
+    <p>
 
     </p>
 
+
+
+  </section>
+
+  <section>
+    <h3>Exercises</h3>
+
+    <ul>
+      <li>Change the <code>reverser.ex</code> code so that it writes the output to a new file.</li>
+    </ul>
   </section>
 
 
