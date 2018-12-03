@@ -80,8 +80,8 @@ class TestBook < Minitest::Test
 
   def test_toc_navigation_7
     go_toc
-    click_link "Intermission: Recap"
-    assert page.has_content?("7. Intermission: Recap")
+    click_link "Part 2: Recap"
+    assert page.has_content?("7. Part 2: Recap")
   end
 
   def test_toc_navigation_8
@@ -100,6 +100,18 @@ class TestBook < Minitest::Test
     go_toc
     click_link "Working with maps"
     assert page.has_content?("10. Working with maps")
+  end
+
+  def test_toc_navigation_11
+    go_toc
+    click_link "Working with files"
+    assert page.has_content?("11. Working with files")
+  end
+
+  def test_toc_navigation_12
+    go_toc
+    click_link "Conditional code"
+    assert page.has_content?("12. Conditional code")
   end
 
   def test_toc_setup_and_install
@@ -125,24 +137,32 @@ class TestBook < Minitest::Test
     click_next_link
     assert page.has_content?("6. Pattern matching")
     click_next_link
-    assert page.has_content?("7. Intermission: Recap")
+    assert page.has_content?("7. Part 2: Recap")
     click_next_link
     assert page.has_content?("8. Working with strings, input and output")
     click_next_link
     assert page.has_content?("9. Working with lists")
     click_next_link
     assert page.has_content?("10. Working with maps")
+    click_next_link
+    assert page.has_content?("11. Working with files")
+    click_next_link
+    assert page.has_content?("12. Conditional code")
   end
 
     def test_walkthrough_backwards
-    visit "http://localhost:4000/10-maps"
+    visit "http://localhost:4000/12-conditional-code"
+    assert page.has_content?("12. Conditional code")
+    click_previous_link
+    assert page.has_content?("11. Working with files")
+    click_previous_link
     assert page.has_content?("10. Working with maps")
     click_previous_link
     assert page.has_content?("9. Working with lists")
     click_previous_link
     assert page.has_content?("8. Working with strings, input and output")
     click_previous_link
-    assert page.has_content?("7. Intermission: Recap")
+    assert page.has_content?("7. Part 2: Recap")
     click_previous_link
     assert page.has_content?("6. Pattern matching")
     click_previous_link

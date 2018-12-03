@@ -3,4 +3,4 @@ require 'capybara/minitest'
 
 require "selenium/webdriver"
 
-Capybara.default_driver = :selenium
+Capybara.default_driver = :selenium_chrome_headless
