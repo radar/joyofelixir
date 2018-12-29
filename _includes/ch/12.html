@@ -359,51 +359,88 @@ Number is not 50
     </p>
 
     <p>
-      Let's say that we're building a small program which will read files like our <code>haiku.txt</code> file from the previous chapter. We'll put this program in a new file called <code>reverser.ex</code>, because we'll want to run it multiple times to test the output. In this section, we'll use a few concepts from some past chapters to construct the example for <code>with</code>.
+      Let's say that we had somehow came across a map containing this data in our travels:
+    </p>
+
+    <pre><code>iex> file_data = %{name: "haiku.txt"}</code></pre>
+
+    <p>
+      This map is designed to tell us what file to read our haiku from. This map contains a single key which is the atom <code>:name</code>, and its value is the string "haiku.txt". So we could know by accessing the name key in this map what file to read from. Here's one way we could do it:
+    </p>
+
+    <pre><code>iex> File.read(file_data["name"])
+{:ok, "rixilE evol I..."}</code></pre>
+
+    <p>
+      But what would happen here if the map <em>didn't</em> contain this key, but instead a differently named key? Then our code would break:
+    </p>
+
+    <pre><code>iex> file_data = %{filename: "haiku.txt"}
+%{filename: "haiku.txt"}
+iex> File.read(file_data["name"])
+{:error, :enoent}</code></pre>
+
+    <p>
+      Our programs need to be written in such a way to protect against this sort of thing. In this particular case, we must make them expect to read a value from a key called <code>:name</code>, not <code>:filename</code>. Once it has done that, then it can try to read that file.
     </p>
 
     <p>
-      Rather than always reading from a file called <code>haiku.txt</code>, this program will first ask the user for the name of the file. We can do this with <code>IO.gets/1</code>, which we last saw in Chapter 8. Let's put this code in <code>reverser.ex</code> now, in the same directory as the <code>haiku.txt</code> file we created last chapter:
+      One way to write this would be to use a <code>case</code> statement inside another <code>case</code> statement, like this:
     </p>
 
-    <pre><code>file = IO.gets("What is the name of the file?\n")
-IO.inspect file</code></pre>
+    <pre><code>file_data = %{name: "haiku.txt"}
+case Map.fetch(file_data, :name) do
+  {:ok, name} ->
+    case File.read(name) do
+      {:ok, contents} ->
+        contents
+        |> String.split("\n", trim: true)
+        |> Enum.map(&String.reverse/1)
+        |> Enum.join("\n")
+      {:error, :enoent} ->
+        IO.puts "Could not find a file called #{name}"
+    end
+  :error -> "No key called :name in file_data map"
+end</code></pre>
 
     <p>
-      It's been a few chapters since we saw <code>IO.gets/1</code>, so we might be a bit rusty on its behaviour by now. This <code>IO.gets/1</code> function prompts a user for some input. Whatever the user enters in this case, will be stored in the <code>file</code> variable. We then use <code>IO.inspect/1</code> to output what we took as input through <code>IO.gets/1</code>.
+      In this code, we attempt to find the <code>:name</code> key in <code>file_data</code> with <code>Map.fetch/2</code> (last seen in Chapter 10). If there is such a key, then <code>Map.fetch/2</code> will return <code>{:ok, name}</code>. If there isn't, it will return the atom <code>:error</code>, which we pattern match on at the end of the first case statement. In this example, there is going to be a <code>:name</code> key, and so it will match the <code>{:ok, name}</code> part of our case statement. Then the second <code>case</code> statement will come into effect.
     </p>
 
     <p>
-      We can run this program with <code>elixir reverser.ex</code>. It will prompt us for some input. If we type <code>haiku.txt</code> and press enter, we'll see this as the complete output from our program:
+      This second case statement attempts to read a file using <code>File.read/1</code>. If this file exists, then this function will return <code>{:ok, contents}</code>. If the file does not exist, <code>{:error, :enoent}</code> will be returned instead. In this case, we know that the file exists from our previous attempts at reading it, and so it this code will execute successfully.
     </p>
-
-    <pre><code>What's the name of the file?
-haiku.txt
-"haiku.txt\n"</code></pre>
 
     <p>
-      Now that we have some way of getting the name of the file, our next step is to read that file, which we can do with <code>File.read/1</code>:
+      This code is a little hard to read, as we need to really focus to keep our mind on where we are in the code. A <code>with</code> statement can simplify this code:
     </p>
 
-    <pre><code>IO.gets("What is the name of the file?\n")
-|> File.read
-|> IO.inspect</code></pre>
+    <pre><code>with {:ok, name} &lt;- Map.fetch(file_data, :name),
+     {:ok, contents} &lt;- File.read(name) do
+  contents
+  |> String.split("\n", trim: true)
+  |> Enum.map(&String.reverse/1)
+  |> Enum.join("\n")
+  |> IO.puts
+else
+  :error -> ":name key missing in file_data"
+  {:error, :enoent} -> "Couldn't read file"
+end</code></pre>
 
     <p>
-
+      In Elixir, <code>with</code> statements are to be read like a series of instructions of what to do when everything goes <em>right</em>. In this example, if <code>Map.fetch/2</code> succeeds and returns <code>{:ok, name}</code>, then Elixir will be able to use it in the next step, when it calls <code>File.read/1</code>. After that, our code will work as intended.
     </p>
 
+    <p>
+      However, if <code>Map.fetch/2</code> fails, then <code>:error</code> will be returned. We handle that in the <code>else</code> inside this <code>with</code> block, telling <code>with</code> that if we see <code>:error</code> returned, that we want to see an error message saying that the <code>:name</code> key was missing. Then if <code>File.read/1</code> fails and returns <code>{:error, :enoent}</code>, then we want it to tell us that it couldn't read the file.
+    </p>
 
+    <p>
+      This code is a little neater than the double-<code>case</code> code because all of our code that deals with the <em>success</em> of our program is grouped neatly at the top, and all the code that deals with the <code>failure</code> is grouped at the bottom.
+    </p>
 
+    <p>
+      I would encourage you to play around here with the <code>with</code> statement to get a better understanding of it. What happens if you change <code>file_data</code> so that it doesn't have a <code>:name</code> key? What happens if that <code>haiku.txt</code> file goes missing?
+    </p>
   </section>
-
-  <section>
-    <h3>Exercises</h3>
-
-    <ul>
-      <li>Change the <code>reverser.ex</code> code so that it writes the output to a new file.</li>
-    </ul>
-  </section>
-
-
 </section>
