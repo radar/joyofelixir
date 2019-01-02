@@ -1,7 +1,75 @@
-<h2 id='chapter-12'>12. Finding more functions</h2>
+<section class='break'>
+  <h2 id='chapter-13'>13. Finding more functions</h2>
+
+  <p>
+    We've now seen a small taste of a variety of functions that Elixir provides us. In this chapter, we're going to look at some new functions that will help us. These functions can show us documentation about other functions, tell us about variables within our code and more. We'll also see where we can go to find out more information
+  </p>
+
+  <section>
+    <h3>iex helper functions</h3>
+
+    <p>
+      The <code>iex</code> prompt lets us run Elixir code with ease and to also see the output of that code. We've seen plenty of examples of this throughout the last twelve chapters. But the <code>iex</code> prompt has at least two more tricks up its sleeves.
+    </p>
+
+    <h4>The h helper</h4>
+
+    <p>
+      The first of these tricks is the <code>h</code> helper. This helper's name is short for "help", and it will display documentation on whatever you wish. For instance, if you wanted to bring up the documentation for <code>Map.get/2</code>, you can do that by running this command inside of <code>iex</code>:
+    </p>
+
+    <pre><code>iex> h Map.get/2</code></pre>
+
+    <p>
+      When you run this, you'll see this output:
+    </p>
+
+    <pre><code class='no-highlight custom'><div class='console-bg-yellow center'>def get(map, key, default \\ nil)</div>
+Gets the value for a specific <span class='console-blue'>key</span> in <span class='console-blue'>map</span>.
+
+If <span class='console-blue'>key</span> is present in <span class='console-blue'>map</span> with value <span class='console-blue'>value</span>, then value is returned. Otherwise,
+<span class='console-blue'>default</span> is returned (which is <span class='console-blue'>nil</span> unless specified otherwise).
+
+<span class='console-yellow'>## Examples</span><div class='console-blue'>
+    iex> Map.get(%{}, :a)
+    nil
+    iex> Map.get(%{a: 1}, :a)
+    1
+    iex> Map.get(%{a: 1}, :b)
+    nil
+    iex> Map.get(%{a: 1}, :b, 3)
+    3</div>
+</code></pre>
+
+  <p>
+    This output shows us the documentation that Elixir has for the <code>Map.get/2</code> function. It even shows us some examples of how to use this function, which is pretty great!
+  </p>
+
+  <p>
+    One thing we didn't learn back in Chapter 10 when we first learned about the <code>Map.get/2</code> function is that it can take a <em>third</em> argument too, a default argument. This argument will be returned if the key we're trying to get isn't found, as we can see by the examples provided by the very helpful documentation.
+  </p>
+
+  <p>
+    "Hold on a minute!", Izzy pipes up. "If this function takes a <em>third</em> argument, then why is it called <code>Map.get/2</code> and not <code>Map.get/3</code>?". Izzy makes a good point. The number at the end of <code>Map.get/2</code> signifies how many arguments a function takes. We learned this back in Chapter 9. What we can see with this function is that there's a <code>Map.get</code> variant that takes three arguments, and so there is a <code>Map.get/3</code> function, as well as the <code>Map.get/2</code>.
+  </p>
+
+
+    <h4>The v helper</h4>
+
+  </section>
+
+  <section>
+    <h3>Tab complete</h3>
+  </section>
+
+  <section>
+    <h3>Elixir's documentation</h3>
+  </section>
+
+</section>
+
 
 <div class='todo'>
-  Talk about the <code>h</code> & <code>i</code> and <code>v</code> helpers in the iex prompt.
 
   Talk about tab complete here too?
 
