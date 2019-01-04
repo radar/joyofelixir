@@ -41,20 +41,99 @@ If <span class='console-blue'>key</span> is present in <span class='console-blue
     3</div>
 </code></pre>
 
-  <p>
-    This output shows us the documentation that Elixir has for the <code>Map.get/2</code> function. It even shows us some examples of how to use this function, which is pretty great!
-  </p>
+    <p>
+      This output shows us the documentation that Elixir has for the <code>Map.get/2</code> function. It even shows us some examples of how to use this function, which is pretty great!
+    </p>
 
-  <p>
-    One thing we didn't learn back in Chapter 10 when we first learned about the <code>Map.get/2</code> function is that it can take a <em>third</em> argument too, a default argument. This argument will be returned if the key we're trying to get isn't found, as we can see by the examples provided by the very helpful documentation.
-  </p>
+    <p>
+      One thing we didn't learn back in Chapter 10 when we first learned about the <code>Map.get/2</code> function is that it can take a <em>third</em> argument too, a default argument. This argument will be returned if the key we're trying to get isn't found, as we can see by the examples provided by the very helpful documentation.
+    </p>
 
-  <p>
-    "Hold on a minute!", Izzy pipes up. "If this function takes a <em>third</em> argument, then why is it called <code>Map.get/2</code> and not <code>Map.get/3</code>?". Izzy makes a good point. The number at the end of <code>Map.get/2</code> signifies how many arguments a function takes. We learned this back in Chapter 9. What we can see with this function is that there's a <code>Map.get</code> variant that takes three arguments, and so there is a <code>Map.get/3</code> function, as well as the <code>Map.get/2</code>.
-  </p>
+    <p>
+      "Hold on a minute!", Izzy pipes up. "If this function takes a <em>third</em> argument, then why is it called <code>Map.get/2</code> and not <code>Map.get/3</code>?". Izzy makes a good point. The number at the end of <code>Map.get/2</code> signifies how many arguments a function takes. We learned this back in Chapter 9. What we can see with this function is that there's a <code>Map.get</code> variant that takes three arguments, and so there is a <code>Map.get/3</code> function, as well as the <code>Map.get/2</code>.
+    </p>
 
+    <p>
+      We can look up any function's documentation that we've seen so far. Go on, try looking up the documentation for functions that we've seen in the past chapters. They're all documented here!
+    </p>
 
-    <h4>The v helper</h4>
+    <h4>The arrow and v helpers</h4>
+
+    <p>
+      Two more little helpers that you should know about are the arrows on your keyboard, and the <code>v</code> helper provided by <code>iex</code>. You might have been using the arrows already to move around in code. The up and down arrows allow us to move through the historical input in our prompt, while the <code>v</code> helper lets us pull values out of particular lines in the output.
+    </p>
+
+    <p>
+      Let's say that we've been working in <code>iex</code> and we've written this code:
+    </p>
+
+    <pre><code>iex(1)> %{name: "Izzy", age: "30ish", gender: "Female"}
+iex(2)> %{name: "Ryan", age: "30ish", gender: "Male"}</code></pre>
+
+    <p>
+      Oh drat. We've just realised that wanted to assign these to variables, but forgot to. One way we can get that value again is by pressing the up-arrow on our keyboard. We'll then see this:
+    </p>
+
+    <pre><code>iex(1)> %{name: "Izzy", age: "30ish", gender: "Female"}
+%{age: "30ish", gender: "Female", name: "Izzy"}
+iex(2)> %{name: "Ryan", age: "30ish", gender: "Male"}
+%{name: "Ryan", age: "30ish", gender: "Male"}
+iex(3)> %{name: "Ryan", age: "30ish", gender: "Male"}</code></pre>
+
+    <p>
+      Our terminal helpfully brings back the last value when we push the up-arrow. But if we push the up-arrow again, look what happens:
+    </p>
+
+    <pre><code>iex(1)> %{name: "Izzy", age: "30ish", gender: "Female"}
+%{age: "30ish", gender: "Female", name: "Izzy"}
+iex(2)> %{name: "Ryan", age: "30ish", gender: "Male"}
+%{name: "Ryan", age: "30ish", gender: "Male"}
+iex(3)> %{age: "30ish", gender: "Female", name: "Izzy"}</code></pre>
+
+    <p>
+      We're now back to the first value again! We could then go to the start of this line (by pushing the left-arrow, or <kbd>Ctrl+A</kbd>) and assign it to a variable if we wished:
+    </p>
+
+    <pre><code>iex(3)> izzy = %{age: "30ish", gender: "Female", name: "Izzy"}
+%{age: "30ish", gender: "Female", name: "Izzy"}</code></pre>
+
+    <p>
+      If we push the up-arrow again here, we'll get the same as line 3; the line we just had:
+    </p>
+
+    <pre><code>iex(4)> izzy = %{age: "30ish", gender: "Female", name: "Izzy"}
+%{age: "30ish", gender: "Female", name: "Izzy"}</code></pre>
+
+    <p>
+      If we push it a second time, we'll get the same as line 2.
+    </p>
+
+    <pre><code>iex(4)> %{name: "Ryan", age: "30ish", gender: "Male"}</code></pre>
+
+    <p>
+      If we push the down-arrow, we'll go back to line 3.
+    </p>
+
+    <pre><code>iex(4)> izzy = %{age: "30ish", gender: "Female", name: "Izzy"}
+%{age: "30ish", gender: "Female", name: "Izzy"}</code></pre>
+
+    <p>
+      This is how we can navigate up and down, or back and forward (depending your viewpoint) through the history of what we've put into <code>iex</code>.
+    </p>
+
+    <p>
+      Now about that <code>v</code> helper. If we want, we can pick a value out of a particular line by using <code>v</code>. For instance, if we wanted the value from the 2nd line of our <code>iex</code> prompt and then to assign that to a variable called <code>ryan</code> we can run this code:
+    </p>
+
+    <pre><code>iex(4)> ryan = v(2)
+%{name: "Ryan", age: "30ish", gender: "Male"}</code></pre>
+
+    <p>
+      This code can be read as: find the 2nd value from the prompt, and assign it to a variable called <code>ryan</code>. As this <code>v</code> helper is a function in Elixir, We can even leave off the brackets if we wish to save us some typing:
+    </p>
+
+    <pre><code>iex(5)> ryan = v 2
+%{name: "Ryan", age: "30ish", gender: "Male"}</code></pre>
 
   </section>
 

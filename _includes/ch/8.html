@@ -20,6 +20,28 @@
 <pre><code>iex> String.reverse("reverse this")
 <span class='console-green'>"siht esrever"</span></code></pre>
 
+  <aside>
+    <header>Look Ma, No Brackets!</header>
+
+    <p>
+      When we're calling functions in Elixir, we will typically wrap the arguments in brackets. We do this in order to make it very clear where the end of the function is.
+    </p>
+
+    <p>
+      However, you <em>might</em> see some code like this too, sans brackets:
+    </p>
+
+    <pre><code>iex> String.reverse "reverse this"</code></pre>
+
+    <p>
+      Elixir is smart enough to know here that <code>"reverse this"</code> is an argument to the <code>String.reverse</code> function.
+    </p>
+
+    <p>
+      It's generally accepted best practice to always use brackets, however.
+    </p>
+  </aside>
+
   <p>
     Izzy elicits a noticeable "wooooowww, that's so cool" at this. "What else does Elixir have?", she asks quickly. We'll get to that, Izzy. Let's take the time now to understand what's happening here first.
   </p>
