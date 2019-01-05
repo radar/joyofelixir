@@ -80,6 +80,8 @@
 * BYO functions
 * Enum.reduce/2
 * Enum.sum/1
+* Enum.filter/2
+* Enum.find/2
 
 ## Chapter 10: Working with maps
 
@@ -101,20 +103,30 @@
 * Atoms
 * Tuples
 
-## Chapter 12: Finding more functions
+## Chapter 12: Conditional Code
 
-* h helper in iex prompt
+* Case
+* If / Unless
+* Cond
+* With
+
+## Chapter 13: Finding more functions
+
+* h + v helpers in iex prompt
 * Tab complete
 * Elixir docs link
 
-## Chapter 13: Mixing it up
+## Chapter 14: Mixing it up
 
 * Introduction to Mix, similar in approach to the official guide, but using concepts just from this book. No agents.
 * Demonstrate defining Modules
 * (?) Structs?
-* (?) Introduce automated testing
 
-## Chapter 14: Where to from here?
+## Chapter 15: Testing
+
+* Cover ExUnit, including DocTests
+
+## Chapter 16: Where to from here?
 
 * Link to other resources, like Programming Elixir
 

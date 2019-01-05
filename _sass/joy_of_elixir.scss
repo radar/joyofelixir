@@ -53,7 +53,7 @@ article {
   }
 
   p, ul {
-    code {
+    code, kbd {
       background: #FBECFF;
       border-radius: 3px;
       padding: 3px;
@@ -203,4 +203,15 @@ footer {
 .highlight-blue {
   background: $blue;
   color: lighten($blue, 25);
+}
+
+.autocomplete-suggestions {
+  border-left: 5px solid $light-purple;
+  background: black;
+  color: white;
+  font-family: "Anonymous Pro";
+
+  td {
+    padding: 0.5em;
+  }
 }

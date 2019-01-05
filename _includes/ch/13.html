@@ -134,24 +134,201 @@ iex(3)> %{age: "30ish", gender: "Female", name: "Izzy"}</code></pre>
 
     <pre><code>iex(5)> ryan = v 2
 %{name: "Ryan", age: "30ish", gender: "Male"}</code></pre>
-
   </section>
 
   <section>
     <h3>Tab complete</h3>
+
+    <p>
+      One last <code>iex</code> helper that I want to show you involves another key on your keyboard: the <kbd>Tab</kbd> key.
+    </p>
+
+    <p>
+      In your <code>iex</code> prompt, you can hit the <kbd>Tab</kbd> key to make it autocomplete what you type. For instance, you can type this:
+    </p>
+
+    <pre><code>iex> String.rev</code></pre>
+
+    <p>
+      And then if you hit tab, <code>iex</code> will autocomplete it into <code>String.reverse</code>:
+    </p>
+
+    <pre><code>iex> String.reverse</code></pre>
+
+    <p>
+      You can do this with any module name or function you wish. Go on, give it a go with things like <code>En[TAB]</code>, and <code>Enum.fil[TAB]</code>.
+    </p>
+
+    <p>
+      You might realise if you experiment enough that if <code>iex</code> doesn't know what you want, then it will provide some suggestions. For instance, if we type <code>Enum.f</code> and hit tab, we'll see all the functions from the <code>Enum</code> module that start with <code>f</code>:
+    </p>
+
+    <table class='autocomplete-suggestions'>
+      <tr>
+        <td>fetch!/2</td>
+        <td>fetch/2</td>
+        <td>filter/2</td>
+      </tr>
+      <tr>
+        <td>find/2</td>
+        <td>find/3</td>
+        <td>find_index/2</td>
+      </tr>
+      <tr>
+        <td>flat_map_reduce/3</td>
+        <td></td>
+        <td></td>
+      </tr>
+    </table>
+
+    <p>
+      We've seen the <code>Enum.find/2</code> and <code>Enum.filter/2</code> functions back in Chapter 9, but as we can see here Elixir provides a few more functions than the ones we've seen so far.
+    </p>
+
+    <p>
+      Keep on exploring here and seeing what other functions you can find. Remember that you can always use the <code>h</code> helper to bring up information about functions you don't know about yet. For instance, we could bring up the documentation for <code>Enum.find_index/2</code> by writing this:
+    </p>
+
+    <pre><code>iex> h Enum.find_index/2</code></pre>
+
+    <p>
+      The documentation that we would see is this:
+    </p>
+
+    <pre><code class='no-highlight custom'><div class='console-bg-yellow center'>def find_index(enumerable, fun)</div>
+<span class='console-blue'>@spec</span> find_index(t(), (element() -> any())) :: non_neg_integer() | nil
+
+Similar to <span class='console-blue'>find/3</span>, but returns the index (zero-based) of the element instead of
+the element itself.
+
+<span class='console-yellow'>## Examples</span>
+<span class='console-blue'>
+    iex> Enum.find_index([2, 4, 6], fn x -> rem(x, 2) == 1 end)
+    nil
+
+    iex> Enum.find_index([2, 3, 4], fn x -> rem(x, 2) == 1 end)
+    1</span></code></pre>
+
+    <p>
+      There's also one more place where we can go to find documentation.
+    </p>
   </section>
 
   <section>
     <h3>Elixir's documentation</h3>
+
+    <p>
+      As we've seen a few times now, we can bring up documentation in the <code>iex</code> prompt with the <code>h</code> helper. There's another plcae where we can go to find the same documentation, as well as documentation for every other function Elixir provides.
+    </p>
+
+    <p>
+      That place is <a href='https://elixir-lang.org/docs.html'>https://elixir-lang.org/docs.html</a>. When you visit that site, you'll see a list of documentation:
+    </p>
+
+    <figure>
+      <img src="/images/13/elixir-docs.png">
+      <figcaption>Figure 13.1: Elixir's Stable Documentation</figcaption>
+    </figure>
+
+    <p>
+      The "stable" name at the top indicates that the documentation listed underneath is the for the most recent stable release of Elixir, where "stable" meaning that it's safe for people like us to use, and won't have any nasty bugs in it.
+    </p>
+
+    <p>
+      We can see a list of documentation here for the different parts of Elixir. There's "Elixir", which is the documentation for all the functions we've been using so far. You can see documentation for other parts of Elixir too, including "IEx", which gets its own set of documentation. There's also "Mix" which we'll find out about in Chapter 14, and "ExUnit" that we'll find out about in Chapter 15.
+    </p>
+
+    <p>
+      If we click that "Elixir" link near the top, we'll be taken to the documentation site for Elixir's standard library. A "standard library" is a set of functions that programming languages provides, and this new page will show you Elixir's.
+    </p>
+
+    <p>
+      The default page is a little wordy:
+    </p>
+
+    <figure>
+      <img src="/images/13/elixir-std-lib-docs.png">
+      <figcaption>Figure 13.2: Elixir Standard Library Homepage</figcaption>
+    </figure>
+
+    <p>
+      Let's not focus on all the words on the right-hand-side too much. What I want to show you here is the search bar over on the left.
+    </p>
+
+    <figure>
+      <img src="/images/13/elixir-std-lib-docs-search.png">
+      <figcaption>Figure 13.3: Look to the left hand side and see the search box.</figcaption>
+    </figure>
+
+    <p>
+      You can type any module or function name into this box to be taken right to its documentation. If we want to find out about <code>Enum.find</code>, we can search for that and then see this page:
+    </p>
+
+    <figure>
+      <img src="/images/13/enum-search-results.png">
+      <figcaption>Figure 13.4: Enum search results</figcaption>
+    </figure>
+
+    <p>
+      If we click on the <code>find/3</code> function, we'll be taken right to its location in the docs: <a href='https://hexdocs.pm/elixir/Enum.html#find/3'>https://hexdocs.pm/elixir/Enum.html#find/3</a>. The great thing about this URL is that it's shareable, and so if you have friends that are learning Elixir too, you can give them this URL to teach them about <code>Enum.find/3</code> too.
+    </p>
+
+    <p>
+      Here's what we'll see on this page when we visit it.
+    </p>
+
+    <figure>
+      <img src="/images/13/enum-find.png">
+      <figcaption>Figure 13.5: Enum find</figcaption>
+    </figure>
+
+    <p>
+      The great thing here is that we'll be on a page that has <em>all</em> the documentation that Elixir has for the <code>Enum</code> module. We can scroll up (or down!) the page to find out what other functions Eliixr provides in this module.
+    </p>
+
+    <p>
+      The other great thing about this is that the documentation here will match what we see when we use the <code>h</code> helper in the <code>iex</code> prompt:
+    </p>
+
+    <pre><code class='no-highlight custom'><div class='console-bg-yellow center'>def find(enumerable, default \\ nil, fun)</div>
+<span class='console-blue'>@spec</span> find(t(), default(), (element() -> any())) :: element() | default()
+
+Returns the first item for which <span class='console-blue'>fun</span> returns a truthy value. If no such item is
+found, returns <span class='console-blue'>default</span>.
+
+<span class='console-yellow'>## Examples</span>
+
+<span class='console-blue'>iex> Enum.find([2, 4, 6], fn x -> rem(x, 2) == 1 end)
+nil
+
+iex> Enum.find([2, 4, 6], 0, fn x -> rem(x, 2) == 1 end)
+0
+
+iex> Enum.find([2, 3, 4], fn x -> rem(x, 2) == 1 end)
+3</span></code></pre>
+
+  <p>
+    So now we have two ways of looking at documentation for the functions that we're using within Elixir.
+  </p>
   </section>
 
+  <section>
+    <h3>Summary</h3>
+
+    <p>
+      In this chapter, we've looked at how we can be more productive by reading documentation and learning from that, as well as new tricks for moving around in the <code>iex</code> prompt.
+    </p>
+
+    <p>
+      We saw the <code>h</code> helper, which brings up documentation about a particular module or function. We also saw that we can press the up and down arrows on our keyboards to navigate through the history of what we've typed into <code>iex</code>
+    </p>
+
+    <p>
+      Lastly, we saw that Elixir has online documentation that we can read too, and we saw that this documentation matches exactly what we can see in our <code>iex</code> prompt.
+    </p>
+
+    <p>
+      While we were looking at that documentation, we saw mentions of things called "Mix" and "ExUnit". These are two additional parts of Elixir's tooling that we will be looking at in the 4th and final part of this book: Chapters 14 and 15.
+    </p>
+  </section>
 </section>
-
-
-<div class='todo'>
-
-  Talk about tab complete here too?
-
-  TODO: Link to https://hexdocs.pm/elixir/
-
-</div>
