@@ -158,7 +158,7 @@ Great functional code</code></pre>
       But we don't have a single string here, we have three strings within a list. But we have knowledge on our side. We have special skills that we built up in <a href='/9-lists'>Chapter 9</a>, and with those special skills we know that we can call <code>Enum.map/2</code> to apply a function to multiple elements within a list. We've done exactly this back in Chapter 9:
     </p>
 
-    <pre><code>iex> Enum.map(seasons, &amp;String.capitalize/1)</code></pre>
+    <pre><code>iex> Enum.map(cities, &amp;String.capitalize/1)</code></pre>
 
     <p>
       So let's take our list, adapt this code a little bit to use the pipe operator and <code>String.reverse/1</code> and reverse each string with this code:

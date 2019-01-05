@@ -189,10 +189,10 @@ List.reverse(animals_or_derivatives_of_animals, [1, 2, 3])
   </p>
 
   <p>
-    Let's start with a list. How about a list of the seasons, just for something different?
+    Let's start with a list. How about a list of the world's top five most liveable cities, just for something different?
   </p>
 
-<pre><code>iex> seasons = ["summer", "fall", "winter", "spring"]</code></pre>
+<pre><code>iex> cities = ["vienna", "melbourne", "osaka", "calgary", "sydney"]</code></pre>
 
   <p>
     The simplest way of enumerating through a list in Elixir is to use the <code>Enum.each/2</code> function. Remember that the <code>/2</code> here means that the function takes two arguments. Those two arguments are:
@@ -207,31 +207,32 @@ List.reverse(animals_or_derivatives_of_animals, [1, 2, 3])
     Let's take a look at an example:
   </p>
 
-<pre><code>iex> Enum.each(seasons, &amp;IO.puts/1)</code></pre>
+<pre><code>iex> Enum.each(cities, &amp;IO.puts/1)</code></pre>
 
   <p>
-    The first argument here is our list of seasons. The second argument is the function that we want to run for each item in this list: specifically the built-in <code>IO.puts/1</code> function. The <code>&amp;</code> before this function name is referred to as the "capture operator". We saw this back in Chapter 5, but we were using it to build our own functions then:
+    The first argument here is our list of cities. The second argument is the function that we want to run for each item in this list: specifically the built-in <code>IO.puts/1</code> function. The <code>&amp;</code> before this function name is referred to as the "capture operator". We saw this back in Chapter 5, but we were using it to build our own functions then:
   </p>
 
   <pre><code>iex> greeting = &("Hello #{&1}")</code></pre>
 
   <p>
-    The <code>&amp;</code> has another use, and that is to capture functions from modules so that we can use them later. In this example, we're capturing <code>IO.puts/1</code> so that <code>Enum.each/2</code> can call that function on each of the items in the <code>seasons</code> list.
+    The <code>&amp;</code> has another use, and that is to capture functions from modules so that we can use them later. In this example, we're capturing <code>IO.puts/1</code> so that <code>Enum.each/2</code> can call that function on each of the items in the <code>cities</code> list.
   </p>
 
   <p>
-    Let's take a look at what this combination of <code>Enum.each</code>, <code>seasons</code> and <code>&amp;IO.puts/1</code> does:
+    Let's take a look at what this combination of <code>Enum.each</code>, <code>cities</code> and <code>&amp;IO.puts/1</code> does:
   </p>
 
-<pre><code>iex> Enum.each(seasons, &amp;IO.puts/1)
-summer
-fall
-winter
-spring
+<pre><code>iex> Enum.each(cities, &amp;IO.puts/1)
+vienna
+melbourne
+osaka
+calgary
+sydney
 :ok</code></pre>
 
   <p>
-    This particular combination of those three things has made Elixir output each season on a single line in our <code>iex</code> prompt. Then there's one more thing: that little blue <code>:ok</code> at the end of our output. That's a little atom value and it indicates to us that the iterating with <code>Enum.each/2</code> worked successfully. We saw atoms like this used for keys in maps in previous chapters, but they can also be used in Elixir code like this too.
+    This particular combination of those three things has made Elixir output each city on a single line in our <code>iex</code> prompt. Then there's one more thing: that little blue <code>:ok</code> at the end of our output. That's a little atom value and it indicates to us that the iterating with <code>Enum.each/2</code> worked successfully. We saw atoms like this used for keys in maps in previous chapters, but they can also be used in Elixir code like this too.
   </p>
 
   <p>
@@ -243,8 +244,8 @@ spring
   </p>
 
 <pre><code>iex> puts = &amp;IO.puts/1
-puts.("summer")
-"summer"
+puts.("melbourne")
+"melbourne"
 :ok
 </code></pre>
 
@@ -258,11 +259,11 @@ puts.("summer")
     <header>Try this one as a program too</header>
 
     <p>
-      You should try running the above example as an Elixir script too. Save this file at <code>seasons.exs</code> and run it with <code>elixir seasons.exs</code>.
+      You should try running the above example as an Elixir script too. Save this file at <code>cities.exs</code> and run it with <code>elixir cities.exs</code>.
     </p>
 
     <p>
-      What you'll see will mostly be the same: all the seasons are output on their own lines. What you won't see is that final <code>:ok</code>. This is because when we run a function in the <code>iex</code> prompt, the function will always tell us what its result is.
+      What you'll see will mostly be the same: all the cities are output on their own lines. What you won't see is that final <code>:ok</code>. This is because when we run a function in the <code>iex</code> prompt, the function will always tell us what its result is.
     </p>
 
     <p>
@@ -289,15 +290,15 @@ puts.("summer")
   </p>
 
 <pre><code>iex> cap = &amp;String.capitalize/1
-cap.("summer")
-<span class='console-green'>"Summer"</span>
+cap.("melbourne")
+<span class='console-green'>"Melbourne"</span>
 </code></pre>
 
   <p>
-    Here, the <code>String.capitalize/1</code> function takes a string and turns the first letter into a capital letter. In this code example, we're making it so that we can call the <code>String.capitalize/1</code> as if it were a function called <code>cap</code>. However, if we wanted to capitalise the names of our season using the <code>String.capitalize/1</code> function with <code>Enum.each/2</code> it wouldn't do very much:
+    Here, the <code>String.capitalize/1</code> function takes a string and turns the first letter into a capital letter. In this code example, we're making it so that we can call the <code>String.capitalize/1</code> as if it were a function called <code>cap</code>. However, if we wanted to capitalise the names of our city using the <code>String.capitalize/1</code> function with <code>Enum.each/2</code> it wouldn't do very much:
   </p>
 
-<pre><code>iex> Enum.each(seasons, &amp;String.capitalize/1)
+<pre><code>iex> Enum.each(cities, &amp;String.capitalize/1)
 <span class='console-blue'>:ok</span></code></pre>
 
   <p>
@@ -311,26 +312,27 @@ cap.("summer")
   <h4>Map, but not the kind that you know already</h4>
 
   <p>
-    The names of these seasons should be capitalized because they are nouns, but whoever created this list neglected to capitalize them. Oops! What we should have is a list with proper capitalization:
+    The names of these cities should be capitalized because they are proper nouns, but whoever created this list neglected to capitalize them. Oops! What we should have is a list with proper capitalization:
   </p>
 
-<pre><code>["Summer", "Fall", "Winter", "Spring"]</code></pre>
+<pre><code>["Vienna", "Melbourne", "Osaka", "Calgary", "Sydney"]</code></pre>
 
   <p>
-    We tried using <code>Enum.each/2</code> to give us this list of capitalized seasons, but that just told us <code>:ok</code> and it didn't give us back a list of capitalized season names.
+    We tried using <code>Enum.each/2</code> to give us this list of capitalized cities, but that just told us <code>:ok</code> and it didn't give us back a list of capitalized city names.
   </p>
 
   <p>
-    We're going to need a function that goes through each item in the list and applies <code>String.capitalize/1</code>, and then shows us the result of each application of that function. Something that would turn our existing <code>seasons</code> list into a list like this one:
+    We're going to need a function that goes through each item in the list and applies <code>String.capitalize/1</code>, and then shows us the result of each application of that function. Something that would turn our existing <code>cities</code> list into a list like this one:
   </p>
 
-<pre><code>iex> seasons = [
-    String.capitalize("summer"),
-    String.capitalize("fall"),
-    String.capitalize("winter"),
-    String.capitalize("spring"),
+<pre><code>iex> cities = [
+    String.capitalize("vienna"),
+    String.capitalize("melbourne"),
+    String.capitalize("osaka"),
+    String.capitalize("calgary"),
+    String.capitalize("sydney"),
   ]
-[<span class='console-green'>"Summer"</span>, <span class='console-green'>"Fall"</span>, <span class='console-green'>"Winter"</span>, <span class='console-green'>"Spring"</span>]</code></pre>
+[<span class='console-green'>"Vienna"</span>, <span class='console-green'>"Melbourne"</span>, <span class='console-green'>"Osaka"</span>, <span class='console-green'>"Calgary"</span>,<span class='console-green'>"Sydney"</span>]</code></pre>
 
   <p>
     But since we've already got a list we're going to have to do <em>something</em> to that list to turn it into what we want. That something is to use another function from the <code>Enum</code> module called <code>Enum.map/2</code>. This <code>map</code> function is different from the map kind of data (<code>%{name: "Izzy"}</code>), in that the function-called-map will take the specified enumerable and another function as arguments, then enumerate through each item in the list and run that other function for each item, and then return the result of each function run.
@@ -340,11 +342,11 @@ cap.("summer")
     Enough jibber-jabber. Let's see this in actual practice:
   </p>
 
-<pre><code>iex> Enum.map(seasons, &amp;String.capitalize/1)
-[<span class='console-green'>"Summer"</span>, <span class='console-green'>"Fall"</span>, <span class='console-green'>"Winter"</span>, <span class='console-green'>"Spring"</span>]</code></pre>
+<pre><code>iex> Enum.map(cities, &amp;String.capitalize/1)
+[<span class='console-green'>"Vienna"</span>, <span class='console-green'>"Melbourne"</span>, <span class='console-green'>"Osaka"</span>, <span class='console-green'>"Calgary"</span>,<span class='console-green'>"Sydney"</span>]</code></pre>
 
   <p>
-    Hooray! Each of our seasons now has a correctly capitalized name. What's happened here is that we've told the <code>map</code> function that we want it to run another function &mdash; that'd be the <code>String.capitalize/1</code> function &mdash; on each item of the <code>seasons</code> list. This is how we've been able to go from our existing list with non-capitalized season names to a new list with capitalized names.
+    Hooray! Each of our cities now has a correctly capitalized name. What's happened here is that we've told the <code>map</code> function that we want it to run another function &mdash; that'd be the <code>String.capitalize/1</code> function &mdash; on each item of the <code>cities</code> list. This is how we've been able to go from our existing list with non-capitalized city names to a new list with capitalized names.
   </p>
 
   <aside>
