@@ -210,7 +210,13 @@ List.reverse(animals_or_derivatives_of_animals, [1, 2, 3])
 <pre><code>iex> Enum.each(seasons, &amp;IO.puts/1)</code></pre>
 
   <p>
-    The first argument here is our list of seasons. The second argument is the function that we want to run for each item in this list: specifically the built-in <code>IO.puts/1</code> function. As we saw in the last chapter, <code>IO.puts/1</code> will output a string to the terminal during a program's execution.
+    The first argument here is our list of seasons. The second argument is the function that we want to run for each item in this list: specifically the built-in <code>IO.puts/1</code> function. The <code>&amp;</code> before this function name is referred to as the "capture operator". We saw this back in Chapter 5, but we were using it to build our own functions then:
+  </p>
+
+  <pre><code>iex> greeting = &("Hello #{&1}")</code></pre>
+
+  <p>
+    The <code>&amp;</code> has another use, and that is to capture functions from modules so that we can use them later. In this example, we're capturing <code>IO.puts/1</code> so that <code>Enum.each/2</code> can call that function on each of the items in the <code>seasons</code> list.
   </p>
 
   <p>

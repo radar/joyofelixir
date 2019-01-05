@@ -146,7 +146,57 @@ iex> c_to_f.(40)
 </section>
 
 <section>
-  <h3>Default arguments</h3>
+  <h3>Capture operator</h3>
+
+  <p>
+    Elixir provides us with the <code>fn</code> construct so that we can write functions, and we've seen a few examples of that so far. There's one other construct you might see if you read other people's code, and it's called the <em>capture operator</em> and it goes like this:
+  </p>
+
+  <pre><code>iex> captured_greeting = &("Hello #{&1}!")</code></pre>
+
+  <p>
+    We must wrap the entire contents of the function with brackets, and then inside the brackets we can use <code>&1</code> to capture the first argument passed to this function, <code>&2</code> to capture the second and so on. For now, we're just capturing the one.
+  </p>
+
+  <p>
+    This function is functionally (ahem) equivalent to our first greeting function:
+  </p>
+
+  <pre><code>iex> greeting = fn (name) -> "Hello #{name}!" end</code></pre>
+
+  <p>
+    We can see this if we call both functions with the same argument:
+  </p>
+
+  <pre><code>iex> captured_greeting.("World")
+"Hello World!"
+iex> greeting.("World")
+"Hello World!"</code></pre>
+
+  <p>
+    As I mentioned before, you can capture as many arguments as you wish. We can take our 3-argument <code>greeting</code> function from earlier:
+  </p>
+
+  <pre><code>iex> greeting = fn (name, gender, age) ->
+  ...>   "Hello, #{name}! I see you're #{gender} and you're #{age} years old."
+  ...> end</code></pre>
+
+  <p>
+    And we can write it in a slightly shorter way by using the capture operator:
+  </p>
+
+  <pre><code>iex> captured_greeting = &("Hello, #{&1}! I see you're #{&2} and you're #{&3} years old.")</code></pre>
+
+  <p>
+    Then we can call it with three arguments too:
+  </p>
+
+  <pre><code>iex> captured.("Izzy", "Female", "30ish")
+<span class='console-green'>"Hello, Izzy! I see you're Female and you're 30ish years old!"</span></code></pre>
+
+  <p>
+    Functions written with the <code>fn</code> construct and the capture operator behave identically. The only differences are that the capture operator syntax is shorter, and you refer to arguments by their position rather than a name.
+  </p>
 </section>
 
 <section>
