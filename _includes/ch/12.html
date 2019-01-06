@@ -404,7 +404,15 @@ case Map.fetch(file_data, :name) do
 end</code></pre>
 
     <p>
-      In this code, we attempt to find the <code>:name</code> key in <code>file_data</code> with <code>Map.fetch/2</code> (last seen in Chapter 10). If there is such a key, then <code>Map.fetch/2</code> will return <code>{:ok, name}</code>. If there isn't, it will return the atom <code>:error</code>, which we pattern match on at the end of the first case statement. In this example, there is going to be a <code>:name</code> key, and so it will match the <code>{:ok, name}</code> part of our case statement. Then the second <code>case</code> statement will come into effect.
+      In this code, we attempt to find the <code>:name</code> key in <code>file_data</code> with <code>Map.fetch/2</code>. This <code>Map.fetch/2</code> function is new to us here, and so we'll quickly cover what it does.
+    </p>
+
+    <p>
+      The way <code>Map.fetch/2</code> works is that if there is a key in the map then <code>Map.fetch/2</code> will return <code>{:ok, name}</code>. If there isn't, it will return the atom <code>:error</code>.
+    </p>
+
+    <p>
+      We pattern match on either of these two outcomes during this <code>case</code> statement. In this example, there is going to be a <code>:name</code> key, and so it will match the <code>{:ok, name}</code> part of our case statement. Then the second <code>case</code> statement will come into effect.
     </p>
 
     <p>
