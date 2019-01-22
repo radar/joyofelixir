@@ -37,4 +37,186 @@ iex> 108 / 6
       Special thing to note here is that when we divide in Elixir, it will always give us a decimal representation of the number, rather than a whole number. This is why we see <code>18.0</code> instead of simply <code>18</code> here.
     </p>
   </section>
+
+  <section>
+    <h3>Chapter 2</h3>
+
+    <h4>Exercise 1</h4>
+
+    <p><em>If we store the number of seconds in a day using this code: <code>seconds = 86400</code>, calculate using that variable how many hours there are in 30 days.</em></p>
+
+    <p>
+      Tricky part here is that the variable is for <em>seconds</em>, but the answer we seek is for <em>hours</em>. To convert the number of seconds into hours, we need to a similar calculation to Exercise 1.1: take the number of seconds, divide by 60 to get minutes and then divide by 60 again to get how many hours are in a single day:
+    </p>
+
+    <pre><code>iex> seconds = 86400
+86400
+iex> seconds / 60 / 60
+24.0</code></pre>
+
+    <p>
+      We know that there are 24 hours in a given day. So to get the number of hours in 30 days, we can multiply 24 by 30:
+    </p>
+
+    <pre><code>iex> 24.0 * 30
+720</code></pre>
+
+    <p>
+      This gives us our answer: there are 720 hours in 30 days. Doing this whole calculation in a single line would look like:
+    </p>
+
+    <pre><code>iex> seconds / 60 / 60 * 30
+720</code></pre>
+
+    <p>
+      It's possible to make this a little shorter too. At the end of this line, we're dividing by 60 and then multiplying by 30. Dividing anything by 60 and multiplying it by 30 is the same as dividing it by 2 (2 comes from dividing 60 by 30). The same could be said if we divided by 10 and multiplied by 5, or divided by 4 and multiplied by 2. So we can shorten this by dividing by 60 once, and then dividing by 2 to get the same answer:
+    </p>
+
+    <pre><code>iex> seconds / 60 / 2
+720</code></pre>
+
+    <h4>Exercise 2</h4>
+
+    <p><em>The line <code>5 / "four"</code> shows an error. Think about why this error might happen.</em></p>
+
+    <p>
+      The error that we'll see for this line is this:
+    </p>
+
+    <pre><code>iex> 5 / "four"
+<span class='console-red'>** (ArithmeticError) bad argument in arithmetic expression: 5 / "four"
+:erlang./(5, "four")</span></code></pre>
+
+    <p>
+      Elixir is saying here that there's a "bad argument in arithmetic expression" -- which is a confounding way to say "what you're asking me to say doesn't make sense to do!". It is not possible to divide the <em>number</em> 5 by the <em>word</em> "four". These two things are incompatible, which is why we're seeing this issue.
+    </p>
+  </section>
+
+  <section>
+    <h3>Chapter 3</h3>
+
+    <p>There are no exercises for this chapter.</p>
+  </section>
+
+  <section>
+    <h3>Chapter 4</h3>
+
+    <p>There are no exercises for this chapter.</p>
+  </section>
+
+  <section>
+    <h3>Chapter 5</h3>
+
+    <h4>Exercise 1</h4>
+
+    <p><em>Make a function which turns fahrenheit temperatures into celsius.</em></p>
+
+    <p>
+      Early on in Chapter 5, we see a function which converts celsius into fahrenheit:
+    </p>
+
+<pre><code>iex> c_to_f = fn (c) -> c * 1.8 + 32 end</code></pre>
+
+    <p>
+      This exercise is about going the other way: converting from fahrenheit to celsius. We need to reverse the order of operations here and then turn the operations into their opposites too. Where we add, we minus. Where we multiply, we divide:
+    </p>
+
+<pre><code>iex> f_to_c = fn (f) -> (f - 32) / 1.8 end</code></pre>
+
+    <p>
+      We must include the brackets here on the first operation, otherwise Elixir will attempt to divide 32 by 1.8 first. Go on, try it without the brackets and see what happens.
+    </p>
+
+    <p>
+      We can run this function like this:
+    </p>
+
+<pre><code>iex> f_to_c.(104)
+40
+</code></pre>
+
+    <p>
+      If you ask Google "104 Farenheit in Celsius?", you'll see this is the right result:
+    </p>
+
+    <figure>
+      <img src='/images/solutions/google-f-to-c.png' alt='Google result for '104 Farenheit in Celsius>
+      <figcaption>Google result for '104 Farenheit in Celsius'</figcaption>
+    </figure>
+
+    <p>
+      Other numbers should work just as well too!
+    </p>
+
+
+    <h4>Exercise 2</h4>
+
+    <p>
+      <em>Make a function which returns the number of seconds in the specified amount of days. For example, <code>seconds.(2)</code> should tell us how many seconds there are in 2 days.</em>
+    </p>
+
+    <p>
+      We know that there are 24 hours in a day, 60 minutes in an hour, and 60 seconds in an hour. So to get from days to seconds, we need to multiply by 24, then 60, then 60 again. In a function, this would look like:
+    </p>
+
+<pre><code>iex> seconds = fn (days) -> days * 24 * 60 * 60 end</code></pre>
+
+    <p>
+      We can then run this function like this:
+    </p>
+
+<pre><code>iex> seconds.(1)
+86400
+iex> seconds.(2)
+172800
+</code></pre>
+
+    <h4>Exercise 3</h4>
+
+    <p><em>Make a function which takes two maps with <code>"age"</code> keys in them and returns the average age.</em></p>
+
+    <p>
+      This function needs to take two maps, and the easiest way to do that would be to have them as two separate arguments.
+    </p>
+
+<pre><code>iex> average_age = fn (person_1, person_2) -> ...</code></pre>
+
+    We can then take out the relevant <code>age</code> values from these maps with some pattern matching:
+    </p>
+
+
+<pre><code>iex> average_age = fn (%{"age" => age_1}, %{"age" => age_2}) -> ...</code></pre>
+
+    <p>
+      This change of the function makes it so that the function only cares about the <code>"age"</code> keys in the maps, and will ignore the rest. From there, we need to calculate the average. The way we can do that is to add together all the numbers we have, and then divide the result by the count of the things we added together.
+    </p>
+
+  <pre><code>iex> average_age = fn (%{"age" => age_1}, %{"age" => age_2}) -> (age_1 + age_2) / 2 end</code></pre>
+
+
+    <p>We can then run this function like this:</p>
+
+<pre><code>average_age.(%{"age" => 15}, %{"age" => 45})
+30.0</code></pre>
+
+    <p>
+      It's important to note that both of the maps have to have the <code>"age"</code> key, otherwise this code will not work:
+    </p>
+
+<pre><code>average_age.(%{"age" => 15}, %{"name" => "Izzy"})
+<span class='console-red'>** (FunctionClauseError) no function clause matching in :erl_eval."-inside-an-interpreted-fun-"/2</span>
+
+The following arguments were given to :erl_eval."-inside-an-interpreted-fun-"/2:
+
+    # 1
+    %{<span class='console-green'>"age"</span> => 15}
+
+    # 2
+    %{<span class='console-green'>"name"</span> => <span class='console-green'>"Izzy"</span>}</code></pre>
+
+    <p>
+      This error shows that the arguments that we passed do not match what the function expects. It helpfully shows us what we've passed, so that we can double check that.
+    </p>
+  </ul>
+  </section>
 </section>
