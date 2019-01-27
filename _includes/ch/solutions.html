@@ -215,8 +215,151 @@ The following arguments were given to :erl_eval."-inside-an-interpreted-fun-"/2:
     %{<span class='console-green'>"name"</span> => <span class='console-green'>"Izzy"</span>}</code></pre>
 
     <p>
-      This error shows that the arguments that we passed do not match what the function expects. It helpfully shows us what we've passed, so that we can double check that.
+      This error shows that the arguments that we passed do not match what the function expects. It helpfully shows us what we've passed, so that we can see for ourselves that the 2nd argument does not fit the criteria of needing an <code>"age"</code> key.
     </p>
-  </ul>
+  </section>
+
+  <section>
+    <h3>Chapter 6</h3>
+
+    <p><em>Make a function that takes either a map containing a "name" and "age", or just a map containing "name". Change the output depending on if "age" is present. What happens if you switch the order of the function clauses? What can you learn from this?</em></p>
+
+    <p>
+      For this, we can use a function that pattern matches on what keys are in the map. We'll call this function <code>about</code> because it's going to tell us about a person:
+    </p>
+
+    <pre><code>iex> about = fn
+  %{"name" => name, "age" => age} ->
+    "#{name} is #{age} years old"
+  %{"name" => name} ->
+    "I don't know how old #{name} is!"
+end</code></pre>
+
+    <p>
+      We can call the function with a map that contains a <code>"name"</code> and <code>"age"</code> key:
+    </p>
+
+    <pre><code>iex> about.(%{"name" => "Ryan", "age" => 31})</code></pre>
+
+    <p>
+      This map matches the <em>first</em> clause:
+    </p>
+
+    <pre><code>iex> about = fn
+  %{"name" => name, "age" => age} ->
+    "#{name} is #{age} years old"
+  <span class='unused-clause'>%{"name" => name} ->
+    "I don't know how old #{name} is!"</span>
+end</code></pre>
+
+    <p>
+      Or we can call it with a map with just a name key:
+    </p>
+
+    <pre><code>iex> about.(%{"name" => "Izzy"})</code></pre>
+
+    <p>
+      This map matches the <em>second</em> clause, because the first clause requires <em>both</em> a <code>"name"</code> and <code>"age"</code> key.
+    </p>
+
+    <pre><code>iex> about = fn
+  <span class='unused-clause'>%{"name" => name, "age" => age} ->
+    "#{name} is #{age} years old"</span>
+  %{"name" => name} ->
+    "I don't know how old #{name} is!"
+end</code></pre>
+
+    <p>
+      The last part of the exercise asks: "What happens if you switch the order of the function clauses?". Let's try it. We'll reorder the function:
+    </p>
+
+    <pre><code>iex> about = fn
+  %{"name" => name} ->
+    "I don't know how old #{name} is!"
+  %{"name" => name, "age" => age} ->
+    "#{name} is #{age} years old"
+end</code></pre>
+
+    <p>
+      And then we'll try to run it:
+    </p>
+
+
+    <pre><code>iex> about.(%{"name" => "Ryan", "age" => 31})</code></pre>
+
+    <p>
+      This map matches the <em>first</em> clause because the first clause only needs a <code>"name"</code> key to match its pattern:
+    </p>
+
+    <pre><code>iex> about = fn
+  %{"name" => name} ->
+    "I don't know how old #{name} is!"
+  %{"name" => name, "age" => age} ->
+    "#{name} is #{age} years old"
+end</code></pre>
+
+    <p>
+      This may be unexpected; it may be expected to match the <em>second</em> clause, the one with both <code>"name"</code> and <code>"age"</code>. But this will not happen, because the first clause is really relaxed: it only expects <code>"name"</code>
+    </p>
+
+    <p>
+      This is hopefully a good lesson in pattern matching in Elixir. A good rule to follow is that your clauses should be ordered from most-specific to least-specific. If you do not order your clauses like this, then you may have a clause matching before others unexpectedly.
+    </p>
+  </section>
+
+  <section>
+    <h3>Chapter 7</h3>
+
+    <p>There are no exercises for this chapter.</p>
+  </section>
+
+  <section>
+    <h3>Chapter 8</h3>
+
+    <ul>
+      <li>Make a program that generates a very short story. Get it to take some input of a place, an action and an object and combine all three into a little sentence.</li>
+      <li>Ponder on what happens when you remove the <code>IO.puts</code> from the beginning of Line 3 in <code>greet.exs</code> and then run the program with <code>elixir greet.exs</code>. Think about how this would be different if you put that code into an <code>iex</code> prompt. </li>
+    </ul>
+
+  </section>
+
+  <section>
+    <h3>Chapter 9</h3>
+
+    <ul>
+      <li>Use a combination of <code>Enum.map/2</code> and <code>String.replace/3</code> to replace all the e's in these words with another letter of your choosing: <code>["a", "very", "fine", "collection", "of", "words", "enunciated"]</code></li>
+      <li>Use <code>Enum.reduce/2</code> to multiply these numbers together: <code>[5, 12, 9, 24, 9, 18]</code></li>
+    </ul>
+  </section>
+
+  <section>
+    <h3>Chapter 10</h3>
+
+    <p>There are no exercises for this chapter.</p>
+  </section>
+
+  <section>
+    <h3>Chapter 11</h3>
+
+    <ul>
+      <li>
+        Can you make Elixir write a program for itself? Put the following code into a file called <code>script.ex</code> with <code>File.write/2</code>, writing to a file called <code>generated.ex</code>. Here's the code that should go in <code>script.ex</code>: <code>IO.puts "This file was generated from Elixir"</code>. When we run <code>elixir script.ex</code>, we should then be able to run <code>elixir that-file.ex</code> and see our output.
+      </li>
+      <li>
+        Figure out what happens if you try to delete a file that doesn't exist with <code>File.rm/1</code>. Is this what you expected to happen?
+      </li>
+    </ul>
+  </section>
+
+  <section>
+    <h3>Chapter 12</h3>
+
+    <p>There are no exercises for this chapter.</p>
+  </section>
+
+  <section>
+    <h3>Chapter 13</h3>
+
+    <p>There are no exercises for this chapter.</p>
   </section>
 </section>
