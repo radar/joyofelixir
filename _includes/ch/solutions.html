@@ -316,11 +316,74 @@ end</code></pre>
   <section>
     <h3>Chapter 8</h3>
 
-    <ul>
-      <li>Make a program that generates a very short story. Get it to take some input of a place, an action and an object and combine all three into a little sentence.</li>
-      <li>Ponder on what happens when you remove the <code>IO.puts</code> from the beginning of Line 3 in <code>greet.exs</code> and then run the program with <code>elixir greet.exs</code>. Think about how this would be different if you put that code into an <code>iex</code> prompt. </li>
-    </ul>
+    <p>
+      <em>Make a program that generates a very short story. Get it to take some input of a person, a place and an object -- using <code>IO.gets/1</code> and combine all three into a little sentence, output with <code>IO.puts/1</code></em>
+    </p>
 
+    <p>
+      What we're looking to output to the screen is a string containing a <code>person</code>, a <code>place</code> and an <code>object</code>. Something like this:
+    </p>
+
+    <pre><code>I suggest it was [Colonel Mustard], in the [Ballroom], with the [Revolver]</code></pre>
+
+    <p>
+      First, we need to collect the pieces:
+    </p>
+
+    <p>
+      person = IO.gets("Whodunit? ")
+      place = IO.gets("Where? ")
+      object = IO.gets("With what? ")
+    </p>
+
+    <p>
+      We'll need to trim all of these, as when <code>IO.gets/1</code> gives us our values it will include a new line at the end:
+    </p>
+
+    <pre><code>person = "Colonel Mustard\n"</code></pre>
+
+    <p>
+      This will lead to our output to look a little... strange:
+    </p>
+
+    <pre><code>I suggest it was [Colonel Mustard]
+, in the [Ballroom]
+, with the [Revolver]</code></pre>
+
+    <p>
+      We can strip it like this:
+    </p>
+
+<pre><code>person = String.trim(IO.gets("Whodunit? "))
+place = String.trim(IO.gets("Where? "))
+object = String.trim(IO.gets?("With what? "))</code></pre>
+
+  <p>
+    (We'll see a cleaner way of writing this code in Chapter 10's exercise solutions!)
+  </p>
+
+  <p>
+    With everything collected, now we can output it:
+  </p>
+
+  <pre><code>IO.puts "I suggest it was [#{person}] in the [#{place}] with the [#{object}]"</code></pre>
+
+  <p>
+    The whole program looks like this:
+  </p>
+
+  <pre><code>person = String.trim(IO.gets("Whodunit? "))
+place = String.trim(IO.gets("Where? "))
+object = String.trim(IO.gets("With what? "))
+
+IO.puts "I suggest it was [#{person}] in the [#{place}] with the [#{object}]"
+  </code></pre>
+
+  <p>
+    If we put this code into a file called <code>clue.ex</code> and run it with <code>elixir clue.ex</code>, and answer all its prompts, we'll see the output we wished for:
+  </p>
+
+  <pre><code>I suggest it was [Colonel Mustard], in the [Ballroom], with the [Revolver]</code></pre>
   </section>
 
   <section>
@@ -335,7 +398,11 @@ end</code></pre>
   <section>
     <h3>Chapter 10</h3>
 
-    <p>There are no exercises for this chapter.</p>
+    <ul>
+        <li>
+          Use your newfound knowledge of the pipe operator to re-write your solution to Chapter 8's first exercise.
+        </li>
+      </ul>
   </section>
 
   <section>
