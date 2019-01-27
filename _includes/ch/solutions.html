@@ -316,6 +316,8 @@ end</code></pre>
   <section>
     <h3>Chapter 8</h3>
 
+    <h4>Exercise 1</h4>
+
     <p>
       <em>Make a program that generates a very short story. Get it to take some input of a person, a place and an object -- using <code>IO.gets/1</code> and combine all three into a little sentence, output with <code>IO.puts/1</code></em>
     </p>
@@ -376,34 +378,141 @@ object = String.trim(IO.gets?("With what? "))</code></pre>
 place = String.trim(IO.gets("Where? "))
 object = String.trim(IO.gets("With what? "))
 
-IO.puts "I suggest it was [#{person}] in the [#{place}] with the [#{object}]"
-  </code></pre>
+IO.puts "I suggest it was [#{person}] in the [#{place}] with the [#{object}]"</code></pre>
 
   <p>
     If we put this code into a file called <code>clue.ex</code> and run it with <code>elixir clue.ex</code>, and answer all its prompts, we'll see the output we wished for:
   </p>
 
   <pre><code>I suggest it was [Colonel Mustard], in the [Ballroom], with the [Revolver]</code></pre>
+
+  <h4>Exercise 2</h4>
+
+  <p><em>Ponder on what happens when you remove the <code>IO.puts</code> from the beginning of Line 3 in <code>greet.exs</code> and then run the program with <code>elixir greet.exs</code>. Think about how this would be different if you put that code into an <code>iex</code> prompt.</em></p>
+
+  <p>
+    If we remove the <code>IO.puts</code> line from <code>greet.exs</code>, nothing will be output. This is different from the <code>iex</code> prompt, which will show us the string, with the <code>name</code> and <code>age</code> variables put in their right place:
+  </p>
+
+  <pre><code>iex> "Hello, #{String.trim(name)}! You're #{String.trim(age)}? That's so old!"
+"Hello, Ryan! You're 31? That's so old!"</code></pre>
+
+  <p>
+    This is because <code>iex</code> is a Read-Eval-Print Loop, it will read in the code, evaluate it, and print (or output) whatever the code tells it to do. This is different from running the program <code>greet.exs</code>, because that only outputs when we tell it to do so. When we remove the <code>IO.puts</code> from the beginning of the line, we're telling it to evaluate the string, but <em>not</em> to output it.
+  </p>
   </section>
 
   <section>
     <h3>Chapter 9</h3>
 
-    <ul>
-      <li>Use a combination of <code>Enum.map/2</code> and <code>String.replace/3</code> to replace all the e's in these words with another letter of your choosing: <code>["a", "very", "fine", "collection", "of", "words", "enunciated"]</code></li>
-      <li>Use <code>Enum.reduce/2</code> to multiply these numbers together: <code>[5, 12, 9, 24, 9, 18]</code></li>
-    </ul>
+    <h4>Exercise 1</h4>
+
+    <p>
+      <em>Use a combination of <code>Enum.map/2</code> and <code>String.replace/3</code> to replace all the e's in these words with another letter of your choosing: <code>["a", "very", "fine", "collection", "of", "words", "enunciated"]</code></em>
+    </p>
+
+    <p>
+      If we wanted to replace the letter "e" in the word "very", we can do that easily with <code>String.replace/3</code>. The three arguments are the string we want to change, what in that string we want to replace and what we want to replace it with.
+    </p>
+
+    <pre><code>iex> String.replace("very", "e", "a")
+"vary"</code></pre>
+
+    <p>
+      To do this with a list of strings, we must employ <code>Enum.map/2</code>. The two arguments here are the word list, and then a function to run over each of them:
+    </p>
+
+    <pre><code>iex> words = ["a", "very", "fine", "collection", "of", "words", "enunciated"]
+["a", "very", "fine", "collection", "of", "words", "enunciated"]
+iex> Enum.map(words, fn(word) -> String.replace(word, "e", "a") end)
+["a", "vary", "fina", "collaction", "of", "words", "anunciatad"]
+</code></pre>
+
+    <p>
+      The words have now all had their "e" letters replaced with "a", which makas tha word list look a littla stranga, don't you rackon?
+    </p>
+
+    <p>
+      We can write this a little shorter by using the capture operator:
+    </p>
+
+  <pre><code>iex> Enum.map(words, &(String.replace(&1, "e", "a")))
+["a", "vary", "fina", "collaction", "of", "words", "anunciatad"]
+</code></pre>
+
+    <h4>Exercise 2</h4>
+
+    <p><em>Use <code>Enum.reduce/2</code> to multiply these numbers together: <code>[2, 4, 991, 2543]</code></em></p>
+
+    <p>
+      The final example of <code>Enum.reduce/2</code> shows us how to add together a list of scores:
+    </p>
+
+    <pre><code>iex> scores = [74, 79, 89, 32, 79, 70, 32, 69, 76, 73, 88, 73, 82, 31]
+[74, 79, 89, 32, 79, 70, 32, 69, 76, 73, 88, 73, 82, 31]
+iex> Enum.reduce(scores, fn (score, sum) -> sum + score end)
+947</code></pre>
+
+    <p>
+      We can adapt this to multiply together our new list:
+    </p>
+
+    <pre><code>iex> numbers = [2, 4, 991, 2543]
+[2, 4, 991, 2543]
+iex> Enum.reduce(numbers, fn (number, sum) -> sum * number end)
+20160904</code></pre>
   </section>
 
   <section>
     <h3>Chapter 10</h3>
 
-    <ul>
-        <li>
-          Use your newfound knowledge of the pipe operator to re-write your solution to Chapter 8's first exercise.
-        </li>
-      </ul>
+    <p><em>Use your newfound knowledge of the pipe operator to re-write your solution to Chapter 8's first exercise.</em></p>
+
+    <p>
+      As a little refresher, here's what our end solution to Chapter 8 looked like:
+    </p>
+
+
+    <pre><code>person = String.trim(IO.gets("Whodunit? "))
+place = String.trim(IO.gets("Where? "))
+object = String.trim(IO.gets("With what? "))
+
+IO.puts "I suggest it was [#{person}] in the [#{place}] with the [#{object}]"</code></pre>
+
+    <p>
+      We have to read this code from the inside-out -- we read the argument that's passed to <code>IO.gets/1</code>, then we need to read <code>IO.gets/1</code> itself to understand that, then we read the <code>String.trim/1</code> function.
+    </p>
+
+    <p>
+      The pipe operator can make this code easier to understand:
+    </p>
+
+    <pre><code>person = "Whodunit? " |> IO.gets |> String.trim
+place = "Where? " |> IO.gets |> String.trim
+object = "With what?" |> IO.gets |> String.trim</code></pre>
+
+    <p>
+      Now our code reads left-to-right, just like a sentence.
+    </p>
+
+    <p>
+      For bonus points, we can take out this repetition and move it into a function:
+    </p>
+
+    <pre><code>question = fn (question) ->
+  IO.gets("#{question} ") |> String.trim
+end
+
+person = question.("Whodunit?")
+place = question.("Where?")
+object = question.("With what?")
+
+IO.puts "I suggest it was [#{person}] in the [#{place}] with the [#{object}]"</code></pre>
   </section>
+
+    <p>
+      When we run this code again, it will work just the same. The function is the same, but the form is now a lot cleaner with the pipe.
+    </p>
 
   <section>
     <h3>Chapter 11</h3>
