@@ -1,9 +1,101 @@
 <section class='break'>
-  <h2 id='chapter-14'>14. Introduction to Mix</h2>
+  <h2 id='chapter-14'>14. Modules</h2>
 
-  <div class='todo'>
-  * Introduction to Mix, similar in approach to the official guide, but using concepts just from this book. No agents, no supervisors, no ETS, etc.
-  * Cover doc testing.
-  * Perhaps a scrabble word scorer would be a simple project?
-  </div>
+  <section>
+    <p>
+      We've now seen lots of examples of functions throughout this book. We've seen how we can define anonymous functions (in Chapter 5):
+    </p>
+
+    <pre><code>iex> hello = fn (place) -> "Hello #{place}!"
+  hello.("World")
+  "Hello World!"</code></pre>
+
+    <p>
+      And we've seen how we can call functions from already defined modules (in Chapter 8):
+    </p>
+
+    <pre><code>iex> String.downcase("HELLO BUT QUIETLY")
+  "hello but quietly"</code></pre>
+
+    <p>
+      But what we haven't seen yet is how to define our own modules, or even <em>why</em> we would want to do that. The why is the simple part: we define functions inside of modules to keep them separate from other functions; modules are a convenient way of grouping functions. Here's a refresher that recycles the description used in Chapter 8:
+    </p>
+
+    <blockquote>
+      <p>
+        The functions that Elixir provides are separated into something akin to kitchen drawers or toolboxes, called <em>modules</em>. Whereas in your top kitchen drawer you might have forks, knives, sporks, and spoons (like every sensible person's kitchen does), and in another you might have measuring cups, and in another tea towels, in Elixir the functions to work with the different kinds of data are separated into different modules. This makes finding functions to work with particular kinds of data in Elixir very easy.
+      </p>
+    </blockquote>
+
+    <p>
+      We haven't yet built a complex enough system to require us to put functions inside of modules, or to even want to write our own functions. That changes in this chapter! A rumbling occurs behind us, and slightly to our lefts. It's Izzy vibrating with anticipation. It's a weird and unearthly sound, but we'll roll with it.
+    </p>
+  </section>
+
+  <section>
+    <h3>Home, Sweet Home</h3>
+
+    <p>
+      The system that we're going to write in this chapter will be modelling a home automation system for lights. When I say "modelling", I mean we will be writing some Elixir code that will simulate a home automation system. It'll be a fictional house, instead of a real one. But if we were working on a real home automation system in Elixir, it might work something like this one.</p>
+    <p>
+
+    </p>In our fictional house, there are fictional rooms, each with a set of fictional lights. It looks like this:
+    </p>
+
+    <div class='todo'>
+      Image for a house here.
+    </div>
+
+    <p>
+      Red circles here indicate lights that are off, where green ones indicate on.
+    </p>
+
+    <p>
+      In this house, we want to be able to go into a room and turn on one particular light, or to turn on <em>all</em> the lights in that room. Maybe when we go into the dining room, we want to turn on all the lights not only so we can see what we're eating, but so we have the best lighting for our Instagram photos too when we cook an especially photogenic meal.
+    </p>
+
+    <div class='todo'>
+      Dining room with all lights on.
+    </div>
+
+    <p>
+      But maybe we want to go into another room later that evening -- after our photogenic meal is devoured -- perhaps the lounge room and we want to watch TV. We turn the TV on, but then also want the small lamp on in the room to provide some more light. We don't want to turn on <em>all</em> the lights in that room. We only want to turn on the lamp.
+    </p>
+
+    <div class='todo'>
+      Lounge room with small lamp on.
+    </div>
+
+    <p>
+      What we will look at in this chapter is how we could write some Elixir code that will be able to turn on or off a whole room's set of lights, or individual lights.
+    </p>
+  </section>
+
+  <section>
+    <h3>Let there be light</h3>
+
+    <p>
+      In our Elixir code, we need to create something that will keep a track of a light. Here's what we know so far:
+    </p>
+
+    <ul>
+      <li>Lights can be on, or off</li>
+      <li>Lights have a room, like "dining room" or "lounge room"</li>
+      <li>Lights can have a name, like "small lamp"</li>
+    </ul>
+
+    <p>
+      But how can we represent this in Elixir? What kind of data type can we use?
+    </p>
+
+    <p>
+      Izzy's unearthly vibration stops, deadening the air. We had become so accustomed to the noise that its loss leaves us with a very mild sense of melancholy. Then she pipes up: "A map might work. On or off, room name and name all look like they could be keys and values. Here, let me try an example."
+    </p>
+
+    <pre><code>iex> light = %{
+      status: "on",
+      room: "Lounge Room",
+      name: "Small Map"
+    }</code></pre>
+  </section>
 </section>

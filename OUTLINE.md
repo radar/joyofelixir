@@ -115,11 +115,21 @@
 * h + v helpers in iex prompt
 * Tab complete
 * Elixir docs link
+* Elixir school
+
+## Chapter 14: Modules Chapter
+
+* Why should we use modules?
+* Lights & Rooms examples
+* Demonstrate how to define modules
+* Structs within modules
+* Public vs. Private functions
 
 ## Chapter 14: Mixing it up
 
+
 * Introduction to Mix, similar in approach to the official guide, but using concepts just from this book. No agents.
-* Demonstrate defining Modules
+
 * (?) Structs?
 
 ## Chapter 15: Testing
