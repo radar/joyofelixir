@@ -125,18 +125,18 @@
 * Structs within modules
 * Public vs. Private functions
 
-## Chapter 14: Mixing it up
+## Chapter 15: Mixing it up
 
 
 * Introduction to Mix, similar in approach to the official guide, but using concepts just from this book. No agents.
 
 * (?) Structs?
 
-## Chapter 15: Testing
+## Chapter 16: Testing
 
 * Cover ExUnit, including DocTests
 
-## Chapter 16: Where to from here?
+## Chapter 17: Where to from here?
 
 * Link to other resources, like Programming Elixir
 
