@@ -649,6 +649,37 @@ iex> first_person
   <code>country</code> to this map.
   </p>
 
+<h4>Pipe Merging</h4>
+
+  <p>
+    While we can use <code>Map.merge/2</code> to combine two maps to update an existing map, there is also a shorter way, which we'll call <em>pipe merging</em>. The syntax goes like this:
+  </p>
+
+  <pre><code>iex> izzy = %{"name" => "Izzy", "age" => "30ish", "gender" => "Female"}
+%{"age" => "30ish", "gender" => "Female", "name" => "Izzy"}
+iex> %{izzy | "age" => "40ish", "name" => "Isadora"}
+%{"age" => "40ish", "gender" => "Female", "name" => "Isadora"}</code></pre>
+
+  <p>
+    This syntax <em>looks</em> like a map, but it's split in two. On the left hand side, inside the map syntax, we have a variable which represents an <em>existing</em> map. On the right hand side, we have keys we would like to update in that map, along with their new values. As we can see, the map's <code>"age"</code> and <code>"name"</code> keys change, taking on their values from the right hand side.
+  </p>
+
+  <p>
+    However, it's important to note that if we try to add a <em>new</em> key to this map, it will not work with this syntax:
+  </p>
+
+  <pre><code>iex> izzy = %{"name" => "Izzy", "age" => "30ish", "gender" => "Female"}
+%{"age" => "30ish", "gender" => "Female", "name" => "Izzy"}
+iex> %{izzy | "country" => "Australia"}
+<span class='console-red'>
+** (KeyError) key "country" not found in: %{"age" => "30ish", "gender" => "Female", "name" => "Izzy"}
+    (stdlib) :maps.update("country", "Australia", %{"age" => "30ish", "gender" => "Female", "name" => "Izzy"})</span></code></pre>
+
+
+  <p>
+    This <em>pipe merging</em> feature will only work with <em>existing</em> keys in the map, and this is an important difference to notice from <code>Map.merge/2</code>, which will work with both kinds of keys: new and pre-existing.
+  </p>
+
 <h4>delete</h4>
 
   <p>
