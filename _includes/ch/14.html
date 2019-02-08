@@ -28,7 +28,11 @@
     </blockquote>
 
     <p>
-      We haven't yet built a complex enough system to require us to put functions inside of modules, or to even want to write our own functions. That changes in this chapter! A rumbling occurs behind us, and slightly to our lefts. It's Izzy vibrating with anticipation. It's a weird and unearthly sound, but we'll roll with it.
+      We haven't yet built a complex enough system to require us to put functions inside of modules, or to even want to write our own functions. That changes in this chapter! A rumbling occurs behind us, and slightly to our left. It's Izzy vibrating with anticipation. It's a weird and unearthly sound, but we'll roll with it.
+    </p>
+
+    <p>
+      This chapter will show you how to write new modules for the purpose of grouping together functions, and we'll also cover a special kind of map called a <em>struct</em>. Let's go!
     </p>
   </section>
 
@@ -93,9 +97,73 @@
     </p>
 
     <pre><code>iex> light = %{
-      status: "on",
-      room: "Lounge Room",
-      name: "Small Map"
-    }</code></pre>
+  status: "on",
+  room: "Lounge Room",
+  name: "Small Map"
+}</code></pre>
+
+    <p>
+      A map does seem to be quite a good type of data to use here. It allows us to keep a track of the light's status, the room that the light is in, as well as a name specific to the light itself.
+    </p>
+
+    <p>
+      If we want to change any one of the light's attributes, we can use <em>pipe merging</em> (from Chapter 10) to do so:
+    </p>
+
+    <pre><code>iex> %{light | status: "off"}
+%{name: "Small Map", room: "Lounge Room", status: "off"}</code></pre>
+
+
+    <p>
+      This code is a little long to write, so we might want to make a function for it:
+    </p>
+
+    <pre><code>iex> turn_off = fn (light) -> %{light | status: "off"} end </code></pre>
+
+    <p>
+      Now we can turn lights off by calling this function:
+    </p>
+
+    <pre><code>iex> turn_off.(light)
+%{name: "Small Map", room: "Lounge Room", status: "off"}</code></pre>
+
+    <p>
+      Similarly, we can write another function to turn the lights on:
+    </p>
+
+    <pre><code>iex> turn_on = fn (light) -> light |> Map.merge(%{status: "on"}) end
+#Function<6.127694169/1 in :erl_eval.expr/5>
+iex> turn_on.(light)
+%{name: "Small Map", room: "Lounge Room", status: "on"}</code></pre>
+
+
+    <p>
+      Finally, we can create one more function that will toggle a light's status, depending on whether the "status" is on or off, using pattern matching (as we originally saw in Chapter 6):
+    </p>
+
+    <pre><code>iex> toggle = fn
+  %{status: "on"} = light -> light |> Map.merge(%{status: "off"})
+  %{status: "off"} = light -> light |> Map.merge(%{status: "off"})
+end</code></pre>
+
+    <p>
+      We now have these three functions, <code>turn_off</code>, <code>turn_on</code> and <code>toggle</code>. But they aren't connected together, they're all floating out there. If we added further functions, how would we know if those functions were for lights, or for rooms? It might be hard to tell.
+    </p>
+
+    <p>
+      What we can do to group these functions together is to move them into a module.
+    </p>
+  </section>
+
+  <section>
+    <h3>The Light module</h3>
+
+    <p>
+      We're now going to move out of <code>iex</code>, and write some code in a new file.
+    </p>
+  </section>
+
+  <section>
+    <h3>The Light struct</h3>
   </section>
 </section>
