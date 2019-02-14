@@ -7,15 +7,15 @@
     </p>
 
     <pre><code>iex> hello = fn (place) -> "Hello #{place}!"
-  hello.("World")
-  "Hello World!"</code></pre>
+hello.("World")
+"Hello World!"</code></pre>
 
     <p>
       And we've seen how we can call functions from already defined modules (in Chapter 8):
     </p>
 
     <pre><code>iex> String.downcase("HELLO BUT QUIETLY")
-  "hello but quietly"</code></pre>
+"hello but quietly"</code></pre>
 
     <p>
       But what we haven't seen yet is how to define our own modules, or even <em>why</em> we would want to do that. The why is the simple part: we define functions inside of modules to keep them separate from other functions; modules are a convenient way of grouping functions. Here's a refresher that recycles the description used in Chapter 8:
@@ -32,7 +32,7 @@
     </p>
 
     <p>
-      This chapter will show you how to write new modules for the purpose of grouping together functions, and we'll also cover a special kind of map called a <em>struct</em>. Let's go!
+      This chapter will show you how to write new modules for the purpose of grouping together functions, and we'll also cover a special kind of map called a <em>struct</em>. In fact, we'll write <em>TWO</em> modules. Let's go!
     </p>
   </section>
 
@@ -40,7 +40,7 @@
     <h3>Home, Sweet Home</h3>
 
     <p>
-      The system that we're going to write in this chapter will be modelling a home automation system for lights. When I say "modelling", I mean we will be writing some Elixir code that will simulate a home automation system. It'll be a fictional house, instead of a real one. But if we were working on a real home automation system in Elixir, it might work something like this one.</p>
+      The system that we're going to start writing in this chapter will be modelling a home automation system for lights. When I say "modelling", I mean we will be writing some Elixir code that will simulate a home automation system. It'll be a fictional house, instead of a real one. But if we were working on a real home automation system in Elixir, it might work something like this one. We'll use this same code in the next two chapters as well.</p>
     <p>
 
     </p>In our fictional house, there are fictional rooms, each with a set of fictional lights. It looks like this:
@@ -131,7 +131,7 @@
       Similarly, we can write another function to turn the lights on:
     </p>
 
-    <pre><code>iex> turn_on = fn (light) -> light |> Map.merge(%{status: "on"}) end
+    <pre><code>iex> turn_on = fn (light) -> %{light | status: "on"} end
 #Function<6.127694169/1 in :erl_eval.expr/5>
 iex> turn_on.(light)
 %{name: "Small Map", room: "Lounge Room", status: "on"}</code></pre>
@@ -142,8 +142,8 @@ iex> turn_on.(light)
     </p>
 
     <pre><code>iex> toggle = fn
-  %{status: "on"} = light -> light |> Map.merge(%{status: "off"})
-  %{status: "off"} = light -> light |> Map.merge(%{status: "off"})
+  %{status: "on"} = light -> %{light | status: "off"}
+  %{status: "off"} = light -> %{light | status: "on"}
 end</code></pre>
 
     <p>
@@ -159,11 +159,170 @@ end</code></pre>
     <h3>The Light module</h3>
 
     <p>
-      We're now going to move out of <code>iex</code>, and write some code in a new file.
+      We're now going to move out of <code>iex</code>, and write some code in a new file. This will make it easier to define our very first custom module, the <code>Light</code> module. We'll write this code in a new file called <code>light.exs</code>:
+    </p>
+
+    <pre><code>defmodule Light do
+  def turn_on(light) do
+    %{light | status: "on"}
+  end
+
+  def turn_off(light) do
+    %{light | status: "off"}
+  end
+
+  def toggle(%{status: "on"} = light) do
+    %{light | status: "off"}
+  end
+
+  def toggle(%{status: "off"} = light) do
+    %{light | status: "on"}
+  end
+end</code></pre>
+
+    <p>
+      This code is some of the longest Elixir code that we've written and it looks slightly alien from the Elixir we're used to. Izzy asks: "What is that <code>defmodule</code> thing, and how is it different from <code>def</code>"? Let's walk through it bit by bit.
+    </p>
+
+    <h4>Simple module functions</h4>
+
+    <p>
+      The first line here starts our module definition, and the <code>do</code> starts a block of code for the module. Inside the module, we can then define functions using <code>def</code>. When we've defined functions in the past, we would define them like this:
+    </p>
+
+    <pre><code>iex> turn_off = fn (light) -> %{light | status: "off"} end
+iex> turn_on = fn (light) -> %{light | status: "on"} end</code></pre>
+
+    <p>
+      These functions from the past are defined outside of a module, and must be defined like this, with a variable on the left hand side of an equals sign to name the function.
+    </p>
+
+    <p>
+      But when we're inside a module, we must define them like this:
+    </p>
+
+
+    <pre><code>def turn_on(light) do
+  %{light | status: "on"}
+end
+
+def turn_off(light) do
+  %{light | status: "off"}
+end</code></pre>
+
+    <p>
+      The arguments stay within the circle brackets, but move to be next to the name of the function. We then use a <code>do</code> / <code>end</code> block here to define the functions' bodies, rather than <code>-></code> / <code>end</code>.
+    </p>
+
+    <p>
+      These two functions work the same way however we define them. The <code>turn_on</code> function sets the <code>status</code>'s value to <code>on</code>, and the <code>turn_off</code> function sets it to <code>off</code>.
+    </p>
+
+    <h4>Pattern matching with module functions</h4>
+
+    <p>
+      When we get to <code>toggle</code>, something special happens:
+    </p>
+
+    <pre><code>def toggle(%{status: "on"} = light) do
+  %{light | status: "off"}
+end
+
+def toggle(%{status: "off"} = light) do
+  %{light | status: "on"}
+end</code></pre>
+
+    <p>
+      This looks almost like we're defining the same function twice. And technically, we are. Both functions are taking a single argument. Because these <code>toggle</code> functions are inside the <code>Light</code> module and because they both take one argument (a light), we would refer to both of these functions as <code>Light.toggle/1</code>.
+    </p>
+
+    <p>
+      These two functions are equivalent to this other syntax that we have seen:
+    </p>
+
+  <pre><code>toggle = fn
+  %{status: "on"} = light -> %{light | status: "off"}
+  %{status: "off"} = light -> %{light | status: "on"}
+end</code></pre>
+
+    <p>
+      In both cases, we use <em>pattern matching</em> to match the argument passed to the function. If the argument is a map containing a <code>status</code> key that's an atom, and that key has a string value of "on", it will match the first function clause and not the second:
+    </p>
+
+<pre><code>def toggle(%{status: "on"} = light) do
+  %{light | status: "off"}
+end
+
+<span class='unused-clause'>def toggle(%{status: "off"} = light) do
+  %{light | status: "on"}
+end</span></code></pre>
+
+    <p>
+      But if the value of <code>status</code> was "off" instead, then the first function clause wouldn't match, but the 2nd one would:
+    </p>
+
+<pre><code><span class='unused-clause'>def toggle(%{status: "on"} = light) do
+  %{light | status: "off"}
+end</span>
+
+def toggle(%{status: "off"} = light) do
+  %{light | status: "on"}
+end</code></pre>
+
+    <p>
+      As we can see here, pattern matching comes in handy. Rather than us (as humans) knowing whether or not our light is on or off, and then figuring out which function to use, we can rely on <code>toggle</code> (the computer) to figure it out for us, and to take the right actions on our light.
+    </p>
+
+    <p>
+      We've now talked at (extreme) length about the <code>Light</code> module, but we haven't actually used it yet. We've written the code in <code>light.exs</code>, and now it's time to use it.
     </p>
   </section>
 
   <section>
-    <h3>The Light struct</h3>
+    <h3>Using the Light module</h3>
+
+    <div class='todo'>
+      The <code>c</code> helper within iex
+
+      Turn on a light
+
+      Turn off a light
+
+      Toggle a light
+
+      Piping between functions
+    </div>
+
   </section>
+
+
+  <section>
+    <h3>The Light struct</h3>
+
+    <div class='todo'>
+      Define a struct within the Light module
+
+      Structs are limited in the amount of keys they can accept
+
+      Structs can have default values for keys (status set to "off")
+
+      Update the Light functions to use the struct
+
+      Show that the functions do not match on pure maps anymore, explain why
+
+      Structs are map with a __struct__ key, demonstrate this by defining a map with __struct__ key
+    </div>
+  </section>
+
+  <section>
+    <h3>The Room module</h3>
+
+    <div class='todo'>
+      Define a Room module
+
+      Add turn on, turn off, toggle
+    </div>
+  </section>
+
+
 </section>

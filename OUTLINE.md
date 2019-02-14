@@ -127,10 +127,7 @@
 
 ## Chapter 15: Mixing it up
 
-
 * Introduction to Mix, similar in approach to the official guide, but using concepts just from this book. No agents.
-
-* (?) Structs?
 
 ## Chapter 16: Testing
 
