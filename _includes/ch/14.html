@@ -273,6 +273,36 @@ end</code></pre>
       As we can see here, pattern matching comes in handy. Rather than us (as humans) knowing whether or not our light is on or off, and then figuring out which function to use, we can rely on <code>toggle</code> (the computer) to figure it out for us, and to take the right actions on our light.
     </p>
 
+    <aside>
+      <header>How to tell functions apart</header>
+
+      <p>
+        One final thing to point out here is that back in Chapter 8 we had this large text explaining how functions can be different from one another:
+      </p>
+
+      <blockquote>
+        <strong>Functions not only differ by name, but also by the number of arguments that they take.</strong>
+      </blockquote>
+
+      <p>
+        We've now got an example where the function's name <em>and</em> the number of arguments are identical. The <code>Light.toggle/1</code> function has the same name, and the same number of arguments, but the two functions are actually different. So this phrasing (and our understanding) needs updating to include the pattern matching that we now know Elixir is capable of:
+      </p>
+
+      <blockquote>
+        <strong>Functions not only differ by name, but also by the number of arguments that they take, as well as the <em>pattern</em> of those arguments.</strong>
+      </blockquote>
+
+      <p>
+        There are now <em>three</em> things that make Elixir functions unique:
+      </p>
+
+      <ol>
+        <li>The function's name</li>
+        <li>How many arguments that function takes, and;</li>
+        <li>The <em>pattern</em> of those arguments</li>
+      </ol>
+    </aside>
+
     <p>
       We've now talked at (extreme) length about the <code>Light</code> module, but we haven't actually used it yet. We've written the code in <code>light.exs</code>, and now it's time to use it.
     </p>
@@ -281,20 +311,63 @@ end</code></pre>
   <section>
     <h3>Using the Light module</h3>
 
-    <div class='todo'>
-      The <code>c</code> helper within iex
+    <p>
+      It's time to use this <code>Light</code> module we've crafted. We must first navigate in the terminal to the directory where <code>light.exs</code> is. On my computer, it is at <code>~/code/joy-of-elixir</code> and so I type this to get there:
+    </p>
 
-      Turn on a light
+<pre><code class='hljs plain'>cd ~/code/joy-of-elixir</code></pre>
 
-      Turn off a light
+    <p>
+      Once there, we can start <code>iex</code> and load our module with the <code>c</code> helper from <code>iex</code>:
+    </p>
 
-      Toggle a light
+<pre><code>iex> c "light.exs"
+[Light]</code></pre>
 
-      Piping between functions
-    </div>
+    <p>
+      The <code>c</code> helper's name is short for "compile". Using <code>c</code> like this will load the code from <code>light.exs</code> into our <code>iex</code> session, making the <code>Light</code> module and its functions available to us. When we run <code>c</code>, it outputs a list of the modules that were loaded by compiling the file, which we see here as <code>[Light]</code>, since there's only the <code>Light</code> module in that file.
+    </p>
 
+    <p>
+      With this file compiled, we can start to use to use the <code>Light</code> module. Let's try the <code>Light.turn_on/1</code> function:
+    </p>
+
+    <pre><code>iex> %{status: "off"} |> Light.turn_on
+%{status: "on"}</code></pre>
+
+    <p>
+      "Hey, it works!", exclaims Izzy. She of little faith. Let's try turning a light off:
+    </p>
+
+    <pre><code>iex> %{status: "on"} |> Light.turn_off
+%{status: "on"}</code></pre>
+
+    <p>
+      We can even pipe chain these functions together to turn the light on and off:
+    </p>
+
+    <pre><code>iex> %{status: "off"} |> Light.turn_on |> Light.turn_off
+%{status: "off"}</code></pre>
+
+    <p>
+      We can do this because each of the functions takes a map and changes the value associated with the <code>status</code> key to either "on" or "off". All of these functions return a map, and so we can chain these functions together infinitely if we wanted. We would, in effect, be flicking the lights on and off really quickly -- something our parents told us not to do as children. Let's try to do this with a pipe chain of <code>Light.toggle/1</code> functions:
+    </p>
+
+    <pre><code>iex> %{status: "off"} |> Light.toggle |> Light.toggle |> Light.toggle
+%{status: "on"}</code></pre>
+
+    <p>
+      This is so much fun! We wrote our very first Elixir module, put some functions in it and it's working perfectly. We can now turn lights on or off, or toggle them.
+    </p>
   </section>
 
+  <section>
+    <h3>Public and private functions</h3>
+
+    <div class='todo'>
+      move turn on / turn off into private functions, making toggle the only public function
+    </div>
+  </section>
 
   <section>
     <h3>The Light struct</h3>
@@ -317,16 +390,4 @@ end</code></pre>
 
     </div>
   </section>
-
-  <section>
-    <h3>The Room module</h3>
-
-    <div class='todo'>
-      Define a Room module
-
-      Add turn on, turn off, toggle
-    </div>
-  </section>
-
-
 </section>
