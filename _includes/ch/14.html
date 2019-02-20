@@ -357,16 +357,139 @@ end</code></pre>
 %{status: "on"}</code></pre>
 
     <p>
-      This is so much fun! We wrote our very first Elixir module, put some functions in it and it's working perfectly. We can now turn lights on or off, or toggle them.
+      This is so much fun! We wrote our very first Elixir module, put some functions in it and it's working perfectly. We can now turn lights on or off, or toggle them. But what if we only wanted to make it so a light could be toggled? Let's take a brief look at what that might look like.
     </p>
   </section>
 
   <section>
     <h3>Public and private functions</h3>
 
+    <p>
+      We currently have three functions within the <code>Light</code> module: <code>Light.turn_on/1</code>, <code>Light.turn_off/1</code> and <code>Light.toggle/1</code>. We're now going to change this module so that the <code>Light.toggle/1</code> function is the only function that can be called from outside this module. We will do this by turning the <code>Light.turn_on/1</code> and <code>Light.turn_off/1</code> functions into<em>private functions</em>.
+    </p>
+
+    <p>
+      Functions defined in Elixir modules with <code>def</code> are <em>public</em> functions. That means that we can call them from anywhere else within Elixir code. When a function is <em>private</em>, it can only be referred to from within the same module. We might want to do this to simplify the interface to our module. We're doing that now: we're simplifying it by bringing down the number of functions from 3 to 1.
+    </p>
+
+    <p>
+      A real-world example of a public / private "function" is the inner workings of a light switch. The public example is the little plastic switch or button we can use to turn the light on or off. The private example happens behind the scenes: flicking the switch one way connects two wires together and completes a circuit. Flicking it the other way breaks the connection.
+    </p>
+
     <div class='todo'>
-      move turn on / turn off into private functions, making toggle the only public function
+      Basic circuit image of wires connecting for a light here.
+
     </div>
+
+    <p>
+      When we turn on or off a light, we don't think about wires connecting -- although now you might!
+    </p>
+
+    <p>
+      We're now going to turn the <code>Light.turn_on/1</code> and <code>Light.turn_off/1</code> functions into private functions. We can do this by moving these functions to the bottom of our <code>Light</code> module, and defining them with <code>defp</code> instead of <code>def</code>:
+    </p>
+
+    <pre><code>defmodule Light do
+  def toggle(%{status: "on"} = light) do
+    %{light | status: "off"}
+  end
+
+  def toggle(%{status: "off"} = light) do
+    %{light | status: "on"}
+  end
+
+  defp turn_on(light) do
+    %{light | status: "on"}
+  end
+
+  defp turn_off(light) do
+    %{light | status: "off"}
+  end
+end</code></pre>
+
+  <p>
+    The order of these function definitions are important. At the top of Elixir modules, we must define the <em>public</em> functions. Then when we're done defining the public functions, we then define the <em>private</em> ones. This helps other people who are reading our code: the public ones are the ones they're probably interested in using, and so it makes sense for them to be defined first.
+  </p>
+
+  <p>
+    One funny thing with this code is that we've defined <code>turn_on</code> and <code>turn_off</code> as private functions, but we're not using these at all within the module. If we launch <code>iex</code> now and compile our <code>light.exs</code> file, Elixir will warn us about this:
+  </p>
+
+  <pre><code class='plain hljs'>iex> c "light.exs"
+<span class='console-yellow'>warning</span>: function turn_off/1 is unused
+  light.exs:14
+
+<span class='console-yellow'>warning:</span> function turn_on/1 is unused
+  light.exs:10
+
+[<span class='console-blue'>Light</span>]</code></pre>
+
+  <p>
+    Elixir is able to determine that these functions are unused by checking our code. Warnings like these can be incredibly helpful for getting rid of code that we no longer rely on. But in this case, the warnings are happening because we've moved these two functions to be private functions, and we're not using them in either of the <code>Light.toggle/1</code> clauses. Let's fix this up:
+  </p>
+
+  <pre><code>defmodule Light do
+  def toggle(%{status: "on"} = light) do
+    light |> turn_off
+  end
+
+  def toggle(%{status: "off"} = light) do
+    light |> turn_on
+  end
+
+  defp turn_on(light) do
+    %{light | status: "on"}
+  end
+
+  defp turn_off(light) do
+    %{light | status: "off"}
+  end
+end</code></pre>
+
+    <p>
+      If we re-compile the <code>light.exs</code> file with the <code>c</code> helper, we will no longer see the warnings:
+    </p>
+
+    <pre><code class='plain hljs'>iex> c "light.exs"
+
+<span class='console-yellow'>warning:</span> redefining module Light (current version defined in memory)
+light.exs:1
+
+[<span class='console-blue'>Light</span>]</code></pre>
+
+    <p>
+      We do see a different warning though. This is because we're re-defining the module <code>Light</code> by re-compiling this file again. It is nothing to particularly worry about here, and we can safely ignore this.
+    </p>
+
+    <p>
+      While we're in <code>iex</code>, let's try using our <code>Light.toggle/1</code> function again:
+    </p>
+
+    <pre><code>iex> %{status: "on"} |> Light.toggle
+%{status: "off"}
+iex> %{status: "off"} |> Light.toggle
+%{status: "on"}
+</code></pre>
+
+    <p>
+      Great, that seems to be all in order. But what happens if we try to use the now-private functions, <code>Light.turn_off/1</code> or <code>Light.turn_on/1</code>?
+    </p>
+
+    <pre><code>iex> %{status: "on"} |> Light.turn_off
+<span class='console-red'>** (UndefinedFunctionError) function Light.turn_off/1 is undefined or private
+  Light.turn_off(%{status: "on"})</span>
+iex> %{status: "off"} |> Light.turn_on
+<span class='console-red'>** (UndefinedFunctionError) function Light.turn_on/1 is undefined or private
+  Light.turn_on(%{status: "off"})</span>
+</code></pre>
+
+    <p>
+      We know for a fact that these functions are defined, as we defined them ourselves. We know that they're defined as private functions, and that's exactly what Elixir is telling us now. We cannot use these functions in <code>iex</code>, because we are outside of the module. Private functions can only be accessed from within the module itself -- never from the outside. We choose to make functions private to simplify what our module exposes.
+    </p>
+
+    <p>
+      Let's look at one final feature of modules before we round out this chapter. That feature is called <em>structs</em>.
+    </p>
   </section>
 
   <section>
