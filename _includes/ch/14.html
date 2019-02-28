@@ -321,40 +321,56 @@ end</code></pre>
       Once there, we can start <code>iex</code> and load our module with the <code>c</code> helper from <code>iex</code>:
     </p>
 
-<pre><code>iex> c "light.exs"
+<pre><code>iex> c "light.exs", "."
 [Light]</code></pre>
 
     <p>
-      The <code>c</code> helper's name is short for "compile". Using <code>c</code> like this will load the code from <code>light.exs</code> into our <code>iex</code> session, making the <code>Light</code> module and its functions available to us. When we run <code>c</code>, it outputs a list of the modules that were loaded by compiling the file, which we see here as <code>[Light]</code>, since there's only the <code>Light</code> module in that file.
+      The <code>c</code> helper's name is short for "compile". Using <code>c</code> like this will load the code from <code>light.exs</code> into our <code>iex</code> session, making the <code>Light</code> module and its functions available to us.
+    </p>
+
+    <p>
+      When we run <code>c</code>, it outputs a list of the modules that were loaded by compiling the file, which we see here as <code>[Light]</code>, since there's only the <code>Light</code> module in that file.
+    </p>
+
+    <p>
+      We're passing a second argument to <code>c</code> here which is a path where our compiled module should go. The dot (<code>.</code>) here means "the current directory", so where we ran the <code>iex</code> command from. When we run this command, Elixir will compile our module to a file called <code>Elixir.Light.beam</code>.
+    </p>
+
+    <p>
+      We could also compile this file with <code>c "light.exs"</code> -- only a single argument to the <code>c</code> function call. This will still compile the module, but every time we go back into <code>iex</code>, we will need to re-compile the module to use it. By running it with two arguments -- <code>c "light.exs", "."</code>, we can enter and leave <code>iex</code> and always have our <code>Light</code> module available.
     </p>
 
     <p>
       With this file compiled, we can start to use to use the <code>Light</code> module. Let's try the <code>Light.turn_on/1</code> function:
     </p>
 
-    <pre><code>iex> %{status: "off"} |> Light.turn_on
-%{status: "on"}</code></pre>
+    <pre><code>iex> %{status: "off", name: "Lamp"} |> Light.turn_on
+%{status: "on", name: "Lamp"}</code></pre>
 
     <p>
-      "Hey, it works!", exclaims Izzy. She of little faith. Let's try turning a light off:
+      "Hey, it works!", exclaims Izzy. She of little faith. This <code>Light.turn_on/1</code> function has changed the <code>:status</code> key within our map to <code>"on"</code>, and has left the <code>:name</code> key unchanged. Let's try turning a light off:
     </p>
 
-    <pre><code>iex> %{status: "on"} |> Light.turn_off
-%{status: "on"}</code></pre>
+    <pre><code>iex> %{status: "on", name: "Lamp"} |> Light.turn_off
+%{status: "off", name: "Lamp"}</code></pre>
 
     <p>
-      We can even pipe chain these functions together to turn the light on and off:
+      The light's status is now <code>"off"</code>. Excellent! We can even pipe chain these functions together to turn the light on and off:
     </p>
 
-    <pre><code>iex> %{status: "off"} |> Light.turn_on |> Light.turn_off
-%{status: "off"}</code></pre>
+    <pre><code>iex> %{status: "off", name: "Lamp"} |> Light.turn_on |> Light.turn_off
+%{status: "off", name: "Lamp"}</code></pre>
 
     <p>
-      We can do this because each of the functions takes a map and changes the value associated with the <code>status</code> key to either "on" or "off". All of these functions return a map, and so we can chain these functions together infinitely if we wanted. We would, in effect, be flicking the lights on and off really quickly -- something our parents told us not to do as children. Let's try to do this with a pipe chain of <code>Light.toggle/1</code> functions:
+      We can do this because each of the functions takes a map and changes the value associated with the <code>status</code> key to either "on" or "off". All of these functions not only <em>take</em> a map as an argument, but they also return a map, and so we can chain these functions together infinitely if we wanted. We would, in effect, be flicking the lights on and off really quickly -- something our parents told us not to do as children. Let's try to do this with a pipe chain of <code>Light.toggle/1</code> functions:
     </p>
 
-    <pre><code>iex> %{status: "off"} |> Light.toggle |> Light.toggle |> Light.toggle
-%{status: "on"}</code></pre>
+    <pre><code>iex> %{status: "off", name: "Lamp"} |> Light.toggle |> Light.toggle |> Light.toggle
+%{status: "on", name: "Lamp"}</code></pre>
+
+    <div class='todo'>
+      Short diagram showing input and output for each toggle invocation.
+    </div>
 
     <p>
       This is so much fun! We wrote our very first Elixir module, put some functions in it and it's working perfectly. We can now turn lights on or off, or toggle them. But what if we only wanted to make it so a light could be toggled? Let's take a brief look at what that might look like.
@@ -415,7 +431,7 @@ end</code></pre>
     One funny thing with this code is that we've defined <code>turn_on</code> and <code>turn_off</code> as private functions, but we're not using these at all within the module. If we launch <code>iex</code> now and compile our <code>light.exs</code> file, Elixir will warn us about this:
   </p>
 
-  <pre><code class='plain hljs'>iex> c "light.exs"
+  <pre><code class='plain hljs'>iex> c "light.exs", "."
 <span class='console-yellow'>warning</span>: function turn_off/1 is unused
   light.exs:14
 
@@ -450,15 +466,15 @@ end</code></pre>
       If we re-compile the <code>light.exs</code> file with the <code>c</code> helper, we will no longer see the warnings:
     </p>
 
-    <pre><code class='plain hljs'>iex> c "light.exs"
+    <pre><code class='plain hljs'>iex> c "light.exs", "."
 
-<span class='console-yellow'>warning:</span> redefining module Light (current version defined in memory)
+<span class='console-yellow'>warning:</span> redefining module Light (current version loaded from ./Elixir.Light.beam)
 light.exs:1
 
 [<span class='console-blue'>Light</span>]</code></pre>
 
     <p>
-      We do see a different warning though. This is because we're re-defining the module <code>Light</code> by re-compiling this file again. It is nothing to particularly worry about here, and we can safely ignore this.
+      We do see a different warning though. This is because we're re-defining the module <code>Light</code> by re-compiling this file again. It is nothing to particularly worry about here, and we can safely ignore this. We're re-compiling this module so that the newest code is available within our <code>iex</code> prompt. If we did not re-compile this module, <code>iex</code> would only know about the last version that we compiled.
     </p>
 
     <p>
@@ -495,22 +511,193 @@ iex> %{status: "off"} |> Light.turn_on
   <section>
     <h3>The Light struct</h3>
 
-    <div class='todo'>
-      Define a struct within the Light module
+    <p>
+      So far, we have been using maps to represent our lights and then passing these maps through to the functions from the <code>Light</code> module:
+    </p>
 
-      Structs are limited in the amount of keys they can accept
+    <pre><code>iex> %{status: "off", name: "Lamp"} |> Light.toggle
+%{status: "on", name: "Lamp"}</code></pre>
 
-      Structs can have default values for keys (status set to "off")
+    <p>
+      We're now going to take the time to look at a data type that is similar to a map, called a <em>struct</em>. The word "struct" is shorted for "structured data"; it's a map, but a particular <em>type</em> of map, where each map of the same type will share the same structure.
+    </p>
 
-      Structs can have "enforced" keys
+    <p>
+      A struct has a set of key-value pairs just like a map, but a struct's keys are limited to only a certain set. Let's look at how we would define a struct now within the <code>Light</code> module. At the top of the module, we can use the <code>defstruct</code> keyword to define a struct:
+    </p>
 
-      Update the Light functions to use the struct
+    <pre><code>defmodule Light do
+  defstruct [status: "off"]
+end</code></pre>
 
-      Show that the functions do not match on pure maps anymore, explain why
+    <p>
+      Let's start <code>iex</code> and compile our <code>light.exs</code> file:
+    </p>
 
-      Structs are map with a __struct__ key, demonstrate this by defining a map with __struct__ key
+    <pre><code>iex> c "light.exs"</code></pre>
 
+    <p>
+      To use this struct, we use a similar syntax to how we would create a new map:
+    </p>
 
-    </div>
+    <pre><code>iex> %Light{}
+%Light{status: "off"}</code></pre>
+
+    <p>
+      The difference is here that we put the name of the module where the struct is defined between the <code>%</code> and the opening curly bracket. In our <code>defstruct</code> call, we have defined a default value for <code>status</code>: <code>"off"</code>. So when we've now built this new struct with <code>%Light{}</code>, it will already have a <code>:status</code> key set to <code>"off"</code>.
+    </p>
+
+    <p>
+      This is one of the advantages of structs over maps: structs can have default values.
+    </p>
+
+    <p>Another advantage is that structs are limited to the keys specified within the <code>defstruct</code> definition. If we attempt to add a <code>:name</code> key when we define a new <code>%Light{}</code> struct, we'll see an error occur:</p>
+
+    <pre><code>iex> %Light{name: "Lamp"}
+<span class='console-red'>** (KeyError) key :name not found
+  expanding struct: Light.__struct__/1
+  iex:3: (file)</span></code></pre>
+
+    <p>
+      We're seeing this error because the struct is only supposed to have a <code>:status</code> key. Any additional keys will not be allowed within this struct. This can be helpful in order to keep structs relatively simple.
+    </p>
+
+    <p>
+      You might also recognise the <code>Light.__struct__/1</code> part of this error message as being something that looks like a function. You would be correct! When we use <code>%Light{}</code>, that use the <code>Light.__struct__/1</code> function underneath, which is automatically defined by Elixir when we use <code>defstruct</code>. We can use this function too:
+    </p>
+
+    <pre><code>iex> Light.__struct__(status: "on")
+%Light{status: "on"}</code></pre>
+
+    <p>
+      But this is much longer than writing:
+    </p>
+
+    <pre><code>iex> %Light{status: "on"}
+%Light{status: "on"}</code></pre>
+
+    <p>
+      And so we should stick with the latter syntax instead.
+    </p>
+
+    <p>
+      Structs are beneficial because we can specify default values for certain keys, and we can limit the number of keys that a struct can have, but with a map we cannot. There's also one more place that we can use structs: to pattern match on them for function defintions.
+    </p>
+
+    <h4>Using structs with functions</h4>
+
+    <p>
+      We now have some functions within our <code>Light</code> module, and we are using <code>defstruct</code> which will let us define structured maps to represent our lights. We can combine these two together.
+    </p>
+
+    <p>
+      But first, a little bit about why. Our code for <code>Light.toggle/1</code> will break if we use it in weird ways -- like if we pass it a map which <em>does not</em> have a <code>:status</code> key:
+    </p>
+
+    <pre><code class='hljs plain'>iex> %{} |> Light.toggle
+<span class='console-red'>** (FunctionClauseError) no function clause matching in Light.toggle/1</span>
+
+The following arguments were given to Light.toggle/1:
+
+    # 1
+    %{}
+
+    Attempted function clauses (showing 2 out of 2):
+
+    def toggle(<span class='console-red'>%{status: "on"} = light</span>)
+    def toggle(<span class='console-red'>%{status: "off"} = light</span>)
+
+<span class='console-red'>light.exs:4: Light.toggle/1</span></code></pre>
+
+    <p>
+      As we can see from the error output, this error is happening because <em>both</em> of the clauses for <code>Light.toggle/1</code> do not match:
+    </p>
+
+    <pre><code><span class='unused-clause'>def toggle(%{status: "on"} = light) do
+  %{light | status: "off"}
+end
+
+def toggle(%{status: "off"} = light) do
+  %{light | status: "on"}
+end</span></code></pre>
+
+    <p>
+      Neither clause matches because there is no <code>:status</code> key with a value of either "on" or "off" within the map that we are passing to <code>Light.toggle/1</code>. We can fix this by making our functions match on the <code>Light</code> structs, rather than simple maps. The <code>Light</code> struct <em>always</em> includes a <code>:status</code> key. To make our code do this, we'll change our <code>light.exs</code> code to this:
+    </p>
+
+    <pre><code>defmodule Light do
+  defstruct [:name, status: "off"]
+
+  def toggle(%Light{status: "on"} = light) do
+    light |> turn_off
+  end
+
+  def toggle(%Light{status: "off"} = light) do
+    light |> turn_on
+  end
+
+  defp turn_on(%Light{} = light) do
+    %{light | status: "on"}
+  end
+
+  defp turn_off(%Light{} = light) do
+    %{light | status: "off"}
+  end
+end</code></pre>
+
+    <p>
+      With the module changed, we can re-compile it:
+    </p>
+
+    <pre><code>iex> c "light.exs", "."
+<span class='console-yellow'>warning:</span> redefining module Light (current version loaded from Elixir.Light.beam)
+  light.exs:1
+
+[Light]
+    </code></pre>
+
+    <p>
+      Once the module is re-compiled, we can try calling <code>Light.toggle/1</code> with an empty map again:
+    </p>
+
+    <pre><code>iex> Light.toggle(%{})
+<span class='console-red'>** (FunctionClauseError) no function clause matching in Light.toggle/1</span>
+
+The following arguments were given to Light.toggle/1:
+
+    # 1
+    %{}
+
+Attempted function clauses (showing 2 out of 2):
+
+    def toggle(<span class='console-red'>%Light{status: "on"} = light</span>)
+    def toggle(<span class='console-red'>%Light{status: "off"} = light</span>)
+
+<span class='console-red'>light.exs:4: Light.toggle/1</span></code></pre>
+
+    <p>
+      This is a bit better! The error message shows us that we're passing through an empty map, but the function takes a <code>Light</code> struct instead. Let's try passing through an empty <code>Light</code> struct instead:
+    </p>
+
+    <pre><code>iex> Light.toggle(%Light{})
+%Light{name: nil, status: "on"}</code></pre>
+
+    <p>
+      This code works! It works because the <code>Light</code> struct is configured to have a default value of <code>"off"</code> for the <code>:status</code> key within <code>light.exs</code>:
+    </p>
+
+    <pre><code>defmodule Light do
+  defstruct [:name, status: "off"]</code></pre>
+
+    <p>
+      This means that when we write <code>%Light{}</code>, we're actually going to get back something else:
+    </p>
+
+    <pre><code>iex> %Light{}
+  %Light{name: nil, status: "off"}</code></pre>
+
+    <p>
+      This is certainly a big advantage of using structs over maps: we can have keys with default values and then we can match on those default values in functions such as <code>Light.toggle/1.</code>
+    </p>
   </section>
 </section>
