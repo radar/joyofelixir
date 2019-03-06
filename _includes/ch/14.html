@@ -694,15 +694,45 @@ Attempted function clauses (showing 2 out of 2):
     </p>
 
     <pre><code>iex> %Light{}
-  %Light{name: nil, status: "off"}</code></pre>
+%Light{name: nil, status: "off"}</code></pre>
 
     <p>
-      This is certainly a big advantage of using structs over maps: we can have keys with default values and then we can match on those default values in functions such as <code>Light.toggle/1.</code>
+      This is certainly a big advantage of using structs over maps: we can have keys with default values and then we can match on those default values in functions such as <code>Light.toggle/1</code>. This makes mistakes like leaving out the <code>:status</code> key avoidable.
+    </p>
+  </section>
+
+  <section class='break'>
+    <h3>Structs are maps at heart</h3>
+
+    <p>
+      There's one last thing to cover on the topic of structs. Structs are maps when you get to the bottom of things. Structs can be passed as the argument to any <code>Map</code> function, like <code>Map.get/2</code> for instance:
     </p>
 
+    <pre><code>iex> %Light{} |> Map.get(:status)</code></pre>
 
-    <div class='todo'>
-      Structs are map with a __struct__ key, demonstrate this by defining a map with __struct__ key
-    </div>
+    <p>
+      This is because the underlying implementation of structs is based on maps. We can see this in action if we call the <code>Map.keys/1</code> function on a struct:
+    </p>
+
+    <pre><code>iex> %Light{} |> Map.keys
+[:__struct__, :name, :status]</code></pre>
+
+    <p>
+      The <code>Map.keys/1</code> function returns not just the two keys that we've defined with <code>defstruct</code>, but a third key called <code>:__struct__</code>. This key contains the module name of the struct. We can see this by asking the struct for its <code>__struct__</code> key's value:
+    </p>
+
+    <pre><code>iex> %Light{}.__struct__
+Light</code></pre>
+
+    <p>
+      Structs are, simply put, maps with one extra key: a <code>:__struct__</code> key. We can even define a map ourselves with such a key to prove this:
+    </p>
+
+    <pre><code>iex> %{__struct__: Light, status: "off", name: "Lamp"}
+%Light{name: "Lamp", status: "off"}</code></pre>
+
+    <p>
+      Structs are maps at heart!
+    </p>
   </section>
 </section>
