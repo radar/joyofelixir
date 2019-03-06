@@ -114,6 +114,18 @@ class TestBook < Minitest::Test
     assert page.has_content?("12. Conditional code")
   end
 
+  def test_toc_navigation_13
+    go_toc
+    click_link "Finding more functions"
+    assert page.has_content?("13. Finding more functions")
+  end
+
+  def test_toc_navigation_14
+    go_toc
+    click_link "Modules and Structs"
+    assert page.has_content?("14. Modules and Structs")
+  end
+
   def test_toc_setup_and_install
     go_toc
     click_link "Setup and install"
@@ -148,10 +160,18 @@ class TestBook < Minitest::Test
     assert page.has_content?("11. Working with files")
     click_next_link
     assert page.has_content?("12. Conditional code")
+    click_next_link
+    assert page.has_content?("13. Finding more functions")
+    click_next_link
+    assert page.has_content?("14. Modules and Structs")
   end
 
-    def test_walkthrough_backwards
-    visit "http://localhost:4000/12-conditional-code"
+  def test_walkthrough_backwards
+    visit "http://localhost:4000/14-modules-and-structs"
+    assert page.has_content?("14. Modules and Structs")
+    click_previous_link
+    assert page.has_content?("13. Finding more functions")
+    click_previous_link
     assert page.has_content?("12. Conditional code")
     click_previous_link
     assert page.has_content?("11. Working with files")
