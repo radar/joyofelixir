@@ -3,7 +3,7 @@
 
 
 @page {
-  size: A4;
+  size: letter;
 }
 
 body {
@@ -36,4 +36,8 @@ nav, footer {
   margin-top: 50%;
   font-size: 100pt;
   page-break-after: always;
+}
+
+article figure img {
+  max-width: 75vw;
 }
