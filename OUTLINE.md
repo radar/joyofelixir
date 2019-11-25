@@ -120,7 +120,7 @@
 ## Chapter 14: Modules Chapter
 
 * Why should we use modules?
-* Lights & Rooms examples
+* Person module example
 * Demonstrate how to define modules
 * Structs within modules
 * Public vs. Private functions
