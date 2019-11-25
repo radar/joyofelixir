@@ -6,7 +6,7 @@
       We've now seen lots of examples of functions throughout this book. We've seen how we can define anonymous functions (in Chapter 5):
     </p>
 
-    <pre><code>iex> hello = fn (place) -> "Hello #{place}!"
+    <pre><code>iex> hello = fn (place) -> "Hello #{place}!" end
 hello.("World")
 "Hello World!"</code></pre>
 
@@ -23,7 +23,10 @@ hello.("World")
 
     <blockquote>
       <p>
-        The functions that Elixir provides are separated into something akin to kitchen drawers or toolboxes, called <em>modules</em>. Whereas in your top kitchen drawer you might have forks, knives, sporks, and spoons (like every sensible person's kitchen does), and in another you might have measuring cups, and in another tea towels, in Elixir the functions to work with the different kinds of data are separated into different modules. This makes finding functions to work with particular kinds of data in Elixir very easy.
+        The functions that Elixir provides are separated into something akin to kitchen drawers or toolboxes, called <em>modules</em>. Whereas in your top kitchen drawer you might have forks, knives, sporks, and spoons (like every sensible person's kitchen does), and in another you might have measuring cups, and in another tea towels.
+      </p>
+
+      <p>In Elixir, the functions to work with the different kinds of data are separated into different modules. This makes finding functions to work with particular kinds of data in Elixir very easy.
       </p>
     </blockquote>
 
@@ -32,246 +35,426 @@ hello.("World")
     </p>
 
     <p>
-      This chapter will show you how to write new modules for the purpose of grouping together functions, and we'll also cover a special kind of map called a <em>struct</em>. In fact, we'll write <em>TWO</em> modules. Let's go!
+      This chapter will show you how to write new modules for the purpose of grouping together functions, and we'll also cover a special kind of map called a <em>struct</em>. Let's go!
     </p>
   </section>
 
   <section>
-    <h3>Home, Sweet Home</h3>
+    <h3>Functions for the people</h3>
 
     <p>
-      The system that we're going to start writing in this chapter will be modelling a home automation system for lights. When I say "modelling", I mean we will be writing some Elixir code that will simulate a home automation system. It'll be a fictional house, instead of a real one. But if we were working on a real home automation system in Elixir, it might work something like this one. We'll use this same code in the next two chapters as well.</p>
-    <p>
-
-    </p>In our fictional house, there are fictional rooms, each with a set of fictional lights. It looks like this:
+      Way back in Chapter 4, we had maps that looked like this:
     </p>
 
-    <div class='todo'>
-      Image for a house here.
-    </div>
+    <pre><code>%{name: "Izzy", age: "30ish"}</code></pre>
 
     <p>
-      Red circles here indicate lights that are off, where green ones indicate on.
+      In this chapter, we're going to be working with maps based off these ones, but they're going to be a little more complicated in shape:
+    </p>
+
+<pre><code>iex> person = %{
+  first_name: "Izzy",
+  last_name: "Bell",
+  birthday: ~D[1987-12-04],
+}</code></pre>
+
+    <aside>
+      <header>What is that <code>~D</code> thing?</header>
+
+      <p>
+        In the above map, there's <code>~D[1987-12-04]</code> used as a value for the <code>birthday</code> key in the map. This is the first time we're seeing such syntax, and so it deserves an explanation!
+      </p>
+
+      <p>
+        When you see <code>~</code> followed by a letter in Elixir, that is referred to as a <em>sigil</em>. These are special constructs in Elixir that provide us with shortcuts of creating certain things. In this case, the <code>~D</code> sigil lets us create a data type that represents a date.
+      </p>
+
+      <p>
+        We'll come back to that a little later on in the chapter, but I think it deserved that quick explanation here to avoid any potential stumbling blocks!
+      </p>
+    </aside>
+
+    <p>
+      With our new map shape, what if we wanted to have a function that joined together the person's first and last name into a single string? Well, we could probably write it like this:
+    </p>
+
+<pre><code>iex> full_name = fn (person) -> "#{person.first_name} #{person.last_name}" end</code></pre>
+
+    <p>
+      Then we can call this function with this code:
+    </p>
+
+<pre><code>iex> full_name.(person)
+"Izzy Bell"</code></pre>
+
+    <p>
+      This is wilfully ignoring the fact that some people have <a href='https://en.wikipedia.org/wiki/Mononymous_person'>mononyms</a>, as well as <a href='https://www.kalzumeus.com/2010/06/17/falsehoods-programmers-believe-about-names/'>the falsehoods programmers believe about names</a>. Ignoring both of those things for now, we have a single function that will let us display a combination of a first name and a last name. That's all well and good to have a function that does that.
     </p>
 
     <p>
-      In this house, we want to be able to go into a room and turn on one particular light, or to turn on <em>all</em> the lights in that room. Maybe when we go into the dining room, we want to turn on all the lights not only so we can see what we're eating, but so we have the best lighting for our Instagram photos too when we cook an especially photogenic meal.
+      But what if we had <em>another</em> function that also operated on these people maps? A function called <code>age</code>:
     </p>
 
-    <div class='todo'>
-      Dining room with all lights on.
-    </div>
+<pre><code>iex> age = fn (person) ->
+...> days =  Date.diff(Date.utc_today, person.birthday)
+...> days / 365.25
+...> end</code></pre>
 
     <p>
-      But maybe we want to go into another room later that evening -- after our photogenic meal is devoured -- perhaps the lounge room and we want to watch TV. We turn the TV on, but then also want the small lamp on in the room to provide some more light. We don't want to turn on <em>all</em> the lights in that room. We only want to turn on the lamp.
+      This new function uses two new functions from Elixir's built-in <code>Date</code> module: <code>Date.utc_today/0</code> and <code>Date.diff/2</code>. The <code>Date.utc_today/0</code> function returns the current date in the <a href='https://en.wikipedia.org/wiki/Coordinated_Universal_Time'>UTC time zone</a>. The <code>Date.diff/2</code> function allows us to figure out the difference (in days) between two dates. So we're using this function to find the number of days between today and the person's birthday. We then take that number of days and divide it by the average number of days in a year: <code>365.25</code>. This should give us a close-enough approximation of somebody's age.
     </p>
 
-    <div class='todo'>
-      Lounge room with small lamp on.
-    </div>
+    <p>
+      We can call this function with this code:
+    </p>
+
+<pre><code>iex> age.(person)
+31.972621492128678</code></pre>
 
     <p>
-      What we will look at in this chapter is how we could write some Elixir code that will be able to turn on or off a whole room's set of lights, or individual lights.
+      Note that you'll get a different number to the one shown here because <code>Date.utc_today</code> will return a different day for you. This number was correct at the time of writing, I promise!
+    </p>
+
+    <p>
+      Now we have two functions that work on this same map. Wouldn't it be nice to have a place where we could group the functions? Similar to how <code>Date.diff/2</code> and <code>Date.utc_today/0</code> functions. Those functions are grouped together inside of a module called <code>Date</code>. Let's look at how we can create our own module for these <code>full_name</code> and <code>age</code> functions.
     </p>
   </section>
 
   <section>
-    <h3>Let there be light</h3>
+    <h3>The Person module</h3>
 
     <p>
-      In our Elixir code, we need to create something that will keep a track of a light. Here's what we know so far:
-    </p>
-
-    <ul>
-      <li>Lights can be on, or off</li>
-      <li>Lights have a room, like "dining room" or "lounge room"</li>
-      <li>Lights can have a name, like "small lamp"</li>
-    </ul>
-
-    <p>
-      But how can we represent this in Elixir? What kind of data type can we use?
+      Elixir comes with a bunch of built-in modules: <code>List</code>, <code>Map</code>, <code>Enum</code> and <code>Date</code> are a few that we've seen so far. Creating modules is not just for Elixir itself, but we can create our own modules too. The main reason to create a module is to group together functions, which is exactly what we're going to do in this part of this chapter.
     </p>
 
     <p>
-      Izzy's unearthly vibration stops, deadening the air. We had become so accustomed to the noise that its loss leaves us with a very mild sense of melancholy. Then she pipes up: "A map might work. On or off, room name and name all look like they could be keys and values. Here, let me try an example."
+      To define modules in Elixir we use <code>defmodule</code>. We <em>could</em> write it out in <code>iex</code>:
     </p>
 
-    <pre><code>iex> light = %{
-  status: "on",
-  room: "Lounge Room",
-  name: "Small Map"
+<pre><code>iex(1)> defmodule Person do
+...> ...
+...> end
+</code></pre>
+
+    <p>
+      But we're going to be changing this code a lot and so we should write the code in a  file instead. Let's create a new file called <code>person.exs</code> inside a directory called <code>~/code/joy_of_elixir</code> and we'll define the <code>Person</code> module in this file:
+    </p>
+
+<pre><code>defmodule Person do
+end</code></pre>
+
+    <p>
+      Our module doesn't do very much at the moment. So let's change that by putting our functions inside it. Functions defined in a module must start with the keyword <code>def</code>:
+    </p>
+
+<pre><code>defmodule Person do
+  def full_name(person) do
+    "#{person.first_name} #{person.last_name}"
+  end
+
+  def age(person) do
+    days = Date.diff(Date.utc_today, person.birthday)
+    days / 365.25
+  end
+end</code></pre>
+
+    <p>
+      To use this module, we need to make sure that we're in the <code>~/code/joy_of_elixir</code> directory and then we can run <code>iex</code>. Once we're in <code>iex</code> we can compile the module with:
+    </p>
+
+<pre><code>iex> c "person.exs", "."</code></pre>
+
+    <p>
+      The <code>c</code> helper's name is short for "compile". Using <code>c</code> like this will load the code from <code>person.exs</code> into our <code>iex</code> session, making the <code>Person</code> module and its functions available to us.
+    </p>
+
+    <p>
+      When we run <code>c</code>, it outputs a list of the modules that were loaded by compiling the file, which we see here as <code>[Person]</code>, since there's only the <code>Person</code> module in that file.
+    </p>
+
+    <p>
+      We're passing a second argument to <code>c</code> here which is a path where our compiled module should go. The dot (<code>.</code>) here means "the current directory", so where we ran the <code>iex</code> command from. When we run this command, Elixir will compile our module to a file called <code>Elixir.Person.beam</code>.
+    </p>
+
+    <p>
+      We could also compile this file with <code>c "person.exs"</code> -- only a single argument to the <code>c</code> function call. This will still compile the module, but every time we go back into <code>iex</code>, we will need to re-compile the module to use it. By running it with two arguments -- <code>c "person.exs", "."</code>, we can enter and leave <code>iex</code> and always have our <code>Person</code> module available.
+    </p>
+
+    <p>
+      With this file compiled, we can start to use to use the <code>Person</code> module. Let's try the <code>Person.age/1</code> function:
+    </p>
+
+<pre><code>iex> person = %{
+  first_name: "Izzy",
+  last_name: "Bell",
+  birthday: ~D[1987-12-04],
+}
+iex> person |> Person.age
+31.975359342915812</code></pre>
+
+    <p>
+      Great! That one works. Let's try the <code>full_name</code> function too:
+    </p>
+
+<pre><code>iex> person |> Person.full_name
+"Izzy Bell"</code></pre>
+
+    <p>Excellent. Both functions work!</p>
+
+    <p>
+      One special thing to note here is that if we exit out of <code>iex</code> and re-open it again, our module will still be accessible. We will still be able to run the functions without first having to compile our module:
+    </p>
+
+<pre><code>iex> person = %{
+  first_name: "Izzy",
+  last_name: "Bell",
+  birthday: ~D[1987-12-04],
+}
+iex> person |> Person.age
+31.975359342915812</code></pre>
+
+<pre><code>iex> person |> Person.full_name
+"Izzy Bell"</code></pre>
+
+    <p>
+      This is because Elixir will load the <code>Elixir.Person.beam</code> file automatically, as it is located in the directory that we're running <code>iex</code> in.
+    </p>
+
+    <p>
+      Now that we have got our module running, let's add another two functions to it. These functions will set a person's location to either be "home" or "away". This location value will indicate if the person is at home, or if they're away from home. The functions should go at the bottom of the module definition inside <code>person.exs</code>:
+    </p>
+
+<pre><code>defmodule Person do
+  def full_name(person) do
+    "#{person.first_name} #{person.last_name}"
+  end
+
+  def age(person) do
+    days = Date.diff(Date.utc_today, person.birthday)
+    days / 365.25
+  end
+
+  def home(person) do
+    %{person | location: "home"}
+  end
+
+  def away(person) do
+    %{person | location: "away"}
+  end</code></pre>
+
+    <p>
+      If we attempt to use these functions right away, they will not work:
+    </p>
+
+<pre><code>iex> person |> Person.away
+** (UndefinedFunctionError) function Person.away/1 is undefined or private</code></pre>
+
+    <p>
+      This is happening because we have not yet re-compiled the <code>Person</code> module. To do that, we need to use the <code>c</code> helper again:
+    </p>
+
+<pre><code>c "person.exs", "."</code></pre>
+
+    <p>
+      With the module now compiled, we will be able to use this function:
+    </p>
+
+<pre><code>iex> person |> Person.away
+** (KeyError) key :location not found
+person.exs:15: Person.away/1</code></pre>
+
+    <p>
+      Well, we thought we could. But this map doesn't have a <code>location</code> key on it, and this means the <code>away</code> function is unable to set that key to a value. We can fix this by providing that key when we define the initial map:
+    </p>
+
+<pre><code>iex> person = %{
+  first_name: "Izzy",
+  last_name: "Bell",
+  birthday: ~D[1987-12-04],
+  location: "home",
+}
+iex> person |> Person.away
+%{
+  birthday: ~D[1987-12-04],
+  first_name: "Izzy",
+  last_name: "Bell",
+  location: "away"
 }</code></pre>
 
     <p>
-      A map does seem to be quite a good type of data to use here. It allows us to keep a track of the light's status, the room that the light is in, as well as a name specific to the light itself.
-    </p>
-
-    <p>
-      If we want to change any one of the light's attributes, we can use <em>pipe merging</em> (from Chapter 10) to do so:
-    </p>
-
-    <pre><code>iex> %{light | status: "off"}
-%{name: "Small Map", room: "Lounge Room", status: "off"}</code></pre>
-
-
-    <p>
-      This code is a little long to write, so we might want to make a function for it:
-    </p>
-
-    <pre><code>iex> turn_off = fn (light) -> %{light | status: "off"} end </code></pre>
-
-    <p>
-      Now we can turn lights off by calling this function:
-    </p>
-
-    <pre><code>iex> turn_off.(light)
-%{name: "Small Map", room: "Lounge Room", status: "off"}</code></pre>
-
-    <p>
-      Similarly, we can write another function to turn the lights on:
-    </p>
-
-    <pre><code>iex> turn_on = fn (light) -> %{light | status: "on"} end
-#Function<6.127694169/1 in :erl_eval.expr/5>
-iex> turn_on.(light)
-%{name: "Small Map", room: "Lounge Room", status: "on"}</code></pre>
-
-
-    <p>
-      Finally, we can create one more function that will toggle a light's status, depending on whether the "status" is on or off, using pattern matching (as we originally saw in Chapter 6):
-    </p>
-
-    <pre><code>iex> toggle = fn
-  %{status: "on"} = light -> %{light | status: "off"}
-  %{status: "off"} = light -> %{light | status: "on"}
-end</code></pre>
-
-    <p>
-      We now have these three functions, <code>turn_off</code>, <code>turn_on</code> and <code>toggle</code>. But they aren't connected together, they're all floating out there. If we added further functions, how would we know if those functions were for lights, or for rooms? It might be hard to tell.
-    </p>
-
-    <p>
-      What we can do to group these functions together is to move them into a module.
+      Okay, so what we needed to do here was to provide the <code>location</code> key in the map and then it worked. That's good to see! But how could we prevent this missing key being an issue again? The way to do that is with a struct!
     </p>
   </section>
 
+
+
   <section>
-    <h3>The Light module</h3>
+    <h3>Structs</h3>
 
     <p>
-      We're now going to move out of <code>iex</code>, and write some code in a new file. This will make it easier to define our very first custom module, the <code>Light</code> module. We'll write this code in a new file called <code>light.exs</code>:
+      So far, we have been using maps to represent our people -- well, <em>one</em> person -- and then passing this map through to the functions from the <code>Person</code> module:
     </p>
 
-    <pre><code>defmodule Light do
-  def turn_on(light) do
-    %{light | status: "on"}
-  end
+    <pre><code>iex> person = %{
+  first_name: "Izzy",
+  last_name: "Bell",
+  birthday: ~D[1987-12-04],
+  location: "home",
+}
+iex> person |> Person.away
+%{
+  birthday: ~D[1987-12-04],
+  first_name: "Izzy",
+  last_name: "Bell",
+  location: "away"
+}</code></pre>
 
-  def turn_off(light) do
-    %{light | status: "off"}
-  end
+    <p>
+      We're now going to take the time to look at a data type that is similar to a map, called a <em>struct</em>. The word "struct" is shorted for "structured data"; it's a map, but a particular <em>type</em> of map, where each map of the same type will share the same structure.
+    </p>
 
-  def toggle(%{status: "on"} = light) do
-    %{light | status: "off"}
-  end
+    <p>
+      A struct has a set of key-value pairs just like a map, but a struct's keys are limited to only a certain set. Let's look at how we would define a struct now within the <code>Perosn</code> module. At the top of the module, we can use the <code>defstruct</code> keyword to define a struct:
+    </p>
 
-  def toggle(%{status: "off"} = light) do
-    %{light | status: "on"}
-  end
+    <pre><code>defmodule Person do
+  defstruct [
+    first_name: nil,
+    last_name: nil,
+    birthday: nil,
+    location: "home"
+  ]
+
+  ...
 end</code></pre>
 
     <p>
-      This code is some of the longest Elixir code that we've written and it looks slightly alien from the Elixir we're used to. Izzy asks: "What is that <code>defmodule</code> thing, and how is it different from <code>def</code>"? Let's walk through it bit by bit.
+      Let's start <code>iex</code> and compile our <code>light.exs</code> file:
     </p>
 
-    <h4>Simple module functions</h4>
+<pre><code>iex> c "light.exs"</code></pre>
 
     <p>
-      The first line here starts our module definition, and the <code>do</code> starts a block of code for the module. Inside the module, we can then define functions using <code>def</code>. When we've defined functions in the past, we would define them like this:
+      To use this struct, we use a similar syntax to how we would create a new map:
     </p>
 
-    <pre><code>iex> turn_off = fn (light) -> %{light | status: "off"} end
-iex> turn_on = fn (light) -> %{light | status: "on"} end</code></pre>
+<pre><code>person = %Person{}</code></pre>
 
     <p>
-      These functions from the past are defined outside of a module, and must be defined like this, with a variable on the left hand side of an equals sign to name the function.
+      The difference is here that we put the name of the module where the struct is defined between the <code>%</code> and the opening curly bracket. In our <code>defstruct</code> call, we have defined a default value for <code>status</code>: <code>"home"</code>. So when we've now built this new struct with <code>%Person{}</code>, it will already have a <code>:location</code> key set to <code>"home"</code>.
     </p>
 
     <p>
-      But when we're inside a module, we must define them like this:
+      This is one of the advantages of structs over maps: structs can have default values. This will avoid the issue where our <code>away</code> function was failing because there was no <code>location</code> key in our map.
     </p>
 
+    <p>
+      One extra thing that will help here is to match on the struct type in the <code>away</code> and <code>home</code> functions. This will ensure that we <em>always</em> are getting a <code>Person</code> struct before we try to do anything in these functions. To do this, we need to change these functions to this:
+    </p>
 
-    <pre><code>def turn_on(light) do
-  %{light | status: "on"}
+<pre><code>def home(%Person{} = person) do
+  %{person | location: "home"}
 end
 
-def turn_off(light) do
-  %{light | status: "off"}
+def away(%Person{} = person) do
+  %{person | location: "away"}
 end</code></pre>
 
     <p>
-      The arguments stay within the circle brackets, but move to be next to the name of the function. We then use a <code>do</code> / <code>end</code> block here to define the functions' bodies, rather than <code>-></code> / <code>end</code>.
+      This change to these functions will make them <em>always</em> require a <code>Person</code> struct as an argument. They will no longer work with a map. Let's see this in action by re-compiling our module and trying agani:
+    </p>
+
+<pre><code>iex> c "person.exs", "."
+iex> person = %{
+  first_name: "Izzy",
+  last_name: "Bell",
+  birthday: ~D[1987-12-04],
+  location: "home",
+}
+iex> person |> Person.away
+</code></pre>
+
+    <p>
+      When we run this code, we'll see this error:
+    </p>
+
+<pre><code class='plain hljs'>** (FunctionClauseError) no function clause matching in Person.away/1
+
+The following arguments were given to Person.away/1:
+
+    # 1
+    %{
+      birthday: ~D[1987-12-04],
+      first_name: "Izzy",
+      last_name: "Bell",
+      location: "home"
+    }
+
+Attempted function clauses (showing 1 out of 1):
+
+    def away(%Person{} = person)
+
+person.exs:22: Person.away/1
+</code></pre>
+
+    <p>
+      This error is showing us that the function does not match. It shows us that we're passing a plain map to the function as its first argument, but the function is expecting a <code>Person</code> struct instead. So let's pass one of those instead:
+    </p>
+
+<pre><code>person = %Person{
+  first_name: "Izzy",
+  last_name: "Bell",
+  birthday: ~D[1987-12-04],
+}
+iex> person |> Person.away
+%Person{
+  birthday: ~D[1987-12-04],
+  first_name: "Izzy",
+  last_name: "Bell",
+  location: "away"
+}</code></pre>
+
+    <p>
+      That works a lot better! And did you notice that we didn't have to supply a <code>location</code> for our Izzy either? The struct will use the default value if we do not specify it.
     </p>
 
     <p>
-      These two functions work the same way however we define them. The <code>turn_on</code> function sets the <code>status</code>'s value to <code>on</code>, and the <code>turn_off</code> function sets it to <code>off</code>.
+      By enforcing a <code>Person</code> struct here in this <code>away</code> function, we can be guaranteed that the function will always receive a <code>person</code> argument that is a <code>Person</code> struct, and that means it will <em>always</em> have a location key.
     </p>
-
-    <h4>Pattern matching with module functions</h4>
 
     <p>
-      When we get to <code>toggle</code>, something special happens:
+      While we're here, we should also make the same changes to the <code>age</code> and <code>full_name</code> functions too, just to make sure that we receive structs for those functions too.
     </p>
 
-    <pre><code>def toggle(%{status: "on"} = light) do
-  %{light | status: "off"}
-end
+    <p>
+      Our module will now look like this:
+    </p>
 
-def toggle(%{status: "off"} = light) do
-  %{light | status: "on"}
+<pre><code>defmodule Person do
+  defstruct [
+    first_name: nil,
+    last_name: nil,
+    birthday: nil,
+    location: "home"
+  ]
+
+  def full_name(%Person{} = person) do
+    "#{person.first_name} #{person.last_name}"
+  end
+
+  def age(%Person{} = person) do
+    days = Date.diff(Date.utc_today, person.birthday)
+    days / 365.25
+  end
+
+  def home(%Person{} = person) do
+    %{person | location: "home"}
+  end
+
+  def away(%Person{} = person) do
+    %{person | location: "away"}
+  end
 end</code></pre>
-
-    <p>
-      This looks almost like we're defining the same function twice. And technically, we are. Both functions are taking a single argument. Because these <code>toggle</code> functions are inside the <code>Light</code> module and because they both take one argument (a light), we would refer to both of these functions as <code>Light.toggle/1</code>.
-    </p>
-
-    <p>
-      These two functions are equivalent to this other syntax that we have seen:
-    </p>
-
-  <pre><code>toggle = fn
-  %{status: "on"} = light -> %{light | status: "off"}
-  %{status: "off"} = light -> %{light | status: "on"}
-end</code></pre>
-
-    <p>
-      In both cases, we use <em>pattern matching</em> to match the argument passed to the function. If the argument is a map containing a <code>status</code> key that's an atom, and that key has a string value of "on", it will match the first function clause and not the second:
-    </p>
-
-<pre><code>def toggle(%{status: "on"} = light) do
-  %{light | status: "off"}
-end
-
-<span class='unused-clause'>def toggle(%{status: "off"} = light) do
-  %{light | status: "on"}
-end</span></code></pre>
-
-    <p>
-      But if the value of <code>status</code> was "off" instead, then the first function clause wouldn't match, but the 2nd one would:
-    </p>
-
-<pre><code><span class='unused-clause'>def toggle(%{status: "on"} = light) do
-  %{light | status: "off"}
-end</span>
-
-def toggle(%{status: "off"} = light) do
-  %{light | status: "on"}
-end</code></pre>
-
-    <p>
-      As we can see here, pattern matching comes in handy. Rather than us (as humans) knowing whether or not our light is on or off, and then figuring out which function to use, we can rely on <code>toggle</code> (the computer) to figure it out for us, and to take the right actions on our light.
-    </p>
 
     <aside>
       <header>How to tell functions apart</header>
@@ -302,402 +485,92 @@ end</code></pre>
         <li>The <em>pattern</em> of those arguments</li>
       </ol>
     </aside>
-
-    <p>
-      We've now talked at (extreme) length about the <code>Light</code> module, but we haven't actually used it yet. We've written the code in <code>light.exs</code>, and now it's time to use it.
-    </p>
-  </section>
-
-  <section>
-    <h3>Using the Light module</h3>
-
-    <p>
-      It's time to use this <code>Light</code> module we've crafted. We must first navigate in the terminal to the directory where <code>light.exs</code> is. On my computer, it is at <code>~/code/joy-of-elixir</code> and so I type this to get there:
-    </p>
-
-<pre><code class='hljs plain'>cd ~/code/joy-of-elixir</code></pre>
-
-    <p>
-      Once there, we can start <code>iex</code> and load our module with the <code>c</code> helper from <code>iex</code>:
-    </p>
-
-<pre><code>iex> c "light.exs", "."
-[Light]</code></pre>
-
-    <p>
-      The <code>c</code> helper's name is short for "compile". Using <code>c</code> like this will load the code from <code>light.exs</code> into our <code>iex</code> session, making the <code>Light</code> module and its functions available to us.
-    </p>
-
-    <p>
-      When we run <code>c</code>, it outputs a list of the modules that were loaded by compiling the file, which we see here as <code>[Light]</code>, since there's only the <code>Light</code> module in that file.
-    </p>
-
-    <p>
-      We're passing a second argument to <code>c</code> here which is a path where our compiled module should go. The dot (<code>.</code>) here means "the current directory", so where we ran the <code>iex</code> command from. When we run this command, Elixir will compile our module to a file called <code>Elixir.Light.beam</code>.
-    </p>
-
-    <p>
-      We could also compile this file with <code>c "light.exs"</code> -- only a single argument to the <code>c</code> function call. This will still compile the module, but every time we go back into <code>iex</code>, we will need to re-compile the module to use it. By running it with two arguments -- <code>c "light.exs", "."</code>, we can enter and leave <code>iex</code> and always have our <code>Light</code> module available.
-    </p>
-
-    <p>
-      With this file compiled, we can start to use to use the <code>Light</code> module. Let's try the <code>Light.turn_on/1</code> function:
-    </p>
-
-    <pre><code>iex> %{status: "off", name: "Lamp"} |> Light.turn_on
-%{status: "on", name: "Lamp"}</code></pre>
-
-    <p>
-      "Hey, it works!", exclaims Izzy. She of little faith. This <code>Light.turn_on/1</code> function has changed the <code>:status</code> key within our map to <code>"on"</code>, and has left the <code>:name</code> key unchanged. Let's try turning a light off:
-    </p>
-
-    <pre><code>iex> %{status: "on", name: "Lamp"} |> Light.turn_off
-%{status: "off", name: "Lamp"}</code></pre>
-
-    <p>
-      The light's status is now <code>"off"</code>. Excellent! We can even pipe chain these functions together to turn the light on and off:
-    </p>
-
-    <pre><code>iex> %{status: "off", name: "Lamp"} |> Light.turn_on |> Light.turn_off
-%{status: "off", name: "Lamp"}</code></pre>
-
-    <p>
-      We can do this because each of the functions takes a map and changes the value associated with the <code>status</code> key to either "on" or "off". All of these functions not only <em>take</em> a map as an argument, but they also return a map, and so we can chain these functions together infinitely if we wanted. We would, in effect, be flicking the lights on and off really quickly -- something our parents told us not to do as children. Let's try to do this with a pipe chain of <code>Light.toggle/1</code> functions:
-    </p>
-
-    <pre><code>iex> %{status: "off", name: "Lamp"} |> Light.toggle |> Light.toggle |> Light.toggle
-%{status: "on", name: "Lamp"}</code></pre>
-
-    <div class='todo'>
-      Short diagram showing input and output for each toggle invocation.
-    </div>
-
-    <p>
-      This is so much fun! We wrote our very first Elixir module, put some functions in it and it's working perfectly. We can now turn lights on or off, or toggle them. But what if we only wanted to make it so a light could be toggled? Let's take a brief look at what that might look like.
-    </p>
   </section>
 
   <section>
     <h3>Public and private functions</h3>
 
     <p>
-      We currently have three functions within the <code>Light</code> module: <code>Light.turn_on/1</code>, <code>Light.turn_off/1</code> and <code>Light.toggle/1</code>. We're now going to change this module so that the <code>Light.toggle/1</code> function is the only function that can be called from outside this module. We will do this by turning the <code>Light.turn_on/1</code> and <code>Light.turn_off/1</code> functions into<em>private functions</em>.
+      Before we move on from here, there's one extra concept I would like to share with you. That concept is about <em>public</em> and <em>private</em> functions in modules. Sometimes, we will have functions in modules that we will not want to share with the outside world. Those functions can be kept <em>private</em> so that only other functions inside the module know about it.
     </p>
 
     <p>
-      Functions defined in Elixir modules with <code>def</code> are <em>public</em> functions. That means that we can call them from anywhere else within Elixir code. When a function is <em>private</em>, it can only be referred to from within the same module. We might want to do this to simplify the interface to our module. We're doing that now: we're simplifying it by bringing down the number of functions from 3 to 1.
+      Let's say that instead of having two functions called <code>home</code> and a <code>away</code>, we instead wanted to have a function called <code>toggle_location</code> that toggled the person's location between "home" and "away"?
     </p>
 
     <p>
-      A real-world example of a public / private "function" is the inner workings of a light switch. The public example is the little plastic switch or button we can use to turn the light on or off. The private example happens behind the scenes: flicking the switch one way connects two wires together and completes a circuit. Flicking it the other way breaks the connection.
+      Well, here's how we might write that function:
     </p>
 
-    <div class='todo'>
-      Basic circuit image of wires connecting for a light here.
-
-    </div>
-
-    <p>
-      When we turn on or off a light, we don't think about wires connecting -- although now you might!
-    </p>
-
-    <p>
-      We're now going to turn the <code>Light.turn_on/1</code> and <code>Light.turn_off/1</code> functions into private functions. We can do this by moving these functions to the bottom of our <code>Light</code> module, and defining them with <code>defp</code> instead of <code>def</code>:
-    </p>
-
-    <pre><code>defmodule Light do
-  def toggle(%{status: "on"} = light) do
-    %{light | status: "off"}
-  end
-
-  def toggle(%{status: "off"} = light) do
-    %{light | status: "on"}
-  end
-
-  defp turn_on(light) do
-    %{light | status: "on"}
-  end
-
-  defp turn_off(light) do
-    %{light | status: "off"}
-  end
-end</code></pre>
-
-  <p>
-    The order of these function definitions are important. At the top of Elixir modules, we must define the <em>public</em> functions. Then when we're done defining the public functions, we then define the <em>private</em> ones. This helps other people who are reading our code: the public ones are the ones they're probably interested in using, and so it makes sense for them to be defined first.
-  </p>
-
-  <p>
-    One funny thing with this code is that we've defined <code>turn_on</code> and <code>turn_off</code> as private functions, but we're not using these at all within the module. If we launch <code>iex</code> now and compile our <code>light.exs</code> file, Elixir will warn us about this:
-  </p>
-
-  <pre><code class='plain hljs'>iex> c "light.exs", "."
-<span class='console-yellow'>warning</span>: function turn_off/1 is unused
-  light.exs:14
-
-<span class='console-yellow'>warning:</span> function turn_on/1 is unused
-  light.exs:10
-
-[<span class='console-blue'>Light</span>]</code></pre>
-
-  <p>
-    Elixir is able to determine that these functions are unused by checking our code. Warnings like these can be incredibly helpful for getting rid of code that we no longer rely on. But in this case, the warnings are happening because we've moved these two functions to be private functions, and we're not using them in either of the <code>Light.toggle/1</code> clauses. Let's fix this up:
-  </p>
-
-  <pre><code>defmodule Light do
-  def toggle(%{status: "on"} = light) do
-    light |> turn_off
-  end
-
-  def toggle(%{status: "off"} = light) do
-    light |> turn_on
-  end
-
-  defp turn_on(light) do
-    %{light | status: "on"}
-  end
-
-  defp turn_off(light) do
-    %{light | status: "off"}
-  end
-end</code></pre>
-
-    <p>
-      If we re-compile the <code>light.exs</code> file with the <code>c</code> helper, we will no longer see the warnings:
-    </p>
-
-    <pre><code class='plain hljs'>iex> c "light.exs", "."
-
-<span class='console-yellow'>warning:</span> redefining module Light (current version loaded from ./Elixir.Light.beam)
-light.exs:1
-
-[<span class='console-blue'>Light</span>]</code></pre>
-
-    <p>
-      We do see a different warning though. This is because we're re-defining the module <code>Light</code> by re-compiling this file again. It is nothing to particularly worry about here, and we can safely ignore this. We're re-compiling this module so that the newest code is available within our <code>iex</code> prompt. If we did not re-compile this module, <code>iex</code> would only know about the last version that we compiled.
-    </p>
-
-    <p>
-      While we're in <code>iex</code>, let's try using our <code>Light.toggle/1</code> function again:
-    </p>
-
-    <pre><code>iex> %{status: "on"} |> Light.toggle
-%{status: "off"}
-iex> %{status: "off"} |> Light.toggle
-%{status: "on"}
-</code></pre>
-
-    <p>
-      Great, that seems to be all in order. But what happens if we try to use the now-private functions, <code>Light.turn_off/1</code> or <code>Light.turn_on/1</code>?
-    </p>
-
-    <pre><code>iex> %{status: "on"} |> Light.turn_off
-<span class='console-red'>** (UndefinedFunctionError) function Light.turn_off/1 is undefined or private
-  Light.turn_off(%{status: "on"})</span>
-iex> %{status: "off"} |> Light.turn_on
-<span class='console-red'>** (UndefinedFunctionError) function Light.turn_on/1 is undefined or private
-  Light.turn_on(%{status: "off"})</span>
-</code></pre>
-
-    <p>
-      We know for a fact that these functions are defined, as we defined them ourselves. We know that they're defined as private functions, and that's exactly what Elixir is telling us now. We cannot use these functions in <code>iex</code>, because we are outside of the module. Private functions can only be accessed from within the module itself -- never from the outside. We choose to make functions private to simplify what our module exposes.
-    </p>
-
-    <p>
-      Let's look at one final feature of modules before we round out this chapter. That feature is called <em>structs</em>.
-    </p>
-  </section>
-
-  <section>
-    <h3>The Light struct</h3>
-
-    <p>
-      So far, we have been using maps to represent our lights and then passing these maps through to the functions from the <code>Light</code> module:
-    </p>
-
-    <pre><code>iex> %{status: "off", name: "Lamp"} |> Light.toggle
-%{status: "on", name: "Lamp"}</code></pre>
-
-    <p>
-      We're now going to take the time to look at a data type that is similar to a map, called a <em>struct</em>. The word "struct" is shorted for "structured data"; it's a map, but a particular <em>type</em> of map, where each map of the same type will share the same structure.
-    </p>
-
-    <p>
-      A struct has a set of key-value pairs just like a map, but a struct's keys are limited to only a certain set. Let's look at how we would define a struct now within the <code>Light</code> module. At the top of the module, we can use the <code>defstruct</code> keyword to define a struct:
-    </p>
-
-    <pre><code>defmodule Light do
-  defstruct [status: "off"]
-end</code></pre>
-
-    <p>
-      Let's start <code>iex</code> and compile our <code>light.exs</code> file:
-    </p>
-
-    <pre><code>iex> c "light.exs"</code></pre>
-
-    <p>
-      To use this struct, we use a similar syntax to how we would create a new map:
-    </p>
-
-    <pre><code>iex> %Light{}
-%Light{status: "off"}</code></pre>
-
-    <p>
-      The difference is here that we put the name of the module where the struct is defined between the <code>%</code> and the opening curly bracket. In our <code>defstruct</code> call, we have defined a default value for <code>status</code>: <code>"off"</code>. So when we've now built this new struct with <code>%Light{}</code>, it will already have a <code>:status</code> key set to <code>"off"</code>.
-    </p>
-
-    <p>
-      This is one of the advantages of structs over maps: structs can have default values.
-    </p>
-
-    <p>Another advantage is that structs are limited to the keys specified within the <code>defstruct</code> definition. If we attempt to add a <code>:name</code> key when we define a new <code>%Light{}</code> struct, we'll see an error occur:</p>
-
-    <pre><code>iex> %Light{name: "Lamp"}
-<span class='console-red'>** (KeyError) key :name not found
-  expanding struct: Light.__struct__/1
-  iex:3: (file)</span></code></pre>
-
-    <p>
-      We're seeing this error because the struct is only supposed to have a <code>:status</code> key. Any additional keys will not be allowed within this struct. This can be helpful in order to keep structs relatively simple.
-    </p>
-
-    <p>
-      You might also recognise the <code>Light.__struct__/1</code> part of this error message as being something that looks like a function. You would be correct! When we use <code>%Light{}</code>, that use the <code>Light.__struct__/1</code> function underneath, which is automatically defined by Elixir when we use <code>defstruct</code>. We can use this function too:
-    </p>
-
-    <pre><code>iex> Light.__struct__(status: "on")
-%Light{status: "on"}</code></pre>
-
-    <p>
-      But this is much longer than writing:
-    </p>
-
-    <pre><code>iex> %Light{status: "on"}
-%Light{status: "on"}</code></pre>
-
-    <p>
-      And so we should stick with the latter syntax instead.
-    </p>
-
-    <p>
-      Structs are beneficial because we can specify default values for certain keys, and we can limit the number of keys that a struct can have, but with a map we cannot. There's also one more place that we can use structs: to pattern match on them for function defintions.
-    </p>
-
-    <h4>Using structs with functions</h4>
-
-    <p>
-      We now have some functions within our <code>Light</code> module, and we are using <code>defstruct</code> which will let us define structured maps to represent our lights. We can combine these two together.
-    </p>
-
-    <p>
-      But first, a little bit about why. Our code for <code>Light.toggle/1</code> will break if we use it in weird ways -- like if we pass it a map which <em>does not</em> have a <code>:status</code> key:
-    </p>
-
-    <pre><code class='hljs plain'>iex> %{} |> Light.toggle
-<span class='console-red'>** (FunctionClauseError) no function clause matching in Light.toggle/1</span>
-
-The following arguments were given to Light.toggle/1:
-
-    # 1
-    %{}
-
-    Attempted function clauses (showing 2 out of 2):
-
-    def toggle(<span class='console-red'>%{status: "on"} = light</span>)
-    def toggle(<span class='console-red'>%{status: "off"} = light</span>)
-
-<span class='console-red'>light.exs:4: Light.toggle/1</span></code></pre>
-
-    <p>
-      As we can see from the error output, this error is happening because <em>both</em> of the clauses for <code>Light.toggle/1</code> do not match:
-    </p>
-
-    <pre><code><span class='unused-clause'>def toggle(%{status: "on"} = light) do
-  %{light | status: "off"}
+<pre><code>def toggle_location(%Person{location: "away"} = person) do
+  %{person | location: "home"}
 end
 
-def toggle(%{status: "off"} = light) do
-  %{light | status: "on"}
-end</span></code></pre>
-
-    <p>
-      Neither clause matches because there is no <code>:status</code> key with a value of either "on" or "off" within the map that we are passing to <code>Light.toggle/1</code>. We can fix this by making our functions match on the <code>Light</code> structs, rather than simple maps. The <code>Light</code> struct <em>always</em> includes a <code>:status</code> key. To make our code do this, we'll change our <code>light.exs</code> code to this:
-    </p>
-
-    <pre><code>defmodule Light do
-  defstruct [:name, status: "off"]
-
-  def toggle(%Light{status: "on"} = light) do
-    light |> turn_off
-  end
-
-  def toggle(%Light{status: "off"} = light) do
-    light |> turn_on
-  end
-
-  defp turn_on(%Light{} = light) do
-    %{light | status: "on"}
-  end
-
-  defp turn_off(%Light{} = light) do
-    %{light | status: "off"}
-  end
+def toggle_location(%Person{location: "home"} = person) do
+  %{person | location: "away"}
 end</code></pre>
 
     <p>
-      With the module changed, we can re-compile it:
+      And now we can compile the module once again, and use this function:
     </p>
 
-    <pre><code>iex> c "light.exs", "."
-<span class='console-yellow'>warning:</span> redefining module Light (current version loaded from Elixir.Light.beam)
-  light.exs:1
-
-[Light]
-    </code></pre>
+<pre><code>iex> c "person.exs", "."
+iex> person = %Person{
+  first_name: "Izzy",
+  last_name: "Bell",
+  birthday: ~D[1987-12-04],
+}
+iex> person |> Person.toggle_location
+%Person{
+  birthday: ~D[1987-12-04],
+  first_name: "Izzy",
+  last_name: "Bell",
+  location: "away"
+}</code></pre>
 
     <p>
-      Once the module is re-compiled, we can try calling <code>Light.toggle/1</code> with an empty map again:
+      This function does exactly what our <code>home</code> and <code>away</code> functions do, and so we can remove those functions.
     </p>
 
-    <pre><code>iex> Light.toggle(%{})
-<span class='console-red'>** (FunctionClauseError) no function clause matching in Light.toggle/1</span>
-
-The following arguments were given to Light.toggle/1:
-
-    # 1
-    %{}
-
-Attempted function clauses (showing 2 out of 2):
-
-    def toggle(<span class='console-red'>%Light{status: "on"} = light</span>)
-    def toggle(<span class='console-red'>%Light{status: "off"} = light</span>)
-
-<span class='console-red'>light.exs:4: Light.toggle/1</span></code></pre>
-
     <p>
-      This is a bit better! The error message shows us that we're passing through an empty map, but the function takes a <code>Light</code> struct instead. Let's try passing through an empty <code>Light</code> struct instead:
+      But this <code>toggle_location</code> function is public -- it's accessible outside of the module still -- and weren't we talking about both public and private functions? You're right! We were. Let's get to that now.
     </p>
 
-    <pre><code>iex> Light.toggle(%Light{})
-%Light{name: nil, status: "on"}</code></pre>
-
     <p>
-      This code works! It works because the <code>Light</code> struct is configured to have a default value of <code>"off"</code> for the <code>:status</code> key within <code>light.exs</code>:
+      The two function clauses of <code>toggle_location</code> look remarkably similar. They both set a <code>location</code> key to a particular value. This is a clear opportunity for tidying up some of our code, and it's a great opportunity to demonstrate private functions too.
     </p>
 
-    <pre><code>defmodule Light do
-  defstruct [:name, status: "off"]</code></pre>
-
     <p>
-      This means that when we write <code>%Light{}</code>, we're actually going to get back something else:
+      Let's add a new function -- a <em>private</em> function</em> to our module. We add private functions to the bottom of our module, and define them with <code>defp</code>, where the "p" stands for private.
     </p>
 
-    <pre><code>iex> %Light{}
-%Light{name: nil, status: "off"}</code></pre>
+<pre><code>defp set_location(%Person{} = person, location) do
+  %{person | location: location}
+end</code></pre>
 
     <p>
-      This is certainly a big advantage of using structs over maps: we can have keys with default values and then we can match on those default values in functions such as <code>Light.toggle/1</code>. This makes mistakes like leaving out the <code>:status</code> key avoidable.
+      Now back up in <code>toggle_location</code>, we can use this function to set the location:
+    </p>
+
+<pre><code>def toggle_location(%Person{location: "away"} = person) do
+  person |> set_location("home")
+end
+
+def toggle_location(%Person{location: "home"} = person) do
+  person |> set_location("away")
+end</code></pre>
+
+    <p>
+      This way, the code involved with setting the location can be shared across these <code>toggle_location</code> functions, and any other functions that later on might also set a location. Perhaps there'll come a time where we might want to announce what a particular person's location is each time it changes:
+    </p>
+
+    <pre><code>defp set_location(%Person{} = person, location) do
+  IO.puts "#{person |> full_name}'s location is now #{location}"
+  %{person | location: location}
+end</code></pre>
+
+    <p>
+      The private function is an ideal place to put that code. It centralises the code in one simple place, and hides internal implementation details about how a location is set.
     </p>
   </section>
 
@@ -708,31 +581,117 @@ Attempted function clauses (showing 2 out of 2):
       There's one last thing to cover on the topic of structs. Structs are maps when you get to the bottom of things. Structs can be passed as the argument to any <code>Map</code> function, like <code>Map.get/2</code> for instance:
     </p>
 
-    <pre><code>iex> %Light{} |> Map.get(:status)</code></pre>
+<pre><code>iex> %Person{} |> Map.get(:location)
+"home"</code></pre>
 
     <p>
       This is because the underlying implementation of structs is based on maps. We can see this in action if we call the <code>Map.keys/1</code> function on a struct:
     </p>
 
-    <pre><code>iex> %Light{} |> Map.keys
-[:__struct__, :name, :status]</code></pre>
+<pre><code>iex> %Person{} |> Map.keys
+[:__struct__, :birthday, :first_name, :last_name, :location]</code></pre>
 
     <p>
-      The <code>Map.keys/1</code> function returns not just the two keys that we've defined with <code>defstruct</code>, but a third key called <code>:__struct__</code>. This key contains the module name of the struct. We can see this by asking the struct for its <code>__struct__</code> key's value:
+      The <code>Map.keys/1</code> function returns not just the four keys that we've defined with <code>defstruct</code>, but a fifth key called <code>:__struct__</code>. This key contains the module name of the struct. We can see this by asking the struct for its <code>__struct__</code> key's value:
     </p>
 
-    <pre><code>iex> %Light{}.__struct__
-Light</code></pre>
+    <pre><code>iex> %Person{}.__struct__
+Person</code></pre>
 
     <p>
       Structs are, simply put, maps with one extra key: a <code>:__struct__</code> key. We can even define a map ourselves with such a key to prove this:
     </p>
 
-    <pre><code>iex> %{__struct__: Light, status: "off", name: "Lamp"}
-%Light{name: "Lamp", status: "off"}</code></pre>
+<pre><code>iex> %{__struct__: Person, first_name: "Izzy", last_name: "Bell", birthday: ~D[1987-12-04], location: "home"}
+%Person{
+  birthday: ~D[1987-12-04],
+  first_name: "Izzy",
+  last_name: "Bell",
+  location: ""
+}</code></pre>
 
     <p>
       Structs are maps at heart!
+    </p>
+  </section>
+
+  <section class='break'>
+    <h3>Structs and Protocols</h3>
+
+    <p>
+      There's been one other type of struct that we've been using a lot in this chapter, and we haven't even talked about it being a struct! It's this:
+    </p>
+
+    <pre><code>~D[1987-12-04]</code></pre>
+
+    <p>
+      Izzy exclaims: "That's not a struct! There's no percent sign!". Yup, there's not a single percent sign there. But it's still a struct! How can we tell? We can use <code>Map.keys/1</code>:
+    </p>
+
+<pre><code>iex> ~D[1987-12-04] |> Map.keys
+[:__struct__, :calendar, :day, :month, :year]</code></pre>
+
+    <p>
+      This function returns a list of keys, and that list contains <code>:__struct__</code>, and that's how we know that dates are structs under the hood.
+    </p>
+
+    <p>
+      Izzy is right that structs <em>usually</em> contain a percent sign. When we create a date, we don't use a percent sign to create it. Instead, we use the <code>~D</code> sigil. Similarly, when a date is displayed (like in some output for our terminal) it is not displayed like this:
+    </p>
+
+<pre><code>%Calendar.Date{calendar: Calendar.ISO, day: 4, month: 12, year: 1987}</code></pre>
+
+    <p>
+      Instead, it is shown like this:
+    </p>
+
+<pre><code>~D[1987-12-04]</code></pre>
+
+    <p>
+      This is due to <a href='https://github.com/elixir-lang/elixir/blob/0a953d75fb2cbdc6f3d33040aa60738d85512a1f/lib/elixir/lib/calendar/date.ex#L750-L757'>some code within Elixir itself</a>. This code sees that a date is about to be output, and instead displays it in this condensed format instead for readability.
+    </p>
+
+    <p>
+      This feature of Elixir is called a <em>protocol</em>, and in particular this is the <code>Inspect</code> protocol we're talking about here. When a date is output on the screen, Elixir checks if there is an inspect protocol implemented for dates. There is, and so it gets used instead of the regular struct output.
+    </p>
+
+    <p>
+      That description is a little wordy, so let's see some code of our own in action! Let's go into our <code>person.exs</code> file and define an implementation for this <code>Inspect</code> protocol:
+    </p>
+
+
+<pre><code>defmodule Person do
+  # ...
+  # functions go here
+  # ...
+
+  defimpl Inspect do
+    def inspect(%{first_name: first_name, last_name: last_name}, _) do
+      "Person[#{first_name} #{last_name}]"
+    end
+  end
+end</code></pre>
+
+    <p>
+      Then let's re-compile this module back in <code>iex</code>:
+    </p>
+
+<pre><code>iex> c "person.exs", "."
+[Inspect.Person, Person]</code></pre>
+
+    <p>
+      Note that this has now compiled <em>two</em> modules: <code>Inspect.Person</code> and <code>Person</code>. The <code>Inspect.Person</code> module has been automatically generated and it will be used when a person struct is inspected.
+    </p>
+
+    <p>
+      To inspect a person struct, all we need to do is to generate one and get the console to do the actual inspection:
+    </p>
+
+<pre><code>iex> %Person{first_name: "Izzy", last_name: "Bell"}
+Person[Izzy Bell]</code></pre>
+
+    <p>
+      Great! This is now working. This has allowed us to condense the information that is displayed when using a <code>Person</code> struct in the console. This can be useful if you want to limit the amount of data that is shown in the terminal and just something I thought you should know about before we wrap up this chapter on modules and structs!
     </p>
   </section>
 </section>
