@@ -7,18 +7,25 @@ html {
 body {
   height: 100%;
 
-  font: 13pt "Oxygen";
+  font: 12pt "Oxygen";
   font-weight: 100;
   -webkit-text-size-adjust: 100%;
   @media screen {
-    background: linear-gradient(145deg, $lighter-purple, darken($lighter-purple, 25));
+    background: linear-gradient(
+      145deg,
+      $lighter-purple,
+      darken($lighter-purple, 25)
+    );
     background-repeat: no-repeat;
     background-attachment: fixed;
   }
   margin: 0;
 }
 
-h1, h2, h3, h4 {
+h1,
+h2,
+h3,
+h4 {
   color: $purple;
 }
 
@@ -35,7 +42,9 @@ h3 {
   font-size: 1.25rem;
 }
 
-p, ul, ol {
+p,
+ul,
+ol {
   line-height: 150%;
 }
 
@@ -52,9 +61,11 @@ article {
     font-family: "Anonymous Pro";
   }
 
-  p, ul {
-    code, kbd {
-      background: #FBECFF;
+  p,
+  ul {
+    code,
+    kbd {
+      background: #fbecff;
       border-radius: 3px;
       padding: 3px;
     }
@@ -67,16 +78,23 @@ article {
       color: white;
       line-height: 133%;
       border-left: 5px solid $light-purple;
+      border-radius: 5px;
 
       &.custom {
         padding: 0.5em;
+      }
+
+      font-size: 80%;
+
+      @media only screen and (min-device-width: 750px) {
+        font-size: 100%;
       }
     }
   }
 
   aside {
-    border-color: #80DED9;
-    background: lighten(#80DED9, 30);
+    border-color: #80ded9;
+    background: lighten(#80ded9, 30);
 
     header {
       font-weight: bold;
@@ -88,11 +106,12 @@ article {
     margin-top: 20px;
   }
 
-  aside, blockquote {
-    border-width: 2px;
-    border-style: solid;
+  aside,
+  blockquote {
     border-radius: 5px;
     padding: 15px;
+    border-left-style: solid;
+    border-left-width: 5px;
 
     p:last-child {
       margin-bottom: 0px;
@@ -101,10 +120,11 @@ article {
 
   blockquote {
     margin: 0;
-    border-color: #9DD1F1;
-    background: lighten(#9DD1F1, 15);
+    font-size: 95%;
+    border-left: 5px solid #9dd1f1;
+    background: lighten(#9dd1f1, 15);
 
-    p {
+    p:first-child {
       margin: 0;
     }
   }
@@ -114,7 +134,7 @@ article {
 
     img {
       max-width: 45vw;
-      border: 1px solid #D7D7D7;
+      border: 1px solid #d7d7d7;
     }
 
     figcaption {
@@ -128,10 +148,13 @@ footer {
 }
 
 .wrapper {
-  @media only screen and (min-device-width: 750px) {
-    margin: 0 10%;
+  @media only screen and (min-width: 700px) {
+    margin: 0 5%;
     padding: 2.5% 5%;
   }
+
+  border-left: 3px solid $lighter-purple;
+  border-right: 3px solid $light-purple;
 
   background: white;
   padding: 2.5% 5%;
