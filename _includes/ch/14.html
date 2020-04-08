@@ -3,7 +3,8 @@
 
   <section>
     <p>
-      We've now seen lots of examples of functions throughout this book. We've seen how we can define anonymous functions (in Chapter 5):
+      We've now seen lots of examples of functions throughout this book. We've seen how we can define anonymous
+      functions (in Chapter 5):
     </p>
 
     <pre><code>iex> hello = fn (place) -> "Hello #{place}!" end
@@ -18,24 +19,32 @@ hello.("World")
 "hello but quietly"</code></pre>
 
     <p>
-      But what we haven't seen yet is how to define our own modules, or even <em>why</em> we would want to do that. The why is the simple part: we define functions inside of modules to keep them separate from other functions; modules are a convenient way of grouping functions. Here's a refresher that recycles the description used in Chapter 8:
+      But what we haven't seen yet is how to define our own modules, or even <em>why</em> we would want to do that. The
+      why is the simple part: we define functions inside of modules to keep them separate from other functions; modules
+      are a convenient way of grouping functions. Here's a refresher that recycles the description used in Chapter 8:
     </p>
 
     <blockquote>
       <p>
-        The functions that Elixir provides are separated into something akin to kitchen drawers or toolboxes, called <em>modules</em>. Whereas in your top kitchen drawer you might have forks, knives, sporks, and spoons (like every sensible person's kitchen does), and in another you might have measuring cups, and in another tea towels.
+        The functions that Elixir provides are separated into something akin to kitchen drawers or toolboxes, called
+        <em>modules</em>. Whereas in your top kitchen drawer you might have forks, knives, sporks, and spoons (like
+        every sensible person's kitchen does), and in another you might have measuring cups, and in another tea towels.
       </p>
 
-      <p>In Elixir, the functions to work with the different kinds of data are separated into different modules. This makes finding functions to work with particular kinds of data in Elixir very easy.
+      <p>In Elixir, the functions to work with the different kinds of data are separated into different modules. This
+        makes finding functions to work with particular kinds of data in Elixir very easy.
       </p>
     </blockquote>
 
     <p>
-      We haven't yet built a complex enough system to require us to put functions inside of modules, or to even want to write our own functions. That changes in this chapter! A rumbling occurs behind us, and slightly to our left. It's Izzy vibrating with anticipation. It's a weird and unearthly sound, but we'll roll with it.
+      We haven't yet built a complex enough system to require us to put functions inside of modules, or to even want to
+      write our own functions. That changes in this chapter! A rumbling occurs behind us, and slightly to our left. It's
+      Izzy vibrating with anticipation. It's a weird and unearthly sound, but we'll roll with it.
     </p>
 
     <p>
-      This chapter will show you how to write new modules for the purpose of grouping together functions, and we'll also cover a special kind of map called a <em>struct</em>. Let's go!
+      This chapter will show you how to write new modules for the purpose of grouping together functions, and we'll also
+      cover a special kind of map called a <em>struct</em>. Let's go!
     </p>
   </section>
 
@@ -49,10 +58,11 @@ hello.("World")
     <pre><code>%{name: "Izzy", age: "30ish"}</code></pre>
 
     <p>
-      In this chapter, we're going to be working with maps based off these ones, but they're going to be a little more complicated in shape:
+      In this chapter, we're going to be working with maps based off these ones, but they're going to be a little more
+      complicated in shape:
     </p>
 
-<pre><code>iex> person = %{
+    <pre><code>iex> person = %{
   first_name: "Izzy",
   last_name: "Bell",
   birthday: ~D[1987-12-04],
@@ -62,61 +72,82 @@ hello.("World")
       <header>What is that <code>~D</code> thing?</header>
 
       <p>
-        In the above map, there's <code>~D[1987-12-04]</code> used as a value for the <code>birthday</code> key in the map. This is the first time we're seeing such syntax, and so it deserves an explanation!
+        In the above map, there's <code>~D[1987-12-04]</code> used as a value for the <code>birthday</code> key in the
+        map. This is the first time we're seeing such syntax, and so it deserves an explanation!
       </p>
 
       <p>
-        When you see <code>~</code> followed by a letter in Elixir, that is referred to as a <em>sigil</em>. These are special constructs in Elixir that provide us with shortcuts of creating certain things. In this case, the <code>~D</code> sigil lets us create a data type that represents a date.
+        When you see <code>~</code> followed by a letter in Elixir, that is referred to as a <em>sigil</em>. These are
+        special constructs in Elixir that provide us with shortcuts of creating certain things. In this case, the
+        <code>~D</code> sigil lets us create a data type that represents a date.
       </p>
 
       <p>
-        We'll come back to that a little later on in the chapter, but I think it deserved that quick explanation here to avoid any potential stumbling blocks!
+        We'll come back to that a little later on in the chapter, but I think it deserved that quick explanation here to
+        avoid any potential stumbling blocks!
       </p>
     </aside>
 
     <p>
-      With our new map shape, what if we wanted to have a function that joined together the person's first and last name into a single string? Well, we could probably write it like this:
+      With our new map shape, what if we wanted to have a function that joined together the person's first and last name
+      into a single string? Well, we could probably write it like this:
     </p>
 
-<pre><code>iex> full_name = fn (person) -> "#{person.first_name} #{person.last_name}" end</code></pre>
+    <pre><code>iex> full_name = fn (person) -> "#{person.first_name} #{person.last_name}" end</code></pre>
 
     <p>
       Then we can call this function with this code:
     </p>
 
-<pre><code>iex> full_name.(person)
+    <pre><code>iex> full_name.(person)
 "Izzy Bell"</code></pre>
 
     <p>
-      This is wilfully ignoring the fact that some people have <a href='https://en.wikipedia.org/wiki/Mononymous_person'>mononyms</a>, as well as <a href='https://www.kalzumeus.com/2010/06/17/falsehoods-programmers-believe-about-names/'>the falsehoods programmers believe about names</a>. Ignoring both of those things for now, we have a single function that will let us display a combination of a first name and a last name. That's all well and good to have a function that does that.
+      This is wilfully ignoring the fact that some people have <a
+        href='https://en.wikipedia.org/wiki/Mononymous_person'>mononyms</a>, as well as <a
+        href='https://www.kalzumeus.com/2010/06/17/falsehoods-programmers-believe-about-names/'>the falsehoods
+        programmers believe about names</a>. Ignoring both of those things for now, we have a single function that will
+      let us display a combination of a first name and a last name. That's all well and good to have a function that
+      does that.
     </p>
 
     <p>
-      But what if we had <em>another</em> function that also operated on these people maps? A function called <code>age</code>:
+      But what if we had <em>another</em> function that also operated on these people maps? A function called
+      <code>age</code>:
     </p>
 
-<pre><code>iex> age = fn (person) ->
+    <pre><code>iex> age = fn (person) ->
 ...> days =  Date.diff(Date.utc_today, person.birthday)
 ...> days / 365.25
 ...> end</code></pre>
 
     <p>
-      This new function uses two new functions from Elixir's built-in <code>Date</code> module: <code>Date.utc_today/0</code> and <code>Date.diff/2</code>. The <code>Date.utc_today/0</code> function returns the current date in the <a href='https://en.wikipedia.org/wiki/Coordinated_Universal_Time'>UTC time zone</a>. The <code>Date.diff/2</code> function allows us to figure out the difference (in days) between two dates. So we're using this function to find the number of days between today and the person's birthday. We then take that number of days and divide it by the average number of days in a year: <code>365.25</code>. This should give us a close-enough approximation of somebody's age.
+      This new function uses two new functions from Elixir's built-in <code>Date</code> module:
+      <code>Date.utc_today/0</code> and <code>Date.diff/2</code>. The <code>Date.utc_today/0</code> function returns the
+      current date in the <a href='https://en.wikipedia.org/wiki/Coordinated_Universal_Time'>UTC time zone</a>. The
+      <code>Date.diff/2</code> function allows us to figure out the difference (in days) between two dates. So we're
+      using this function to find the number of days between today and the person's birthday. We then take that number
+      of days and divide it by the average number of days in a year: <code>365.25</code>. This should give us a
+      close-enough approximation of somebody's age.
     </p>
 
     <p>
       We can call this function with this code:
     </p>
 
-<pre><code>iex> age.(person)
+    <pre><code>iex> age.(person)
 31.972621492128678</code></pre>
 
     <p>
-      Note that you'll get a different number to the one shown here because <code>Date.utc_today</code> will return a different day for you. This number was correct at the time of writing, I promise!
+      Note that you'll get a different number to the one shown here because <code>Date.utc_today</code> will return a
+      different day for you. This number was correct at the time of writing, I promise!
     </p>
 
     <p>
-      Now we have two functions that work on this same map. Wouldn't it be nice to have a place where we could group the functions? Similar to how <code>Date.diff/2</code> and <code>Date.utc_today/0</code> functions. Those functions are grouped together inside of a module called <code>Date</code>. Let's look at how we can create our own module for these <code>full_name</code> and <code>age</code> functions.
+      Now we have two functions that work on this same map. Wouldn't it be nice to have a place where we could group the
+      functions? Similar to how <code>Date.diff/2</code> and <code>Date.utc_today/0</code> functions. Those functions
+      are grouped together inside of a module called <code>Date</code>. Let's look at how we can create our own module
+      for these <code>full_name</code> and <code>age</code> functions.
     </p>
   </section>
 
@@ -124,30 +155,36 @@ hello.("World")
     <h3>The Person module</h3>
 
     <p>
-      Elixir comes with a bunch of built-in modules: <code>List</code>, <code>Map</code>, <code>Enum</code> and <code>Date</code> are a few that we've seen so far. Creating modules is not just for Elixir itself, but we can create our own modules too. The main reason to create a module is to group together functions, which is exactly what we're going to do in this part of this chapter.
+      Elixir comes with a bunch of built-in modules: <code>List</code>, <code>Map</code>, <code>Enum</code> and
+      <code>Date</code> are a few that we've seen so far. Creating modules is not just for Elixir itself, but we can
+      create our own modules too. The main reason to create a module is to group together functions, which is exactly
+      what we're going to do in this part of this chapter.
     </p>
 
     <p>
       To define modules in Elixir we use <code>defmodule</code>. We <em>could</em> write it out in <code>iex</code>:
     </p>
 
-<pre><code>iex(1)> defmodule Person do
+    <pre><code>iex(1)> defmodule Person do
 ...> ...
 ...> end
 </code></pre>
 
     <p>
-      But we're going to be changing this code a lot and so we should write the code in a  file instead. Let's create a new file called <code>person.exs</code> inside a directory called <code>~/code/joy_of_elixir</code> and we'll define the <code>Person</code> module in this file:
+      But we're going to be changing this code a lot and so we should write the code in a file instead. Let's create a
+      new file called <code>person.exs</code> inside a directory called <code>~/code/joy_of_elixir</code> and we'll
+      define the <code>Person</code> module in this file:
     </p>
 
-<pre><code>defmodule Person do
+    <pre><code>defmodule Person do
 end</code></pre>
 
     <p>
-      Our module doesn't do very much at the moment. So let's change that by putting our functions inside it. Functions defined in a module must start with the keyword <code>def</code>:
+      Our module doesn't do very much at the moment. So let's change that by putting our functions inside it. Functions
+      defined in a module must start with the keyword <code>def</code>:
     </p>
 
-<pre><code>defmodule Person do
+    <pre><code>defmodule Person do
   def full_name(person) do
     "#{person.first_name} #{person.last_name}"
   end
@@ -159,32 +196,42 @@ end</code></pre>
 end</code></pre>
 
     <p>
-      To use this module, we need to make sure that we're in the <code>~/code/joy_of_elixir</code> directory and then we can run <code>iex</code>. Once we're in <code>iex</code> we can compile the module with:
+      To use this module, we need to make sure that we're in the <code>~/code/joy_of_elixir</code> directory and then we
+      can run <code>iex</code>. Once we're in <code>iex</code> we can compile the module with:
     </p>
 
-<pre><code>iex> c "person.exs", "."</code></pre>
+    <pre><code>iex> c "person.exs", "."</code></pre>
 
     <p>
-      The <code>c</code> helper's name is short for "compile". Using <code>c</code> like this will load the code from <code>person.exs</code> into our <code>iex</code> session, making the <code>Person</code> module and its functions available to us.
-    </p>
-
-    <p>
-      When we run <code>c</code>, it outputs a list of the modules that were loaded by compiling the file, which we see here as <code>[Person]</code>, since there's only the <code>Person</code> module in that file.
-    </p>
-
-    <p>
-      We're passing a second argument to <code>c</code> here which is a path where our compiled module should go. The dot (<code>.</code>) here means "the current directory", so where we ran the <code>iex</code> command from. When we run this command, Elixir will compile our module to a file called <code>Elixir.Person.beam</code>.
+      The <code>c</code> helper's name is short for "compile". Using <code>c</code> like this will load the code from
+      <code>person.exs</code> into our <code>iex</code> session, making the <code>Person</code> module and its functions
+      available to us.
     </p>
 
     <p>
-      We could also compile this file with <code>c "person.exs"</code> -- only a single argument to the <code>c</code> function call. This will still compile the module, but every time we go back into <code>iex</code>, we will need to re-compile the module to use it. By running it with two arguments -- <code>c "person.exs", "."</code>, we can enter and leave <code>iex</code> and always have our <code>Person</code> module available.
+      When we run <code>c</code>, it outputs a list of the modules that were loaded by compiling the file, which we see
+      here as <code>[Person]</code>, since there's only the <code>Person</code> module in that file.
     </p>
 
     <p>
-      With this file compiled, we can start to use to use the <code>Person</code> module. Let's try the <code>Person.age/1</code> function:
+      We're passing a second argument to <code>c</code> here which is a path where our compiled module should go. The
+      dot (<code>.</code>) here means "the current directory", so where we ran the <code>iex</code> command from. When
+      we run this command, Elixir will compile our module to a file called <code>Elixir.Person.beam</code>.
     </p>
 
-<pre><code>iex> person = %{
+    <p>
+      We could also compile this file with <code>c "person.exs"</code> -- only a single argument to the <code>c</code>
+      function call. This will still compile the module, but every time we go back into <code>iex</code>, we will need
+      to re-compile the module to use it. By running it with two arguments -- <code>c "person.exs", "."</code>, we can
+      enter and leave <code>iex</code> and always have our <code>Person</code> module available.
+    </p>
+
+    <p>
+      With this file compiled, we can start to use to use the <code>Person</code> module. Let's try the
+      <code>Person.age/1</code> function:
+    </p>
+
+    <pre><code>iex> person = %{
   first_name: "Izzy",
   last_name: "Bell",
   birthday: ~D[1987-12-04],
@@ -196,16 +243,17 @@ iex> person |> Person.age
       Great! That one works. Let's try the <code>full_name</code> function too:
     </p>
 
-<pre><code>iex> person |> Person.full_name
+    <pre><code>iex> person |> Person.full_name
 "Izzy Bell"</code></pre>
 
     <p>Excellent. Both functions work!</p>
 
     <p>
-      One special thing to note here is that if we exit out of <code>iex</code> and re-open it again, our module will still be accessible. We will still be able to run the functions without first having to compile our module:
+      One special thing to note here is that if we exit out of <code>iex</code> and re-open it again, our module will
+      still be accessible. We will still be able to run the functions without first having to compile our module:
     </p>
 
-<pre><code>iex> person = %{
+    <pre><code>iex> person = %{
   first_name: "Izzy",
   last_name: "Bell",
   birthday: ~D[1987-12-04],
@@ -213,18 +261,22 @@ iex> person |> Person.age
 iex> person |> Person.age
 31.975359342915812</code></pre>
 
-<pre><code>iex> person |> Person.full_name
+    <pre><code>iex> person |> Person.full_name
 "Izzy Bell"</code></pre>
 
     <p>
-      This is because Elixir will load the <code>Elixir.Person.beam</code> file automatically, as it is located in the directory that we're running <code>iex</code> in.
+      This is because Elixir will load the <code>Elixir.Person.beam</code> file automatically, as it is located in the
+      directory that we're running <code>iex</code> in.
     </p>
 
     <p>
-      Now that we have got our module running, let's add another two functions to it. These functions will set a person's location to either be "home" or "away". This location value will indicate if the person is at home, or if they're away from home. The functions should go at the bottom of the module definition inside <code>person.exs</code>:
+      Now that we have got our module running, let's add another two functions to it. These functions will set a
+      person's location to either be "home" or "away". This location value will indicate if the person is at home, or if
+      they're away from home. The functions should go at the bottom of the module definition inside
+      <code>person.exs</code>:
     </p>
 
-<pre><code>defmodule Person do
+    <pre><code>defmodule Person do
   def full_name(person) do
     "#{person.first_name} #{person.last_name}"
   end
@@ -246,53 +298,28 @@ iex> person |> Person.age
       If we attempt to use these functions right away, they will not work:
     </p>
 
-<pre><code>iex> person |> Person.away
+    <pre><code>iex> person |> Person.away
 ** (UndefinedFunctionError) function Person.away/1 is undefined or private</code></pre>
 
     <p>
-      This is happening because we have not yet re-compiled the <code>Person</code> module. To do that, we need to use the <code>c</code> helper again:
+      This is happening because we have not yet re-compiled the <code>Person</code> module. To do that, we need to use
+      the <code>c</code> helper again:
     </p>
 
-<pre><code>c "person.exs", "."</code></pre>
+    <pre><code>c "person.exs", "."</code></pre>
 
     <p>
       With the module now compiled, we will be able to use this function:
     </p>
 
-<pre><code>iex> person |> Person.away
+    <pre><code>iex> person |> Person.away
 ** (KeyError) key :location not found
 person.exs:15: Person.away/1</code></pre>
 
     <p>
-      Well, we thought we could. But this map doesn't have a <code>location</code> key on it, and this means the <code>away</code> function is unable to set that key to a value. We can fix this by providing that key when we define the initial map:
-    </p>
-
-<pre><code>iex> person = %{
-  first_name: "Izzy",
-  last_name: "Bell",
-  birthday: ~D[1987-12-04],
-  location: "home",
-}
-iex> person |> Person.away
-%{
-  birthday: ~D[1987-12-04],
-  first_name: "Izzy",
-  last_name: "Bell",
-  location: "away"
-}</code></pre>
-
-    <p>
-      Okay, so what we needed to do here was to provide the <code>location</code> key in the map and then it worked. That's good to see! But how could we prevent this missing key being an issue again? The way to do that is with a struct!
-    </p>
-  </section>
-
-
-
-  <section>
-    <h3>Structs</h3>
-
-    <p>
-      So far, we have been using maps to represent our people -- well, <em>one</em> person -- and then passing this map through to the functions from the <code>Person</code> module:
+      Well, we thought we could. But this map doesn't have a <code>location</code> key on it, and this means the
+      <code>away</code> function is unable to set that key to a value. We can fix this by providing that key when we
+      define the initial map:
     </p>
 
     <pre><code>iex> person = %{
@@ -310,11 +337,46 @@ iex> person |> Person.away
 }</code></pre>
 
     <p>
-      We're now going to take the time to look at a data type that is similar to a map, called a <em>struct</em>. The word "struct" is shorted for "structured data"; it's a map, but a particular <em>type</em> of map, where each map of the same type will share the same structure.
+      Okay, so what we needed to do here was to provide the <code>location</code> key in the map and then it worked.
+      That's good to see! But how could we prevent this missing key being an issue again? The way to do that is with a
+      struct!
+    </p>
+  </section>
+
+
+
+  <section>
+    <h3>Structs</h3>
+
+    <p>
+      So far, we have been using maps to represent our people -- well, <em>one</em> person -- and then passing this map
+      through to the functions from the <code>Person</code> module:
+    </p>
+
+    <pre><code>iex> person = %{
+  first_name: "Izzy",
+  last_name: "Bell",
+  birthday: ~D[1987-12-04],
+  location: "home",
+}
+iex> person |> Person.away
+%{
+  birthday: ~D[1987-12-04],
+  first_name: "Izzy",
+  last_name: "Bell",
+  location: "away"
+}</code></pre>
+
+    <p>
+      We're now going to take the time to look at a data type that is similar to a map, called a <em>struct</em>. The
+      word "struct" is shorted for "structured data"; it's a map, but a particular <em>type</em> of map, where each map
+      of the same type will share the same structure.
     </p>
 
     <p>
-      A struct has a set of key-value pairs just like a map, but a struct's keys are limited to only a certain set. Let's look at how we would define a struct now within the <code>Perosn</code> module. At the top of the module, we can use the <code>defstruct</code> keyword to define a struct:
+      A struct has a set of key-value pairs just like a map, but a struct's keys are limited to only a certain set.
+      Let's look at how we would define a struct now within the <code>Perosn</code> module. At the top of the module, we
+      can use the <code>defstruct</code> keyword to define a struct:
     </p>
 
     <pre><code>defmodule Person do
@@ -332,27 +394,33 @@ end</code></pre>
       Let's start <code>iex</code> and compile our <code>light.exs</code> file:
     </p>
 
-<pre><code>iex> c "light.exs"</code></pre>
+    <pre><code>iex> c "light.exs"</code></pre>
 
     <p>
       To use this struct, we use a similar syntax to how we would create a new map:
     </p>
 
-<pre><code>person = %Person{}</code></pre>
+    <pre><code>person = %Person{}</code></pre>
 
     <p>
-      The difference is here that we put the name of the module where the struct is defined between the <code>%</code> and the opening curly bracket. In our <code>defstruct</code> call, we have defined a default value for <code>status</code>: <code>"home"</code>. So when we've now built this new struct with <code>%Person{}</code>, it will already have a <code>:location</code> key set to <code>"home"</code>.
+      The difference is here that we put the name of the module where the struct is defined between the <code>%</code>
+      and the opening curly bracket. In our <code>defstruct</code> call, we have defined a default value for
+      <code>location</code>: <code>"home"</code>. So when we've now built this new struct with <code>%Person{}</code>,
+      it will already have a <code>:location</code> key set to <code>"home"</code>.
     </p>
 
     <p>
-      This is one of the advantages of structs over maps: structs can have default values. This will avoid the issue where our <code>away</code> function was failing because there was no <code>location</code> key in our map.
+      This is one of the advantages of structs over maps: structs can have default values. This will avoid the issue
+      where our <code>away</code> function was failing because there was no <code>location</code> key in our map.
     </p>
 
     <p>
-      One extra thing that will help here is to match on the struct type in the <code>away</code> and <code>home</code> functions. This will ensure that we <em>always</em> are getting a <code>Person</code> struct before we try to do anything in these functions. To do this, we need to change these functions to this:
+      One extra thing that will help here is to match on the struct type in the <code>away</code> and <code>home</code>
+      functions. This will ensure that we <em>always</em> are getting a <code>Person</code> struct before we try to do
+      anything in these functions. To do this, we need to change these functions to this:
     </p>
 
-<pre><code>def home(%Person{} = person) do
+    <pre><code>def home(%Person{} = person) do
   %{person | location: "home"}
 end
 
@@ -361,10 +429,11 @@ def away(%Person{} = person) do
 end</code></pre>
 
     <p>
-      This change to these functions will make them <em>always</em> require a <code>Person</code> struct as an argument. They will no longer work with a map. Let's see this in action by re-compiling our module and trying agani:
+      This change to these functions will make them <em>always</em> require a <code>Person</code> struct as an argument.
+      They will no longer work with a map. Let's see this in action by re-compiling our module and trying agani:
     </p>
 
-<pre><code>iex> c "person.exs", "."
+    <pre><code>iex> c "person.exs", "."
 iex> person = %{
   first_name: "Izzy",
   last_name: "Bell",
@@ -378,7 +447,7 @@ iex> person |> Person.away
       When we run this code, we'll see this error:
     </p>
 
-<pre><code class='plain hljs'>** (FunctionClauseError) no function clause matching in Person.away/1
+    <pre><code class='plain hljs'>** (FunctionClauseError) no function clause matching in Person.away/1
 
 The following arguments were given to Person.away/1:
 
@@ -398,10 +467,12 @@ person.exs:22: Person.away/1
 </code></pre>
 
     <p>
-      This error is showing us that the function does not match. It shows us that we're passing a plain map to the function as its first argument, but the function is expecting a <code>Person</code> struct instead. So let's pass one of those instead:
+      This error is showing us that the function does not match. It shows us that we're passing a plain map to the
+      function as its first argument, but the function is expecting a <code>Person</code> struct instead. So let's pass
+      one of those instead:
     </p>
 
-<pre><code>person = %Person{
+    <pre><code>person = %Person{
   first_name: "Izzy",
   last_name: "Bell",
   birthday: ~D[1987-12-04],
@@ -415,22 +486,26 @@ iex> person |> Person.away
 }</code></pre>
 
     <p>
-      That works a lot better! And did you notice that we didn't have to supply a <code>location</code> for our Izzy either? The struct will use the default value if we do not specify it.
+      That works a lot better! And did you notice that we didn't have to supply a <code>location</code> for our Izzy
+      either? The struct will use the default value if we do not specify it.
     </p>
 
     <p>
-      By enforcing a <code>Person</code> struct here in this <code>away</code> function, we can be guaranteed that the function will always receive a <code>person</code> argument that is a <code>Person</code> struct, and that means it will <em>always</em> have a location key.
+      By enforcing a <code>Person</code> struct here in this <code>away</code> function, we can be guaranteed that the
+      function will always receive a <code>person</code> argument that is a <code>Person</code> struct, and that means
+      it will <em>always</em> have a location key.
     </p>
 
     <p>
-      While we're here, we should also make the same changes to the <code>age</code> and <code>full_name</code> functions too, just to make sure that we receive structs for those functions too.
+      While we're here, we should also make the same changes to the <code>age</code> and <code>full_name</code>
+      functions too, just to make sure that we receive structs for those functions too.
     </p>
 
     <p>
       Our module will now look like this:
     </p>
 
-<pre><code>defmodule Person do
+    <pre><code>defmodule Person do
   defstruct [
     first_name: nil,
     last_name: nil,
@@ -460,7 +535,8 @@ end</code></pre>
       <header>How to tell functions apart</header>
 
       <p>
-        One final thing to point out here is that back in Chapter 8 we had this large text explaining how functions can be different from one another:
+        One final thing to point out here is that back in Chapter 8 we had this large text explaining how functions can
+        be different from one another:
       </p>
 
       <blockquote>
@@ -468,11 +544,15 @@ end</code></pre>
       </blockquote>
 
       <p>
-        We've now got an example where the function's name <em>and</em> the number of arguments are identical. The <code>Light.toggle/1</code> function has the same name, and the same number of arguments, but the two functions are actually different. So this phrasing (and our understanding) needs updating to include the pattern matching that we now know Elixir is capable of:
+        We've now got an example where the function's name <em>and</em> the number of arguments are identical. The
+        <code>Light.toggle/1</code> function has the same name, and the same number of arguments, but the two functions
+        are actually different. So this phrasing (and our understanding) needs updating to include the pattern matching
+        that we now know Elixir is capable of:
       </p>
 
       <blockquote>
-        <strong>Functions not only differ by name, but also by the number of arguments that they take, as well as the <em>pattern</em> of those arguments.</strong>
+        <strong>Functions not only differ by name, but also by the number of arguments that they take, as well as the
+          <em>pattern</em> of those arguments.</strong>
       </blockquote>
 
       <p>
@@ -491,18 +571,23 @@ end</code></pre>
     <h3>Public and private functions</h3>
 
     <p>
-      Before we move on from here, there's one extra concept I would like to share with you. That concept is about <em>public</em> and <em>private</em> functions in modules. Sometimes, we will have functions in modules that we will not want to share with the outside world. Those functions can be kept <em>private</em> so that only other functions inside the module know about it.
+      Before we move on from here, there's one extra concept I would like to share with you. That concept is about
+      <em>public</em> and <em>private</em> functions in modules. Sometimes, we will have functions in modules that we
+      will not want to share with the outside world. Those functions can be kept <em>private</em> so that only other
+      functions inside the module know about it.
     </p>
 
     <p>
-      Let's say that instead of having two functions called <code>home</code> and a <code>away</code>, we instead wanted to have a function called <code>toggle_location</code> that toggled the person's location between "home" and "away"?
+      Let's say that instead of having two functions called <code>home</code> and a <code>away</code>, we instead wanted
+      to have a function called <code>toggle_location</code> that toggled the person's location between "home" and
+      "away"?
     </p>
 
     <p>
       Well, here's how we might write that function:
     </p>
 
-<pre><code>def toggle_location(%Person{location: "away"} = person) do
+    <pre><code>def toggle_location(%Person{location: "away"} = person) do
   %{person | location: "home"}
 end
 
@@ -514,7 +599,7 @@ end</code></pre>
       And now we can compile the module once again, and use this function:
     </p>
 
-<pre><code>iex> c "person.exs", "."
+    <pre><code>iex> c "person.exs", "."
 iex> person = %Person{
   first_name: "Izzy",
   last_name: "Bell",
@@ -529,22 +614,27 @@ iex> person |> Person.toggle_location
 }</code></pre>
 
     <p>
-      This function does exactly what our <code>home</code> and <code>away</code> functions do, and so we can remove those functions.
+      This function does exactly what our <code>home</code> and <code>away</code> functions do, and so we can remove
+      those functions.
     </p>
 
     <p>
-      But this <code>toggle_location</code> function is public -- it's accessible outside of the module still -- and weren't we talking about both public and private functions? You're right! We were. Let's get to that now.
+      But this <code>toggle_location</code> function is public -- it's accessible outside of the module still -- and
+      weren't we talking about both public and private functions? You're right! We were. Let's get to that now.
     </p>
 
     <p>
-      The two function clauses of <code>toggle_location</code> look remarkably similar. They both set a <code>location</code> key to a particular value. This is a clear opportunity for tidying up some of our code, and it's a great opportunity to demonstrate private functions too.
+      The two function clauses of <code>toggle_location</code> look remarkably similar. They both set a
+      <code>location</code> key to a particular value. This is a clear opportunity for tidying up some of our code, and
+      it's a great opportunity to demonstrate private functions too.
     </p>
 
     <p>
-      Let's add a new function -- a <em>private</em> function</em> to our module. We add private functions to the bottom of our module, and define them with <code>defp</code>, where the "p" stands for private.
+      Let's add a new function -- a <em>private</em> function</em> to our module. We add private functions to the bottom
+      of our module, and define them with <code>defp</code>, where the "p" stands for private.
     </p>
 
-<pre><code>defp set_location(%Person{} = person, location) do
+    <pre><code>defp set_location(%Person{} = person, location) do
   %{person | location: location}
 end</code></pre>
 
@@ -552,7 +642,7 @@ end</code></pre>
       Now back up in <code>toggle_location</code>, we can use this function to set the location:
     </p>
 
-<pre><code>def toggle_location(%Person{location: "away"} = person) do
+    <pre><code>def toggle_location(%Person{location: "away"} = person) do
   person |> set_location("home")
 end
 
@@ -561,7 +651,9 @@ def toggle_location(%Person{location: "home"} = person) do
 end</code></pre>
 
     <p>
-      This way, the code involved with setting the location can be shared across these <code>toggle_location</code> functions, and any other functions that later on might also set a location. Perhaps there'll come a time where we might want to announce what a particular person's location is each time it changes:
+      This way, the code involved with setting the location can be shared across these <code>toggle_location</code>
+      functions, and any other functions that later on might also set a location. Perhaps there'll come a time where we
+      might want to announce what a particular person's location is each time it changes:
     </p>
 
     <pre><code>defp set_location(%Person{} = person, location) do
@@ -570,7 +662,8 @@ end</code></pre>
 end</code></pre>
 
     <p>
-      The private function is an ideal place to put that code. It centralises the code in one simple place, and hides internal implementation details about how a location is set.
+      The private function is an ideal place to put that code. It centralises the code in one simple place, and hides
+      internal implementation details about how a location is set.
     </p>
   </section>
 
@@ -578,31 +671,36 @@ end</code></pre>
     <h3>Structs are maps at heart</h3>
 
     <p>
-      There's one last thing to cover on the topic of structs. Structs are maps when you get to the bottom of things. Structs can be passed as the argument to any <code>Map</code> function, like <code>Map.get/2</code> for instance:
+      There's one last thing to cover on the topic of structs. Structs are maps when you get to the bottom of things.
+      Structs can be passed as the argument to any <code>Map</code> function, like <code>Map.get/2</code> for instance:
     </p>
 
-<pre><code>iex> %Person{} |> Map.get(:location)
+    <pre><code>iex> %Person{} |> Map.get(:location)
 "home"</code></pre>
 
     <p>
-      This is because the underlying implementation of structs is based on maps. We can see this in action if we call the <code>Map.keys/1</code> function on a struct:
+      This is because the underlying implementation of structs is based on maps. We can see this in action if we call
+      the <code>Map.keys/1</code> function on a struct:
     </p>
 
-<pre><code>iex> %Person{} |> Map.keys
+    <pre><code>iex> %Person{} |> Map.keys
 [:__struct__, :birthday, :first_name, :last_name, :location]</code></pre>
 
     <p>
-      The <code>Map.keys/1</code> function returns not just the four keys that we've defined with <code>defstruct</code>, but a fifth key called <code>:__struct__</code>. This key contains the module name of the struct. We can see this by asking the struct for its <code>__struct__</code> key's value:
+      The <code>Map.keys/1</code> function returns not just the four keys that we've defined with
+      <code>defstruct</code>, but a fifth key called <code>:__struct__</code>. This key contains the module name of the
+      struct. We can see this by asking the struct for its <code>__struct__</code> key's value:
     </p>
 
     <pre><code>iex> %Person{}.__struct__
 Person</code></pre>
 
     <p>
-      Structs are, simply put, maps with one extra key: a <code>:__struct__</code> key. We can even define a map ourselves with such a key to prove this:
+      Structs are, simply put, maps with one extra key: a <code>:__struct__</code> key. We can even define a map
+      ourselves with such a key to prove this:
     </p>
 
-<pre><code>iex> %{__struct__: Person, first_name: "Izzy", last_name: "Bell", birthday: ~D[1987-12-04], location: "home"}
+    <pre><code>iex> %{__struct__: Person, first_name: "Izzy", last_name: "Bell", birthday: ~D[1987-12-04], location: "home"}
 %Person{
   birthday: ~D[1987-12-04],
   first_name: "Izzy",
@@ -619,55 +717,70 @@ Person</code></pre>
     <h3>Structs and Protocols</h3>
 
     <p>
-      There's been one other type of struct that we've been using a lot in this chapter, and we haven't even talked about it being a struct! It's this:
+      There's been one other type of struct that we've been using a lot in this chapter, and we haven't even talked
+      about it being a struct! It's this:
     </p>
 
     <pre><code>~D[1987-12-04]</code></pre>
 
     <p>
-      Izzy exclaims: "That's not a struct! There's no percent sign!". Yup, there's not a single percent sign there. But it's still a struct! How can we tell? We can use <code>Map.keys/1</code>:
+      Izzy exclaims: "That's not a struct! There's no percent sign!". Yup, there's not a single percent sign there. But
+      it's still a struct! How can we tell? We can use <code>Map.keys/1</code>:
     </p>
 
-<pre><code>iex> ~D[1987-12-04] |> Map.keys
+    <pre><code>iex> ~D[1987-12-04] |> Map.keys
 [:__struct__, :calendar, :day, :month, :year]</code></pre>
 
     <p>
-      This function returns a list of keys, and that list contains <code>:__struct__</code>, and that's how we know that dates are structs under the hood.
+      This function returns a list of keys, and that list contains <code>:__struct__</code>, and that's how we know that
+      dates are structs under the hood.
     </p>
 
     <p>
-      Izzy is right that structs <em>usually</em> contain a percent sign. When we create a date, we don't use a percent sign to create it. Instead, we use the <code>~D</code> sigil. Similarly, when a date is displayed (like in some output for our terminal) it is not displayed like this:
+      Izzy is right that structs <em>usually</em> contain a percent sign. When we create a date, we don't use a percent
+      sign to create it. Instead, we use the <code>~D</code> sigil. Similarly, when a date is displayed (like in some
+      output for our terminal) it is not displayed like this:
     </p>
 
-<pre><code>%Calendar.Date{calendar: Calendar.ISO, day: 4, month: 12, year: 1987}</code></pre>
+    <pre><code>%Calendar.Date{calendar: Calendar.ISO, day: 4, month: 12, year: 1987}</code></pre>
 
     <p>
       Instead, it is shown like this:
     </p>
 
-<pre><code>~D[1987-12-04]</code></pre>
+    <pre><code>~D[1987-12-04]</code></pre>
 
     <p>
-      This is due to <a href='https://github.com/elixir-lang/elixir/blob/0a953d75fb2cbdc6f3d33040aa60738d85512a1f/lib/elixir/lib/calendar/date.ex#L750-L757'>some code within Elixir itself</a>. This code sees that a date is about to be output, and instead displays it in this condensed format instead for readability.
+      This is due to <a
+        href='https://github.com/elixir-lang/elixir/blob/0a953d75fb2cbdc6f3d33040aa60738d85512a1f/lib/elixir/lib/calendar/date.ex#L750-L757'>some
+        code within Elixir itself</a>. This code sees that a date is about to be output, and instead displays it in this
+      condensed format instead for readability.
     </p>
 
     <p>
-      This feature of Elixir is called a <em>protocol</em>, and in particular this is the <code>Inspect</code> protocol we're talking about here. When a date is output on the screen, Elixir checks if there is an inspect protocol implemented for dates. There is, and so it gets used instead of the regular struct output.
+      This feature of Elixir is called a <em>protocol</em>, and in particular this is the <code>Inspect</code> protocol
+      we're talking about here. When a date is output on the screen, Elixir checks if there is an inspect protocol
+      implemented for dates. There is, and so it gets used instead of the regular struct output.
     </p>
 
     <p>
-      That description is a little wordy, so let's see some code of our own in action! Let's go into our <code>person.exs</code> file and define an implementation for this <code>Inspect</code> protocol:
+      That description is a little wordy, so let's see some code of our own in action! Let's go into our
+      <code>person.exs</code> file and define an implementation for this <code>Inspect</code> protocol:
     </p>
 
 
-<pre><code>defmodule Person do
+    <pre><code>defmodule Person do
   # ...
   # functions go here
   # ...
 
   defimpl Inspect do
-    def inspect(%{first_name: first_name, last_name: last_name}, _) do
-      "Person[#{first_name} #{last_name}]"
+    def inspect(%{
+      first_name: first_name,
+      last_name: last_name,
+      location: location,
+      }, _) do
+      "Person[#{first_name} #{last_name}, #{location}]"
     end
   end
 end</code></pre>
@@ -676,22 +789,27 @@ end</code></pre>
       Then let's re-compile this module back in <code>iex</code>:
     </p>
 
-<pre><code>iex> c "person.exs", "."
+    <pre><code>iex> c "person.exs", "."
 [Inspect.Person, Person]</code></pre>
 
     <p>
-      Note that this has now compiled <em>two</em> modules: <code>Inspect.Person</code> and <code>Person</code>. The <code>Inspect.Person</code> module has been automatically generated and it will be used when a person struct is inspected.
+      Note that this has now compiled <em>two</em> modules: <code>Inspect.Person</code> and <code>Person</code>. The
+      <code>Inspect.Person</code> module has been automatically generated and it will be used when a person struct is
+      inspected.
     </p>
 
     <p>
       To inspect a person struct, all we need to do is to generate one and get the console to do the actual inspection:
     </p>
 
-<pre><code>iex> %Person{first_name: "Izzy", last_name: "Bell"}
+    <pre><code>iex> %Person{first_name: "Izzy", last_name: "Bell"}
 Person[Izzy Bell]</code></pre>
 
     <p>
-      Great! This is now working. This has allowed us to condense the information that is displayed when using a <code>Person</code> struct in the console. This can be useful if you want to limit the amount of data that is shown in the terminal and just something I thought you should know about before we wrap up this chapter on modules and structs!
+      Great! This is now working. This has allowed us to condense the information that is displayed when using a
+      <code>Person</code> struct in the console. This can be useful if you want to limit the amount of data that is
+      shown in the terminal and just something I thought you should know about before we wrap up this chapter on modules
+      and structs!
     </p>
   </section>
 </section>
