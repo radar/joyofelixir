@@ -406,7 +406,7 @@ Great functional code</code></pre>
       This <code>File.rm/1</code> file is called <code>rm</code> as a shorthand for "<strong>r</strong>e<strong>m</strong>ove". We can use this function to remove any file we like. We would like to keep our haiku files, so let's create a separate file that we can remove later by using <code>File.write/2</code> first, and then we'll delete it with <code>File.rm/1</code>. Let's do this slow so that we can see that the file definitely does exist before we delete it. Let's start with creating the file:
     </p>
 
-    <pre><code>iex> File.write("remove-me.txt", "remove me")
+    <pre><code>iex> File.write("delete-me.txt", "delete me")
 :ok</code></pre>
 
     <p>
@@ -415,14 +415,14 @@ Great functional code</code></pre>
 
     <figure>
       <img src='/11-files/images/delete-me.png'>
-      <figcaption>Figure 11.5: The <code>remove-me.txt</code> file exists.</figcaption>
+      <figcaption>Figure 11.5: The <code>delete-me.txt</code> file exists.</figcaption>
     </figure>
 
     <p>
       Let's try removing this file now:
     </p>
 
-    <pre><code>iex> File.rm("remove-me.txt")
+    <pre><code>iex> File.rm("delete-me.txt")
 :ok
 </code></pre>
 
@@ -432,7 +432,7 @@ Great functional code</code></pre>
 
     <figure>
       <img src='/11-files/images/the-haiku-is-fixed-the-people-rejoiced-worldwide-everything-is-good.png'>
-      <figcaption>Figure 11.6: The <code>remove-me.txt</code> file is gone!</figcaption>
+      <figcaption>Figure 11.6: The <code>delete-me.txt</code> file is gone!</figcaption>
     </figure>
 
     <p>
