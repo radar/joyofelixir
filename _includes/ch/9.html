@@ -1,102 +1,130 @@
-<section>
+<section class='major'>
   <h2 id='chapter-9'>9. Working with lists</h2>
 
   <p>
-    In this chapter, we'll cover some functions that Elixir has helpfully got built-in to the language to help us work with lists.
+    In this chapter, we'll cover some functions that Elixir has helpfully got built-in to the language to help us work
+    with lists.
   </p>
 
   <p>
-    Just like there is a <code>String</code> module for working with strings, there is also a <code>List</code> module for working with lists. This module includes functions like <code>first</code> that will tell you what the first item in a list is:
+    Just like there is a <code>String</code> module for working with strings, there is also a <code>List</code> module
+    for working with lists. This module includes functions like <code>first</code> that will tell you what the first
+    item in a list is:
   </p>
 
-<pre><code>List.first([1, 2, 3, 4])
+  <pre><code>List.first([1, 2, 3, 4])
 <span class='console-yellow'>1</span></code></pre>
 
   <p>
     And it also lets you figure out what the last item is too:
   </p>
 
-<pre><code>List.last([1, 2, 3, 4])
+  <pre><code>List.last([1, 2, 3, 4])
 <span class='console-yellow'>4</span></code></pre>
 
   <p>
-    We looked earlier at how we could reverse a string, but how about if we wanted to reverse something else, like this list?
+    We looked earlier at how we could reverse a string, but how about if we wanted to reverse something else, like this
+    list?
   </p>
 
-<pre><code>iex> animals_or_derivatives_of_animals = ["cat", "dog", "cow", "turducken"]</code></pre>
+  <pre><code>iex> animals_or_derivatives_of_animals = ["cat", "dog", "cow", "turducken"]</code></pre>
 
   <p>
-    We would think that just like <code>first</code> and <code>last</code> that there should be a <code>reverse</code> too! We might think this because Elixir provides us a way to reverse strings -- with `String.reverse("string")` -- so why not lists too? Let's try it out:
+    We would think that just like <code>first</code> and <code>last</code> that there should be a <code>reverse</code>
+    too! We might think this because Elixir provides us a way to reverse strings -- with `String.reverse("string")` --
+    so why not lists too? Let's try it out:
   </p>
 
-<pre><code>iex> List.reverse(animals_or_derivatives_of_animals)
+  <pre><code>iex> List.reverse(animals_or_derivatives_of_animals)
 List.reverse(animals_or_derivatives_of_animals)
 <span class='console-red'>** (UndefinedFunctionError) function List.reverse/1 is undefined or private
     (elixir) List.reverse(["cat", "dog", "cow", "turducken"])</span></code></pre>
 
   <p>
-    Uh oh, there's that red text again. It seems like that this function doesn't exist, even though we thought it did. We are lacking the superpower of being able to will functions into being at this current point in time, so we'll have to do some sleuthing to figure out why it's missing.
+    Uh oh, there's that red text again. It seems like that this function doesn't exist, even though we thought it did.
+    We are lacking the superpower of being able to will functions into being at this current point in time, so we'll
+    have to do some sleuthing to figure out why it's missing.
   </p>
 
   <p>
-    The computer is telling us that Elixir doesn't know about a function called <code>List.reverse</code>, or the function is "<em>private</em>". The computer (slyly) won't tell us which one of non-existence or privateness it is, but we'll assume the first case here: that the function is undefined. (We'll come back to private functions a little later on in the book.)
+    The computer is telling us that Elixir doesn't know about a function called <code>List.reverse</code>, or the
+    function is "<em>private</em>". The computer (slyly) won't tell us which one of non-existence or privateness it is,
+    but we'll assume the first case here: that the function is undefined. (We'll come back to private functions a little
+    later on in the book.)
   </p>
 
   <aside>
     <header>Izzy asks: "Hey, what's that <code>/1</code> after the function?"</header>
 
     <p>
-      Glad you asked! It's indicating the <em>arity</em> of the function. We saw the word <em>arity</em> back in Chapter 5, and to refresh your memory, arity is another way of saying "the number of arguments".
+      Glad you asked! It's indicating the <em>arity</em> of the function. We saw the word <em>arity</em> back in Chapter
+      5, and to refresh your memory, arity is another way of saying "the number of arguments".
     </p>
 
     <p>
-      Elixir functions can not only differ by <em>name</em> but also by the number of arguments that the function takes. This error message is telling us that we tried to call the <code>List.reverse/1</code> function. It's showing the <code>/1</code> at the end because we only passed one argument. If we passed two arguments instead of one it would tell us that we tried to call the <code>List.reverse/2</code> function instead.
+      Elixir functions can not only differ by <em>name</em> but also by the number of arguments that the function takes.
+      This error message is telling us that we tried to call the <code>List.reverse/1</code> function. It's showing the
+      <code>/1</code> at the end because we only passed one argument. If we passed two arguments instead of one it would
+      tell us that we tried to call the <code>List.reverse/2</code> function instead.
     </p>
 
-<pre><code>iex> List.reverse(animals_or_derivatives_of_animals, [1, 2, 3])
+    <pre><code>iex> List.reverse(animals_or_derivatives_of_animals, [1, 2, 3])
 List.reverse(animals_or_derivatives_of_animals, [1, 2, 3])
 <span class='console-red'>** (UndefinedFunctionError) function List.reverse/2 is undefined or private
     (elixir) List.reverse(["cat", "dog", "cow", "turducken"], [1, 2, 3])</span></code></pre>
 
-  <p>A good example of this is the <code>String.split</code> function that we saw earlier. It has two variants, one that takes a single argument (<code>String.split/1</code>) and one that takes two arguments (<code>String.split/2</code>). We only saw the single-argument version before:</p>
+    <p>A good example of this is the <code>String.split</code> function that we saw earlier. It has two variants, one
+      that takes a single argument (<code>String.split/1</code>) and one that takes two arguments
+      (<code>String.split/2</code>). We only saw the single-argument version before:</p>
 
-<pre><code>iex> String.split("Hello, World!")
+    <pre><code>iex> String.split("Hello, World!")
 [<span class='console-green'>"Hello,"</span>, <span class='console-green'>"World!"</span>]</code></pre>
 
-  <p>
-    However, if we supply a second argument to this function it behaves differently:
-  </p>
+    <p>
+      However, if we supply a second argument to this function it behaves differently:
+    </p>
 
-<pre><code>iex> String.split("Hello, World!", "o")
+    <pre><code>iex> String.split("Hello, World!", "o")
 ["Hell", ", W", "rld!"]</code></pre>
 
-  <p>
-    The function name doesn't change, but the number of arguments changes, and that alters how the function behaves.
-  </p>
+    <p>
+      The function name doesn't change, but the number of arguments changes, and that alters how the function behaves.
+    </p>
 
-  <p>
-    The second argument to <code>String.split/2</code> tells the computer where to split the string. With the single argument version, the computer assumed we wanted to split on the spaces between the words. With the two argument version &mdash; that is, the <code>/2</code> version &mdash; we tell it that we want to split on the <code>"o"</code> character instead.
-  </p>
+    <p>
+      The second argument to <code>String.split/2</code> tells the computer where to split the string. With the single
+      argument version, the computer assumed we wanted to split on the spaces between the words. With the two argument
+      version &mdash; that is, the <code>/2</code> version &mdash; we tell it that we want to split on the
+      <code>"o"</code> character instead.
+    </p>
 
-  <p>
-    At this point it's also worth mentioning that the <code>String.upcase</code> function we used back in the last chapter has a proper name of <code>String.upcase/1</code>. Just like <code>/2</code> indicates the function takes two arguments, the <code>/1</code> here indicates that this function takes one argument. When referring to Elixir functions, make sure to include the arity as well as the function's name.
-  </p>
+    <p>
+      At this point it's also worth mentioning that the <code>String.upcase</code> function we used back in the last
+      chapter has a proper name of <code>String.upcase/1</code>. Just like <code>/2</code> indicates the function takes
+      two arguments, the <code>/1</code> here indicates that this function takes one argument. When referring to Elixir
+      functions, make sure to include the arity as well as the function's name.
+    </p>
 
-  <p>
-    This is an important distinction to make in Elixir, and so I'll say it again, this time a bit bigger:
-  </p>
+    <p>
+      This is an important distinction to make in Elixir, and so I'll say it again, this time a bit bigger:
+    </p>
 
-  <p style='font-size: 150%; text-align: center;'><strong>Functions not only differ by name, but also by the number of arguments that they take.</strong></p>
+    <p style='font-size: 150%; text-align: center;'><strong>Functions not only differ by name, but also by the number of
+        arguments that they take.</strong></p>
   </aside>
 
   <p>
-    Ok, so we've talked about what <code>/1</code> means (Izzy is now deep in thought), so let's talk about why <code>List.reverse/1</code> doesn't exist.
+    Ok, so we've talked about what <code>/1</code> means (Izzy is now deep in thought), so let's talk about why
+    <code>List.reverse/1</code> doesn't exist.
   </p>
 
   <h3>Thank you Reader, but our <s>princess</s> function is in another <s>castle</s> module</h3>
 
   <p>
-    The short version of why the <code>List.reverse/1</code> function doesn't exist is because it lives in a separate module; it exists in the <code>Enum</code> module. The name <code>Enum</code> is short for <code>Enumerable</code>, and it's done that way because nobody has the time to write out <code>Enumerable</code> correctly every single time. Even as this book's author I have a hard time spelling it correctly each time! Thank goodness for autocomplete.
+    The short version of why the <code>List.reverse/1</code> function doesn't exist is because it lives in a separate
+    module; it exists in the <code>Enum</code> module. The name <code>Enum</code> is short for <code>Enumerable</code>,
+    and it's done that way because nobody has the time to write out <code>Enumerable</code> correctly every single time.
+    Even as this book's author I have a hard time spelling it correctly each time! Thank goodness for autocomplete.
   </p>
 
   <p>
@@ -104,7 +132,10 @@ List.reverse(animals_or_derivatives_of_animals, [1, 2, 3])
   </p>
 
   <p>
-    Lists are a type of data in Elixir called an <em>enumerable</em>. Maps are also <em>enumerables</em>. This means that they can be <em>enumerated</em> through; which means that you can do something with each item in the enumerable object (a list or a map). For instance, if we were to write out our list on a piece of paper, it might look something like this:
+    Lists are a type of data in Elixir called an <em>enumerable</em>. Maps are also <em>enumerables</em>. This means
+    that they can be <em>enumerated</em> through; which means that you can do something with each item in the enumerable
+    object (a list or a map). For instance, if we were to write out our list on a piece of paper, it might look
+    something like this:
   </p>
 
   <ul>
@@ -115,7 +146,9 @@ List.reverse(animals_or_derivatives_of_animals, [1, 2, 3])
   </ul>
 
   <p>
-    It's possible to write each item from the list separately from the other items in the list. Because we're able to do this we can safely say that this list is <em>enumerable</em>. We could try to do the same thing for a number (like 1,354), but it wouldn't make sense:
+    It's possible to write each item from the list separately from the other items in the list. Because we're able to do
+    this we can safely say that this list is <em>enumerable</em>. We could try to do the same thing for a number (like
+    1,354), but it wouldn't make sense:
   </p>
 
   <ul>
@@ -133,39 +166,51 @@ List.reverse(animals_or_derivatives_of_animals, [1, 2, 3])
     Similar to this, we could <em>enumerate</em> through a map. If we were to take one of our maps from earlier...
   </p>
 
-<pre><code>%{name: "Izzy", age: "30ish", gender: "Female"}</code></pre>
+  <pre><code>%{name: "Izzy", age: "30ish", gender: "Female"}</code></pre>
 
   <p>
     ...and write each key and value pair down, they may look something like this:
   </p>
 
   <dl>
-    <dt><strong>Name</strong></dt><dd>Izzy</dd>
-    <dt><strong>Age</strong></dt><dd>30ish</dd>
-    <dt><strong>Gender</strong></dt><dd>Female</dd>
+    <dt><strong>Name</strong></dt>
+    <dd>Izzy</dd>
+    <dt><strong>Age</strong></dt>
+    <dd>30ish</dd>
+    <dt><strong>Gender</strong></dt>
+    <dd>Female</dd>
   </dl>
 
   <p>
-    Again, it makes sense for a map to be an enumerable because you can <em>enumerate</em> through each of the key and value pairs in the map.
+    Again, it makes sense for a map to be an enumerable because you can <em>enumerate</em> through each of the key and
+    value pairs in the map.
   </p>
 
   <h4>And now for the big reveal</h4>
 
   <p>
-  We need to keep in mind that when we're working with <em>enumerable</em> things in Elixir the function that we need might live elsewhere. While there is most certainly a <code>List</code> and a <code>Map</code> module (which we'll see in <a href='/10-maps'>the next chapter</a>) -- sometimes, we need to look in the <code>Enum</code> module too for the function we want.
+    We need to keep in mind that when we're working with <em>enumerable</em> things in Elixir the function that we need
+    might live elsewhere. While there is most certainly a <code>List</code> and a <code>Map</code> module (which we'll
+    see in <a href='/10-maps'>the next chapter</a>) -- sometimes, we need to look in the <code>Enum</code> module too
+    for the function we want.
   </p>
 
   <p>
-    We tried looking in the <code>List</code> module to find the <code>reverse/1</code> function so that we could turn our list around but it wasn't there. We found out a short while ago that the function is actually within the <code>Enum</code> module, so let's try using that function. Before that, let's get our list in Elixir form again. It's been a while since we've seen it that way:
+    We tried looking in the <code>List</code> module to find the <code>reverse/1</code> function so that we could turn
+    our list around but it wasn't there. We found out a short while ago that the function is actually within the
+    <code>Enum</code> module, so let's try using that function. Before that, let's get our list in Elixir form again.
+    It's been a while since we've seen it that way:
   </p>
 
-<pre><code>iex> animals_or_derivatives_of_animals = ["cat", "dog", "cow", "turducken"]</code></pre>
+  <pre><code>iex> animals_or_derivatives_of_animals = ["cat", "dog", "cow", "turducken"]</code></pre>
 
   <p>
-    Since we now know that lists are <em>enumerables</em>, and that the <code>List.reverse/1</code> function doesn't exist <em>but</em> we also (now) know that there's an <code>Enum</code> module to work with this sort of thing, we can probably guess that there's going to be an <code>Enum.reverse/1</code> function. Let's try it and see:
+    Since we now know that lists are <em>enumerables</em>, and that the <code>List.reverse/1</code> function doesn't
+    exist <em>but</em> we also (now) know that there's an <code>Enum</code> module to work with this sort of thing, we
+    can probably guess that there's going to be an <code>Enum.reverse/1</code> function. Let's try it and see:
   </p>
 
-<pre><code>iex> Enum.reverse(animals_or_derivatives_of_animals)
+  <pre><code>iex> Enum.reverse(animals_or_derivatives_of_animals)
   [<span class='console-green'>"turducken"</span>, <span class='console-green'>"cow"</span>, <span class='console-green'>"dog"</span>, <span class='console-green'>"cat"</span>]</code></pre>
 
   <p>
@@ -173,11 +218,15 @@ List.reverse(animals_or_derivatives_of_animals, [1, 2, 3])
   </p>
 
   <p>
-  Izzy's features relax from intense concentration to a more neutral setting and she asks, "Hey, you mentioned before you could <em>enumerate</em> through a list or a map, but you didn't show an example of that. What gives?" You're absolutely right, Izzy. I was too distracted with explaining why <code>List.reverse/1</code> didn't exist to explain how to enumerate through an enumerable. I'm glad that <em>someone</em> is paying attention.
+    Izzy's features relax from intense concentration to a more neutral setting and she asks, "Hey, you mentioned before
+    you could <em>enumerate</em> through a list or a map, but you didn't show an example of that. What gives?" You're
+    absolutely right, Izzy. I was too distracted with explaining why <code>List.reverse/1</code> didn't exist to explain
+    how to enumerate through an enumerable. I'm glad that <em>someone</em> is paying attention.
   </p>
 
   <p>
-    Let's all now take a look at how to do that before we move onto other functions. We've talked about enumerables briefly and it would be a shame to stop so early when you can do so much more with them than reverse them.
+    Let's all now take a look at how to do that before we move onto other functions. We've talked about enumerables
+    briefly and it would be a shame to stop so early when you can do so much more with them than reverse them.
   </p>
 
 
@@ -185,17 +234,21 @@ List.reverse(animals_or_derivatives_of_animals, [1, 2, 3])
   <h3>Enumerating the enumerables</h3>
 
   <p>
-    To appease Izzy (and the masses that she leads) yet again, we're going to need to look at how to enumerate through enumerables. What this means is that we're going to get an enumerable (a list or a map) and we're going to go through each of the enumerable's items and do something with them.
+    To appease Izzy (and the masses that she leads) yet again, we're going to need to look at how to enumerate through
+    enumerables. What this means is that we're going to get an enumerable (a list or a map) and we're going to go
+    through each of the enumerable's items and do something with them.
   </p>
 
   <p>
-    Let's start with a list. How about a list of the world's top five most liveable cities, just for something different?
+    Let's start with a list. How about a list of the world's top five most liveable cities, just for something
+    different?
   </p>
 
-<pre><code>iex> cities = ["vienna", "melbourne", "osaka", "calgary", "sydney"]</code></pre>
+  <pre><code>iex> cities = ["vienna", "melbourne", "osaka", "calgary", "sydney"]</code></pre>
 
   <p>
-    The simplest way of enumerating through a list in Elixir is to use the <code>Enum.each/2</code> function. Remember that the <code>/2</code> here means that the function takes two arguments. Those two arguments are:
+    The simplest way of enumerating through a list in Elixir is to use the <code>Enum.each/2</code> function. Remember
+    that the <code>/2</code> here means that the function takes two arguments. Those two arguments are:
   </p>
 
   <ol>
@@ -207,23 +260,29 @@ List.reverse(animals_or_derivatives_of_animals, [1, 2, 3])
     Let's take a look at an example:
   </p>
 
-<pre><code>iex> Enum.each(cities, &amp;IO.puts/1)</code></pre>
+  <pre><code>iex> Enum.each(cities, &amp;IO.puts/1)</code></pre>
 
   <p>
-    The first argument here is our list of cities. The second argument is the function that we want to run for each item in this list: specifically the built-in <code>IO.puts/1</code> function. The <code>&amp;</code> before this function name is referred to as the "capture operator". We saw this back in Chapter 5, but we were using it to build our own functions then:
+    The first argument here is our list of cities. The second argument is the function that we want to run for each item
+    in this list: specifically the built-in <code>IO.puts/1</code> function. The <code>&amp;</code> before this function
+    name is referred to as the "capture operator". We saw this back in Chapter 5, but we were using it to build our own
+    functions then:
   </p>
 
   <pre><code>iex> greeting = &("Hello #{&1}")</code></pre>
 
   <p>
-    The <code>&amp;</code> has another use, and that is to capture functions from modules so that we can use them later. In this example, we're capturing <code>IO.puts/1</code> so that <code>Enum.each/2</code> can call that function on each of the items in the <code>cities</code> list.
+    The <code>&amp;</code> has another use, and that is to capture functions from modules so that we can use them later.
+    In this example, we're capturing <code>IO.puts/1</code> so that <code>Enum.each/2</code> can call that function on
+    each of the items in the <code>cities</code> list.
   </p>
 
   <p>
-    Let's take a look at what this combination of <code>Enum.each</code>, <code>cities</code> and <code>&amp;IO.puts/1</code> does:
+    Let's take a look at what this combination of <code>Enum.each</code>, <code>cities</code> and
+    <code>&amp;IO.puts/1</code> does:
   </p>
 
-<pre><code>iex> Enum.each(cities, &amp;IO.puts/1)
+  <pre><code>iex> Enum.each(cities, &amp;IO.puts/1)
 vienna
 melbourne
 osaka
@@ -232,25 +291,37 @@ sydney
 :ok</code></pre>
 
   <p>
-    This particular combination of those three things has made Elixir output each city on a single line in our <code>iex</code> prompt. Then there's one more thing: that little blue <code>:ok</code> at the end of our output. That's a little atom value and it indicates to us that the iterating with <code>Enum.each/2</code> worked successfully. We saw atoms like this used for keys in maps in previous chapters, but they can also be used in Elixir code like this too.
+    This particular combination of those three things has made Elixir output each city on a single line in our
+    <code>iex</code> prompt. Then there's one more thing: that little blue <code>:ok</code> at the end of our output.
+    That's a little atom value and it indicates to us that the iterating with <code>Enum.each/2</code> worked
+    successfully. We saw atoms like this used for keys in maps in previous chapters, but they can also be used in Elixir
+    code like this too.
   </p>
 
   <p>
-    Let's take a closer look at what this <code>Enum.each/2</code> code is doing. Specifically: what <code>&amp;IO.puts/1</code> is doing. You know in Elixir that functions can take arguments and you might have in your head that those arguments could be strings, lists or maps because this is what we've seen done previously. But function arguments can also be other functions. This is what's happening here when we're using <code>&amp;IO.puts/1</code>. We're passing that function as an argument to <code>Enum.each/2</code>.
+    Let's take a closer look at what this <code>Enum.each/2</code> code is doing. Specifically: what
+    <code>&amp;IO.puts/1</code> is doing. You know in Elixir that functions can take arguments and you might have in
+    your head that those arguments could be strings, lists or maps because this is what we've seen done previously. But
+    function arguments can also be other functions. This is what's happening here when we're using
+    <code>&amp;IO.puts/1</code>. We're passing that function as an argument to <code>Enum.each/2</code>.
   </p>
 
   <p>
-    To get an idea of how <code>Enum.each/2</code> is able to take the <code>IO.puts/1</code> function and do something with it, we can use this code in the <code>iex</code> prompt:
+    To get an idea of how <code>Enum.each/2</code> is able to take the <code>IO.puts/1</code> function and do something
+    with it, we can use this code in the <code>iex</code> prompt:
   </p>
 
-<pre><code>iex> puts = &amp;IO.puts/1
+  <pre><code>iex> puts = &amp;IO.puts/1
 puts.("melbourne")
 "melbourne"
 :ok
 </code></pre>
 
   <p>
-    With this code, we've assigned the <code>IO.puts/1</code> function to a variable called <code>puts</code>. This is similar to what's going on inside the <code>Enum.each/2</code> function: whatever function we pass as the second argument will be stored with a particular name. Then <code>Enum.each/2</code> goes through each of the items and calls the provided function on it, just like we've done above.
+    With this code, we've assigned the <code>IO.puts/1</code> function to a variable called <code>puts</code>. This is
+    similar to what's going on inside the <code>Enum.each/2</code> function: whatever function we pass as the second
+    argument will be stored with a particular name. Then <code>Enum.each/2</code> goes through each of the items and
+    calls the provided function on it, just like we've done above.
   </p>
 
 
@@ -259,73 +330,91 @@ puts.("melbourne")
     <header>Try this one as a program too</header>
 
     <p>
-      You should try running the above example as an Elixir script too. Save this file at <code>cities.exs</code> and run it with <code>elixir cities.exs</code>.
+      You should try running the above example as an Elixir script too. Save this file at <code>cities.exs</code> and
+      run it with <code>elixir cities.exs</code>.
     </p>
 
     <p>
-      What you'll see will mostly be the same: all the cities are output on their own lines. What you won't see is that final <code>:ok</code>. This is because when we run a function in the <code>iex</code> prompt, the function will always tell us what its result is.
+      What you'll see will mostly be the same: all the cities are output on their own lines. What you won't see is that
+      final <code>:ok</code>. This is because when we run a function in the <code>iex</code> prompt, the function will
+      always tell us what its result is.
     </p>
 
     <p>
-      However when we get to the "big time" of running an actual program, Elixir will only generate output once we tell it to; with something such as <code>IO.puts/1</code>. This is why when you run this script you're <em>not</em> going to see <code>:ok</code>.
+      However when we get to the "big time" of running an actual program, Elixir will only generate output once we tell
+      it to; with something such as <code>IO.puts/1</code>. This is why when you run this script you're <em>not</em>
+      going to see <code>:ok</code>.
     </p>
   </aside>
 
   <p>
-    "That last line looks exactly like how we ran functions back in Chapter 5", Izzy exclaims. Yes, Izzy! That is exactly right. Back in that chapter we defined a <code>greeting</code> function like this:
+    "That last line looks exactly like how we ran functions back in Chapter 5", Izzy exclaims. Yes, Izzy! That is
+    exactly right. Back in that chapter we defined a <code>greeting</code> function like this:
   </p>
 
-<pre><code>iex> greeting = fn (place) -> "Hello, #{place}!" end
+  <pre><code>iex> greeting = fn (place) -> "Hello, #{place}!" end
 <span class='console-yellow'>#Function&lt;6.52032458/1 in :erl_eval.expr/5&gt;</span></code></pre>
 
   <p>
     We then made Elixir run this function using this syntax:
   </p>
 
-<pre><code>iex> greeting.("World")
+  <pre><code>iex> greeting.("World")
 <span class='console-green'>"Hello, World!"</span></code></pre>
 
   <p>
-    What we're doing different here with our <code>puts = &amp;IO.puts/1</code> is that we're using an inbuilt function rather than constructing one of our own. We can do this with any inbuilt function we please. Here's another example, using <code>String.capitalize/1</code>:
+    What we're doing different here with our <code>puts = &amp;IO.puts/1</code> is that we're using an inbuilt function
+    rather than constructing one of our own. We can do this with any inbuilt function we please. Here's another example,
+    using <code>String.capitalize/1</code>:
   </p>
 
-<pre><code>iex> cap = &amp;String.capitalize/1
+  <pre><code>iex> cap = &amp;String.capitalize/1
 cap.("melbourne")
 <span class='console-green'>"Melbourne"</span>
 </code></pre>
 
   <p>
-    Here, the <code>String.capitalize/1</code> function takes a string and turns the first letter into a capital letter. In this code example, we're making it so that we can call the <code>String.capitalize/1</code> as if it were a function called <code>cap</code>. However, if we wanted to capitalise the names of our city using the <code>String.capitalize/1</code> function with <code>Enum.each/2</code> it wouldn't do very much:
+    Here, the <code>String.capitalize/1</code> function takes a string and turns the first letter into a capital letter.
+    In this code example, we're making it so that we can call the <code>String.capitalize/1</code> as if it were a
+    function called <code>cap</code>. However, if we wanted to capitalise the names of our city using the
+    <code>String.capitalize/1</code> function with <code>Enum.each/2</code> it wouldn't do very much:
   </p>
 
-<pre><code>iex> Enum.each(cities, &amp;String.capitalize/1)
+  <pre><code>iex> Enum.each(cities, &amp;String.capitalize/1)
 <span class='console-blue'>:ok</span></code></pre>
 
   <p>
-    Nothing is output here besides <code>:ok</code> because we're not telling Elixir to output anything. It will dutifully run the function <code>String.capitalize/1</code> for each item in the list, and then just as dutifully "forget" to tell us anything about the result.
+    Nothing is output here besides <code>:ok</code> because we're not telling Elixir to output anything. It will
+    dutifully run the function <code>String.capitalize/1</code> for each item in the list, and then just as dutifully
+    "forget" to tell us anything about the result.
   </p>
 
   <p>
-    If we want to see what the result would be from evaluating <code>String.capitalize/1</code> for each item in the list, we're going to have to use a different function.
+    If we want to see what the result would be from evaluating <code>String.capitalize/1</code> for each item in the
+    list, we're going to have to use a different function.
   </p>
 
   <h4>Map, but not the kind that you know already</h4>
 
   <p>
-    The names of these cities should be capitalized because they are proper nouns, but whoever created this list neglected to capitalize them. Oops! What we should have is a list with proper capitalization:
+    The names of these cities should be capitalized because they are proper nouns, but whoever created this list
+    neglected to capitalize them. Oops! What we should have is a list with proper capitalization:
   </p>
 
-<pre><code>["Vienna", "Melbourne", "Osaka", "Calgary", "Sydney"]</code></pre>
+  <pre><code>["Vienna", "Melbourne", "Osaka", "Calgary", "Sydney"]</code></pre>
 
   <p>
-    We tried using <code>Enum.each/2</code> to give us this list of capitalized cities, but that just told us <code>:ok</code> and it didn't give us back a list of capitalized city names.
+    We tried using <code>Enum.each/2</code> to give us this list of capitalized cities, but that just told us
+    <code>:ok</code> and it didn't give us back a list of capitalized city names.
   </p>
 
   <p>
-    We're going to need a function that goes through each item in the list and applies <code>String.capitalize/1</code>, and then shows us the result of each application of that function. Something that would turn our existing <code>cities</code> list into a list like this one:
+    We're going to need a function that goes through each item in the list and applies <code>String.capitalize/1</code>,
+    and then shows us the result of each application of that function. Something that would turn our existing
+    <code>cities</code> list into a list like this one:
   </p>
 
-<pre><code>iex> cities = [
+  <pre><code>iex> cities = [
     String.capitalize("vienna"),
     String.capitalize("melbourne"),
     String.capitalize("osaka"),
@@ -335,73 +424,104 @@ cap.("melbourne")
 [<span class='console-green'>"Vienna"</span>, <span class='console-green'>"Melbourne"</span>, <span class='console-green'>"Osaka"</span>, <span class='console-green'>"Calgary"</span>,<span class='console-green'>"Sydney"</span>]</code></pre>
 
   <p>
-    But since we've already got a list we're going to have to do <em>something</em> to that list to turn it into what we want. That something is to use another function from the <code>Enum</code> module called <code>Enum.map/2</code>. This <code>map</code> function is different from the map kind of data (<code>%{name: "Izzy"}</code>), in that the function-called-map will take the specified enumerable and another function as arguments, then enumerate through each item in the list and run that other function for each item, and then return the result of each function run.
+    But since we've already got a list we're going to have to do <em>something</em> to that list to turn it into what we
+    want. That something is to use another function from the <code>Enum</code> module called <code>Enum.map/2</code>.
+    This <code>map</code> function is different from the map kind of data (<code>%{name: "Izzy"}</code>), in that the
+    function-called-map will take the specified enumerable and another function as arguments, then enumerate through
+    each item in the list and run that other function for each item, and then return the result of each function run.
   </p>
 
   <p>
     Enough jibber-jabber. Let's see this in actual practice:
   </p>
 
-<pre><code>iex> Enum.map(cities, &amp;String.capitalize/1)
+  <pre><code>iex> Enum.map(cities, &amp;String.capitalize/1)
 [<span class='console-green'>"Vienna"</span>, <span class='console-green'>"Melbourne"</span>, <span class='console-green'>"Osaka"</span>, <span class='console-green'>"Calgary"</span>,<span class='console-green'>"Sydney"</span>]</code></pre>
 
   <p>
-    Hooray! Each of our cities now has a correctly capitalized name. What's happened here is that we've told the <code>map</code> function that we want it to run another function &mdash; that'd be the <code>String.capitalize/1</code> function &mdash; on each item of the <code>cities</code> list. This is how we've been able to go from our existing list with non-capitalized city names to a new list with capitalized names.
+    Hooray! Each of our cities now has a correctly capitalized name. What's happened here is that we've told the
+    <code>map</code> function that we want it to run another function &mdash; that'd be the
+    <code>String.capitalize/1</code> function &mdash; on each item of the <code>cities</code> list. This is how we've
+    been able to go from our existing list with non-capitalized city names to a new list with capitalized names.
   </p>
 
   <aside>
     <header>But is why is it called "map"?</header>
 
     <p>
-      Truth be told, I didn't really give the name "map" much thought before I wrote this section of this book. I've always known it to be "map", but never really thought about why. I wanted to answer it right here, but I didn't know myself and <a href='https://twitter.com/ryanbigg/status/892334810416402433'>so I asked about why it's called map on Twitter</a>.
+      Truth be told, I didn't really give the name "map" much thought before I wrote this section of this book. I've
+      always known it to be "map", but never really thought about why. I wanted to answer it right here, but I didn't
+      know myself and <a href='https://twitter.com/ryanbigg/status/892334810416402433'>so I asked about why it's called
+        map on Twitter</a>.
     </p>
 
     <p>
-     The consensus from the Twitter hivemind (nestmind? flockmind?) seems to be that this is a math-y term which gets its meaning from the cartographer map &mdash; wherein the dimensions of the Earth are represented graphically on a map. When you resize one part of the map, you have to resize all the other parts by making the same transformation, otherwise the map no longer makes sense. I found that kind of fascinating, to be quite honest.
+      The consensus from the Twitter hivemind (nestmind? flockmind?) seems to be that this is a math-y term which gets
+      its meaning from the cartographer map &mdash; wherein the dimensions of the Earth are represented graphically on a
+      map. When you resize one part of the map, you have to resize all the other parts by making the same
+      transformation, otherwise the map no longer makes sense. I found that kind of fascinating, to be quite honest.
     </p>
 
     <p>
-      In math, the term "map" means to take a set of numbers and then to apply the same function across them to transform them into a new set of numbers. Hey, that's like what we're doing here &mdash; except we've got a set of words, and not numbers. We're taking a list of strings and then transforming them into a new list of strings.
+      In math, the term "map" means to take a set of numbers and then to apply the same function across them to
+      transform them into a new set of numbers. Hey, that's like what we're doing here &mdash; except we've got a set of
+      words, and not numbers. We're taking a list of strings and then transforming them into a new list of strings.
     </p>
   </aside>
 
   <h4>BYO functions</h4>
 
   <p>
-    One more quick example. When using <code>Enum.each/2</code> or <code>Enum.map/2</code> we don't necessarily need to pass a built-in function as the second argument. We could choose to pass our own function instead. Let's say that we had a list of numbers like this:
+    One more quick example. When using <code>Enum.each/2</code> or <code>Enum.map/2</code> we don't necessarily need to
+    pass a built-in function as the second argument. We could choose to pass our own function instead. Let's say that we
+    had a list of numbers like this:
   </p>
 
-<pre><code>iex> numbers = [4, 8, 15, 16, 23, 42]</code></pre>
+  <pre><code>iex> numbers = [4, 8, 15, 16, 23, 42]</code></pre>
 
   <p>
-    And then we wanted to multiply each number by a different number, let's say 2. We're lazy and we want the computer to do the heavy lifting, and so we can pass <code>Enum.map/2</code> a function of our own design to acheive this goal:
+    And then we wanted to multiply each number by a different number, let's say 2. We're lazy and we want the computer
+    to do the heavy lifting, and so we can pass <code>Enum.map/2</code> a function of our own design to acheive this
+    goal:
   </p>
 
-<pre><code>iex&gt; Enum.map(numbers, fn (number) -&gt; number * 2 end)
+  <pre><code>iex&gt; Enum.map(numbers, fn (number) -&gt; number * 2 end)
 [8, 16, 30, 32, 46, 84]</code></pre>
 
   <p>
-    With our own function here, we're taking each element of the list &mdash; represented inside the function as the variable <code>number</code> &mdash; and then multiplying it by 2. When <code>Enum.map/2</code> has finished going through the list, it outputs a new list showing us the result of running that function on all items in the list.
+    With our own function here, we're taking each element of the list &mdash; represented inside the function as the
+    variable <code>number</code> &mdash; and then multiplying it by 2. When <code>Enum.map/2</code> has finished going
+    through the list, it outputs a new list showing us the result of running that function on all items in the list.
   </p>
 
   <h4>Reducing an enumerable</h4>
 
   <p>
-    We've now looked at how to use two functions from <code>Enum</code>, <code>each/2</code> and <code>map/2</code>. These are two of the most commonly used functions from this module, and that's why we looked at them. But there's a third function that I'd like to tell you about too: <code>Enum.reduce/2</code>. It's a very helpful function!
+    We've now looked at how to use two functions from <code>Enum</code>, <code>each/2</code> and <code>map/2</code>.
+    These are two of the most commonly used functions from this module, and that's why we looked at them. But there's a
+    third function that I'd like to tell you about too: <code>Enum.reduce/2</code>. It's a very helpful function!
   </p>
 
   <p>
-    <code>Enum.reduce/2</code> allows us to iterate through a list and gradually apply a function to each element in that list to get a final value. Think of it like when you're cooking: you're <em>reducing</em> all the ingredients into a meal. You don't think of a spaghetti bolognese as it being a combination of onion, garlic, beef mince, tomatoes, herbs and spaghetti. You think of it as a complete meal. When we want to combine values in Elixir to produce one final value, we would use <code>Enum.reduce/2</code>. Let's take a look at it now.
+    <code>Enum.reduce/2</code> allows us to iterate through a list and gradually apply a function to each element in
+    that list to get a final value. Think of it like when you're cooking: you're <em>reducing</em> all the ingredients
+    into a meal. You don't think of a spaghetti bolognese as it being a combination of onion, garlic, beef mince,
+    tomatoes, herbs and spaghetti. You think of it as a complete meal. When we want to combine values in Elixir to
+    produce one final value, we would use <code>Enum.reduce/2</code>. Let's take a look at it now.
   </p>
 
   <p>
-    We might want Elixir to tell us what the average of a list of numbers is. For instance, we might want to calculate the average of some scores, say for a test. Hey look, here are some handy score numbers now (out of 100):
+    We might want Elixir to tell us what the average of a list of numbers is. For instance, we might want to calculate
+    the average of some scores, say for a test. Hey look, here are some handy score numbers now (out of 100):
   </p>
 
   <pre><code>iex> scores = [74, 79, 89, 32, 79, 70, 32, 69, 76, 73, 88, 73, 82, 31]</code></pre>
 
   <p>
-    I wanted to keep writing numbers above but 14 numbers just felt right for some reason. It looks like most people in this test did particularly well. Good on them! A few didn't do so great and only scored 32 and one scored 31. Anyway, let's not look too closely at the data. What we're trying to do is to calculate the average for these scores and to do that we might try to sum these numbers up ourselves on a piece of paper
+    I wanted to keep writing numbers above but 14 numbers just felt right for some reason. It looks like most people in
+    this test did particularly well. Good on them! A few didn't do so great and only scored 32 and one scored 31.
+    Anyway, let's not look too closely at the data. What we're trying to do is to calculate the average for these scores
+    and to do that we might try to sum these numbers up ourselves on a piece of paper
   </p>
 
   <figure>
@@ -409,38 +529,54 @@ cap.("melbourne")
     <figcaption>Figure 9.1: Adding together numbers manually</figcaption>
   </figure>
 
-  Or we might try using a calculator instead, as that's less error-prone. The way that we would do this calculation on a calculator is exactly as above: we would add each number up, one at a time, to calculate the sum. Our input into the calculator would be this:
+  Or we might try using a calculator instead, as that's less error-prone. The way that we would do this calculation on a
+  calculator is exactly as above: we would add each number up, one at a time, to calculate the sum. Our input into the
+  calculator would be this:
   </p>
 
   <pre><code>74 + 79 + 89 + 32 + 79 + 70 + 32 + 69 + 76 + 73 + 88 + 73 + 82 + 31</code></pre>
 
   <p>
-    The calculator would then tell us that the sum of these numbers is <code>947</code>, as our on-paper working out should've shown us too. Go ahead and check this in your <code>iex</code> console too if you'd like; after all, it's just a super-powered calculator.
+    The calculator would then tell us that the sum of these numbers is <code>947</code>, as our on-paper working out
+    should've shown us too. Go ahead and check this in your <code>iex</code> console too if you'd like; after all, it's
+    just a super-powered calculator.
   </p>
 
   <p>
-    Once we have the sum, then we need to divide that sum by the amount of numbers that we summed in order to get the average. Here, we have 14 numbers. So the average is <code>947 / 14</code>, which a calculator or the <code>iex</code> prompt should both tell you: <code>67.64285714285714</code>. The calculator may not have as many decimal places. If we wanted to write this whole operation in Elixir code, it would be very simple:
+    Once we have the sum, then we need to divide that sum by the amount of numbers that we summed in order to get the
+    average. Here, we have 14 numbers. So the average is <code>947 / 14</code>, which a calculator or the
+    <code>iex</code> prompt should both tell you: <code>67.64285714285714</code>. The calculator may not have as many
+    decimal places. If we wanted to write this whole operation in Elixir code, it would be very simple:
   </p>
 
   <pre><code>iex> (74 + 79 + 89 + 32 + 79 + 70 + 32 + 69 + 76 + 73 + 88 + 73 + 82 + 31) / 14</code></pre>
 
   <p>
-    We sum up all the numbers, then divide it by how many scores we had. Easy! It's easy here because there are only 14 numbers. But what if we had scores from hundreds of people? We wouldn't want to enter all this into our calculator or the <code>iex</code> prompt, now would we? "No way!", contributes Izzy. Exactly! So let's look at how we could use <code>Enum.reduce/2</code> to do the summing up for us, to save us having to work it out all ourselves.
+    We sum up all the numbers, then divide it by how many scores we had. Easy! It's easy here because there are only 14
+    numbers. But what if we had scores from hundreds of people? We wouldn't want to enter all this into our calculator
+    or the <code>iex</code> prompt, now would we? "No way!", contributes Izzy. Exactly! So let's look at how we could
+    use <code>Enum.reduce/2</code> to do the summing up for us, to save us having to work it out all ourselves.
   </p>
 
-<pre><code>iex> scores = [74, 79, 89, 32, 79, 70, 32, 69, 76, 73, 88, 73, 82, 31]
+  <pre><code>iex> scores = [74, 79, 89, 32, 79, 70, 32, 69, 76, 73, 88, 73, 82, 31]
 [74, 79, 89, 32, 79, 70, 32, 69, 76, 73, 88, 73, 82, 31]
 iex> Enum.reduce(scores, fn (score, sum) -> sum + score end)</code></pre>
 
   <p>
-    The <code>reduce/2</code> function here does exactly the same calculations as our earlier prompt: it returns 947. It does this by taking the first number, then it adds the second, third, forth and so on to get the sum. How does it do this? Well, let's walk through what this function is doing.
+    The <code>reduce/2</code> function here does exactly the same calculations as our earlier prompt: it returns 947. It
+    does this by taking the first number, then it adds the second, third, forth and so on to get the sum. How does it do
+    this? Well, let's walk through what this function is doing.
   </p>
 
   <p>
-    First, we pass <code>reduce/2</code> the list of scores that we want to sum up. Then we pass it another function which takes two arguments: <code>score</code> and <code>sum</code>. Inside this function, we add these two arguments together. But what values do <code>score</code> and <code>sum</code> have inside this function? One easy way to figure that out is to get Elixir to output their values every time this function inside <code>reduce/2</code> is used:
+    First, we pass <code>reduce/2</code> the list of scores that we want to sum up. Then we pass it another function
+    which takes two arguments: <code>score</code> and <code>sum</code>. Inside this function, we add these two arguments
+    together. But what values do <code>score</code> and <code>sum</code> have inside this function? One easy way to
+    figure that out is to get Elixir to output their values every time this function inside <code>reduce/2</code> is
+    used:
   </p>
 
-<pre><code>iex> Enum.reduce(scores, fn (score, sum) ->
+  <pre><code>iex> Enum.reduce(scores, fn (score, sum) ->
   IO.puts(sum)
   IO.puts(score)
   IO.puts("---")
@@ -448,10 +584,12 @@ iex> Enum.reduce(scores, fn (score, sum) -> sum + score end)</code></pre>
 end)</code></pre>
 
   <p>
-    Even though the order of the arguments inside the function are <code>score</code> and <code>sum</code>, we're outputting them here as <code>sum</code> and <code>score</code> for reasons that will become clear soon. When we run this new variant of our <code>reduce/2</code> function, this will be the output:
+    Even though the order of the arguments inside the function are <code>score</code> and <code>sum</code>, we're
+    outputting them here as <code>sum</code> and <code>score</code> for reasons that will become clear soon. When we run
+    this new variant of our <code>reduce/2</code> function, this will be the output:
   </p>
 
-<pre><code>74
+  <pre><code>74
 79
 ---
 153
@@ -493,10 +631,11 @@ end)</code></pre>
 947</code></pre>
 
   <p>
-    The first number that we're outputting is the <code>sum</code> and the second number is the <code>score</code>. If we look at the first four lines of our output we'll see three numbers: 74, 79 and 153.
+    The first number that we're outputting is the <code>sum</code> and the second number is the <code>score</code>. If
+    we look at the first four lines of our output we'll see three numbers: 74, 79 and 153.
   </p>
 
-<pre><code>74
+  <pre><code>74
 79
 ---
 153</code></pre>
@@ -505,14 +644,19 @@ end)</code></pre>
     If we look back at our <code>scores</code> list definition, we can see that its first two numbers are 74 and 79.
   </p>
 
-<pre><code>iex> scores = [74, 79, ...]</code></pre>
+  <pre><code>iex> scores = [74, 79, ...]</code></pre>
 
   <p>
-    So then where does 153 come from? The answer is easy: <code>74 + 79 = 153</code>. So we can tell from the output here that our <code>reduce/2</code> function is taking the first item from our list and making that the initial <code>sum</code> argument for our inner function. The second item then becomes the <code>score</code> argument. In the function, we're adding these two values together, and that results in 153. The <code>reduce/2</code> function keeps going through the remaining numbers in the list, adding them one-at-a-time until we get the final result.
+    So then where does 153 come from? The answer is easy: <code>74 + 79 = 153</code>. So we can tell from the output
+    here that our <code>reduce/2</code> function is taking the first item from our list and making that the initial
+    <code>sum</code> argument for our inner function. The second item then becomes the <code>score</code> argument. In
+    the function, we're adding these two values together, and that results in 153. The <code>reduce/2</code> function
+    keeps going through the remaining numbers in the list, adding them one-at-a-time until we get the final result.
   </p>
 
   <p>
-    So that's the wonderful <code>reduce/2</code> function, or at least one example of it. As you can see, it's very handy for when we want to combine (or <em>reduce</em>) several items into one item.
+    So that's the wonderful <code>reduce/2</code> function, or at least one example of it. As you can see, it's very
+    handy for when we want to combine (or <em>reduce</em>) several items into one item.
   </p>
 
 </section>
@@ -521,10 +665,12 @@ end)</code></pre>
   <h3>Summing up a list</h3>
 
   <p>
-    It's at this point that I should probably mention one more function in the <code>Enum</code> toolbox called <code>sum/1</code>. This function takes a list and sums up all the items in it, just like our <code>reduce/2</code> function. These two functions are identical in how they work:
+    It's at this point that I should probably mention one more function in the <code>Enum</code> toolbox called
+    <code>sum/1</code>. This function takes a list and sums up all the items in it, just like our <code>reduce/2</code>
+    function. These two functions are identical in how they work:
   </p>
 
-<pre><code>iex> scores = [74, 79, 89, 32, 79, 70, 32, 69, 76, 73, 88, 73, 82, 31]
+  <pre><code>iex> scores = [74, 79, 89, 32, 79, 70, 32, 69, 76, 73, 88, 73, 82, 31]
 [74, 79, 89, 32, 79, 70, 32, 69, 76, 73, 88, 73, 82, 31]
 iex> Enum.sum(scores)
 947
@@ -532,7 +678,9 @@ iex> Enum.reduce(scores, fn (score, sum) -> sum + score end)
 947</code></pre>
 
   <p>
-    So if you're wanting to sum up a list of numbers, it's better to use <code>Enum.sum/1</code>, than to use to <code>Enum.reduce/2</code>, just because it's less code. If you want to do another operation other than summing, like subtraction, multiplication, division and so on, then it's better to use <code>Enum.reduce/2</code>.
+    So if you're wanting to sum up a list of numbers, it's better to use <code>Enum.sum/1</code>, than to use to
+    <code>Enum.reduce/2</code>, just because it's less code. If you want to do another operation other than summing,
+    like subtraction, multiplication, division and so on, then it's better to use <code>Enum.reduce/2</code>.
   </p>
 </section>
 
@@ -540,7 +688,10 @@ iex> Enum.reduce(scores, fn (score, sum) -> sum + score end)
   <h3>Exercises</h3>
 
   <ul>
-    <li>Use a combination of <code>Enum.map/2</code> and <code>String.replace/3</code> to replace all the e's in these words with another letter of your choosing: <code>["a", "very", "fine", "collection", "of", "words", "enunciated"]</code></li>
+    <li>Use a combination of <code>Enum.map/2</code> and <code>String.replace/3</code> to replace all the e's in these
+      words with another letter of your choosing:
+      <code>["a", "very", "fine", "collection", "of", "words", "enunciated"]</code>
+    </li>
     <li>Use <code>Enum.reduce/2</code> to multiply these numbers together: <code>[5, 12, 9, 24, 9, 18]</code></li>
   </ul>
 </section>

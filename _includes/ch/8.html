@@ -1,30 +1,35 @@
-<section class='break'>
+<section class='major'>
   <h2 id='chapter-8'>8. Working with strings, input and output</h2>
 
   <p>
-    In this chapter we'll go through some of the built-in functions that Elixir has. We'll be focussing specifically on strings, input and output. Elixir has some very handy functions already available to use and we'll see just a small taster of that here.
+    In this chapter we'll go through some of the built-in functions that Elixir has. We'll be focussing specifically on
+    strings, input and output. Elixir has some very handy functions already available to use and we'll see just a small
+    taster of that here.
   </p>
 
   <h3>Working with strings</h3>
 
   <p>
-    We'll start by looking at the functions to work with strings. Strings are where we started back in Chapter 1, so it only makes sense to start with them here, too.
+    We'll start by looking at the functions to work with strings. Strings are where we started back in Chapter 1, so it
+    only makes sense to start with them here, too.
   </p>
 
   <h4>Reversing a string</h4>
 
   <p>
-    Have you ever wanted to reverse a sentence, but didn't want to type all the different characters yourself? Elixir has a handy function for this called <code>String.reverse</code>. Here it is in action:
+    Have you ever wanted to reverse a sentence, but didn't want to type all the different characters yourself? Elixir
+    has a handy function for this called <code>String.reverse</code>. Here it is in action:
   </p>
 
-<pre><code>iex> String.reverse("reverse this")
+  <pre><code>iex> String.reverse("reverse this")
 <span class='console-green'>"siht esrever"</span></code></pre>
 
   <aside>
     <header>Look Ma, No Brackets!</header>
 
     <p>
-      When we're calling functions in Elixir, we will typically wrap the arguments in brackets. We do this in order to make it very clear where the end of the function is.
+      When we're calling functions in Elixir, we will typically wrap the arguments in brackets. We do this in order to
+      make it very clear where the end of the function is.
     </p>
 
     <p>
@@ -34,7 +39,8 @@
     <pre><code>iex> String.reverse "reverse this"</code></pre>
 
     <p>
-      Elixir is smart enough to know here that <code>"reverse this"</code> is an argument to the <code>String.reverse</code> function.
+      Elixir is smart enough to know here that <code>"reverse this"</code> is an argument to the
+      <code>String.reverse</code> function.
     </p>
 
     <p>
@@ -43,52 +49,67 @@
   </aside>
 
   <p>
-    Izzy elicits a noticeable "wooooowww, that's so cool" at this. "What else does Elixir have?", she asks quickly. We'll get to that, Izzy. Let's take the time now to understand what's happening here first.
+    Izzy elicits a noticeable "wooooowww, that's so cool" at this. "What else does Elixir have?", she asks quickly.
+    We'll get to that, Izzy. Let's take the time now to understand what's happening here first.
   </p>
 
   <p>
-    The functions that Elixir provides are separated into something akin to kitchen drawers or toolboxes, called <em>modules</em>. Whereas in your top kitchen drawer you might have forks, knives, sporks, and spoons (like every sensible person's kitchen does), and in another you might have measuring cups, and in another tea towels, in Elixir the functions to work with the different kinds of data are separated into different modules. This makes finding functions to work with particular kinds of data in Elixir very easy.
+    The functions that Elixir provides are separated into something akin to kitchen drawers or toolboxes, called
+    <em>modules</em>. Whereas in your top kitchen drawer you might have forks, knives, sporks, and spoons (like every
+    sensible person's kitchen does), and in another you might have measuring cups, and in another tea towels, in Elixir
+    the functions to work with the different kinds of data are separated into different modules. This makes finding
+    functions to work with particular kinds of data in Elixir very easy.
   </p>
 
   <p>
-    Here, we're using the <code>reverse</code> function from the <code>String</code> <em>module</em> ("drawer" / "toolbox"). We know that this is a module because its first letter is upper-case. We're passing this <code>String.reverse</code> function one argument, which is a string <code>"reverse this"</code>. This function takes the string and flips it around, producing the reversed string: <code>"siht esrever"</code>.
+    Here, we're using the <code>reverse</code> function from the <code>String</code> <em>module</em> ("drawer" /
+    "toolbox"). We know that this is a module because its first letter is upper-case. We're passing this
+    <code>String.reverse</code> function one argument, which is a string <code>"reverse this"</code>. This function
+    takes the string and flips it around, producing the reversed string: <code>"siht esrever"</code>.
   </p>
 
   <p>
-    Note here how we <em>don't</em> need to put a dot between the function name and its arguments, like we had to do with the functions we defined ourselves. You don't need to do this when you're running a function from a module. You only need the dot if you've defined the function and assigned it to a variable. For instance, with our old <code>greeting</code> function:
+    Note here how we <em>don't</em> need to put a dot between the function name and its arguments, like we had to do
+    with the functions we defined ourselves. You don't need to do this when you're running a function from a module. You
+    only need the dot if you've defined the function and assigned it to a variable. For instance, with our old
+    <code>greeting</code> function:
   </p>
 
-<pre><code>iex> greeting = fn (place) -> "Hello, #{place}!" end
+  <pre><code>iex> greeting = fn (place) -> "Hello, #{place}!" end
 <span class='console-yellow'>#Function&lt;6.52032458/1 in :erl_eval.expr/5&gt;</span>
 greeting.("world")</code></pre>
 
   <p>
-    When calling the <code>String.reverse</code> function, Elixir knows that it's a function because of that <code>String.</code> prefix. We don't need a dot right after the function name:
+    When calling the <code>String.reverse</code> function, Elixir knows that it's a function because of that
+    <code>String.</code> prefix. We don't need a dot right after the function name:
   </p>
 
-<pre><code>iex> String.reverse("reverse this")
+  <pre><code>iex> String.reverse("reverse this")
 <span class='console-green'>"siht esrever"</span></code></pre>
 
   <h4>Splitting a string</h4>
 
   <p>
-    What about if we wanted to split a string into its individual words? For that, we can use the <code>String.split</code> function:
+    What about if we wanted to split a string into its individual words? For that, we can use the
+    <code>String.split</code> function:
   </p>
 
-<pre><code>iex> String.split("split my string into pieces")
+  <pre><code>iex> String.split("split my string into pieces")
 [<span class='console-green'>"split"</span>, <span class='console-green'>"my"</span>, <span class='console-green'>"string"</span>, <span class='console-green'>"into"</span>, <span class='console-green'>"pieces"</span>]</code></pre>
 
   <p>
-    We now have a list of the words in the string. We'll see what we could do with such a list in the next chapter. For now, let's look at what else is in this <code>String</code> module.
+    We now have a list of the words in the string. We'll see what we could do with such a list in the next chapter. For
+    now, let's look at what else is in this <code>String</code> module.
   </p>
 
   <h4>Replacing parts of a string</h4>
 
   <p>
-    What about if we wanted to replace all the occurrences of a particular letter in a string with another one? For that, Elixir has the <code>String.replace</code> function:
+    What about if we wanted to replace all the occurrences of a particular letter in a string with another one? For
+    that, Elixir has the <code>String.replace</code> function:
   </p>
 
-<pre><code>iex> String.replace("moo", "o", "e")
+  <pre><code>iex> String.replace("moo", "o", "e")
 "mee"</code></pre>
 
   <p>
@@ -112,16 +133,18 @@ greeting.("world")</code></pre>
 "the cow jumped over the meen"</code></pre>
 
   <p>
-    Notice here that it didn't change the "o" in the word "cow" or the other "o" in the word "over". This is because we told the function to look for <em>two</em> "o"s in a row.
+    Notice here that it didn't change the "o" in the word "cow" or the other "o" in the word "over". This is because we
+    told the function to look for <em>two</em> "o"s in a row.
   </p>
 
   <h4>Making all the letters of a string uppercase</h4>
 
   <p>
-    What about if we wanted to make the computer turn a string into its shouty variant? We can use <code>upcase</code> for this:
+    What about if we wanted to make the computer turn a string into its shouty variant? We can use <code>upcase</code>
+    for this:
   </p>
 
-<pre><code>iex> String.upcase("not so quiet any more")
+  <pre><code>iex> String.upcase("not so quiet any more")
 <span class='console-green'>"NOT SO QUIET ANY MORE"</span></code></pre>
 
   <h4>Making all the letters of a string lowercase</h4>
@@ -130,11 +153,13 @@ greeting.("world")</code></pre>
     At the opposite end of that particular spectrum, there is <code>downcase</code>:
   </p>
 
-<pre><code>iex> String.downcase("LOUD TO QUIET")
+  <pre><code>iex> String.downcase("LOUD TO QUIET")
 <span class='console-green'>"loud to quiet"</span></code></pre>
 
   <p>
-    So as you can see, the <code>String</code> module has some helpful functions that can help us whenever we need to split a string, turn it all into upper / lower ("down") case. There's plenty more functions in the <code>String</code> module, and we'll see some of those in due time.
+    So as you can see, the <code>String</code> module has some helpful functions that can help us whenever we need to
+    split a string, turn it all into upper / lower ("down") case. There's plenty more functions in the
+    <code>String</code> module, and we'll see some of those in due time.
   </p>
 </section>
 
@@ -142,11 +167,16 @@ greeting.("world")</code></pre>
   <h3>Input and output</h3>
 
   <p>
-    Input and output are two fundamental things that you'll work with while programming. Programming is all about taking some data as an input and turning it into some form of an output. We've seen this multiple times already with the functions we've defined and used throughout this book. For instance, in that <code>String.downcase</code> function just above, the string <code>"LOUD TO QUIET"</code> is the input, and the <code>"loud to quiet"</code> generated by the method is the output.
+    Input and output are two fundamental things that you'll work with while programming. Programming is all about taking
+    some data as an input and turning it into some form of an output. We've seen this multiple times already with the
+    functions we've defined and used throughout this book. For instance, in that <code>String.downcase</code> function
+    just above, the string <code>"LOUD TO QUIET"</code> is the input, and the <code>"loud to quiet"</code> generated by
+    the method is the output.
   </p>
 
   <p>
-  What we'll cover in this section is getting some input from a different source: a new prompt. We'll prompt the user for their name and then we will use whatever they enter to output a message containing that input.
+    What we'll cover in this section is getting some input from a different source: a new prompt. We'll prompt the user
+    for their name and then we will use whatever they enter to output a message containing that input.
   </p>
 </section>
 
@@ -154,40 +184,53 @@ greeting.("world")</code></pre>
   <h4>Making our own prompts</h4>
 
   <p>
-    Let's say that we wanted to prompt people for their names and we wanted to prompt them in a way that meant that they didn't have to read Joy of Elixir to understand that strings had to be wrapped in double quotes and that they had to enter their input into an <code>iex</code> prompt.
+    Let's say that we wanted to prompt people for their names and we wanted to prompt them in a way that meant that they
+    didn't have to read Joy of Elixir to understand that strings had to be wrapped in double quotes and that they had to
+    enter their input into an <code>iex</code> prompt.
   </p>
 
   <p>
-    Fortunately for us, Elixir has a module that provides us a function to do just this. That module is called <code>IO</code> (Input / Output) and the function is called <code>gets</code>. The name <code>gets</code> means "get string" and it will allow us to do exactly that. Let's see this function in practice:
+    Fortunately for us, Elixir has a module that provides us a function to do just this. That module is called
+    <code>IO</code> (Input / Output) and the function is called <code>gets</code>. The name <code>gets</code> means "get
+    string" and it will allow us to do exactly that. Let's see this function in practice:
   </p>
 
-<pre><code>iex> name = IO.gets "What is your name?"
+  <pre><code>iex> name = IO.gets "What is your name?"
 What is your name?</code></pre>
 
   <p>
-    "Hey what happened to our <code>iex&gt;</code> prompt?", Izzy asks. Good question! We're using <code>gets</code> and passing it a string. This string then becomes a new prompt. This prompt is asking us for our name. Let's type in our name and press enter:
+    "Hey what happened to our <code>iex&gt;</code> prompt?", Izzy asks. Good question! We're using <code>gets</code> and
+    passing it a string. This string then becomes a new prompt. This prompt is asking us for our name. Let's type in our
+    name and press enter:
   </p>
 
-<pre><code>iex> name = IO.gets "What is your name?"
+  <pre><code>iex> name = IO.gets "What is your name?"
 What is your name?The Reader
 <span class='console-green'>"The Reader\n"</span></code></pre>
 
   <p>
-    Ok, so there's some output here. But what does it mean? If we check our <code>name</code> variable's contents we'll see that it contains this <code>"The Reader\n"</code> string.
+    Ok, so there's some output here. But what does it mean? If we check our <code>name</code> variable's contents we'll
+    see that it contains this <code>"The Reader\n"</code> string.
   </p>
 
-<pre><code>iex> name
+  <pre><code>iex> name
 <span class='console-green'>"The Reader\n"</span></code></pre>
 
   <p>
-    Izzy continues asking great questions: "What's that <code>\n</code> on the end?". That is a <em>new line character</em> and tells the computer that we pressed enter. While the <code>IO.gets</code> function stopped prompting us after we pressed enter, it still kept the enter in case we wanted it too. In this particular case we don't really want that character. We can get rid of it by using another function from the <code>String</code> module, called <code>trim</code>.
+    Izzy continues asking great questions: "What's that <code>\n</code> on the end?". That is a <em>new line
+      character</em> and tells the computer that we pressed enter. While the <code>IO.gets</code> function stopped
+    prompting us after we pressed enter, it still kept the enter in case we wanted it too. In this particular case we
+    don't really want that character. We can get rid of it by using another function from the <code>String</code>
+    module, called <code>trim</code>.
   </p>
 
-<pre><code>iex> name = String.trim(name)
+  <pre><code>iex> name = String.trim(name)
 <span class='console-green'>"The Reader"</span></code></pre>
 
   <p>
-    That's much better! Now we have our name without that pesky new line character suffixed. What <code>String.trim</code> does is remove all the extra spacing from the end of a string, giving us just the important parts.
+    That's much better! Now we have our name without that pesky new line character suffixed. What
+    <code>String.trim</code> does is remove all the extra spacing from the end of a string, giving us just the important
+    parts.
   </p>
 </section>
 
@@ -195,62 +238,80 @@ What is your name?The Reader
   <h4>Taking input and making it output</h4>
 
   <p>
-    We've now got some input, but what's the point of taking input if you're not going to <em>do</em> anything with it? So let's do something with it! What we'll do with this input is to output a greeting message.
+    We've now got some input, but what's the point of taking input if you're not going to <em>do</em> anything with it?
+    So let's do something with it! What we'll do with this input is to output a greeting message.
   </p>
 
   <p>
-    Lets deviate here from using the <code>iex</code> prompt and instead write our code inside one of those Elixir Script (<code>.exs</code>) files we mentioned back at the end of Chapter 5. Let's call this file <code>greet.exs</code> and put this content inside of it:
+    Lets deviate here from using the <code>iex</code> prompt and instead write our code inside one of those Elixir
+    Script (<code>.exs</code>) files we mentioned back at the end of Chapter 5. Let's call this file
+    <code>greet.exs</code> and put this content inside of it:
   </p>
 
-<pre><code class="elixir">name = IO.gets "What is your name? "
+  <pre><code class="elixir">name = IO.gets "What is your name? "
 age = IO.gets "And what is your age? "
 IO.puts "Hello, #{String.trim(name)}! You're #{String.trim(age)}? That's so old!"</code></pre>
 
   <p>
-    Well that's a bit sneaky of that <code>IO.puts</code> to just appear out of <em>nowhere</em>! Just like <code>gets</code> means "get string", <code>puts</code> means "put string". This function will generate some output when our script runs. If we didn't have this <code>IO.puts</code> here, our program would only take input, and it would not generate any output.
+    Well that's a bit sneaky of that <code>IO.puts</code> to just appear out of <em>nowhere</em>! Just like
+    <code>gets</code> means "get string", <code>puts</code> means "put string". This function will generate some output
+    when our script runs. If we didn't have this <code>IO.puts</code> here, our program would only take input, and it
+    would not generate any output.
   </p>
 
   <p>
-    In this function we're interpolating the output of the <code>String.trim</code> function twice. Remember: we're doing this to remove the new line character (<code>\n</code>) from the result of the <code>IO.gets</code> calls.
+    In this function we're interpolating the output of the <code>String.trim</code> function twice. Remember: we're
+    doing this to remove the new line character (<code>\n</code>) from the result of the <code>IO.gets</code> calls.
   </p>
 
   <p>
-    There's some more new syntax that we've never seen before either. We've seen that we could interpolate variables into strings, but we've never seen that we could call functions while interpolating too. It's absolutely something you can do in Elixir. When interpolating inside a string you can put any code inside the interpolation brackets (<code>#{}</code>) &mdash; but as a general rule-of-thumb it's good to keep this interpolated code as short and simple as possible. Normally, you would only interpolate variables. We're making a small exception here to interpolate a function instead.
+    There's some more new syntax that we've never seen before either. We've seen that we could interpolate variables
+    into strings, but we've never seen that we could call functions while interpolating too. It's absolutely something
+    you can do in Elixir. When interpolating inside a string you can put any code inside the interpolation brackets
+    (<code>#{}</code>) &mdash; but as a general rule-of-thumb it's good to keep this interpolated code as short and
+    simple as possible. Normally, you would only interpolate variables. We're making a small exception here to
+    interpolate a function instead.
   </p>
 
   <p>
-    Let's run our <code>greet.exs</code> script now. First, we'll need to stop our <code>iex</code> prompt, which we can do by pressing <code>Ctrl+C</code> twice. Then we can run the script with this command:
+    Let's run our <code>greet.exs</code> script now. First, we'll need to stop our <code>iex</code> prompt, which we can
+    do by pressing <code>Ctrl+C</code> twice. Then we can run the script with this command:
   </p>
 
-<pre><code>elixir greet.exs</code></pre>
+  <pre><code>elixir greet.exs</code></pre>
 
   <p>
     Here's what we'll see initially:
   </p>
 
-<pre><code>What is your name?</code></pre>
+  <pre><code>What is your name?</code></pre>
 
   <p>
-    The script is prompting us for our name and it is doing that because the first line of code in that script is running the <code>IO.gets</code> function. Let's enter our name again and press enter.
+    The script is prompting us for our name and it is doing that because the first line of code in that script is
+    running the <code>IO.gets</code> function. Let's enter our name again and press enter.
   </p>
 
-<pre><code class="hljs text">What is your name? Reader
+  <pre><code class="hljs text">What is your name? Reader
 And what is your age?</code></pre>
 
   <p>
-    This little script is now prompting us for our age. This is because the second line is calling another <code>IO.gets</code>. Let's enter our age and then press enter again,
+    This little script is now prompting us for our age. This is because the second line is calling another
+    <code>IO.gets</code>. Let's enter our age and then press enter again,
   </p>
 
-<pre><code class="hljs text">What is your name? Reader
+  <pre><code class="hljs text">What is your name? Reader
 And what is your age? 30ish
 Hello, Reader! You're 30ish? That's so old!</code></pre>
 
   <p>
-    Our script gets to the third and final line, where it runs the <code>IO.puts</code> function and outputs its little teasing message. Apparently being 30ish is old! Kids these days have no respect.
+    Our script gets to the third and final line, where it runs the <code>IO.puts</code> function and outputs its little
+    teasing message. Apparently being 30ish is old! Kids these days have no respect.
   </p>
 
   <p>
-    This is just a small example of what we can do with <code>IO.gets</code> and <code>IO.puts</code>. We could use any number of <code>IO.gets</code> and <code>IO.puts</code> function calls to build up a program that took user input and generated some output from it.
+    This is just a small example of what we can do with <code>IO.gets</code> and <code>IO.puts</code>. We could use any
+    number of <code>IO.gets</code> and <code>IO.puts</code> function calls to build up a program that took user input
+    and generated some output from it.
   </p>
 </section>
 
@@ -259,18 +320,27 @@ Hello, Reader! You're 30ish? That's so old!</code></pre>
   <h3>The unchanging world</h3>
 
   <p>
-    Now's a good time as any to introduce to you to another feature of Elixir, called <em>immutability</em>. Immutability is another one of those big computer science-y fancy words which is used to describe things that do not change over time. "Do not change over time" made a whole load more sense to me than "immutability" when I first heard the word, to be perfectly honest.
+    Now's a good time as any to introduce to you to another feature of Elixir, called <em>immutability</em>.
+    Immutability is another one of those big computer science-y fancy words which is used to describe things that do not
+    change over time. "Do not change over time" made a whole load more sense to me than "immutability" when I first
+    heard the word, to be perfectly honest.
   </p>
 
   <p>
-    We're talking about it in this chapter because nearly everything you've worked with so far in Elixir is <em>immutable</em>; unchanging and unchangeable. Most things in Elixir cannot be changed, modified, altered, messed with or any other synonym for those terms, and the way we talk about this particular attribute for these things is to say that these things are <em>immutable</em>.
+    We're talking about it in this chapter because nearly everything you've worked with so far in Elixir is
+    <em>immutable</em>; unchanging and unchangeable. Most things in Elixir cannot be changed, modified, altered, messed
+    with or any other synonym for those terms, and the way we talk about this particular attribute for these things is
+    to say that these things are <em>immutable</em>.
   </p>
 
   <p>
-    When we've called a function such as <code>String.downcase</code> or <code>String.upcase</code>, we pass these functions strings as arguments and then we get back another string from the function; two completely different strings. All functions in Elixir behave this way: they cannot modify what they're given. Let's look at a quick example:
+    When we've called a function such as <code>String.downcase</code> or <code>String.upcase</code>, we pass these
+    functions strings as arguments and then we get back another string from the function; two completely different
+    strings. All functions in Elixir behave this way: they cannot modify what they're given. Let's look at a quick
+    example:
   </p>
 
-<pre><code>iex> sentence = "perfectly normal sentence"
+  <pre><code>iex> sentence = "perfectly normal sentence"
 "perfectly normal sentence"
 iex> upcased_sentence = String.upcase(sentence)
 "PERFECTLY NORMAL SENTENCE"
@@ -279,14 +349,19 @@ iex> sentence
 </code></pre>
 
   <p>
-    By running <code>String.upcase</code> on the sentence, it doesn't change what the <code>sentence</code> is -- it's still exactly as we defined it. The data stored in the <code>sentence</code> variable is <em>immutable</em>. The only way we could change what is in that variable is if we re-assigned that variable:
+    By running <code>String.upcase</code> on the sentence, it doesn't change what the <code>sentence</code> is -- it's
+    still exactly as we defined it. The data stored in the <code>sentence</code> variable is <em>immutable</em>. The
+    only way we could change what is in that variable is if we re-assigned that variable:
   </p>
 
-<pre><code>iex> sentence = "another, even more perfectly normal sentence"
+  <pre><code>iex> sentence = "another, even more perfectly normal sentence"
 "another, even more perfectly normal sentence"</code></pre>
 
   <p>
-    It's important to know in Elixir that calling functions on data will never change that data. What will happen instead is that we'll get back some new... thing as a result of that function. This will become more apparent the more Elixir code you write, but I thought it best to mention it here before you get too deep and someone mentions that big fancy word &mdash; "immutable". Now you're, as they say, "in the know" too.
+    It's important to know in Elixir that calling functions on data will never change that data. What will happen
+    instead is that we'll get back some new... thing as a result of that function. This will become more apparent the
+    more Elixir code you write, but I thought it best to mention it here before you get too deep and someone mentions
+    that big fancy word &mdash; "immutable". Now you're, as they say, "in the know" too.
   </p>
 </section>
 
@@ -294,11 +369,16 @@ iex> sentence
   <h3>Exercises</h3>
 
   <ul>
-    <li>Make a program that generates a very short story. Get it to take some input of a person, a place and an object -- using <code>IO.gets/1</code> and combine all three into a little sentence, output with <code>IO.puts/1</code>.</li>
-    <li>Ponder on what happens when you remove the <code>IO.puts</code> from the beginning of Line 3 in <code>greet.exs</code> and then run the program with <code>elixir greet.exs</code>. Think about how this would be different if you put that code into an <code>iex</code> prompt. </li>
+    <li>Make a program that generates a very short story. Get it to take some input of a person, a place and an object
+      -- using <code>IO.gets/1</code> and combine all three into a little sentence, output with <code>IO.puts/1</code>.
+    </li>
+    <li>Ponder on what happens when you remove the <code>IO.puts</code> from the beginning of Line 3 in
+      <code>greet.exs</code> and then run the program with <code>elixir greet.exs</code>. Think about how this would be
+      different if you put that code into an <code>iex</code> prompt. </li>
   </ul>
 
   <p>
-    We've done a lot of work with strings so far in this chapter. Let's look at lists and maps again in the next chapter and the built-in functions that we can use with them.
+    We've done a lot of work with strings so far in this chapter. Let's look at lists and maps again in the next chapter
+    and the built-in functions that we can use with them.
   </p>
 </section>

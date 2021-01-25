@@ -1,7 +1,6 @@
 ---
 ---
 
-
 @page {
   size: letter;
 }
@@ -14,15 +13,26 @@ body {
   border: 0;
 }
 
-p, aside, section.major, pre, .todo, .grouped {
+p,
+aside,
+pre,
+.todo,
+.grouped {
   page-break-inside: avoid;
 }
 
+section {
+  orphans: 0;
+  widows: 0;
+}
+
 section.major {
+  page-break-before: always;
   page-break-after: always;
 }
 
-nav, footer {
+nav,
+footer {
   display: none;
 }
 
@@ -44,4 +54,5 @@ nav, footer {
 
 article figure img {
   max-width: 75vw;
+  max-height: 40vw;
 }

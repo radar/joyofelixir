@@ -7,7 +7,7 @@ html {
 body {
   height: 100%;
 
-  font: 12pt "Bitter";
+  font-family: "Bitter";
   font-weight: 100;
   -webkit-text-size-adjust: 100%;
   @media screen {
@@ -196,6 +196,7 @@ footer {
     }
   }
   .buy {
+    font-family: "Bitter";
     border-radius: 3px;
     border: 3px solid darken($purple, 5);
     font-size: 150%;
@@ -237,5 +238,32 @@ footer {
 
   td {
     padding: 0.5em;
+  }
+}
+
+.pagination {
+  margin-bottom: 3rem;
+  a {
+    background: lighten($lighter-purple, 10);
+    text-decoration: none;
+    border: 1px solid darken($lighter-purple, 10);
+    color: $purple;
+    font-weight: 600;
+    padding: 10px;
+    border-radius: 5px;
+  }
+
+  a + a {
+    margin-left: 10px;
+  }
+}
+
+table {
+  border-collapse: collapse;
+  border: 1px solid black;
+  th,
+  td {
+    padding: 10px;
+    border: 1px solid black;
   }
 }

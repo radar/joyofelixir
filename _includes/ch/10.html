@@ -1,8 +1,11 @@
-<section class='break'>
+<section class='major'>
   <h2 id='chapter-10'>10. Working with maps</h2>
 
   <p>
-    In the last chapter we looked at some functions that we could use to work with lists. We looked at some functions from the <code>List</code> module, but we really spent most of the chapter on the <code>Enum</code> module. In this chapter, we'll spend some time talking about how to use <code>Enum.each/2</code> and <code>Enum.map/2</code> on maps instead of lists. Then we'll cover some functions from the <code>Map</code> module.</p>
+    In the last chapter we looked at some functions that we could use to work with lists. We looked at some functions
+    from the <code>List</code> module, but we really spent most of the chapter on the <code>Enum</code> module. In this
+    chapter, we'll spend some time talking about how to use <code>Enum.each/2</code> and <code>Enum.map/2</code> on maps
+    instead of lists. Then we'll cover some functions from the <code>Map</code> module.</p>
 
   <p>
     We spoke in that last chapter of using the <code>Enum.each/2</code> function to work with maps:
@@ -13,16 +16,19 @@
       Similar to this, we could <em>enumerate</em> through a map. If we were to take one of our maps from earlier...
     </p>
 
-<pre><code>%{name: "Izzy", age: "30ish", gender: "Female"}</code></pre>
+    <pre><code>%{name: "Izzy", age: "30ish", gender: "Female"}</code></pre>
 
     <p>
       ...and write each key and value pair down, they may look something like this:
     </p>
 
     <dl>
-      <dt><strong>Name</strong></dt><dd>Izzy</dd>
-      <dt><strong>Age</strong></dt><dd>30ish</dd>
-      <dt><strong>Gender</strong></dt><dd>Female</dd>
+      <dt><strong>Name</strong></dt>
+      <dd>Izzy</dd>
+      <dt><strong>Age</strong></dt>
+      <dd>30ish</dd>
+      <dt><strong>Gender</strong></dt>
+      <dd>Female</dd>
     </dl>
   </blockquote>
 
@@ -30,24 +36,34 @@
     But we never got around to actually showing you how this was done! Well, enough dilly-dallying, here's an example:
   </p>
 
-<pre><code>iex> person = %{name: "Izzy", age: "30ish", gender: "Female"}
+  <pre><code>iex> person = %{name: "Izzy", age: "30ish", gender: "Female"}
  %{age: "30ish", gender: "Female", name: "Izzy"}
 iex> Enum.each(person, fn ({key, value}) -> IO.puts value end)
 </code></pre>
 
 
   <p>
-    Before I can go any further, Izzy interrupts. "Hey, those curly braces inside the function passed to <code>each</code> are weird! It looks like a map but it's not a map because it doesn't have the <code>%</code> before it. And it's not a list because the curliness of the brackets; a list has square brackets. So what is it?". Izzy is calling out this code specifically:
+    Before I can go any further, Izzy interrupts. "Hey, those curly braces inside the function passed to
+    <code>each</code> are weird! It looks like a map but it's not a map because it doesn't have the <code>%</code>
+    before it. And it's not a list because the curliness of the brackets; a list has square brackets. So what is it?".
+    Izzy is calling out this code specifically:
   </p>
 
-<pre><code>fn ({key, value}) ...</code></pre>
+  <pre><code>fn ({key, value}) ...</code></pre>
 
   <p>
-    The <code>{key, value}</code> here indicates a type of data in Elixir that we haven't seen before called a <em>tuple</em>. Tuples work like lists in that the order of the elements inside them matters, but you can't enumerate through them like you can with lists; said another way: tuples are <em>not</em> enumerable. Tuples are used to represent ordered, linked data. In this example, each tuple represents a key <em>and</em> its linked value.
+    The <code>{key, value}</code> here indicates a type of data in Elixir that we haven't seen before called a
+    <em>tuple</em>. Tuples work like lists in that the order of the elements inside them matters, but you can't
+    enumerate through them like you can with lists; said another way: tuples are <em>not</em> enumerable. Tuples are
+    used to represent ordered, linked data. In this example, each tuple represents a key <em>and</em> its linked value.
   </p>
 
   <p>
-    In this function passed to <code>each</code>, a tuple is used instead of two function arguments (i.e. <code>fn(key, value) -></code>) to indicate that the <code>key</code> and the <code>value</code> share a connection. This <code>key</code> and <code>value</code> are not represented as a list (i.e. <code>fn([key, value]) -></code>) because of this connection. (Also: Elixir in its own "brain" thinks of maps as a list of tuples, and so this is another reason why they're tuples, and not lists!)
+    In this function passed to <code>each</code>, a tuple is used instead of two function arguments (i.e.
+    <code>fn(key, value) -></code>) to indicate that the <code>key</code> and the <code>value</code> share a connection.
+    This <code>key</code> and <code>value</code> are not represented as a list (i.e. <code>fn([key, value]) -></code>)
+    because of this connection. (Also: Elixir in its own "brain" thinks of maps as a list of tuples, and so this is
+    another reason why they're tuples, and not lists!)
   </p>
 
   <aside>
@@ -61,17 +77,19 @@ iex> Enum.each(person, fn ({key, value}) -> IO.puts value end)
     Let's take another look at how we used <code>Enum.each/2</code> and what the output was:
   </p>
 
-<pre><code>iex> Enum.each(person, fn ({key, value}) -> IO.puts value end)
+  <pre><code>iex> Enum.each(person, fn ({key, value}) -> IO.puts value end)
 30ish
 Female
 Izzy
 :ok</code></pre>
 
   <p>
-    Our use of <code>Enum.each/2</code> goes through each <code>key</code> and <code>value</code>, ignores the key and outputs the value with <code>IO.puts/1</code>. This is almost identical to our previous example of <code>Enum.each/2</code>, where we used a list of cities with the <code>IO.puts/1</code> function:
+    Our use of <code>Enum.each/2</code> goes through each <code>key</code> and <code>value</code>, ignores the key and
+    outputs the value with <code>IO.puts/1</code>. This is almost identical to our previous example of
+    <code>Enum.each/2</code>, where we used a list of cities with the <code>IO.puts/1</code> function:
   </p>
 
-<pre><code>iex> Enum.each(cities, &amp;IO.puts/1)</code></pre>
+  <pre><code>iex> Enum.each(cities, &amp;IO.puts/1)</code></pre>
 
   <p>
     In the list example, we were able to use <code>&amp;IO.puts/1</code>. In
@@ -81,15 +99,20 @@ Izzy
     happens if we don't use that expanded version.
   </p>
 
-<pre><code class='hljs text'>iex> Enum.each(person, &IO.puts/1)
+  <pre><code class='hljs text'>iex> Enum.each(person, &IO.puts/1)
 <span class='console-red'>** (Protocol.UndefinedError) protocol String.Chars not implemented for {"age", "30ish"}</span></code></pre>
 
   <p>
-    Uh oh, the computer is mad at us again. This cryptic error message is a complicated way of saying that <code>IO.puts/1</code> doesn't know how to output a tuple. We just need to be careful that we pass <code>IO.puts/1</code> only things it can handle. If we give something that <code>IO.puts/1</code> can't handle, it won't know how to output it, and so it will show this error.
+    Uh oh, the computer is mad at us again. This cryptic error message is a complicated way of saying that
+    <code>IO.puts/1</code> doesn't know how to output a tuple. We just need to be careful that we pass
+    <code>IO.puts/1</code> only things it can handle. If we give something that <code>IO.puts/1</code> can't handle, it
+    won't know how to output it, and so it will show this error.
   </p>
 
   <p>
-    We've now looked at <code>Enum.each/2</code> for maps, just like how we looked at it in the last chapter for lists. In that last chapter we also looked at <code>Enum.map/2</code> and <code>Enum.reduce/2</code> and so it's only fair that we cover them here too.
+    We've now looked at <code>Enum.each/2</code> for maps, just like how we looked at it in the last chapter for lists.
+    In that last chapter we also looked at <code>Enum.map/2</code> and <code>Enum.reduce/2</code> and so it's only fair
+    that we cover them here too.
   </p>
 
 </section>
@@ -101,14 +124,15 @@ Izzy
     I wonder what map we could use this time. We've used the <code>person</code> map quite a few times already:
   </p>
 
-<pre>
+  <pre>
 <code>iex> person = %{name: "Izzy", age: "30ish", gender: "Female"}</code></pre>
 
   <p>
-    We should try to use another map for this section. Hmmmm. How about a map with the days of the week and their expected temperatures? Here's what the week ahead looks like in Melbourne at this current point of writing:
+    We should try to use another map for this section. Hmmmm. How about a map with the days of the week and their
+    expected temperatures? Here's what the week ahead looks like in Melbourne at this current point of writing:
   </p>
 
-<pre><code>%{
+  <pre><code>%{
   "Monday" => 28,
   "Tuesday" => 29,
   "Wednesday" => 29,
@@ -119,14 +143,19 @@ Izzy
 }</code></pre>
 
   <p>
-    These expected temperatures aren't just random numbers. That's just Melbourne for you. It just can't make up its mind. Now what if for our American friends we represented these numbers in their familiar &mdash; but wacky &mdash; farenheit? Otherwise they might read the numbers and think that Melbourne is a frigid hellscape, which <a href='https://www.theguardian.com/australia-news/2017/aug/16/melbourne-worlds-most-liveable-city-for-seventh-year-running'>it most certainly is not</a>.
+    These expected temperatures aren't just random numbers. That's just Melbourne for you. It just can't make up its
+    mind. Now what if for our American friends we represented these numbers in their familiar &mdash; but wacky &mdash;
+    farenheit? Otherwise they might read the numbers and think that Melbourne is a frigid hellscape, which <a
+      href='https://www.theguardian.com/australia-news/2017/aug/16/melbourne-worlds-most-liveable-city-for-seventh-year-running'>it
+      most certainly is not</a>.
   </p>
 
   <p>
-    So we want to convert these temperatures from their celsius amounts into the farenheit equivalents, turning the map into this:
+    So we want to convert these temperatures from their celsius amounts into the farenheit equivalents, turning the map
+    into this:
   </p>
 
-<pre><code>%{
+  <pre><code>%{
   "Monday" => 82.4,
   "Tuesday" => 84.2,
   "Wednesday" => 84.2,
@@ -137,25 +166,28 @@ Izzy
 }</code></pre>
 
   <p>
-    We know already how to convert these numbers if it was simply a list of those numbers, without the days of the week, like this:
+    We know already how to convert these numbers if it was simply a list of those numbers, without the days of the week,
+    like this:
   </p>
 
-<pre><code>[28, 29, 29, 24, 16, 16, 20]</code></pre>
+  <pre><code>[28, 29, 29, 24, 16, 16, 20]</code></pre>
 
   <p>
-    We would use <code>Enum.map/2</code> to run a function on each of these numbers to convert the numbers to farenheit (using that function that we saw back in <a href='/5-funky-functions'>Chapter 5</a>:
+    We would use <code>Enum.map/2</code> to run a function on each of these numbers to convert the numbers to farenheit
+    (using that function that we saw back in <a href='/5-funky-functions'>Chapter 5</a>:
   </p>
 
-<pre><code>iex> forecast = [28, 29, 29, 24, 16, 16, 20]
+  <pre><code>iex> forecast = [28, 29, 29, 24, 16, 16, 20]
   [28, 29, 29, 24, 16, 16, 20]
   iex> Enum.map(forecast, fn (temp) -> temp * 1.8 + 32 end)
   [82.4, 84.2, 84.2, 75.2, 60.8, 60.8, 68.0]</code></pre>
 
   <p>
-    So what if we just tried using <code>Enum.map/2</code> on our forecast map instead of on a list? What would that look like? Let's see:
+    So what if we just tried using <code>Enum.map/2</code> on our forecast map instead of on a list? What would that
+    look like? Let's see:
   </p>
 
-<pre><code>iex> forecast = %{
+  <pre><code>iex> forecast = %{
   "Monday" => 28,
   "Tuesday" => 29,
   "Wednesday" => 29,
@@ -177,14 +209,19 @@ iex> Enum.map(forecast, fn ({day, temp}) -> {day, temp * 1.8 + 32} end)
 ]</code></pre>
 
   <p>
-    "Hey, that's no map! That's a list!", Izzy exclaims, seemingly adapting a quote from a relatively niche space opera series. That's right, Izzy. When we call <code>Enum.map/2</code> on either a list or a map we're going to get back a list regardless. This has to do with how Elixir thinks of maps: it thinks of them as a list of key-value tuples, rather than the friendly <code>%{}</code> syntax that we know and love. To get this data back into the format that we're familiar with, we're going to need to use another function from the <code>Enum</code> toolbox, called <code>Enum.into/2</code>.
+    "Hey, that's no map! That's a list!", Izzy exclaims, seemingly adapting a quote from a relatively niche space opera
+    series. That's right, Izzy. When we call <code>Enum.map/2</code> on either a list or a map we're going to get back a
+    list regardless. This has to do with how Elixir thinks of maps: it thinks of them as a list of key-value tuples,
+    rather than the friendly <code>%{}</code> syntax that we know and love. To get this data back into the format that
+    we're familiar with, we're going to need to use another function from the <code>Enum</code> toolbox, called
+    <code>Enum.into/2</code>.
   </p>
 
   <p>
     Let's run our <code>Enum.map/2</code> line again, but this time we'll assign the output to a variable.
   </p>
 
-<pre><code>iex> new_forecast = Enum.map(forecast, fn ({day, temp}) -> {day, temp * 1.8 + 32} end)
+  <pre><code>iex> new_forecast = Enum.map(forecast, fn ({day, temp}) -> {day, temp * 1.8 + 32} end)
 [
   {"Friday", 60.8},
   {"Monday", 82.4},
@@ -199,19 +236,23 @@ iex> Enum.map(forecast, fn ({day, temp}) -> {day, temp * 1.8 + 32} end)
     Then we can use <code>Enum.into/2</code> to convert this list of tuples back into a map:
   </p>
 
-<pre><code>iex> Enum.into(new_forecast, %{})
+  <pre><code>iex> Enum.into(new_forecast, %{})
 %{"Friday" => 60.8, "Monday" => 82.4, "Saturday" => 60.8, "Sunday" => 68.0,
   "Thursday" => 75.2, "Tuesday" => 84.2, "Wednesday" => 84.2}</code></pre>
 
   <p>
-    That's better! Our data is back into the shape of a map... but the days of the week have lost their ordering. But that's okay because we don't care about ordering in maps: we access values in our maps by their matching key, not by their position.
+    That's better! Our data is back into the shape of a map... but the days of the week have lost their ordering. But
+    that's okay because we don't care about ordering in maps: we access values in our maps by their matching key, not by
+    their position.
 
   <p>
-    So here we've seen how to use the <code>Enum.map/2</code> and <code>Enum.into/2</code> functions to iterate through a map's elements to run a function on each of those elements.
+    So here we've seen how to use the <code>Enum.map/2</code> and <code>Enum.into/2</code> functions to iterate through
+    a map's elements to run a function on each of those elements.
   </p>
 
   <p>
-    However, there is a cleaner way of writing the above code and that's with the help of one of the best Elixir features: the <em>pipe operator</em>. Let's spend a little while looking at the pipe operator now.
+    However, there is a cleaner way of writing the above code and that's with the help of one of the best Elixir
+    features: the <em>pipe operator</em>. Let's spend a little while looking at the pipe operator now.
   </p>
 </section>
 
@@ -219,10 +260,11 @@ iex> Enum.map(forecast, fn ({day, temp}) -> {day, temp * 1.8 + 32} end)
   <h3>The wonderful pipe operator</h3>
 
   <p>
-    I've just shown you one way to use <code>Enum.map/2</code> to go over a map's values and to apply a function to each of those values. Here it is again, in case you missed it:
+    I've just shown you one way to use <code>Enum.map/2</code> to go over a map's values and to apply a function to each
+    of those values. Here it is again, in case you missed it:
   </p>
 
-<pre><code>iex> forecast = %{
+  <pre><code>iex> forecast = %{
   "Monday" => 28,
   "Tuesday" => 29,
   "Wednesday" => 29,
@@ -258,21 +300,33 @@ iex> Enum.into(new_forecast, %{})
   </p>
 
   <ol>
-    <li>We define a variable called <code>forecast</code>, which is a map containing the days of the week and their expected temperatures.</li>
+    <li>We define a variable called <code>forecast</code>, which is a map containing the days of the week and their
+      expected temperatures.</li>
     <li>We then take this <code>forecast</code> variable, and pass it as the
       first argument to <code>Enum.map/2</code>. The second argument passed to
       <code>Enum.map/2</code> is a function which runs on each key-value pair
-      in the map. This function takes the temperature -- the value -- and converts it to farenheit.</li>
+      in the map. This function takes the temperature -- the value -- and converts it to farenheit.
+    </li>
     <li>We assign the result of this <code>Enum.map/2</code> call to a variable
-      called <code>new_forecast</code>, and then immediately pass that into <code>Enum.into/2</code> as the first argument. The second argument given to <code>Enum.into/2</code> is an empty map. This converts the output of <code>Enum.map/2</code> -- a list of key-value tuples -- into a friendly map.</li>
+      called <code>new_forecast</code>, and then immediately pass that into <code>Enum.into/2</code> as the first
+      argument. The second argument given to <code>Enum.into/2</code> is an empty map. This converts the output of
+      <code>Enum.map/2</code> -- a list of key-value tuples -- into a friendly map.</li>
   </ol>
 
   <p>
-    Elixir has a way of writing this code in a shorter way that I would like to show you now as I believe it can lead to shorter, cleaner Elixir code. We might find more uses for it as we go along too, and so this seems like a pretty good time to introduce this particular concept.
+    Elixir has a way of writing this code in a shorter way that I would like to show you now as I believe it can lead to
+    shorter, cleaner Elixir code. We might find more uses for it as we go along too, and so this seems like a pretty
+    good time to introduce this particular concept.
   </p>
 
   <p>
-    The way to write shorter code here is by using the <em>pipe operator</em>, <code>|&gt;</code>. The pipe operator allows us to chain together actions within Elixir, passing the result of one function on to the next. It's called the <em>pipe operator</em> because it connects the functions together in a linear fashion, with data flowing from one function to the next; like water through a pipe. Unfortunately, unlike <a href='https://en.wikipedia.org/wiki/Tony_Hawk%27s_Pro_Skater'>Tony Hawk's Pro Skater</a>, we do not get thousands of points for chaining together sick combos. But we still do get the great sense of satisfaction when it all works together!
+    The way to write shorter code here is by using the <em>pipe operator</em>, <code>|&gt;</code>. The pipe operator
+    allows us to chain together actions within Elixir, passing the result of one function on to the next. It's called
+    the <em>pipe operator</em> because it connects the functions together in a linear fashion, with data flowing from
+    one function to the next; like water through a pipe. Unfortunately, unlike <a
+      href='https://en.wikipedia.org/wiki/Tony_Hawk%27s_Pro_Skater'>Tony Hawk's Pro Skater</a>, we do not get thousands
+    of points for chaining together sick combos. But we still do get the great sense of satisfaction when it all works
+    together!
   </p>
 
   <p>
@@ -286,23 +340,29 @@ iex> Enum.into(new_forecast, %{})
   </ul>
 
   <p>
-    We can't convert the data to farenheit unless we have it already, and we can't send it to our American friend -- or <em>shouldn't</em> -- before converting it to farenheit. We have to do these steps in order for them to make sense. If we were to write the above in Elixir code with the pipe operator, it might look like this:
+    We can't convert the data to farenheit unless we have it already, and we can't send it to our American friend -- or
+    <em>shouldn't</em> -- before converting it to farenheit. We have to do these steps in order for them to make sense.
+    If we were to write the above in Elixir code with the pipe operator, it might look like this:
   </p>
 
-<pre><code>get_forecast_data |> convert_to_farenheit |> send_to_american_friend</code></pre>
+  <pre><code>get_forecast_data |> convert_to_farenheit |> send_to_american_friend</code></pre>
 
 
   <p>
     Hey, that looks nice, doesn't it? You can think of the pipe operator as an
     "and then" operator. Do this action, <em>then</em> do this action <em>and
-    then</em> do this final action. What would happen in our fictional code here is that the data from <code>get_forecast_data</code> would get passed to <code>convert_to_farenheit</code>, then <code>convert_to_farenheit</code> will pass its data onto the <code>send_to_american_friend</code> function.
+      then</em> do this final action. What would happen in our fictional code here is that the data from
+    <code>get_forecast_data</code> would get passed to <code>convert_to_farenheit</code>, then
+    <code>convert_to_farenheit</code> will pass its data onto the <code>send_to_american_friend</code> function.
   </p>
 
   <p>
-    Rather than continuing to look at fictional code, let's switch back to a real example. Here's some code that uses the pipe operator ("and then") that is functionally identical to the code from the previous section, where we have a forecast in celsius and we convert it to farenheit:
+    Rather than continuing to look at fictional code, let's switch back to a real example. Here's some code that uses
+    the pipe operator ("and then") that is functionally identical to the code from the previous section, where we have a
+    forecast in celsius and we convert it to farenheit:
   </p>
 
-<pre><code>%{
+  <pre><code>%{
   "Monday" => 28,
   "Tuesday" => 29,
   "Wednesday" => 29,
@@ -321,7 +381,7 @@ iex> Enum.into(new_forecast, %{})
     run it with <code>elixir forecast.exs</code>. This is what you'll see as the output:
   </p>
 
-<pre><code>%{
+  <pre><code>%{
   "Friday" => 60.8,
   "Monday" => 82.4,
   "Saturday" => 60.8,
@@ -332,38 +392,45 @@ iex> Enum.into(new_forecast, %{})
 }</code></pre>
 
   <p>
-    I've put each key and value onto its own line, but you can see here that the output is the same as before in our <code>iex</code> console, and the code is neater to boot! "Amazing", utters Izzy. So what's happened here? Let's run through it:
+    I've put each key and value onto its own line, but you can see here that the output is the same as before in our
+    <code>iex</code> console, and the code is neater to boot! "Amazing", utters Izzy. So what's happened here? Let's run
+    through it:
   </p>
 
   <ol>
     <li>
-      We define a map containing the days of the week and their expected temperatures. We <em>don't</em> assign this to a variable.
+      We define a map containing the days of the week and their expected temperatures. We <em>don't</em> assign this to
+      a variable.
     </li>
     <li>
       <em>And then</em> we <em>pipe</em> this map using the <em>pipe
         operator</em> (<code>|&gt;</code>) into <code>Enum.map/2</code>. This
       makes the map the first argument of <code>Enum.map/2</code>, so this
       removes the need to define a <code>forecast</code> variable and to pass
-    it in as the first argument. The pipe operator gives the map to the
-    function automatically. The only argument on <code>Enum.map/2</code> here
-    is just the function that we use to convert the temperature values. We
-    still refer to this function as <code>Enum.map/2</code>, because it is
-    taking in two arguments: the piped-in value and the function.
+      it in as the first argument. The pipe operator gives the map to the
+      function automatically. The only argument on <code>Enum.map/2</code> here
+      is just the function that we use to convert the temperature values. We
+      still refer to this function as <code>Enum.map/2</code>, because it is
+      taking in two arguments: the piped-in value and the function.
     </li>
     <li>
       <em>And then</em> we <em>pipe</em> the result of this
       <code>Enum.map/2</code> call into <code>Enum.into/2</code>, and the
       result of <code>Enum.map/2</code> becomes the first argument of
       <code>Enum.into/2</code>. The second argument to <code>Enum.into/2</code>
-    is still an empty map.
+      is still an empty map.
     </li>
     <li>
-      Finally, we <em>pipe</em> the result of <code>Enum.into/2</code> into a function we've not seen before called <code>IO.inspect/1</code>. This outputs the map in a human-friendly way. We're not using <code>IO.puts/1</code> here because it only works with strings, and what we have at this point of the code after <code>Enum.into/2</code> is a map, not a string. <code>IO.inspect/1</code> will work with any form of data that we give it.
+      Finally, we <em>pipe</em> the result of <code>Enum.into/2</code> into a function we've not seen before called
+      <code>IO.inspect/1</code>. This outputs the map in a human-friendly way. We're not using <code>IO.puts/1</code>
+      here because it only works with strings, and what we have at this point of the code after <code>Enum.into/2</code>
+      is a map, not a string. <code>IO.inspect/1</code> will work with any form of data that we give it.
     </li>
   </ol>
 
   <p>
-    "Wow, that's a lot of text!", says Izzy, looking a little stunned. "Do you have an image that I could look at instead?". Sure I do!
+    "Wow, that's a lot of text!", says Izzy, looking a little stunned. "Do you have an image that I could look at
+    instead?". Sure I do!
   </p>
 
   <figure>
@@ -372,17 +439,24 @@ iex> Enum.into(new_forecast, %{})
   </figure>
 
   <p>
-    You can think of the pipe operator not only as an "and then" operator, but also like the stages of a waterfall -- or "datafall" -- with data flowing from one function to the next.
+    You can think of the pipe operator not only as an "and then" operator, but also like the stages of a waterfall -- or
+    "datafall" -- with data flowing from one function to the next.
 
   <p>
-    Each operation that we're doing in <code>forecast.exs</code> passes its result onto the next line, in a pipeline of operations. Elixir allows us to chain these operations together seamlessly with this pipe operator. Everything just flows from one line to the next until we reach the end. There is no need for storing data into temporary variables like <code>new_forecast</code>; you just simply pipe the output from one function to the next.
+    Each operation that we're doing in <code>forecast.exs</code> passes its result onto the next line, in a pipeline of
+    operations. Elixir allows us to chain these operations together seamlessly with this pipe operator. Everything just
+    flows from one line to the next until we reach the end. There is no need for storing data into temporary variables
+    like <code>new_forecast</code>; you just simply pipe the output from one function to the next.
   </p>
 
   <p>
     So that's the wonderful pipe operator! How handy!
   </p>
   <p>
-    We started this chapter by making some promises, though. We've already fulfilled one promise&mdash;we've talked about the <code>Enum</code> module's functions <code>each/2</code> and <code>map/2</code>. But we also promised to talk about some functions from the <code>Map</code> module. Let's get into it. We might even find another excuse to use the pipe operator.
+    We started this chapter by making some promises, though. We've already fulfilled one promise&mdash;we've talked
+    about the <code>Enum</code> module's functions <code>each/2</code> and <code>map/2</code>. But we also promised to
+    talk about some functions from the <code>Map</code> module. Let's get into it. We might even find another excuse to
+    use the pipe operator.
   </p>
 </section>
 
@@ -390,20 +464,25 @@ iex> Enum.into(new_forecast, %{})
   <h3>The marvellous Map module and its fantastic contraptions</h3>
 
   <p>
-    Rightio, so we've spent a lot of the last few pages looking at two modules: the <code>List</code> and <code>Enum</code> module. It's time for a breath of fresh air -- time to break out of our <code>Enum</code> comfort zone that we've wiggled into and time to get uncomfortable again! Let's look at a brand-new-to-us module: the <code>Map</code> module.
+    Rightio, so we've spent a lot of the last few pages looking at two modules: the <code>List</code> and
+    <code>Enum</code> module. It's time for a breath of fresh air -- time to break out of our <code>Enum</code> comfort
+    zone that we've wiggled into and time to get uncomfortable again! Let's look at a brand-new-to-us module: the
+    <code>Map</code> module.
   </p>
 
   <p>
-    If you want to do nearly anything with maps that doesn't involve <em>enumerating</em> over them, you would use this <code>Map</code> module. Let's look at a few common actions that you might take on a map.
+    If you want to do nearly anything with maps that doesn't involve <em>enumerating</em> over them, you would use this
+    <code>Map</code> module. Let's look at a few common actions that you might take on a map.
   </p>
 
   <h4>Finding a key's value</h4>
 
   <p>
-    In <a href='/4-marvellous-maps'>Chapter 4: Marvellous Maps</a> we saw that we could fetch the value of a particular key by using square brackets.
+    In <a href='/4-marvellous-maps'>Chapter 4: Marvellous Maps</a> we saw that we could fetch the value of a particular
+    key by using square brackets.
   </p>
 
-<pre><code>iex> person = %{"gender" => "Female", "age" => "30ish", "name" => "Izzy"}
+  <pre><code>iex> person = %{"gender" => "Female", "age" => "30ish", "name" => "Izzy"}
 %{"age" => "30ish", "gender" => "Izzy", "name" => "Izzy"}
 iex> person["name"]
 "Izzy"</code></pre>
@@ -420,7 +499,7 @@ iex> person["name"]
     The <code>Map</code> module provides us another way to get that value out: <code>Map.get/2</code>.
   </p>
 
-<pre><code>iex> Map.get(person, "name")</code></pre>
+  <pre><code>iex> Map.get(person, "name")</code></pre>
 
   <p>
     Now this might not seem very useful. After all, why not just use the old
@@ -430,7 +509,7 @@ iex> person["name"]
     <code>get_attendees</code> that gives you data that looks like this:
   </p>
 
-<pre><code>%{
+  <pre><code>%{
   "people" => ["Izzy", "The Author"],
   "robots" => ["Roboto", "TARS"]
 }</code></pre>
@@ -489,7 +568,8 @@ iex> person["name"]
   <aside>
     <header>Pattern matching would work here too</header>
     <p>
-      Readers with impressive memory spans may remember an example back in Chapter 6 which used pattern matching to find a person's name from a list of people. I've shortened the example below to just the important bits:
+      Readers with impressive memory spans may remember an example back in Chapter 6 which used pattern matching to find
+      a person's name from a list of people. I've shortened the example below to just the important bits:
     </p>
 
     <pre><code>iex> those_who_are_assembled = [
@@ -501,7 +581,8 @@ iex> first_name
 "Izzy"</code></pre>
 
     <p>
-      We could <em>absolutely</em> do the same sort of thing here to pull out the first human attendee's name instead of <code>Map.get/2</code>
+      We could <em>absolutely</em> do the same sort of thing here to pull out the first human attendee's name instead of
+      <code>Map.get/2</code>
     </p>
 
     <pre><code>iex> %{"people" => [first_person | others]} = get_attendees()
@@ -510,30 +591,40 @@ iex> first_person
 "Izzy"</code></pre>
 
     <p>
-      But then... is this really cleaner than <code>Map.get/2</code>and <code>List.first/1</code>? Let's put the two side-by-side:
+      But then... is this really cleaner than <code>Map.get/2</code>and <code>List.first/1</code>? Let's put the two
+      side-by-side:
     </p>
 
     <pre><code>get_attendees() |> Map.get("people") |> List.first</code></pre>
 
     <p>
-      I would argue that it is not cleaner, and therefore not "better" than <code>Map.get/2</code> and <code>List.first/1</code>. It accomplishes the same task, but the complexity of the code means that it isn't worthwhile to use pattern matching here too. The "get and first" example reads better, flowing very easily from left-to-right.
+      I would argue that it is not cleaner, and therefore not "better" than <code>Map.get/2</code> and
+      <code>List.first/1</code>. It accomplishes the same task, but the complexity of the code means that it isn't
+      worthwhile to use pattern matching here too. The "get and first" example reads better, flowing very easily from
+      left-to-right.
     </p>
 
     <p>
-      Code readability is something to be treasured in all programming languages. The pipe version here is distinctly more readable. You'll see cases like this within any Elixir code you write. There is almost universally more than one way of writing code, and in some cases more than one <em>right</em> way of writing code that does the same thing. As you write more code yourself, you'll start to develop a judgement about these sorts of things too.
+      Code readability is something to be treasured in all programming languages. The pipe version here is distinctly
+      more readable. You'll see cases like this within any Elixir code you write. There is almost universally more than
+      one way of writing code, and in some cases more than one <em>right</em> way of writing code that does the same
+      thing. As you write more code yourself, you'll start to develop a judgement about these sorts of things too.
     </p>
   </aside>
 
   <p>
     I want to show you three more functions from <code>Map</code> which I think are
-  as important to know as <code>Map.get/2</code> and those are
-  <code>Map.put/2</code>, <code>Map.merge/2</code> and <code>Map.delete/2</code>.
+    as important to know as <code>Map.get/2</code> and those are
+    <code>Map.put/2</code>, <code>Map.merge/2</code> and <code>Map.delete/2</code>.
   </p>
 
   <h4>put</h4>
 
   <p>
-    The <code>Map.put/3</code> function takes three arguments: a map, a key and a value. It will then return an updated version of the original map. How that map gets updated depends on what the key was: if it was an existing key, only the value for that key is updated. If it's a new key, then both the key and value are added. Let's look at some examples to get a clearer understanding.
+    The <code>Map.put/3</code> function takes three arguments: a map, a key and a value. It will then return an updated
+    version of the original map. How that map gets updated depends on what the key was: if it was an existing key, only
+    the value for that key is updated. If it's a new key, then both the key and value are added. Let's look at some
+    examples to get a clearer understanding.
   </p>
 
   <p>
@@ -542,18 +633,18 @@ iex> first_person
     data that we have on Izzy so far:
   </p>
 
-<pre><code>iex> izzy = %{"name" => "Izzy", "age" => "30ish", "gender" => "Female"}</code></pre>
+  <pre><code>iex> izzy = %{"name" => "Izzy", "age" => "30ish", "gender" => "Female"}</code></pre>
 
   <p>
     Recently, we've found out that Izzy is from Australia. That would explain
-  the accent and the cork hat. We've also found out that Izzy is "40ish" rather
-  than "30ish". This is surprising to us, considering her youthful visage.
-  Based on this new information, we'll add a new key to our map called
-  <code>country</code> and update the <code>age</code> key with the more
-  correct value. We could just type it all out again:
+    the accent and the cork hat. We've also found out that Izzy is "40ish" rather
+    than "30ish". This is surprising to us, considering her youthful visage.
+    Based on this new information, we'll add a new key to our map called
+    <code>country</code> and update the <code>age</code> key with the more
+    correct value. We could just type it all out again:
   </p>
 
-<pre><code>iex> izzy = %{
+  <pre><code>iex> izzy = %{
   <span class='unfocussed'>"name" => "Izzy"</span>,
   "age" => "40ish",
   <span class='unfocussed'>"gender" => "Female",</span>
@@ -561,12 +652,12 @@ iex> first_person
 }</code></pre>
 
   <p>
-  But that seems like an awful lot of typing just to update one key. Let's look
-  at how we could update the <code>age</code> key and add in the
-  <code>country</code> key by using <code>Map.put/3</code>:
+    But that seems like an awful lot of typing just to update one key. Let's look
+    at how we could update the <code>age</code> key and add in the
+    <code>country</code> key by using <code>Map.put/3</code>:
   </p>
 
-<pre><code>iex> izzy = Map.put(izzy, "age", "40ish")
+  <pre><code>iex> izzy = Map.put(izzy, "age", "40ish")
 %{"age" => "40ish", "gender" => "Female", "name" => "Izzy"}</code></pre>
 
   <p>
@@ -582,21 +673,26 @@ iex> first_person
     together:
   </p>
 
-<pre><code>izzy |> Map.put("age", "40ish") |> Map.put("country", "Australia")
+  <pre><code>izzy |> Map.put("age", "40ish") |> Map.put("country", "Australia")
 %{"age" => "40ish", "country" => "Australia", "gender" => "Female", "name" => "Izzy"}</code></pre>
 
   <p>
-    This time, we've updated the value under the <code>age</code> key, <em>and</em> we've also added a new key here called <code>country</code>. It's important to note here that the original <code>izzy</code> map isn't changed at all:
+    This time, we've updated the value under the <code>age</code> key, <em>and</em> we've also added a new key here
+    called <code>country</code>. It's important to note here that the original <code>izzy</code> map isn't changed at
+    all:
   </p>
 
-<pre><code>izzy
+  <pre><code>izzy
 %{"age" => "30ish", "gender" => "Female", "name" => "Izzy"}</code></pre>
 
   <p>
-    This is because of that <em>immutability</em> thing we talked about a few chapters ago. Data in Elixir never changes unless we re-assign the variable it is associated with. In the above <code>Map.put/3</code> code, <code>izzy</code> stays the same, even though the functions run. If we wanted to update the <code>izzy</code> variable with new data, we could re-assign that variable:
+    This is because of that <em>immutability</em> thing we talked about a few chapters ago. Data in Elixir never changes
+    unless we re-assign the variable it is associated with. In the above <code>Map.put/3</code> code, <code>izzy</code>
+    stays the same, even though the functions run. If we wanted to update the <code>izzy</code> variable with new data,
+    we could re-assign that variable:
   </p>
 
-<pre><code>izzy = izzy |> Map.put("age", "40ish") |> Map.put("country", "Australia")
+  <pre><code>izzy = izzy |> Map.put("age", "40ish") |> Map.put("country", "Australia")
 %{"age" => "40ish", "country" => "Australia", "gender" => "Female", "name" => "Izzy"}</code></pre>
 
   <p>
@@ -605,26 +701,26 @@ iex> first_person
 
   <p>
     How we've used <code>Map.put/3</code> here is another great example of the pipe operator in action, but we can
-  write the code in a shorter fashion with the next <code>Map</code> function:
-  <code>merge/2</code>.
+    write the code in a shorter fashion with the next <code>Map</code> function:
+    <code>merge/2</code>.
   </p>
 
-<h4>merge</h4>
+  <h4>merge</h4>
 
   <p>
     Let's change the data that we have on Izzy back to what it was at the start of this chapter:
   </p>
 
-<pre><code>izzy = %{"name" => "Izzy", "age" => "30ish", "gender" => "Female"}</code></pre>
+  <pre><code>izzy = %{"name" => "Izzy", "age" => "30ish", "gender" => "Female"}</code></pre>
 
   <p>
-  This'll make it easier to show what <code>Map.merge/2</code> does.
-  <code>Map.merge/2</code> takes two maps and merges them together. Let's take
-  our last <code>Map.put/3</code> example and rewrite it with
-  <code>Map.merge/2</code> to demonstrate this:
+    This'll make it easier to show what <code>Map.merge/2</code> does.
+    <code>Map.merge/2</code> takes two maps and merges them together. Let's take
+    our last <code>Map.put/3</code> example and rewrite it with
+    <code>Map.merge/2</code> to demonstrate this:
   </p>
 
-<pre><code>izzy = Map.merge(izzy, %{"age" => "40ish", "country" => "Australia"})
+  <pre><code>izzy = Map.merge(izzy, %{"age" => "40ish", "country" => "Australia"})
 %{
   "age" => "40ish",
   "country" => "Australia",
@@ -634,8 +730,8 @@ iex> first_person
 
   <p>
     This results in the same map as our <code>Map.put/3</code> example, except we
-  only have to call one function once instead of twice. The
-  <code>Map.merge/2</code> function takes two maps as arguments, and then:
+    only have to call one function once instead of twice. The
+    <code>Map.merge/2</code> function takes two maps as arguments, and then:
   </p>
 
   <ul>
@@ -645,14 +741,15 @@ iex> first_person
 
   <p>
     In this example, it has replaced the "old" <code>age</code> value ("30ish")
-  with the "new" one ("40ish"), and it has added a key called
-  <code>country</code> to this map.
+    with the "new" one ("40ish"), and it has added a key called
+    <code>country</code> to this map.
   </p>
 
-<h4>Pipe Merging</h4>
+  <h4>Pipe Merging</h4>
 
   <p>
-    While we can use <code>Map.merge/2</code> to combine two maps to update an existing map, there is also a shorter way, which we'll call <em>pipe merging</em>. The syntax goes like this:
+    While we can use <code>Map.merge/2</code> to combine two maps to update an existing map, there is also a shorter
+    way, which we'll call <em>pipe merging</em>. The syntax goes like this:
   </p>
 
   <pre><code>iex> izzy = %{"name" => "Izzy", "age" => "30ish", "gender" => "Female"}
@@ -661,11 +758,15 @@ iex> %{izzy | "age" => "40ish", "name" => "Isadora"}
 %{"age" => "40ish", "gender" => "Female", "name" => "Isadora"}</code></pre>
 
   <p>
-    This syntax <em>looks</em> like a map, but it's split in two. On the left hand side, inside the map syntax, we have a variable which represents an <em>existing</em> map. On the right hand side, we have keys we would like to update in that map, along with their new values. As we can see, the map's <code>"age"</code> and <code>"name"</code> keys change, taking on their values from the right hand side.
+    This syntax <em>looks</em> like a map, but it's split in two. On the left hand side, inside the map syntax, we have
+    a variable which represents an <em>existing</em> map. On the right hand side, we have keys we would like to update
+    in that map, along with their new values. As we can see, the map's <code>"age"</code> and <code>"name"</code> keys
+    change, taking on their values from the right hand side.
   </p>
 
   <p>
-    However, it's important to note that if we try to add a <em>new</em> key to this map, it will not work with this syntax:
+    However, it's important to note that if we try to add a <em>new</em> key to this map, it will not work with this
+    syntax:
   </p>
 
   <pre><code>iex> izzy = %{"name" => "Izzy", "age" => "30ish", "gender" => "Female"}
@@ -677,10 +778,11 @@ iex> %{izzy | "country" => "Australia"}
 
 
   <p>
-    This <em>pipe merging</em> feature will only work with <em>existing</em> keys in the map, and this is an important difference to notice from <code>Map.merge/2</code>, which will work with both kinds of keys: new and pre-existing.
+    This <em>pipe merging</em> feature will only work with <em>existing</em> keys in the map, and this is an important
+    difference to notice from <code>Map.merge/2</code>, which will work with both kinds of keys: new and pre-existing.
   </p>
 
-<h4>delete</h4>
+  <h4>delete</h4>
 
   <p>
     We've now looked at how to add new keys or update keys in a map. The only
@@ -690,12 +792,13 @@ iex> %{izzy | "country" => "Australia"}
     everything else, by using <code>Map.delete/2</code>
   </p>
 
-<pre><code>izzy = Map.delete(izzy, "country")
+  <pre><code>izzy = Map.delete(izzy, "country")
 %{"age" => "40ish", "gender" => "Female", "name" => "Izzy"}
 </code></pre>
 
   <p>
-    This function takes a map as its first argument, and then a key as its second argument. When the function acts, it removes that key from the map.
+    This function takes a map as its first argument, and then a key as its second argument. When the function acts, it
+    removes that key from the map.
   </p>
 </section>
 
@@ -703,11 +806,15 @@ iex> %{izzy | "country" => "Australia"}
   <h3>Summary</h3>
 
   <p>
-    In this chapter, we've seen a couple of ways of working with maps. We saw that we could go through each key-value pair in the map with <code>Enum.each/2</code>. We also used <code>Enum.map/2</code> and <code>Enum.into/2</code> to change the values inside the maps to other values, converting temperature numbers to farenheit ones.
+    In this chapter, we've seen a couple of ways of working with maps. We saw that we could go through each key-value
+    pair in the map with <code>Enum.each/2</code>. We also used <code>Enum.map/2</code> and <code>Enum.into/2</code> to
+    change the values inside the maps to other values, converting temperature numbers to farenheit ones.
   </p>
 
   <p>
-    When we looked at <code>Enum.map/2</code> and <code>Enum.into/2</code>, we discovered that we could write the code in a shorter way with the <em>pipe operator</em>: <code>|&gt;</code>. This operator allows us to pass the result of one function call to the next, allowing us to write cleaner Elixir code.
+    When we looked at <code>Enum.map/2</code> and <code>Enum.into/2</code>, we discovered that we could write the code
+    in a shorter way with the <em>pipe operator</em>: <code>|&gt;</code>. This operator allows us to pass the result of
+    one function call to the next, allowing us to write cleaner Elixir code.
   </p>
 
   <p>
@@ -715,23 +822,31 @@ iex> %{izzy | "country" => "Australia"}
   </p>
 
   <p>
-    We saw <code>Map.get/2</code> which allowed us to pick out a particular value based on a key's name. We knew we could already do this with code like <code>person["name"]</code>, but, as we saw, <code>Map.get/2</code> is useful if we're in the middle of a piping operation and need to pick out a value from a map.
+    We saw <code>Map.get/2</code> which allowed us to pick out a particular value based on a key's name. We knew we
+    could already do this with code like <code>person["name"]</code>, but, as we saw, <code>Map.get/2</code> is useful
+    if we're in the middle of a piping operation and need to pick out a value from a map.
   </p>
 
   <p>
-    We then looked at <code>Map.put/3</code> which gave us the ability to create a new map with new keys from an existing map. This function took a map, a key and a value and then gave us back a new map with the changes we asked for.
+    We then looked at <code>Map.put/3</code> which gave us the ability to create a new map with new keys from an
+    existing map. This function took a map, a key and a value and then gave us back a new map with the changes we asked
+    for.
   </p>
 
   <p>
-    If we were applying multiple changes with <code>Map.put/3</code> at the same time, we learned that it wasn't smart to do that and so we then learned about <code>Map.merge/2</code>. We saw that this function takes two maps and merges them together, with the 2nd maps keys taking precedence over the first map's keys.
+    If we were applying multiple changes with <code>Map.put/3</code> at the same time, we learned that it wasn't smart
+    to do that and so we then learned about <code>Map.merge/2</code>. We saw that this function takes two maps and
+    merges them together, with the 2nd maps keys taking precedence over the first map's keys.
   </p>
 
   <p>
-    The last thing we saw in this chapter was how to get back a map without certain keys with <code>Map.delete/2</code>. It's a good way of removing data from a map if we don't need it anymore.
+    The last thing we saw in this chapter was how to get back a map without certain keys with <code>Map.delete/2</code>.
+    It's a good way of removing data from a map if we don't need it anymore.
   </p>
 
   <p>
-    We're now moving out of the <code>Enum</code>, <code>List</code> and <code>Map</code> woods into something brand new to us: using Elixir to interact with files on our computer.
+    We're now moving out of the <code>Enum</code>, <code>List</code> and <code>Map</code> woods into something brand new
+    to us: using Elixir to interact with files on our computer.
   </p>
 
   <section class='break'>

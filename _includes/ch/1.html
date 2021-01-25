@@ -1,8 +1,11 @@
-<section class='break'>
+<section class='major'>
   <h2 id='chapter-1'>1. Appeasing the masses with code</h2>
 
   <p>
-    The masses have sat through the best part of a chapter (at least) absorbing everything that we've talked about. But they're a little rowdy because we've been talking about programming languages without actually doing any programming. Well, that's completely understandable! I would be just as annoyed if I wasn't the one writing the book. I know what's coming but they don't.
+    The masses have sat through the best part of a chapter (at least) absorbing everything that we've talked about. But
+    they're a little rowdy because we've been talking about programming languages without actually doing any
+    programming. Well, that's completely understandable! I would be just as annoyed if I wasn't the one writing the
+    book. I know what's coming but they don't.
   </p>
 
   <p>OK, let's try appeasing the masses. Here's some code:
@@ -13,67 +16,82 @@
   </center>
 
   <p>
-    The masses are silent. Their stares harden. Their spokesman &mdash; who they've nominated while I thought of this snippet &mdash; says (while systematically tearing down the fourth wall): "That's just a bunch of quoted words! Just like this one that I'm speaking."
+    The masses are silent. Their stares harden. Their spokesman &mdash; who they've nominated while I thought of this
+    snippet &mdash; says (while systematically tearing down the fourth wall): "That's just a bunch of quoted words! Just
+    like this one that I'm speaking."
   </p>
 
   <p>
-   The crowd agrees.
+    The crowd agrees.
   </p>
 
   <p>
-    Ok, you're right. It is some quoted words, but they're quoted words that both humans <em>and</em> computers can understand. That's pretty cool. Well, I thought so, at least.
+    Ok, you're right. It is some quoted words, but they're quoted words that both humans <em>and</em> computers can
+    understand. That's pretty cool. Well, I thought so, at least.
   </p>
 
   <p>
-    The crowd of humans arrayed before us know the words and that the words have <em>meaning</em> behind them and form an understandable sentence. The computer knows only the individual letters or symbols in the words, and cares not that the words have a meaning or that the words form an understandable sentence. "Those things are only important to the humans", it thinks, without acknowledging the <a href='http://whatis.techtarget.com/definition/machine-learning'>Machine Learning</a> zeitgeist that has sprung up recently.
+    The crowd of humans arrayed before us know the words and that the words have <em>meaning</em> behind them and form
+    an understandable sentence. The computer knows only the individual letters or symbols in the words, and cares not
+    that the words have a meaning or that the words form an understandable sentence. "Those things are only important to
+    the humans", it thinks, without acknowledging the <a
+      href='http://whatis.techtarget.com/definition/machine-learning'>Machine Learning</a> zeitgeist that has sprung up
+    recently.
   </p>
 
   <p>
-    When we say the sentence to the masses, they can easily repeat it back to us. To speak to the computer, we need to open up a <em>prompt</em> for the particular language we want to use to converse. Different languages have different prompts. We can't just speak to the computer to program it. Not yet, anyway.
+    When we say the sentence to the masses, they can easily repeat it back to us. To speak to the computer, we need to
+    open up a <em>prompt</em> for the particular language we want to use to converse. Different languages have different
+    prompts. We can't just speak to the computer to program it. Not yet, anyway.
   </p>
 
   <aside>
     <header>Installing Elixir</header>
 
     <p>
-      You might not have installed Elixir yet and we're just about to need it to be installed. If you don't have it installed, pretty much everything after this point won't work.
+      You might not have installed Elixir yet and we're just about to need it to be installed. If you don't have it
+      installed, pretty much everything after this point won't work.
     </p>
 
     <p>
       A good way to check to see if Elixir is installed is by running this command in your terminal:
     </p>
 
-<pre><code>elixir -v</code></pre>
+    <pre><code>elixir -v</code></pre>
 
     <p>
       If this command says something like this:
     </p>
 
-<pre><code class='hljs text'>{{site.erlang_version}}
+    <pre><code class='hljs text'>{{site.erlang_version}}
 
 Elixir {{site.elixir_version}}</code></pre>
 
     <p>
-      Then that means Elixir is installed and you can carry on. If it says something like "command not found", then head over to <a href='/a-setup-and-install'>Appendix A: Setup and Install</a> and follow the steps in there first.
+      Then that means Elixir is installed and you can carry on. If it says something like "command not found", then head
+      over to <a href='/a-setup-and-install'>Appendix A: Setup and Install</a> and follow the steps in there first.
     </p>
   </aside>
 
   <p>
-    In this case, we want to talk Elixir and so we can open a prompt with the <code>iex</code> command. <code>iex</code> stands for "Interactive EliXir". To open a prompt, we'll need to first open our terminal or command prompt application. Once that's open, then we can type <code>iex</code> into that window and press <kbd>Enter</kbd> to start our <code>iex</code> prompt.
+    In this case, we want to talk Elixir and so we can open a prompt with the <code>iex</code> command. <code>iex</code>
+    stands for "Interactive EliXir". To open a prompt, we'll need to first open our terminal or command prompt
+    application. Once that's open, then we can type <code>iex</code> into that window and press <kbd>Enter</kbd> to
+    start our <code>iex</code> prompt.
   </p>
 
-<div class='grouped'>
-  <p>
-    When it starts, the prompt says:
-  </p>
+  <div class='grouped'>
+    <p>
+      When it starts, the prompt says:
+    </p>
 
 
-<pre><code class="hljs text">{{site.erlang_version_truncated}}
+    <pre><code class="hljs text">{{site.erlang_version_truncated}}
 
 Interactive Elixir ({{site.elixir_version}}) - ⏎
   press Ctrl+C to exit (type h() ENTER for help)</code>
 </pre>
-</div>
+  </div>
 
   <aside>
     <header>That little <code>&#9166;</code> character</header>
@@ -83,34 +101,44 @@ Interactive Elixir ({{site.elixir_version}}) - ⏎
     </p>
 
     <p>
-       I've put it there to indicate that the line is split over two lines in this book. This is done so that the whole line fits into the book. If I didn't do this, the end of the output would be hidden by the page margin. That'd be no fun for anyone! You should be seeing it as one continuous line in your <code>iex</code> prompt.
+      I've put it there to indicate that the line is split over two lines in this book. This is done so that the whole
+      line fits into the book. If I didn't do this, the end of the output would be hidden by the page margin. That'd be
+      no fun for anyone! You should be seeing it as one continuous line in your <code>iex</code> prompt.
     </p>
 
     <p>
-      So when you see <code>&#9166;</code> just think of it as "this is all one line in real life, but spread over <em>two</em> lines in the book."
+      So when you see <code>&#9166;</code> just think of it as "this is all one line in real life, but spread over
+      <em>two</em> lines in the book."
     </p>
   </aside>
 
   <p>
-    We can safely ignore the output from the prompt so far. It is just giving us some nerdy information. The last line shown here tells us that we're running Interactive Elixir "{{site.elixir_version}}". This tells us that we're running the {{site.elixir_verison}} version of Elixir. It tells us that we can hit <kbd>Ctrl+C</kbd> to exit -- this will stop the <code>iex</code> prompt and return us back to our terminal's prompt).
+    We can safely ignore the output from the prompt so far. It is just giving us some nerdy information. The last line
+    shown here tells us that we're running Interactive Elixir "{{site.elixir_version}}". This tells us that we're
+    running the {{site.elixir_verison}} version of Elixir. It tells us that we can hit <kbd>Ctrl+C</kbd> to exit -- this
+    will stop the <code>iex</code> prompt and return us back to our terminal's prompt).
   </p>
 
   <p>
     The next thing the computer says is:
   </p>
 
-<pre><code>iex(1)></code></pre>
+  <pre><code>iex(1)></code></pre>
 
   <p>
-    This tells us that the computer is now listening for our instructions, eagerly awaiting them. It's <em>prompting</em> us for input. Let's give the computer our sentence again, pressing enter at the end of the line:
+    This tells us that the computer is now listening for our instructions, eagerly awaiting them. It's
+    <em>prompting</em> us for input. Let's give the computer our sentence again, pressing enter at the end of the line:
   </p>
 
-<pre><code>iex(1)> "Hello, World!"
+  <pre><code>iex(1)> "Hello, World!"
 <span class="console-green">"Hello, World!"</span></code>
 </pre>
 
   <p>
-    On the first line here, we're giving the computer an instruction that looks like a regular sentence. This is because it is a regular sentence. In computer-nerd-terminology, we refer to this double-quoted collection of symbols as a <em>string</em>. It's easier to think of it like a string if you think of all of the sentence's parts being connected by an actual string:
+    On the first line here, we're giving the computer an instruction that looks like a regular sentence. This is because
+    it is a regular sentence. In computer-nerd-terminology, we refer to this double-quoted collection of symbols as a
+    <em>string</em>. It's easier to think of it like a string if you think of all of the sentence's parts being
+    connected by an actual string:
   </p>
 
   <figure>
@@ -119,42 +147,57 @@ Interactive Elixir ({{site.elixir_version}}) - ⏎
   </figure>
 
   <p>
-    The computer then takes in this string, interprets it and tells us how it interpreted the string. In this case, the computer is just parroting our sentence/string back to us. The computer can do a lot more than this, believe me. Computers wouldn't be very good if all they did was parrot back to us.
+    The computer then takes in this string, interprets it and tells us how it interpreted the string. In this case, the
+    computer is just parroting our sentence/string back to us. The computer can do a lot more than this, believe me.
+    Computers wouldn't be very good if all they did was parrot back to us.
   </p>
 
   <p>
-    The masses are now getting fidgety. So far we've shown just the one line of code. Twice, yes, but it's still just one line of code. And the computer is prompting us with this line.
+    The masses are now getting fidgety. So far we've shown just the one line of code. Twice, yes, but it's still just
+    one line of code. And the computer is prompting us with this line.
   </p>
 
-<pre><code>iex(2)></code></pre>
+  <pre><code>iex(2)></code></pre>
 
   <p>
-    The computer hungers for more input. The masses hunger, too. Fortunately for me (and you), Elixir can do much more than parrot.
+    The computer hungers for more input. The masses hunger, too. Fortunately for me (and you), Elixir can do much more
+    than parrot.
   </p>
 
   <aside>
     <header>"We just saw a REPL!" "A what now?"</header>
 
     <p>
-      Nerdier types would call this "prompt" of ours a REPL. If those nerdier types have been using the word "REPL" to describe prompts like iex, you now know what they mean: REPL = prompt. You know that it has nothing to do with descending from a height suspended by a double coiled rope (rappel).
+      Nerdier types would call this "prompt" of ours a REPL. If those nerdier types have been using the word "REPL" to
+      describe prompts like iex, you now know what they mean: REPL = prompt. You know that it has nothing to do with
+      descending from a height suspended by a double coiled rope (rappel).
     </p>
 
     <p>
-      "But hey REPL looks like an acronym!", I hear you say. Gold star for you. It <em>is</em> an acronym and it stands for <strong>R</strong>ead, <strong>E</strong>valuate, <strong>P</strong>rint, and <strong>L</strong>oop.
+      "But hey REPL looks like an acronym!", I hear you say. Gold star for you. It <em>is</em> an acronym and it stands
+      for <strong>R</strong>ead, <strong>E</strong>valuate, <strong>P</strong>rint, and <strong>L</strong>oop.
     </p>
 
-    <p>The <code>iex</code> prompt prompts us for input. This is the "read" step. It will read our input. Once we give it input, it then <em>evaluates</em> what we've given it to determine if the computer is capable of running our program. If it is, then the computer runs our program and "<em>prints</em>" the output of our program back to the prompt to show us what the computer has done. And then it prompts us again because it is <em>looping</em>. Hence: read, evaluate, print, loop: REPL. And now you know!</p>
+    <p>The <code>iex</code> prompt prompts us for input. This is the "read" step. It will read our input. Once we give
+      it input, it then <em>evaluates</em> what we've given it to determine if the computer is capable of running our
+      program. If it is, then the computer runs our program and "<em>prints</em>" the output of our program back to the
+      prompt to show us what the computer has done. And then it prompts us again because it is <em>looping</em>. Hence:
+      read, evaluate, print, loop: REPL. And now you know!</p>
   </aside>
 
   <aside>
     <header>No more numbers in <code>iex</code> prompts</header>
 
     <p>
-      Hi, it's me again. Bet you weren't expecting to hear from me again so soon. Well, here we are again. It'll only be a minute. Then we can get back to learning about Elixir. Promise.
+      Hi, it's me again. Bet you weren't expecting to hear from me again so soon. Well, here we are again. It'll only be
+      a minute. Then we can get back to learning about Elixir. Promise.
     </p>
 
     <p>
-      Just a quick note: examples that use <code>iex</code> from here on out are going to be missing their numbers from the prompt. Instead of showing <code>iex(3)></code> for the next prompt, you'll just see <code>iex></code>. This makes it easier for this author to move code examples around in the book without having to re-number the <code>iex(3)</code> lines. I hope you don't mind.
+      Just a quick note: examples that use <code>iex</code> from here on out are going to be missing their numbers from
+      the prompt. Instead of showing <code>iex(3)></code> for the next prompt, you'll just see <code>iex></code>. This
+      makes it easier for this author to move code examples around in the book without having to re-number the
+      <code>iex(3)</code> lines. I hope you don't mind.
     </p>
   </aside>
 </section>
@@ -163,10 +206,11 @@ Interactive Elixir ({{site.elixir_version}}) - ⏎
   <h2>Mathematical!</h2>
 
   <p>
-    Ok, so the computer can parrot things. But what else can it do? How about we ask the computer to do some simple mathematics?
+    Ok, so the computer can parrot things. But what else can it do? How about we ask the computer to do some simple
+    mathematics?
   </p>
 
-<pre><code>iex> 2 + 4
+  <pre><code>iex> 2 + 4
 <span class='console-yellow'>6</span>
 iex> 3 - 6
 <span class='console-yellow'>-3</span>
@@ -175,13 +219,20 @@ iex> 4 * 12345
 iex> 1234 / 4 + 2 - 12 * 3
 <span class='console-yellow'>274.5</span></code></pre>
 
-<p>
-  This appeases the masses, slightly. They're a fickle bunch. The computer is now no longer parroting things back to us. It's instead calculating the not-so-advanced mathematical equations we're giving it, and then giving us the right numbers. If you're not convinced these are the right numbers, I would encourage you to get a pen and paper and to puzzle them out yourselves. You'll find out that the computer is right. Good computer!
-</p>
+  <p>
+    This appeases the masses, slightly. They're a fickle bunch. The computer is now no longer parroting things back to
+    us. It's instead calculating the not-so-advanced mathematical equations we're giving it, and then giving us the
+    right numbers. If you're not convinced these are the right numbers, I would encourage you to get a pen and paper and
+    to puzzle them out yourselves. You'll find out that the computer is right. Good computer!
+  </p>
 
-<p>
-  The masses realise that Elixir is now built for more things than simple parroting. Elixir can do calculations too! We've used the symbols <code>+</code>, <code>-</code>, <code>*</code>, and <code>/</code> here, asking the computer to add, subtract, multiply and divide, in that order. You might think to use <code>x</code> to multiply, but that has a different meaning as we'll see later on. You should use <code>*</code> when you wish to multiply things, as that is what Elixir expects you to do.
-</p>
+  <p>
+    The masses realise that Elixir is now built for more things than simple parroting. Elixir can do calculations too!
+    We've used the symbols <code>+</code>, <code>-</code>, <code>*</code>, and <code>/</code> here, asking the computer
+    to add, subtract, multiply and divide, in that order. You might think to use <code>x</code> to multiply, but that
+    has a different meaning as we'll see later on. You should use <code>*</code> when you wish to multiply things, as
+    that is what Elixir expects you to do.
+  </p>
 
   <aside>
     <header>Why are numbers yellow, but strings green?</header>
@@ -190,7 +241,7 @@ iex> 1234 / 4 + 2 - 12 * 3
       You may have noticed that a string shows up as green in the <code>iex</code> prompt:
     </p>
 
-<pre>
+    <pre>
 <code>iex> "Hello World!"
 <span class='console-green'>"Hello World"</span></code></pre>
 
@@ -198,7 +249,7 @@ iex> 1234 / 4 + 2 - 12 * 3
       But numbers show up as yellow:
     </p>
 
-<pre><code>iex> 2 + 4
+    <pre><code>iex> 2 + 4
 <span class='console-yellow'>6</span></code></pre>
 
     <p>
@@ -206,7 +257,10 @@ iex> 1234 / 4 + 2 - 12 * 3
     </p>
 
     <p>
-      Well, there is no particular reason for strings being green and numbers being yellow; the colours don't mean much else than to serve as useful indicators of the different kinds of data. Strings are one kind of data, and numbers are a different kind. We'll see more kinds as we continue on our journey. These different colours just help differentiate the types of values we're seeing in the prompt.
+      Well, there is no particular reason for strings being green and numbers being yellow; the colours don't mean much
+      else than to serve as useful indicators of the different kinds of data. Strings are one kind of data, and numbers
+      are a different kind. We'll see more kinds as we continue on our journey. These different colours just help
+      differentiate the types of values we're seeing in the prompt.
     </p>
   </aside>
 </section>
@@ -215,23 +269,33 @@ iex> 1234 / 4 + 2 - 12 * 3
   <h2>What we aim to achieve in this book</h2>
 
   <p>
-    Okay, now that the masses are appeased, let's take a moment to talk about what this book is going to cover and what you're going to get out of it.
+    Okay, now that the masses are appeased, let's take a moment to talk about what this book is going to cover and what
+    you're going to get out of it.
   </p>
 
   <p>
-    The first 12 chapters are going to cover some Elixir basics. Yes, that seems like a lot of chapters but most of these chapters are fairly short; just a couple of pages long. It's about 50 pages in total. These chapters will cover the things that you should know before you can write any Elixir program of a decent length, and it gives you a good tour of the language. These chapters are important because they will build a solid foundation for your Elixir experience.
+    The first 12 chapters are going to cover some Elixir basics. Yes, that seems like a lot of chapters but most of
+    these chapters are fairly short; just a couple of pages long. It's about 50 pages in total. These chapters will
+    cover the things that you should know before you can write any Elixir program of a decent length, and it gives you a
+    good tour of the language. These chapters are important because they will build a solid foundation for your Elixir
+    experience.
   </p>
 
   <p>
-    Chapter 13 onwards will focus on building larger programs using the techniques that we've learned in the first 12 chapters. We'll combine things from earlier chapters and use them altogether and we'll even get introduced to even more things that the Elixir language does.
+    Chapter 13 onwards will focus on building larger programs using the techniques that we've learned in the first 12
+    chapters. We'll combine things from earlier chapters and use them altogether and we'll even get introduced to even
+    more things that the Elixir language does.
   </p>
 
   <p>
-    At the end of each chapter, there will be a set of (optional) exercises that you can do, using things that you have learned in the chapter. I strongly encourage that you try these out at least. If you're unable to do them, don't sweat it. Just try again later on.
+    At the end of each chapter, there will be a set of (optional) exercises that you can do, using things that you have
+    learned in the chapter. I strongly encourage that you try these out at least. If you're unable to do them, don't
+    sweat it. Just try again later on.
   </p>
 
   <p>
-    With all that said, let's continue looking at what Elixir can do for us, starting next with making Elixir remember things for us.
+    With all that said, let's continue looking at what Elixir can do for us, starting next with making Elixir remember
+    things for us.
   </p>
 </section>
 
@@ -239,11 +303,13 @@ iex> 1234 / 4 + 2 - 12 * 3
   <h3>Exercises</h3>
 
   <ul>
-    <li>Get Elixir to calculate the number of seconds in the day by multiplying the hours in a day by 60 twice. How many seconds are there in a day?</li>
+    <li>Get Elixir to calculate the number of seconds in the day by multiplying the hours in a day by 60 twice. How many
+      seconds are there in a day?</li>
     <li>Calculate the average of these numbers: 4, 8, 15, 16, 23 and 42.</li>
   </ul>
 
   <p>
-    Note: You can find solutions to all of this book's exercises in the <a href='/solutions'>solutions</a> section at the back of this book.
+    Note: You can find solutions to all of this book's exercises in the <a href='/solutions'>solutions</a> section at
+    the back of this book.
   </p>
 </section>

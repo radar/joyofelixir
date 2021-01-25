@@ -1,15 +1,17 @@
-<section class='break'>
+<section class='major'>
   <h2 id='chapter-3'>3. Lovely lists</h2>
 
   <p>
-    But what <em>else</em> can Elixir do? We've seen that it can handle strings and it can handle mathematical equations with ease and it can remember things, but what else? Well, what if we had a <em>list</em> of things that we wanted the computer to remember? And we wanted the computer to remember this list of things in a particular order?
+    But what <em>else</em> can Elixir do? We've seen that it can handle strings and it can handle mathematical equations
+    with ease and it can remember things, but what else? Well, what if we had a <em>list</em> of things that we wanted
+    the computer to remember? And we wanted the computer to remember this list of things in a particular order?
   </p>
 
   <p>
     We could do this by assigning each of the things to a unique variable:
   </p>
 
-<pre><code>iex> first = "fish"
+  <pre><code>iex> first = "fish"
 <span class='console-green'>"fish"</span>
 iex> second = "ham"
 <span class='console-green'>"ham"</span>
@@ -17,10 +19,12 @@ iex> third = "eggs"
 <span class='console-green'>"eggs"</span></code></pre>
 
   <p>
-    But then we would need to remember that the things we want are stored in the variables <code>first</code>, <code>second</code> and <code>third</code>. And what if we &mdash; as humans &mdash; forget what position we were up to?
+    But then we would need to remember that the things we want are stored in the variables <code>first</code>,
+    <code>second</code> and <code>third</code>. And what if we &mdash; as humans &mdash; forget what position we were up
+    to?
   </p>
 
-<pre><code>iex> fifth = "bread"
+  <pre><code>iex> fifth = "bread"
 <span class='console-green'>"bread"</span>
 </code></pre>
 
@@ -29,21 +33,26 @@ iex> third = "eggs"
   </p>
 
   <p>
-    A better solution to getting the computer to remember a list in Elixir is to actually tell it what we're storing is a list. To do this, we wrap our list in square brackets (<code>[]</code>) and separate each item in the list with a comma:
+    A better solution to getting the computer to remember a list in Elixir is to actually tell it what we're storing is
+    a list. To do this, we wrap our list in square brackets (<code>[]</code>) and separate each item in the list with a
+    comma:
   </p>
 
-<pre><code>iex> shopping_list = ["fish", "ham", "eggs", "bread"]
+  <pre><code>iex> shopping_list = ["fish", "ham", "eggs", "bread"]
 [<span class='console-green'>"fish"</span>, <span class='console-green'>"ham"</span>, <span class='console-green'>"eggs"</span>, <span class='console-green'>"bread"</span>]</code></pre>
 
   <p>
-    Just like we need to start and end a string with double quotes, we need to start and end a list with square brackets (<code>[]</code>).
+    Just like we need to start and end a string with double quotes, we need to start and end a list with square brackets
+    (<code>[]</code>).
   </p>
 
-  <p>The computer will now remember our entire shopping list in one variable (<code>shopping_list</code>), rather than remembering it across multiple variables. Now we have a one-stop-shop that we can go to for our shopping list.
+  <p>The computer will now remember our entire shopping list in one variable (<code>shopping_list</code>), rather than
+    remembering it across multiple variables. Now we have a one-stop-shop that we can go to for our shopping list.
   </p>
 
   <p>
-    We can use more than just strings when we're creating lists too. Let's say we want to have a list of the last temperatures (in celsius) of the last five days. We could represent this data like this:
+    We can use more than just strings when we're creating lists too. Let's say we want to have a list of the last
+    temperatures (in celsius) of the last five days. We could represent this data like this:
   </p>
 
   <pre><code>iex> temperatures = [15, 17, 19, 20, 20]</code></pre>
@@ -53,10 +62,12 @@ iex> third = "eggs"
   </p>
 
   <p>
-    Izzy, impressed with Elixir's ability to keep a list of anything her heart desires, has started taking the names down of the people who are in the crowd. Her computer materialised from nowhere, or perhaps from somewhere in the throng nearby. It was too quick to really notice. She starts taking down names, fingers flying across the keyboard:
+    Izzy, impressed with Elixir's ability to keep a list of anything her heart desires, has started taking the names
+    down of the people who are in the crowd. Her computer materialised from nowhere, or perhaps from somewhere in the
+    throng nearby. It was too quick to really notice. She starts taking down names, fingers flying across the keyboard:
   </p>
 
-<pre>
+  <pre>
 <code>iex> those_who_are_assembled = [
 "Izzy",
 "The Author",
@@ -75,29 +86,38 @@ iex> third = "eggs"
     </header>
 
     <p>
-      She started a list on one line and then continued it on the lines following. When she finished her list, the computer then took <em>all</em> the lines, processed them as one big instruction and presented us with the finished list. Elixir will let us write lists over multiple lines like this, which is handy because it helps for readability!
+      She started a list on one line and then continued it on the lines following. When she finished her list, the
+      computer then took <em>all</em> the lines, processed them as one big instruction and presented us with the
+      finished list. Elixir will let us write lists over multiple lines like this, which is handy because it helps for
+      readability!
     </p>
   </aside>
 
   <p>
-    And so Izzy continues. She disappears into the crowd directly to our right, and somehow re-appears within mere seconds on our left. This is despite the density of the crowd. Amazing stuff. She then asks: "Hey Mr. Author Guy, I want to also track people's ages so that I can do some statistics on who exactly is assembled here. Oh, and I want to track their gender too. But a list doesn't seem very suitable for this. How can I do this?"
+    And so Izzy continues. She disappears into the crowd directly to our right, and somehow re-appears within mere
+    seconds on our left. This is despite the density of the crowd. Amazing stuff. She then asks: "Hey Mr. Author Guy, I
+    want to also track people's ages so that I can do some statistics on who exactly is assembled here. Oh, and I want
+    to track their gender too. But a list doesn't seem very suitable for this. How can I do this?"
   </p>
 
   <p>
-    Well Izzy, there's more than one way you could do this. If all you wanted to track about a person was their name, their age and their gender, you could make each item in the list its own list:
+    Well Izzy, there's more than one way you could do this. If all you wanted to track about a person was their name,
+    their age and their gender, you could make each item in the list its own list:
   </p>
 
-<pre>
+  <pre>
 <code>iex> those_who_are_assembled = [
 ...> ["Izzy", "30ish", "Female"],
 ...> ["The Author", "30ish", "Male"],
 ...> ]</code></pre>
 
   <p>
-   These lists-inside-of-lists would be called <em>sub-lists</em>. You would then have to keep in mind that the first item in each sub-list is the name, the second is the age and the third is the gender. What if you (or someone else, using your computer) forgot the order and started adding in people, with age and gender swapping positions?
+    These lists-inside-of-lists would be called <em>sub-lists</em>. You would then have to keep in mind that the first
+    item in each sub-list is the name, the second is the age and the third is the gender. What if you (or someone else,
+    using your computer) forgot the order and started adding in people, with age and gender swapping positions?
   </p>
 
-<pre>
+  <pre>
 <code>iex> those_who_are_assembled = [
 ...> ["Izzy", "30ish", "Female"],
   ... a long time passes ...
@@ -105,6 +125,7 @@ iex> third = "eggs"
 ...> ]</code></pre>
 
   <p>
-    Pandemonium again! We need a better way of enforcing what data we're collecting for each person. We need a better data structure than lists within lists. Read on to find out what that data structure is!
+    Pandemonium again! We need a better way of enforcing what data we're collecting for each person. We need a better
+    data structure than lists within lists. Read on to find out what that data structure is!
   </p>
 </section>

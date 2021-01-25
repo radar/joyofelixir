@@ -31,6 +31,6 @@ sass:
     sass_dir: _sass
 
 
-elixir_version: v1.8.1
-erlang_version: "Erlang/OTP 21 [erts-10.0] [source] [64-bit] [smp:4:4] [ds:4:4:10] [async-threads:1] [hipe]"
-erlang_version_truncated: "Erlang/OTP 21 [erts-10.0] [source] ..."
+elixir_version: v1.10.4
+erlang_version: "Erlang/OTP 23 [erts-11.1.1] [source] [64-bit] [smp:16:16] [ds:16:16:10] [async-threads:1] [hipe] [dtrace]"
+erlang_version_truncated: "Erlang/OTP 23 [erts-11.1.1] [source] ..."

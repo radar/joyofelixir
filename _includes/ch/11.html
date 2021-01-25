@@ -1,30 +1,39 @@
-<section class='break'>
+<section class='major'>
   <h2 id='chapter-11'>11. Working with files</h2>
 
   <p>
-    So far, we've worked with data that we've defined ourselves in the <code>iex</code> prompt. This has been incredibly handy because it has allowed us (and Izzy) to experiment with Elixir's features. When we program in the real world, data typically comes from sources external to our code. One of those sources is files from the <a href='https://en.wikipedia.org/wiki/File_system'>file system</a>.
+    So far, we've worked with data that we've defined ourselves in the <code>iex</code> prompt. This has been incredibly
+    handy because it has allowed us (and Izzy) to experiment with Elixir's features. When we program in the real world,
+    data typically comes from sources external to our code. One of those sources is files from the <a
+      href='https://en.wikipedia.org/wiki/File_system'>file system</a>.
   </p>
 
   <p>
-    In this chapter, we'll look at how we can read existing files, create new ones and even delete files using functions that are built-in to Elixir.
+    In this chapter, we'll look at how we can read existing files, create new ones and even delete files using functions
+    that are built-in to Elixir.
   </p>
 
   <section>
     <h3>Reading a file</h3>
 
     <p>
-      The first thing we're going to take a look at here is how to read a file's contents and then use Elixir to do something with those contents.
+      The first thing we're going to take a look at here is how to read a file's contents and then use Elixir to do
+      something with those contents.
     </p>
 
     <p>
-      Certain files may contain data that we can use in our Elixir programs. Elixir can read any file you throw at it. In this chapter, just for simplicity, we're going to stick to a single file format: text files.
+      Certain files may contain data that we can use in our Elixir programs. Elixir can read any file you throw at it.
+      In this chapter, just for simplicity, we're going to stick to a single file format: text files.
     </p>
 
     <p>
-      A text file is just a file with a bunch of words in it. You probably have a file like that on your computer right now. You could open one of these files in your text editor and read what was written in that file. If for some weird reason you don't have one of these, you can take this content and put it in a new file called <code>haiku.txt</code>:
+      A text file is just a file with a bunch of words in it. You probably have a file like that on your computer right
+      now. You could open one of these files in your text editor and read what was written in that file. If for some
+      weird reason you don't have one of these, you can take this content and put it in a new file called
+      <code>haiku.txt</code>:
     </p>
 
-  <pre><code>rixilE evol I
+    <pre><code>rixilE evol I
 nrael ot ysae os si tI
 edoc lanoitcnuf taerG</code></pre>
 
@@ -45,85 +54,111 @@ edoc lanoitcnuf taerG</code></pre>
     </figure>
 
     <p>
-      Izzy squints at the haiku. "Um... This haiku looks a little... backwards". Yes, Izzy! Each line is written backwards! The haiku should read:
+      Izzy squints at the haiku. "Um... This haiku looks a little... backwards". Yes, Izzy! Each line is written
+      backwards! The haiku should read:
     </p>
 
-  <pre><code>I love Elixir
+    <pre><code>I love Elixir
 It is so easy to learn
 Great functional code</code></pre>
 
     <p>
-  We could go in to the file and correct this ourselves, but we're <em>programmers</em> learning a super-duper-awesome programming language and by golly if we aren't going to use it to solve every problem we come across. To solve this problem, we're going to use the power of Elixir.
+      We could go in to the file and correct this ourselves, but we're <em>programmers</em> learning a
+      super-duper-awesome programming language and by golly if we aren't going to use it to solve every problem we come
+      across. To solve this problem, we're going to use the power of Elixir.
     </p>
 
     <p>
-      What we're going to do is to read this haiku into Elixir, and then we're going to reverse the order of words in each line. I make it sound so easy, and that's because it is. Really!
+      What we're going to do is to read this haiku into Elixir, and then we're going to reverse the order of words in
+      each line. I make it sound so easy, and that's because it is. Really!
     </p>
 
     <p>
-      To read this file, we'll need to open an <code>iex</code> prompt where the file is, and then we can use this code to read it:
+      To read this file, we'll need to open an <code>iex</code> prompt where the file is, and then we can use this code
+      to read it:
     </p>
 
-  <pre><code>iex> File.read("haiku.txt")</code></pre>
+    <pre><code>iex> File.read("haiku.txt")</code></pre>
 
     <p>
-      This code tells Elixir to read a file by calling the <code>File.read/1</code> function. Calling this function will give us the following output:
+      This code tells Elixir to read a file by calling the <code>File.read/1</code> function. Calling this function will
+      give us the following output:
     </p>
 
     <pre><code>{:ok, "I evol rixilE\nnrael ot ysae os si tI\nedoc lanoitcnuf taerG\n"}</code></pre>
 
     <p>
-      In this output, there's not <em>one</em> but <em>two</em> new concepts. You've gotten so far through the book that you're now so great at learning and that means I can introduce things rapid-fire and you'll pick 'em up with no effort.
+      In this output, there's not <em>one</em> but <em>two</em> new concepts. You've gotten so far through the book that
+      you're now so great at learning and that means I can introduce things rapid-fire and you'll pick 'em up with no
+      effort.
     </p>
 
     <p>
-      The first of these is the curly brackets. Did you notice them? They wrap all of the output from the <code>File.read/1</code>. Did you notice that these curly brackets, unlike all the other curly brackets we've seen before, are <em>not</em> prefixed with a percent-sign (<code>%</code>)?
+      The first of these is the curly brackets. Did you notice them? They wrap all of the output from the
+      <code>File.read/1</code>. Did you notice that these curly brackets, unlike all the other curly brackets we've seen
+      before, are <em>not</em> prefixed with a percent-sign (<code>%</code>)?
     </p>
 
     <p>
-      This particular concept in Elixir is called a <em>tuple</em>. You can think of tuples as a fixed-length list and they're used to link a bunch of information together in a particular order. In this case, it's telling us that the file operation was <code>:ok</code>, and then it's giving us a string containing all the file's information.
+      This particular concept in Elixir is called a <em>tuple</em>. You can think of tuples as a fixed-length list and
+      they're used to link a bunch of information together in a particular order. In this case, it's telling us that the
+      file operation was <code>:ok</code>, and then it's giving us a string containing all the file's information.
     </p>
 
     <p>
-      Izzy pipes up: "What's that <code>:ok</code> thing and why does it have a colon before it?". Good spot, Izzy. That is called an <code>atom</code>. We first saw these back in <a href='/4-marvellous-maps'>Chapter 4</a> when they were used as keys in maps.
+      Izzy pipes up: "What's that <code>:ok</code> thing and why does it have a colon before it?". Good spot, Izzy. That
+      is called an <code>atom</code>. We first saw these back in <a href='/4-marvellous-maps'>Chapter 4</a> when they
+      were used as keys in maps.
     </p>
 
     <p>
-      We've seen atoms since then, but here's a refresher: Atoms are used to provide informational messages, like in this case. Atoms names are their values. This is unlike strings, maps and lists where we would assign to a variable in order to give a meaningful name to. This atom is telling us that the operation we asked <code>File.read/1</code> to perform went "ok"; we were able to read the file successfully.
+      We've seen atoms since then, but here's a refresher: Atoms are used to provide informational messages, like in
+      this case. Atoms names are their values. This is unlike strings, maps and lists where we would assign to a
+      variable in order to give a meaningful name to. This atom is telling us that the operation we asked
+      <code>File.read/1</code> to perform went "ok"; we were able to read the file successfully.
     </p>
 
     <p>
-      If we specified a file that wasn't present, <code>File.read/1</code> would give us a different atom in that first place:
+      If we specified a file that wasn't present, <code>File.read/1</code> would give us a different atom in that first
+      place:
     </p>
 
     <pre><code>iex> File.read("haiboo.txt")
 {:error, :enoent}</code></pre>
 
     <p>
-      This cryptic error message uses a tuple containing <em>two</em> atoms, <code>:error</code> and <code>:enoent</code>. The first one is self-explanatory -- there was an error loading this file. The second one gives us a non-regular-human-friendly error message: <code>:enoent</code>. This is computer-lingo for "I couldn't find that file you were looking for, sorry."
+      This cryptic error message uses a tuple containing <em>two</em> atoms, <code>:error</code> and
+      <code>:enoent</code>. The first one is self-explanatory -- there was an error loading this file. The second one
+      gives us a non-regular-human-friendly error message: <code>:enoent</code>. This is computer-lingo for "I couldn't
+      find that file you were looking for, sorry."
     </p>
 
     <p>
-      The best part about these tuples and atoms being returned from the <code>File.read/1</code> call is that we can use <em>pattern matching</em> (<a href='/6-pattern-matching'>Chapter 6</a>). If we want to only proceed if our <code>File.read/1</code> function executes successfully, we can pattern match like this:
+      The best part about these tuples and atoms being returned from the <code>File.read/1</code> call is that we can
+      use <em>pattern matching</em> (<a href='/6-pattern-matching'>Chapter 6</a>). If we want to only proceed if our
+      <code>File.read/1</code> function executes successfully, we can pattern match like this:
     </p>
 
     <pre><code>iex> {:ok, contents} = File.read("haiku.txt")</code></pre>
 
     <p>
-      Go ahead and try this code out in your <code>iex</code> prompt. Also try it with the wrong path too and see what happens. If you give it the wrong path, you should see it fail like this:
+      Go ahead and try this code out in your <code>iex</code> prompt. Also try it with the wrong path too and see what
+      happens. If you give it the wrong path, you should see it fail like this:
     </p>
 
     <pre><code><span class='console-red'>** (MatchError) no match of right hand side value: {:error, :enoent}</span></code></pre>
 
     <p>
-      This error happens because we're telling Elixir to expect that the tuple returned from this call contains an <code>:ok</code> atom at the start, but it doesn't. Pattern matching can be a useful way of stopping your program in its tracks like this.
+      This error happens because we're telling Elixir to expect that the tuple returned from this call contains an
+      <code>:ok</code> atom at the start, but it doesn't. Pattern matching can be a useful way of stopping your program
+      in its tracks like this.
     </p>
 
     <p>
       Let's look back at the successful read:
     </p>
 
-      <pre><code>iex> {:ok, contents} = File.read("haiku.txt")</code></pre>
+    <pre><code>iex> {:ok, contents} = File.read("haiku.txt")</code></pre>
 
     <p>
       You'll see exactly the same values come back as when we did the first <code>File.read/1</code> invocation:
@@ -132,13 +167,21 @@ Great functional code</code></pre>
     <pre><code>{:ok, "I evol rixilE\nnrael ot ysae os si tI\nedoc lanoitcnuf taerG\n"}</code></pre>
 
     <p>
-      The difference is: this time, we've got the contents of the file in a <code>contents</code> variable. Oooh, that was sneaky! Let's get back to the task at hand: we still need to correct this haiku back to its proper form. We've now got the contents of this file and we need to reverse each line. To do that, we need some way of splitting apart the string so that we can process each line separately from each other line. To do this, we can use our old friend, <code>String.split/3</code>:
+      The difference is: this time, we've got the contents of the file in a <code>contents</code> variable. Oooh, that
+      was sneaky! Let's get back to the task at hand: we still need to correct this haiku back to its proper form. We've
+      now got the contents of this file and we need to reverse each line. To do that, we need some way of splitting
+      apart the string so that we can process each line separately from each other line. To do this, we can use our old
+      friend, <code>String.split/3</code>:
     </p>
 
     <pre><code>iex> contents |> String.split("\n", trim: true)</code></pre>
 
     <p>
-      This code takes the string stored in <code>contents</code> and passes it as the first argument to <code>String.split/3</code>. The other two arguments are: 2) the string <code>"\n"</code> and 3) the option <code>trim: true</code>. The 2nd argument tells <code>String.split/3</code> to split the string on the newline characters (<code>\n</code>), and the 3rd argument tells <code>String.split/3</code> to remove any trailing space at the end.
+      This code takes the string stored in <code>contents</code> and passes it as the first argument to
+      <code>String.split/3</code>. The other two arguments are: 2) the string <code>"\n"</code> and 3) the option
+      <code>trim: true</code>. The 2nd argument tells <code>String.split/3</code> to split the string on the newline
+      characters (<code>\n</code>), and the 3rd argument tells <code>String.split/3</code> to remove any trailing space
+      at the end.
     </p>
 
     <p>
@@ -148,20 +191,28 @@ Great functional code</code></pre>
     <pre><code>["rixilE evol I", "nrael ot ysae os si tI", "edoc lanoitcnuf taerG"]</code></pre>
 
     <p>
-      Yay! We've now got a list of strings here. We need each string here to be reversed. Izzy sticks her hand up and wiggles it around. "Ooh ooh ooh I know how to do this! <code>String.reverse/1</code>!", she says, monospaced font and all. Impressive. Yes, Izzy is correct! We can reverse a string by calling <code>String.reverse/1</code> as we first saw back in <a href='/8-strings-input-and-output'>Chapter 8</a>. We know we can do it with a single string like this:
+      Yay! We've now got a list of strings here. We need each string here to be reversed. Izzy sticks her hand up and
+      wiggles it around. "Ooh ooh ooh I know how to do this! <code>String.reverse/1</code>!", she says, monospaced font
+      and all. Impressive. Yes, Izzy is correct! We can reverse a string by calling <code>String.reverse/1</code> as we
+      first saw back in <a href='/8-strings-input-and-output'>Chapter 8</a>. We know we can do it with a single string
+      like this:
     </p>
 
     <pre><code>iex> "rixilE evol I" |> String.reverse
 "I love Elixir</code></pre>
 
     <p>
-      But we don't have a single string here, we have three strings within a list. But we have knowledge on our side. We have special skills that we built up in <a href='/9-lists'>Chapter 9</a>, and with those special skills we know that we can call <code>Enum.map/2</code> to apply a function to multiple elements within a list. We've done exactly this back in Chapter 9:
+      But we don't have a single string here, we have three strings within a list. But we have knowledge on our side. We
+      have special skills that we built up in <a href='/9-lists'>Chapter 9</a>, and with those special skills we know
+      that we can call <code>Enum.map/2</code> to apply a function to multiple elements within a list. We've done
+      exactly this back in Chapter 9:
     </p>
 
     <pre><code>iex> Enum.map(cities, &amp;String.capitalize/1)</code></pre>
 
     <p>
-      So let's take our list, adapt this code a little bit to use the pipe operator and <code>String.reverse/1</code> and reverse each string with this code:
+      So let's take our list, adapt this code a little bit to use the pipe operator and <code>String.reverse/1</code>
+      and reverse each string with this code:
     </p>
 
     <pre><code>iex> contents \
@@ -169,23 +220,31 @@ Great functional code</code></pre>
 |> Enum.map(&amp;String.reverse/1)</code></pre>
 
     <p>
-      We're using a multi-line pipe operator chain here to accomplish what we want. Because we're in <code>iex</code>, we need to put a backslash (<code>\</code>) on the end of every line to tell Elixir to treat all these lines as one long line and one chain of operations. If we were writing code in an Elixir file, we wouldn't need to do this. <code>iex</code> is a little special in this regard. Another way we could've written the code is like this:
+      We're using a multi-line pipe operator chain here to accomplish what we want. Because we're in <code>iex</code>,
+      we need to put a backslash (<code>\</code>) on the end of every line to tell Elixir to treat all these lines as
+      one long line and one chain of operations. If we were writing code in an Elixir file, we wouldn't need to do this.
+      <code>iex</code> is a little special in this regard. Another way we could've written the code is like this:
     </p>
 
     <pre><code>iex> contents |> String.split("\n", trim: true) |> Enum.map(&amp;String.reverse/1)</code></pre>
 
     <p>
-      But it is considered best practice to split long pipe chains up onto multiple lines when they're really long just to help with readability. Think of it as the same rule that applies when you're writing a book: you split logical breaks into separate paragraphs to make it easier for people to read here. We're applying almost that same rule to our Elixir code.
+      But it is considered best practice to split long pipe chains up onto multiple lines when they're really long just
+      to help with readability. Think of it as the same rule that applies when you're writing a book: you split logical
+      breaks into separate paragraphs to make it easier for people to read here. We're applying almost that same rule to
+      our Elixir code.
     </p>
 
     <p>
-      This code (in either the one-line or three-line form) will give us back a list of strings that now look like proper English:
+      This code (in either the one-line or three-line form) will give us back a list of strings that now look like
+      proper English:
     </p>
 
     <pre><code>["I love Elixir", "It is so easy to learn", "Great functional code"]</code></pre>
 
     <p>
-      All we need to do now is to put the file back into a big string, which we can do with a new-to-us function called <code>Enum.join/2</code>:
+      All we need to do now is to put the file back into a big string, which we can do with a new-to-us function called
+      <code>Enum.join/2</code>:
     </p>
 
     <pre><code>iex> fixed_contents = contents \
@@ -195,7 +254,10 @@ Great functional code</code></pre>
 "I love Elixir\nIt is so easy to learn\nGreat functional code"</code></pre>
 
     <p>
-      Excellent! We've now got our file's text around the right way. We did this with a combination of quite a few functions and that is really demonstrating the repertoire of things that we know how to do with Elixir now. We have used <code>File.read/1</code> function to read this file's contents and to bring them into our Elixir code. Once we have the contents there, we can do whatever we wish with them.
+      Excellent! We've now got our file's text around the right way. We did this with a combination of quite a few
+      functions and that is really demonstrating the repertoire of things that we know how to do with Elixir now. We
+      have used <code>File.read/1</code> function to read this file's contents and to bring them into our Elixir code.
+      Once we have the contents there, we can do whatever we wish with them.
     </p>
 
     <p>
@@ -207,23 +269,35 @@ Great functional code</code></pre>
     <h3>Streaming a file</h3>
 
     <p>
-      Elixir provides us at least one very clear way to read a file: <code>File.read/1</code>. We know how this works. But there is <em>another</em> function that Elixir gives us which can also be used to read files. That function is called <code>File.stream!/1</code>.
+      Elixir provides us at least one very clear way to read a file: <code>File.read/1</code>. We know how this works.
+      But there is <em>another</em> function that Elixir gives us which can also be used to read files. That function is
+      called <code>File.stream!/1</code>.
     </p>
 
     <p>
-      This function works by reading a file <em>one line at a time</em>. This is useful in cases where we might be reading very large files. If we used <code>File.read/1</code> to load a large file, it might take a long time for Elixir to read it all in and it might take up a lot of our computer's resources. On the contrary, <code>File.stream!</code> can be used to read an entire file, but will read a file line-by-line.
+      This function works by reading a file <em>one line at a time</em>. This is useful in cases where we might be
+      reading very large files. If we used <code>File.read/1</code> to load a large file, it might take a long time for
+      Elixir to read it all in and it might take up a lot of our computer's resources. On the contrary,
+      <code>File.stream!</code> can be used to read an entire file, but will read a file line-by-line.
     </p>
 
     <p>
-      We call this type of thing in programming parlance "eagerness" or "laziness". The <code>File.read/1</code> function can be said to be <em>eager</em>: it <em>eagerly</em> loads the whole file without a care in the world if we're going to use the whole lot or not. While the <code>File.stream!/1</code> function is its more chilled out cousin: it will <em>lazily</em> read a single line at a time from the file.
+      We call this type of thing in programming parlance "eagerness" or "laziness". The <code>File.read/1</code>
+      function can be said to be <em>eager</em>: it <em>eagerly</em> loads the whole file without a care in the world if
+      we're going to use the whole lot or not. While the <code>File.stream!/1</code> function is its more chilled out
+      cousin: it will <em>lazily</em> read a single line at a time from the file.
     </p>
 
     <p>
-      Think of it in terms of your favourite internet streaming service. When you stream from that service, you don't have to wait for every single episode of your favourite Scandi Noir TV series to download. You don't even have to wait for a single episode to fully download because it only sends through a small part of the episode at a time. This is what <code>File.stream/1</code> does: gives us the file line-by-line.
+      Think of it in terms of your favourite internet streaming service. When you stream from that service, you don't
+      have to wait for every single episode of your favourite Scandi Noir TV series to download. You don't even have to
+      wait for a single episode to fully download because it only sends through a small part of the episode at a time.
+      This is what <code>File.stream/1</code> does: gives us the file line-by-line.
     </p>
 
     <p>
-      Ok, I think we've talked enough about what <code>File.stream/1</code> does! It's time to see this in action. Let's use this code to start reading our <code>haiku.txt</code> file again:
+      Ok, I think we've talked enough about what <code>File.stream/1</code> does! It's time to see this in action. Let's
+      use this code to start reading our <code>haiku.txt</code> file again:
     </p>
 
     <pre><code>iex> stream = File.stream!("haiku.txt")
@@ -235,11 +309,14 @@ Great functional code</code></pre>
 }</code></pre>
 
     <p>
-      This time, we're not given back the contents of the file. We're given back something we've never seen before: a <em>struct</em>.
+      This time, we're not given back the contents of the file. We're given back something we've never seen before: a
+      <em>struct</em>.
     </p>
 
     <p>
-      We can think of structs as maps that follow a particular set of rules. Just like maps, structs have key-value pairs, as we can see from the output here. If we removed the <code>File.Stream</code> part of this output, the syntax would be a map:
+      We can think of structs as maps that follow a particular set of rules. Just like maps, structs have key-value
+      pairs, as we can see from the output here. If we removed the <code>File.Stream</code> part of this output, the
+      syntax would be a map:
     </p>
 
     <pre><code>iex> %{
@@ -250,15 +327,22 @@ Great functional code</code></pre>
 }</code></pre>
 
     <p>
-      What makes a struct different here is that it is <em>named</em> and structs with the same name always have the same keys. Every time we call <code>File.stream!</code>, we'll see a <code>File.Stream</code> struct come back with exactly the same keys.
+      What makes a struct different here is that it is <em>named</em> and structs with the same name always have the
+      same keys. Every time we call <code>File.stream!</code>, we'll see a <code>File.Stream</code> struct come back
+      with exactly the same keys.
     </p>
 
     <p>
-      The keys in this particular struct tell Elixir what this file stream is all about. It tells Elixir that we're going to read from the <code>haiku.txt</code> (<code>path</code>) file line-by-line (<code>line_or_bytes</code>). I won't go into what <code>modes</code> and <code>raw</code> are for here.
+      The keys in this particular struct tell Elixir what this file stream is all about. It tells Elixir that we're
+      going to read from the <code>haiku.txt</code> (<code>path</code>) file line-by-line (<code>line_or_bytes</code>).
+      I won't go into what <code>modes</code> and <code>raw</code> are for here.
     </p>
 
     <p>
-      At this point, all we have this <code>File.Stream</code> struct. Consider it as an "intent to read" the file. No reading has occurred at this point yet. To trigger this reading, we can pipe this stream into any <code>Enum</code> method. For instance, we could trim all the newline characters (<code>\n</code>) off each line like this:
+      At this point, all we have this <code>File.Stream</code> struct. Consider it as an "intent to read" the file. No
+      reading has occurred at this point yet. To trigger this reading, we can pipe this stream into any
+      <code>Enum</code> method. For instance, we could trim all the newline characters (<code>\n</code>) off each line
+      like this:
     </p>
 
     <pre><code>fixed_contents = stream \
@@ -267,7 +351,10 @@ Great functional code</code></pre>
   </code></pre>
 
     <p>
-      That's a good start. We're not going to be able to peer into exactly what Elixir is doing here, so you'll have to take my word for it that Elixir is now reading each line in this file one at a time and sending it through to <code>Enum.map/2</code>. The output from calling <code>Enum.map/2</code> is good, but what we really need is a list of sentences the right way around. We can flip these by piping the output again:
+      That's a good start. We're not going to be able to peer into exactly what Elixir is doing here, so you'll have to
+      take my word for it that Elixir is now reading each line in this file one at a time and sending it through to
+      <code>Enum.map/2</code>. The output from calling <code>Enum.map/2</code> is good, but what we really need is a
+      list of sentences the right way around. We can flip these by piping the output again:
     </p>
 
     <pre><code>fixed_contents = stream \
@@ -276,7 +363,8 @@ Great functional code</code></pre>
 ["I love Elixir", "It is so easy to learn", "Great functional code"]</code></pre>
 
     <p>
-      That's getting better! Now we need to join these back together again and put line breaks in between them with <code>Enum.join/2</code> again:
+      That's getting better! Now we need to join these back together again and put line breaks in between them with
+      <code>Enum.join/2</code> again:
     </p>
 
     <pre><code>fixed_contents = stream \
@@ -286,11 +374,15 @@ Great functional code</code></pre>
 "I love Elixir\nIt is so easy to learn\nGreat functional code"</code></pre>
 
     <p>
-      Excellent! We now have the fixed haiku in string form inside Elixir. We could get this through either <code>File.read/1</code> or <code>File.stream!/1</code>. Normally, we would only use <code>File.stream/1</code> if the file was really long, but in this section we've used it for illustrative purposes and to prove that there's more than one way to read a file in Elixir.
+      Excellent! We now have the fixed haiku in string form inside Elixir. We could get this through either
+      <code>File.read/1</code> or <code>File.stream!/1</code>. Normally, we would only use <code>File.stream/1</code> if
+      the file was really long, but in this section we've used it for illustrative purposes and to prove that there's
+      more than one way to read a file in Elixir.
     </p>
 
     <p>
-      It would be really handy if we could take this string out of Elixir and put it into a new file so that nobody else has to read a backwards haiku. That's what we'll be looking at next!
+      It would be really handy if we could take this string out of Elixir and put it into a new file so that nobody else
+      has to read a backwards haiku. That's what we'll be looking at next!
     </p>
   </section>
 
@@ -298,7 +390,8 @@ Great functional code</code></pre>
     <h3>Creating and writing to a new file</h3>
 
     <p>
-      We now have the re-arranged contents of our haiku stored within a variable called <code>fixed_contents</code>. If you've lost this since the last section, you can use this code to get it back:
+      We now have the re-arranged contents of our haiku stored within a variable called <code>fixed_contents</code>. If
+      you've lost this since the last section, you can use this code to get it back:
     </p>
 
     <pre><code>iex> fixed_contents = "haiku.txt" \
@@ -309,18 +402,27 @@ Great functional code</code></pre>
 </code></pre>
 
     <p>
-      The pipe opearator makes this code so much easier to read! Now that we most certain have the file contents stored in Elixir and put the right away around, we want to write these contents to a new file. We saw that we could read a file with <code>File.read/1</code>, so it would make sense for there to be a <code>File.write</code> function too. It definitely does exist, and it's called <code>File.write/2</code>. It takes two arguments: 1) the path we want to write to 2) the contents that we want to put in the file. It works like this:
+      The pipe opearator makes this code so much easier to read! Now that we most certain have the file contents stored
+      in Elixir and put the right away around, we want to write these contents to a new file. We saw that we could read
+      a file with <code>File.read/1</code>, so it would make sense for there to be a <code>File.write</code> function
+      too. It definitely does exist, and it's called <code>File.write/2</code>. It takes two arguments: 1) the path we
+      want to write to 2) the contents that we want to put in the file. It works like this:
     </p>
 
     <pre><code>iex> File.write("fixed-haiku.txt", fixed_contents)
 :ok</code></pre>
 
     <p>
-      Elixir dutifully takes the file path and the fixed contents and puts them into a file called <code>fixed-haiku.txt</code>. Well, we assume so. All that we know about this operation is that Elixir thought it went OK, as indicated by the atom that it returned: <code>:ok</code>.
+      Elixir dutifully takes the file path and the fixed contents and puts them into a file called
+      <code>fixed-haiku.txt</code>. Well, we assume so. All that we know about this operation is that Elixir thought it
+      went OK, as indicated by the atom that it returned: <code>:ok</code>.
     </p>
 
     <p>
-      If we want to make sure that the <code>fixed-haiku.txt</code> file is definitely there and contains what we expect it to contain, we could simply find that file in the file browser on our computers and double click on it. That would be the easiest way. But, because we're programmers and we've got powerful new skills up our sleeves, we can use what we know to check this. Let's use <code>File.read/1</code> to see if that file is there:
+      If we want to make sure that the <code>fixed-haiku.txt</code> file is definitely there and contains what we expect
+      it to contain, we could simply find that file in the file browser on our computers and double click on it. That
+      would be the easiest way. But, because we're programmers and we've got powerful new skills up our sleeves, we can
+      use what we know to check this. Let's use <code>File.read/1</code> to see if that file is there:
     </p>
 
     <pre><code>iex> File.read("fixed-haiku.txt")
@@ -335,15 +437,22 @@ Great functional code</code></pre>
     <h3>Renaming a file</h3>
 
     <p>
-      Izzy asks another question: "Why don't we switch these <code>haiku.txt</code> and <code>fixed-haiku.txt</code> files around? If I was opening a file called <code>haiku.txt</code>, I would expect that to be a proper Haiku, not this weird reversed one! I wouldn't think to look in <code>fixed-haiku.txt</code>.
+      Izzy asks another question: "Why don't we switch these <code>haiku.txt</code> and <code>fixed-haiku.txt</code>
+      files around? If I was opening a file called <code>haiku.txt</code>, I would expect that to be a proper Haiku, not
+      this weird reversed one! I wouldn't think to look in <code>fixed-haiku.txt</code>.
     </p>
 
     <p>
-      Izzy's right. It's weird that <code>haiku.txt</code> doesn't contain the haiku. We should rename this strange reversed version to <code>reversed-haiku.txt</code>, and then rename <code>fixed-haiku.txt</code> to <code>haiku.txt</code> to ease any confusion people might have.
+      Izzy's right. It's weird that <code>haiku.txt</code> doesn't contain the haiku. We should rename this strange
+      reversed version to <code>reversed-haiku.txt</code>, and then rename <code>fixed-haiku.txt</code> to
+      <code>haiku.txt</code> to ease any confusion people might have.
     </p>
 
     <p>
-      To read a file there was <code>File.read/1</code>. To write a file there was <code>File.write/2</code>. So it makes sense that in order to rename a file, there is <code>File.rename/2</code>. Elixir is pretty sensible like that, if you haven't realised already. <code>File.rename/2</code>'s two arguments are the original name of the file, and then the new name we want.
+      To read a file there was <code>File.read/1</code>. To write a file there was <code>File.write/2</code>. So it
+      makes sense that in order to rename a file, there is <code>File.rename/2</code>. Elixir is pretty sensible like
+      that, if you haven't realised already. <code>File.rename/2</code>'s two arguments are the original name of the
+      file, and then the new name we want.
     </p>
 
     <p>
@@ -354,36 +463,44 @@ Great functional code</code></pre>
 :ok</code></pre>
 
     <p>
-      Elixir has told us that this operation has suceeded. Well, if that's the case then we should see when we look into that directory again that the <code>haiku.txt</code> file isn't there, but a <code>reversed-haiku.txt</code> file is there instead. Oh, and <code>fixed-haiku.txt</code> exists too. Let's take a peek:
+      Elixir has told us that this operation has suceeded. Well, if that's the case then we should see when we look into
+      that directory again that the <code>haiku.txt</code> file isn't there, but a <code>reversed-haiku.txt</code> file
+      is there instead. Oh, and <code>fixed-haiku.txt</code> exists too. Let's take a peek:
     </p>
 
     <figure>
       <img src='/11-files/images/haiku-reversed.png'>
-      <figcaption>Figure 11.3: Two files now exist, <code>fixed-haiku.txt</code> and <code>reversed-haiku.txt</code>.</figcaption>
+      <figcaption>Figure 11.3: Two files now exist, <code>fixed-haiku.txt</code> and <code>reversed-haiku.txt</code>.
+      </figcaption>
     </figure>
 
     <p>
-      Yes! Our file has been renamed successfully. That's a good start. Let's rename <code>fixed-haiku.txt</code> into <code>haiku.txt</code> with <code>File.rename/2</code> too:
+      Yes! Our file has been renamed successfully. That's a good start. Let's rename <code>fixed-haiku.txt</code> into
+      <code>haiku.txt</code> with <code>File.rename/2</code> too:
     </p>
 
     <pre><code>iex> File.rename("fixed-haiku.txt", "haiku.txt")
 :ok</code></pre>
 
     <p>
-      Elixir tells us that the file rename operation was successful yet again. Two for two! Peeking into that directory one more time, we'll see that indeed it was:
+      Elixir tells us that the file rename operation was successful yet again. Two for two! Peeking into that directory
+      one more time, we'll see that indeed it was:
     </p>
 
     <figure>
       <img src='/11-files/images/the-haiku-is-fixed-the-people-rejoiced-worldwide-everything-is-good.png'>
-      <figcaption>Figure 11.4: The haiku (<code>haiku.txt</code>), and its reversed version (<code>reversed-haiku.txt</code>) are safely in place.</figcaption>
+      <figcaption>Figure 11.4: The haiku (<code>haiku.txt</code>), and its reversed version
+        (<code>reversed-haiku.txt</code>) are safely in place.</figcaption>
     </figure>
 
     <p>
-      Wonderful stuff. Whenever we need to rename a file within Elixir we now know that we can reach for <code>File.rename/2</code>.
+      Wonderful stuff. Whenever we need to rename a file within Elixir we now know that we can reach for
+      <code>File.rename/2</code>.
     </p>
 
     <p>
-      So now we've seen how to read existing files, create new ones and rename them. The final file operation that we'll look at this chapter is to delete the files.
+      So now we've seen how to read existing files, create new ones and rename them. The final file operation that we'll
+      look at this chapter is to delete the files.
     </p>
   </section>
 
@@ -391,19 +508,30 @@ Great functional code</code></pre>
     <h3>Deleting a file</h3>
 
     <p>
-      We've all deleted files from our computers in our lifetime. Sometimes even on purpose. The files reach a point where they're no longer useful and we want them <em>gone</em>. The way we might do this is to drag the file to the Recycle Bin, or to right click and choose "Delete", or... well, there's so many ways to delete files.
+      We've all deleted files from our computers in our lifetime. Sometimes even on purpose. The files reach a point
+      where they're no longer useful and we want them <em>gone</em>. The way we might do this is to drag the file to the
+      Recycle Bin, or to right click and choose "Delete", or... well, there's so many ways to delete files.
     </p>
 
     <p>
-      Elixir provides us a way to delete files too, but it isn't as intuitively named as the operations for reading (<code>File.read/1</code>), writing (<code>File.write/2</code>), and renaming (<code>File.rename/2</code>). To delete a file in Elixir we call the function called <code>File.rm/1</code>.
+      Elixir provides us a way to delete files too, but it isn't as intuitively named as the operations for reading
+      (<code>File.read/1</code>), writing (<code>File.write/2</code>), and renaming (<code>File.rename/2</code>). To
+      delete a file in Elixir we call the function called <code>File.rm/1</code>.
     </p>
 
     <p>
-      "RM? Like <a href='https://www.rmwilliams.com.au/'>R.M. Williams</a>, the world famous Australian manufacturer of leather things? What does leather shoes and belts have to do with removing files?", Izzy asks with quite the perplexed look on her face, cork hat bobbling quizzically along. Woah, slow down there Izzy. Elixir's <code>File.rm/1</code> has nothing to do with boots!
+      "RM? Like <a href='https://www.rmwilliams.com.au/'>R.M. Williams</a>, the world famous Australian manufacturer of
+      leather things? What does leather shoes and belts have to do with removing files?", Izzy asks with quite the
+      perplexed look on her face, cork hat bobbling quizzically along. Woah, slow down there Izzy. Elixir's
+      <code>File.rm/1</code> has nothing to do with boots!
     </p>
 
     <p>
-      This <code>File.rm/1</code> file is called <code>rm</code> as a shorthand for "<strong>r</strong>e<strong>m</strong>ove". We can use this function to remove any file we like. We would like to keep our haiku files, so let's create a separate file that we can remove later by using <code>File.write/2</code> first, and then we'll delete it with <code>File.rm/1</code>. Let's do this slow so that we can see that the file definitely does exist before we delete it. Let's start with creating the file:
+      This <code>File.rm/1</code> file is called <code>rm</code> as a shorthand for
+      "<strong>r</strong>e<strong>m</strong>ove". We can use this function to remove any file we like. We would like to
+      keep our haiku files, so let's create a separate file that we can remove later by using <code>File.write/2</code>
+      first, and then we'll delete it with <code>File.rm/1</code>. Let's do this slow so that we can see that the file
+      definitely does exist before we delete it. Let's start with creating the file:
     </p>
 
     <pre><code>iex> File.write("delete-me.txt", "delete me")
@@ -443,20 +571,29 @@ Great functional code</code></pre>
       <header><code>File.rm/1</code> is destructive</header>
 
       <p>
-        You should take care when using <code>File.rm/1</code> because once a file has been removed using this function it is gone for good! There is no getting this file back at all. The <code>File.rm/1</code> function will delete the file without moving it to your recycling bin or trash. It will be gone, baby, gone.
+        You should take care when using <code>File.rm/1</code> because once a file has been removed using this function
+        it is gone for good! There is no getting this file back at all. The <code>File.rm/1</code> function will delete
+        the file without moving it to your recycling bin or trash. It will be gone, baby, gone.
       </p>
     </aside>
 
     <p>
-      We've now got our head around some of the essential things that we can do with files with Elixir. We know that we can read existing files with <code>File.read/1</code>, write completely new ones with <code>File.write/2</code> and delete existing files with <code>File.rm/1</code>. For good measure, we also learned that these functions may return tuples that indicate errors, like <code>{:error, :enoent}</code>, which tells us that files do not exist.
+      We've now got our head around some of the essential things that we can do with files with Elixir. We know that we
+      can read existing files with <code>File.read/1</code>, write completely new ones with <code>File.write/2</code>
+      and delete existing files with <code>File.rm/1</code>. For good measure, we also learned that these functions may
+      return tuples that indicate errors, like <code>{:error, :enoent}</code>, which tells us that files do not exist.
     </p>
 
     <p>
-      We've now encountered a situation (well, <em>situations</em>) in Elixir where we can call code and get different outcomes depending on external factors like whether files exist or not. The code that we've written so far hasn't been particularly resilient to this sort of thing. We've become accustomed to running code and always seeing the same result.
+      We've now encountered a situation (well, <em>situations</em>) in Elixir where we can call code and get different
+      outcomes depending on external factors like whether files exist or not. The code that we've written so far hasn't
+      been particularly resilient to this sort of thing. We've become accustomed to running code and always seeing the
+      same result.
     </p>
 
     <p>
-      But the rules have changed. We now will need to account for this sort of thing. In the chapter I will show you a few ways that we can make our code more resilient by making it behave differently, depending on the circumstances.
+      But the rules have changed. We now will need to account for this sort of thing. In the chapter I will show you a
+      few ways that we can make our code more resilient by making it behave differently, depending on the circumstances.
     </p>
   </section>
 
@@ -465,10 +602,13 @@ Great functional code</code></pre>
 
     <ul>
       <li>
-        Can you make Elixir write a program for itself? Put this code into a file called <code>script.ex</code> with <code>File.write/2</code>: <code>IO.puts "This file was generated from Elixir"</code> and then make it run by running <code>elixir that-file.ex</code>.
+        Can you make Elixir write a program for itself? Put this code into a file called <code>script.ex</code> with
+        <code>File.write/2</code>: <code>IO.puts "This file was generated from Elixir"</code> and then make it run by
+        running <code>elixir that-file.ex</code>.
       </li>
       <li>
-        Figure out what happens if you try to delete a file that doesn't exist with <code>File.rm/1</code>. Is this what you expected to happen?
+        Figure out what happens if you try to delete a file that doesn't exist with <code>File.rm/1</code>. Is this what
+        you expected to happen?
       </li>
     </ul>
   </section>

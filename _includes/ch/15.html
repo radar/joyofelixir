@@ -1,20 +1,407 @@
-<section class='break'>
+<section class='major'>
   <h2 id='chapter-15'>15. Introduction to Mix</h2>
 
   <p>
-    Welcome to the final part, Part 4 of Joy of Elixir. You've done well to venture this far. The focus for this part of the book is "Real World Elixir". We're going to gather all of the things that we've learned so far and build a new Elixir project, just as we would do in the real world.
+    Welcome to the final part, Part 4 of Joy of Elixir. You've done well to venture this far. The focus for this part of
+    the book is "Real World Elixir". We're going to gather all of the things that we've learned so far and build a new
+    Elixir project, just as we would do in the real world.
   </p>
 
   <p>
-    In this last part consisting of two chapters, we're going to work with an Elixir tool called Mix. Mix allows us to create Elixir projects, allowing us to group together modules into a cohesive unit. It's a similar idea to how we used a module to group together functions in the last chapter.
+    In this last part consisting of three chapters, we're going to work with an Elixir tool called Mix. Mix allows us to
+    create Elixir projects, allowing us to group together modules into a cohesive unit. It's a similar idea to how we
+    used a module to group together functions in the last chapter.
   </p>
 
   <p>
-    Mix projects also come with a built-in testing tool called ExUnit, that we'll be looking at in the very next chapter.
+    In this chapter, we're going to get started with Mix, walk through the structure of a Mix project and then move our
+    code from the last chapter into this project.
   </p>
 
-  <p>
-    In this chapter, we're going to get started with Mix, walk through the structure of a Mix project and then move our code from the last chapter into this project.
-  </p>
+  <section>
+    <h3>Getting started with Mix</h3>
 
+    <p>
+      Every Mix project has an origin, and that origin is the <code>mix new</code> command. We're going to run it now:
+    </p>
+
+    <pre><code>mix new people</code></pre>
+
+    <p>
+      This little command will create a new directory called <code>people</code> and puts some files in that directory.
+      Thankfully, it tells us what those files are so that we don't have to go in and find out for ourselves:
+    </p>
+
+    <pre><code class='plain hljs'>* creating README.md
+* creating .formatter.exs
+* creating .gitignore
+* creating mix.exs
+* creating lib
+* creating lib/people.ex
+* creating test
+* creating test/test_helper.exs
+* creating test/people_test.exs
+
+Your Mix project was created successfully.
+You can use "mix" to compile it, test it, and more:
+
+    cd people
+    mix test
+
+Run "mix help" for more commands.</code></pre>
+
+    <p>
+      Out of all of these files, the <code>mix.exs</code> file is the most important one. This file is used to declare
+      this directory is a Mix project. Think of it like "I claim this land in the name of..." without the crappy
+      colonialism that follows those kinds of statements historically.
+    </p>
+
+    <p>
+      Let's look at that file now.
+    </p>
+
+    <pre><code>defmodule People.MixProject do
+  use Mix.Project
+
+  def project do
+    [
+      app: :people,
+      version: "0.1.0",
+      elixir: "~> 1.10",
+      start_permanent: Mix.env() == :prod,
+      deps: deps()
+    ]
+  end
+
+  # Run "mix help compile.app" to learn about applications.
+  def application do
+    [
+      extra_applications: [:logger]
+    ]
+  end
+
+  # Run "mix help deps" to learn about dependencies.
+  defp deps do
+    [
+      # {:dep_from_hexpm, "~> 0.3.0"},
+      # {:dep_from_git, git: "https://github.com/elixir-lang/my_dep.git", tag: "0.1.0"}
+    ]
+  end
+end
+    </code></pre>
+
+    <p>
+      There's a lot of new things in here, but let's not run away screaming just yet.
+    </p>
+
+    <p>
+      This file defines a module called <code>People.MixProject</code>, and that module is used to define how our Mix
+      project behaves.
+    </p>
+
+    <p>
+      The first function, <code>project</code>, defines the name for our application (<code>app</code>), the version
+      number for the project (<code>version</code>) and the version for Elixir (<code>elixir</code>).
+    </p>
+
+    <aside>
+      <header>A quick word on <code>version</code></header>
+
+      <p>The <code>~> 1.10</code> code means "any version of Elixir, but at least version 1.10, but only up to version
+        2.". So if there was an Elixir 1.99.99 sometime in the future, this project should be compatible with that
+        version, without us having to change this line at all.
+      </p>
+
+      <p>But
+        to use Elixir 2 we would need to change this line to something like:</p>
+
+      <pre><code>elixir: "~> 2.0",</code></pre>
+
+      <p>
+        And that would mean "any version of Elixir, at least version 2, but not including version 3."
+      </p>
+    </aside>
+
+    <p>
+      The remaining two settings within <code>project</code> are <code>start_permanent</code> (which we will ignore for
+      now) and <code>deps</code>, which we will not ignore.
+    </p>
+
+    <p>
+      The <code>deps</code> option allows us to include <em>other people's Mix projects</em> into our own project. This
+      is one of the big "killer features" of Mix projects -- we can bring in other people's code! Just like back in
+      Chapter 8 when we discovered Elixir itself has functions already included, we can also depend on other people's
+      code too. We'll see later on how to use this feature of Mix.
+    </p>
+
+    <p>This
+      setting within <code>project</code> calls the <code>deps</code> function, which only so far includes comments:
+    </p>
+
+    <pre><code># Run "mix help deps" to learn about dependencies.
+defp deps do
+  [
+    # {:dep_from_hexpm, "~> 0.3.0"},
+    # {:dep_from_git, git: "https://github.com/elixir-lang/my_dep.git", tag: "0.1.0"}
+  ]
+end</code></pre>
+
+    <p>
+      This code hints at two possible sources for dependencies: one is called Hex, and you can find it at <a
+        href='https://hex.pm'>Hex.pm</a>. The other source for dependencies is from Git repositories, and shows how you
+      can pull in a particular dependency from <a href='https://github.com'>GitHub</a> here.
+    </p>
+
+    <p>
+      We'll look at how to add another dependency to our project a little later on. For now, let's start by importing
+      the code from the previous chapter.
+    </p>
+  </section>
+
+  <section>
+    <h3>Bringing in the <code>Person</code> module</h3>
+
+    <p>
+      Let's copy over the <code>person.ex</code> file we created in the last chapter into our new Mix project's
+      directory. We'll put the contents of that file into <code>lib/person.ex</code>.
+    </p>
+
+    <pre><code>defmodule Person do
+  defstruct first_name: nil,
+            last_name: nil,
+            birthday: nil,
+            location: "home"
+
+  def full_name(%Person{} = person) do
+    "#{person.first_name} #{person.last_name}"
+  end
+
+  def age(%Person{} = person) do
+    days = Date.diff(Date.utc_today(), person.birthday)
+    days / 365.25
+  end
+
+  def toggle_location(%Person{location: "away"} = person) do
+    person |> set_location("home")
+  end
+
+  def toggle_location(%Person{location: "home"} = person) do
+    person |> set_location("away")
+  end
+
+  defp set_location(%Person{} = person, location) do
+    %{person | location: location}
+  end
+
+  defimpl Inspect do
+    def inspect(
+          %{
+            first_name: first_name,
+            last_name: last_name,
+            location: location
+          },
+          _
+        ) do
+      "Person[#{first_name} #{last_name}, #{location}]"
+    end
+  end
+end</code></pre>
+
+    <p>
+      We're going to need to make a few changes to this file. The first is that we're going to change the module
+      definition to this:
+    </p>
+
+    <pre><code>defmodule People.Person do</code></pre>
+
+    <p>
+      We've now added the <code>People.</code> prefix to this module to clearly indicate that this <code>Person</code>
+      module comes from the <code>People</code> Mix project. This will make it unique enough so that if any other
+      dependency of our Mix application <em>also</em> defined a <code>Person</code> module, it wouldn't conflict with
+      ours.
+    </p>
+
+    <p>
+      Let's try to run our code and see what happens. When we're in a Mix project, we can start an <code>iex</code>
+      session with this command:
+    </p>
+
+    <pre><code>iex -S mix</code></pre>
+
+    <p>The <code>-S</code> option stands for "script", but I like to think of it as the "S" on Superman's chest, because
+      this command gives <code>iex</code> superpowers! It not only will start an <code>iex</code> session, but also load
+      the code from our Mix project at the same time.</p>
+
+    <p>
+      Unfortunately, we'll see this <code>iex</code> session crash:
+    </p>
+
+    <pre><code class='plain hljs'>Compiling 1 file (.ex)
+
+== Compilation error in file lib/person.ex ==
+** (CompileError) lib/person.ex:8: Person.__struct__/0 is undefined, cannot expand struct Person.
+Make sure the struct name is correct.
+
+If the struct name exists and is correct but it still cannot be found,
+you likely have cyclic module usage in your code
+
+    lib/person.ex:8: (module)</code></pre>
+
+    <p>
+      This error is occurring because Elixir cannot find a module called <code>Person</code> anymore. This is because
+      we've renamed the module to <code>People.Person</code>, which, according to Elixir, is a completely different
+      name!
+    </p>
+
+    <p>
+      The line that is causing the error is, as the error message says, line 8 of the <code>lib/person.ex</code> file.
+      Let's look at that line now:
+    </p>
+
+    <pre><code>def full_name(%Person{} = person) do
+  "#{person.first_name} #{person.last_name}"
+end</code></pre>
+
+    <p>
+      We can fix this error by changing the module name here on the first line here too:
+    </p>
+
+    <pre><code>def full_name(%People.Person{} = person) do
+  "#{person.first_name} #{person.last_name}"
+end</code></pre>
+
+    <p>
+      But hold! There is a shorter way of writing this code too, and a way that will be future-proof if we decide to
+      change the name of our module again. Here's the way:
+    </p>
+
+    <pre><code>def full_name(%__MODULE__{} = person) do
+      "#{person.first_name} #{person.last_name}"
+    end</code></pre>
+
+    <p>
+      The <code>__MODULE__</code> short-hand is not Mix-specific -- it's available in any and every Elixir module, and
+      it's a short-hand way of writing the current module's name. Imagine if we had a module called
+      <code>Universe.SolarSystem.Earth.People.Person</code>. That's a mouthful! We can use <code>__MODULE__</code> to
+      avoid such mouthfuls.
+    </p>
+
+    <p>
+      Let's change all of the code in this module to use <code>__MODULE__</code> now:
+    </p>
+
+    <pre><code>defmodule People.Person do
+  defstruct first_name: nil,
+            last_name: nil,
+            birthday: nil,
+            location: "home"
+
+  def full_name(%__MODULE__{} = person) do
+    "#{person.first_name} #{person.last_name}"
+  end
+
+  def age(%__MODULE__{} = person) do
+    days = Date.diff(Date.utc_today(), person.birthday)
+    days / 365.25
+  end
+
+  def toggle_location(%__MODULE__{location: "away"} = person) do
+    person |> set_location("home")
+  end
+
+  def toggle_location(%__MODULE__{location: "home"} = person) do
+    person |> set_location("away")
+  end
+
+  defp set_location(%__MODULE__{} = person, location) do
+    %{person | location: location}
+  end
+
+  defimpl Inspect do
+    def inspect(
+          %{
+            first_name: first_name,
+            last_name: last_name,
+            location: location
+          },
+          _
+        ) do
+      "Person[#{first_name} #{last_name}, #{location}]"
+    end
+  end
+end</code></pre>
+
+    <p>
+      These changes should make our code now work correctly. Let's try running <code>iex -S mix</code> again:
+    </p>
+
+    <pre><code class='hljs plain'>{{site.erlang_version_truncated}}
+
+Compiling 1 file (.ex)
+Generated people app
+Interactive Elixir ({{site.elixir_version}}) - press Ctrl+C to exit (type h() ENTER for help)
+iex(1)></code></pre>
+
+    <p>
+      Excellent! We're now able to start up <code>iex</code>. When we do this, there's a line to show that one file is
+      being compiled (that would be <code>lib/person.ex</code>) and another line that says "Generated people app", where
+      "app" is short here for "application". What's happening here is that Mix is compiling our application's code in a
+      process that's similar to the <code>c</code> helper we saw in the last chapter, but automatically. That's one of
+      the super benefits of using Mix -- it will automatically compile our code for us!
+    </p>
+
+    <p>
+      Let's try using our <code>People.Person</code> code now in <code>iex</code>:
+    </p>
+
+    <pre><code>iex> izzy = %People.Person{first_name: "Izzy", last_name: "Bell"}
+Person[Izzy Bell, home]</code></pre>
+
+    <p>
+      Everything will work as it has done in the past, but keep in mind that we need to use the
+      <code>People.Person</code> module, not <code>Person</code>:
+    </p>
+
+    <pre><code>iex> izzy |> People.Person.toggle_location</code></pre>
+
+  </section>
+  <section>
+    <h3>Using aliases for modules</h3>
+
+    <p>
+      Our <code>People.Person</code> module name is not long, but it's also not short either. What if there was a way to
+      use <code>Person</code> still? If we try to use <code>Person</code> <em>now</em>, we'll get an error:
+    </p>
+
+    <pre><code>izzy |> Person.toggle_location
+<span class='console-red'>** (UndefinedFunctionError) function Person.toggle_location/1 is undefined (module Person is not available)
+    Person.toggle_location(Person[Izzy Bell, home])</span></code></pre>
+
+    <p>
+      This is because the module is now called <code>People.Person</code>, not <code>Person!</code>. If we were to
+      absolutely insist on using <code>Person</code>, we can do that by calling <code>alias</code> first:
+    </p>
+
+    <pre><code>iex> alias People.Person</code></pre>
+
+    <p>
+      This is the way that we can use <code>Person</code> still:
+    </p>
+
+    <pre><code>izzy |> Person.toggle_location</code></pre>
+
+    <p>
+      This feature of Elixir comes in handy for when we want to use shorter names across our Elixir code.
+    </p>
+
+    <p>
+      You can <a href='https://elixir-lang.org/getting-started/alias-require-and-import.html#alias'>read more about
+        Elixir's <code>alias</code> directive on the elixir-lang.org site</a>.
+    </p>
+
+    <p>
+      Now that we've seen how to include our own code into our Mix project, in the next chapter we'll be looking at how
+      to include <em>other</em> people's code.
+    </p>
+  </section>
 </section>

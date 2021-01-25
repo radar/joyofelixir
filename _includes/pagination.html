@@ -1,13 +1,14 @@
-<nav>
+<nav class='pagination'>
   {% if page.previous_page and page.next_page %}
-    <a href='{{ page.previous_page }}/'>Previous</a> | <a href='{{ page.next_page }}/'>Next</a>
+  <a href='{{ page.previous_page }}/'>&laquo; Previous chapter</a> <a href='{{ page.next_page }}/'>Next
+    chapter &raquo;</a>
   {% else %}
-    {% if page.previous_page %}
-      <a href='{{ page.previous_page }}/'>Previous</a>
-    {% else %}
-      {% if page.next_page %}
-        <a href='{{ page.next_page }}/'>Next</a>
-      {% endif %}
-    {% endif %}
+  {% if page.previous_page %}
+  <a href='{{ page.previous_page }}/'>&laquo; Previous chaper</a>
+  {% else %}
+  {% if page.next_page %}
+  <a href='{{ page.next_page }}/'>Next chapter &raquo;</a>
+  {% endif %}
+  {% endif %}
   {% endif %}
 </nav>

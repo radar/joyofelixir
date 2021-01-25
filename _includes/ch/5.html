@@ -1,35 +1,50 @@
-<section class='break'>
+<section class='major'>
   <h2 id='chapter-5'>5. Funky functions</h2>
 
   <p>
-    After about half an hour, Izzy re-appears from seemingly nowhere. Her computer screen glows with the information she has collected from the crowd. We're not quite sure how long she's been back for, but the moment our attention fixes on her, she speaks: "Okay, so you can represent different... <em>kinds</em> of things in Elixir &mdash; strings, numbers, lists, maps &mdash; but what is the point of doing that at all? What can you <em>do</em> with them? Do I need to write code to work with these different kinds of things all the time? Can the computer remember code too?"
+    After about half an hour, Izzy re-appears from seemingly nowhere. Her computer screen glows with the information she
+    has collected from the crowd. We're not quite sure how long she's been back for, but the moment our attention fixes
+    on her, she speaks: "Okay, so you can represent different... <em>kinds</em> of things in Elixir &mdash; strings,
+    numbers, lists, maps &mdash; but what is the point of doing that at all? What can you <em>do</em> with them? Do I
+    need to write code to work with these different kinds of things all the time? Can the computer remember code too?"
   </p>
 
   <p>
-    Well Izzy, that was a very clever and completely unintentional segue into this next part of the book. Thank you for doing that.
+    Well Izzy, that was a very clever and completely unintentional segue into this next part of the book. Thank you for
+    doing that.
   </p>
 
   <p>
-    Yes, in fact you can tell the computer to remember some code too. This saves <em>a lot</em> of typing. Crazy amounts of the stuff. You'll get <em>years</em> of your life back!
+    Yes, in fact you can tell the computer to remember some code too. This saves <em>a lot</em> of typing. Crazy amounts
+    of the stuff. You'll get <em>years</em> of your life back!
   </p>
 
   <p>
     Ok, enough chit-chat. Let's look at one way we can use to make the computer remember some code:
   </p>
 
-<pre><code>iex> greeting = fn (place) -> "Hello, #{place}!" end
+  <pre><code>iex> greeting = fn (place) -> "Hello, #{place}!" end
 <span class='console-yellow'>#Function&lt;6.52032458/1 in :erl_eval.expr/5&gt;</span></code></pre>
 
   <p>
-    This is called a <em>function</em> and we can write whatever code we want the computer to remember for later, just like we could tell the computer to remember a string, a number, a list or a map. Elixir code is all about the functions, and now we understand why Wikipedia said it was a "functional" language. It didn't mean that it was functional in the sense that it is operational, but moreso that it uses functions to get things done. You'll be seeing a lot of functions in Elixir code from here on out.
+    This is called a <em>function</em> and we can write whatever code we want the computer to remember for later, just
+    like we could tell the computer to remember a string, a number, a list or a map. Elixir code is all about the
+    functions, and now we understand why Wikipedia said it was a "functional" language. It didn't mean that it was
+    functional in the sense that it is operational, but moreso that it uses functions to get things done. You'll be
+    seeing a lot of functions in Elixir code from here on out.
   </p>
 
   <p>
-    The <code>fn</code> tells the computer we're about to define a function -- because typing <code>function</code> each time would just be too much for us to bear -- and the defining-of-the-function doesn't stop until it gets to the <code>end</code>. Just like you wouldn't stop until you got to the end of something -- i.e. a book -- right?
+    The <code>fn</code> tells the computer we're about to define a function -- because typing <code>function</code> each
+    time would just be too much for us to bear -- and the defining-of-the-function doesn't stop until it gets to the
+    <code>end</code>. Just like you wouldn't stop until you got to the end of something -- i.e. a book -- right?
   </p>
 
   <p>
-    The <code>(place)</code> here defines an <em>argument</em> for the function; think of it like a variable that is only available within this function and not the angry shouting matches that most <em>normal</em> arguments can devolve into. The <code>-></code> tells the computer that we're done defining the arguments for the function, and anything after this but before the <code>end</code> is going to be the code to run.
+    The <code>(place)</code> here defines an <em>argument</em> for the function; think of it like a variable that is
+    only available within this function and not the angry shouting matches that most <em>normal</em> arguments can
+    devolve into. The <code>-></code> tells the computer that we're done defining the arguments for the function, and
+    anything after this but before the <code>end</code> is going to be the code to run.
   </p>
 
   <figure>
@@ -38,62 +53,77 @@
   </figure>
 
   <p>
-    Once we hit enter at the end of this line, the computer gives us some output to indicate it has accepted our function. It's not the friendliest output, but at least it's something that tells us the computer has done <em>something</em>.
+    Once we hit enter at the end of this line, the computer gives us some output to indicate it has accepted our
+    function. It's not the friendliest output, but at least it's something that tells us the computer has done
+    <em>something</em>.
   </p>
 
-<pre><code>iex> greeting = fn (place) -> "Hello, #{place}!" end
+  <pre><code>iex> greeting = fn (place) -> "Hello, #{place}!" end
 <span class='console-yellow'>#Function&lt;6.52032458/1 in :erl_eval.expr/5&gt;</span></code></pre>
 
   <p>
-    We've assigned our function to the <code>greeting</code> variable and so that's what the computer will remember the function as. "How do we use this function?", Izzy asks keenly, suddenly impressed about the computer's ability to remember functions. I'm sure you're asking the same thing, dear reader.
+    We've assigned our function to the <code>greeting</code> variable and so that's what the computer will remember the
+    function as. "How do we use this function?", Izzy asks keenly, suddenly impressed about the computer's ability to
+    remember functions. I'm sure you're asking the same thing, dear reader.
   </p>
 
   <p>
-  Well, Izzy (and dearest reader), we need to use some new and exciting code that we've not seen yet:
+    Well, Izzy (and dearest reader), we need to use some new and exciting code that we've not seen yet:
   </p>
 
-<pre><code>iex> greeting.("World")
+  <pre><code>iex> greeting.("World")
 <span class='console-green'>"Hello, World!"</span></code></pre>
 
   <p>
-    This is how we make the function run. We run this function by putting a dot after its name. The brackets after this dot represent the argument for the function. This time that we call the function, <code>place</code> will be <code>"World"</code>. But it doesn't always have to be <code>"World"</code>. It can be anything you wish:
+    This is how we make the function run. We run this function by putting a dot after its name. The brackets after this
+    dot represent the argument for the function. This time that we call the function, <code>place</code> will be
+    <code>"World"</code>. But it doesn't always have to be <code>"World"</code>. It can be anything you wish:
   </p>
 
-<pre><code>iex> greeting.("Mars")
+  <pre><code>iex> greeting.("Mars")
 <span class='console-green'>"Hello, Mars!"</span>
 iex> greeting.("Narnia")
 <span class='console-green'>"Hello, Narnia!"</span>
 iex> greeting.("Motherland")
 <span class='console-green'>"Hello, Motherland!"</span></code></pre>
 
-<div class='grouped'>
-  <p>
-    Each time we run the function here we give it a new value for <code>place</code>. We don't have to set <code>place</code> ourselves, as the function takes care of that. But what of our <code>place</code> variable from yesteryear (line 9 in <code>iex</code>)? Has that changed?
-  </p>
+  <div class='grouped'>
+    <p>
+      Each time we run the function here we give it a new value for <code>place</code>. We don't have to set
+      <code>place</code> ourselves, as the function takes care of that. But what of our <code>place</code> variable from
+      yesteryear (line 9 in <code>iex</code>)? Has that changed?
+    </p>
 
-<pre><code>iex> place
+    <pre><code>iex> place
 <span class='console-green'>"World"</span></code></pre>
-</div>
+  </div>
 
   <p>
-    The computer knows that the <code>place</code> from <em>outside</em> the function is different to the place <em>inside</em> the function, and so it keeps the two separate. The computer is smart enough to know that <code>place</code> on the outside may not exist and so it shouldn't rely on it being present. The function contains everything it needs to run inside itself.
+    The computer knows that the <code>place</code> from <em>outside</em> the function is different to the place
+    <em>inside</em> the function, and so it keeps the two separate. The computer is smart enough to know that
+    <code>place</code> on the outside may not exist and so it shouldn't rely on it being present. The function contains
+    everything it needs to run inside itself.
   </p>
 
   <p>
-    Our functions so far have just taken a string and put it inside another string, but functions are capable of executing <em>any</em> code, so let's have a quick look at another function. This function will convert a temperature in the sensible celsius unit to the wacky Fahrenheit equivalent, using numbers instead of strings:
+    Our functions so far have just taken a string and put it inside another string, but functions are capable of
+    executing <em>any</em> code, so let's have a quick look at another function. This function will convert a
+    temperature in the sensible celsius unit to the wacky Fahrenheit equivalent, using numbers instead of strings:
   </p>
 
-<pre><code>iex> c_to_f = fn (c) -> c * 1.8 + 32 end</code></pre>
+  <pre><code>iex> c_to_f = fn (c) -> c * 1.8 + 32 end</code></pre>
 
   <p>
-    The mathematical equation to convert celsius to fahrenheit is to multiply by 1.8 and then add 32, which is exactly what we're doing in our function: we take <code>c</code> representing the number in celsius, multiply (<code>*</code>) it by 1.8, and then add (<code>+</code>) 32.
+    The mathematical equation to convert celsius to fahrenheit is to multiply by 1.8 and then add 32, which is exactly
+    what we're doing in our function: we take <code>c</code> representing the number in celsius, multiply
+    (<code>*</code>) it by 1.8, and then add (<code>+</code>) 32.
   </p>
 
   <p>
     Let's run our function with some celsius temperatures:
   </p>
 
-<pre><code>iex> c_to_f.(20)
+  <pre><code>iex> c_to_f.(20)
 <span class='console-yellow'>68.0</span>
 iex> c_to_f.(24)
 <span class='console-yellow'>75.2</span>
@@ -102,46 +132,60 @@ iex> c_to_f.(40)
 </code></pre>
 
   <p>
-    If you want to check these, plug these into the all-knowing Google using a search time like "20 celsius in fahrenheit" and Google will confirm these answers.
+    If you want to check these, plug these into the all-knowing Google using a search time like "20 celsius in
+    fahrenheit" and Google will confirm these answers.
   </p>
 </section>
 
 <section>
   <h3>Multiple-argument functions</h3>
   <p>
-    One more handy thing about functions is that they're not limited to just one argument. You can define a function that accepts as many arguments as you wish:
+    One more handy thing about functions is that they're not limited to just one argument. You can define a function
+    that accepts as many arguments as you wish:
   </p>
 
-<pre>
+  <pre>
 <code>iex> greeting = fn (name, gender, age) ->
 ...>   "Hello, #{name}! I see you're #{gender} and you're #{age} years old."
 ...> end
 <span class='console-yellow'>#Function&lt;18.52032458/3 in :erl_eval.expr/5&gt;</span></code></pre>
 
   <p>
-    This function has 3 arguments, and so when we run it we need to give it all three. To do that, we just separate them using a comma, similar to how we separated the items in a list earlier, just without the square brackets (<code>[]</code>) around these arguments.
+    This function has 3 arguments, and so when we run it we need to give it all three. To do that, we just separate them
+    using a comma, similar to how we separated the items in a list earlier, just without the square brackets
+    (<code>[]</code>) around these arguments.
   </p>
 
-<pre>
+  <pre>
 <code>iex> greeting.("Izzy", "Female", "30ish")
 <span class='console-green'>"Hello, Izzy! I see you're Female and you're 30ish years old!"</span></code></pre>
 
-  <p>We can go nuts with the number of arguments that a function is defined with. However, we need to take a modicum of caution when running the functions. If we specify the wrong number of arguments, Elixir will tell us off with big red text:</p>
+  <p>We can go nuts with the number of arguments that a function is defined with. However, we need to take a modicum of
+    caution when running the functions. If we specify the wrong number of arguments, Elixir will tell us off with big
+    red text:</p>
 
-<pre><code>iex> greeting.("Izzy")
+  <pre><code>iex> greeting.("Izzy")
 <span class='console-red'>** (BadArityError) #Function&lt;18.52032458/3 in :erl_eval.expr/5&gt;&#9166;
   with arity 3 called with 1 argument ("Izzy")</span></code></pre>
 
   <p>
-    Oh no the computer is angry with us. Well, if the computer felt any emotion from brutal indifference it would <em>probably</em> be some version of angry, or at least disappointed. We've just made a happy little accident here by specifying 3 arguments. The computer is reprimanding us: telling us that we caused a <code>BadArityError</code> and that means that we had a "&lt;function&gt; with arity 3 called with 1 argument".
+    Oh no the computer is angry with us. Well, if the computer felt any emotion from brutal indifference it would
+    <em>probably</em> be some version of angry, or at least disappointed. We've just made a happy little accident here
+    by specifying 3 arguments. The computer is reprimanding us: telling us that we caused a <code>BadArityError</code>
+    and that means that we had a "&lt;function&gt; with arity 3 called with 1 argument".
   </p>
 
   <p>
-    "What on earth is an 'arity'?", Izzy asks, clearly flummoxed (and perhaps a bit affronted) by the word. Unlike the computer, Izzy is not brutally indifferent when it comes to these things. After all, Izzy thought she was getting a handle on this Elixir thing.
+    "What on earth is an 'arity'?", Izzy asks, clearly flummoxed (and perhaps a bit affronted) by the word. Unlike the
+    computer, Izzy is not brutally indifferent when it comes to these things. After all, Izzy thought she was getting a
+    handle on this Elixir thing.
   </p>
 
   <p>
-    Arity is a fancy computer term which means "arguments". This error is saying that while the <code>greeting</code> function is defined with 3 arguments ("with arity 3") we're only running ("calling") it with 1 argument. Helpfully, it tells us what arguments we tried to give the function. To avoid the computer reprimanding us we should make sure to call functions with the right number of arguments.
+    Arity is a fancy computer term which means "arguments". This error is saying that while the <code>greeting</code>
+    function is defined with 3 arguments ("with arity 3") we're only running ("calling") it with 1 argument. Helpfully,
+    it tells us what arguments we tried to give the function. To avoid the computer reprimanding us we should make sure
+    to call functions with the right number of arguments.
   </p>
 </section>
 
@@ -149,13 +193,17 @@ iex> c_to_f.(40)
   <h3>Capture operator</h3>
 
   <p>
-    Elixir provides us with the <code>fn</code> construct so that we can write functions, and we've seen a few examples of that so far. There's one other construct you might see if you read other people's code, and it's called the <em>capture operator</em> and it goes like this:
+    Elixir provides us with the <code>fn</code> construct so that we can write functions, and we've seen a few examples
+    of that so far. There's one other construct you might see if you read other people's code, and it's called the
+    <em>capture operator</em> and it goes like this:
   </p>
 
   <pre><code>iex> captured_greeting = &("Hello #{&1}!")</code></pre>
 
   <p>
-    We must wrap the entire contents of the function with brackets, and then inside the brackets we can use <code>&1</code> to capture the first argument passed to this function, <code>&2</code> to capture the second and so on. For now, we're just capturing the one.
+    We must wrap the entire contents of the function with brackets, and then inside the brackets we can use
+    <code>&1</code> to capture the first argument passed to this function, <code>&2</code> to capture the second and so
+    on. For now, we're just capturing the one.
   </p>
 
   <p>
@@ -174,7 +222,8 @@ iex> greeting.("World")
 "Hello World!"</code></pre>
 
   <p>
-    As I mentioned before, you can capture as many arguments as you wish. We can take our 3-argument <code>greeting</code> function from earlier:
+    As I mentioned before, you can capture as many arguments as you wish. We can take our 3-argument
+    <code>greeting</code> function from earlier:
   </p>
 
   <pre><code>iex> greeting = fn (name, gender, age) ->
@@ -195,7 +244,9 @@ iex> greeting.("World")
 <span class='console-green'>"Hello, Izzy! I see you're Female and you're 30ish years old!"</span></code></pre>
 
   <p>
-    Functions written with the <code>fn</code> construct and the capture operator behave identically. The only differences are that the capture operator syntax is shorter, and you refer to arguments by their position rather than a name.
+    Functions written with the <code>fn</code> construct and the capture operator behave identically. The only
+    differences are that the capture operator syntax is shorter, and you refer to arguments by their position rather
+    than a name.
   </p>
 </section>
 
@@ -203,11 +254,16 @@ iex> greeting.("World")
   <h3>Saving code for later</h3>
 
   <p>
-    While it's all good and well to run code through the <code>iex</code> prompt, you may want to save some code to run later on. Maybe at this point you might have an idea of something to try out and you want to save it <em>somewhere</em> for later on because an <code>iex</code> prompt will only remember what you typed for as long as it is open. Once it's shut, that code is gone for good and you will need to type it all out again.
+    While it's all good and well to run code through the <code>iex</code> prompt, you may want to save some code to run
+    later on. Maybe at this point you might have an idea of something to try out and you want to save it
+    <em>somewhere</em> for later on because an <code>iex</code> prompt will only remember what you typed for as long as
+    it is open. Once it's shut, that code is gone for good and you will need to type it all out again.
   </p>
 
   <p>
-    To save your Elixir code, you can create a new file in your favourite text editor, put in the code you want and then save it with a name like <code>hello.exs</code>. That <code>.exs</code> on the end symbolises that the file is an Elixir Script file.
+    To save your Elixir code, you can create a new file in your favourite text editor, put in the code you want and then
+    save it with a name like <code>hello.exs</code>. That <code>.exs</code> on the end symbolises that the file is an
+    Elixir Script file.
   </p>
 
   <p>
@@ -220,8 +276,10 @@ iex> greeting.("World")
 
   <ul>
     <li>Make a function which turns fahrenheit temperatures into celsius.</li>
-    <li>Make a function which returns the number of seconds in the specified amount of days. For example, <code>seconds.(2)</code> should tell us how many seconds there are in 2 days.</li>
+    <li>Make a function which returns the number of seconds in the specified amount of days. For example,
+      <code>seconds.(2)</code> should tell us how many seconds there are in 2 days.</li>
     <li>Make a function which takes two maps with <code>"age"</code> keys in them and returns the average age.</li>
-    <li>Save any of these three solutions in their own file and run them through the <code>elixir</code> command-line tool.</li>
+    <li>Save any of these three solutions in their own file and run them through the <code>elixir</code> command-line
+      tool.</li>
   </ul>
 </section>

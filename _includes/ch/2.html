@@ -1,12 +1,12 @@
-
-<section class='break'>
+<section class='major'>
   <h2 id='chapter-2'>2. Now, where did I put that value?</h2>
 
   <p>
-    We've now seen that Elixir can handle words and numbers easily. But what else can it do? Well, it can remember things.
+    We've now seen that Elixir can handle words and numbers easily. But what else can it do? Well, it can remember
+    things.
   </p>
 
-<pre><code>iex> sentence = "A really long and complex &#9166;
+  <pre><code>iex> sentence = "A really long and complex &#9166;
 sentence we'd rather not repeat."
 
 <span class='console-green'>"A really long and complex &#9166;
@@ -20,10 +20,13 @@ iex> x = "not for multiplication"
 </code></pre>
 
   <p>
-    As long as we leave <code>iex</code> running, Elixir will remember that <code>sentence</code> is <code>"A really long and complex sentence we'd rather not repeat."</code> and <code>score</code> is <code>40</code>, and <code>x</code> is <code>"not for multiplication"</code>. At any point in time, we can ask it what <code>sentence</code> or <code>score</code> or <code>x</code> is and it will tell us:
+    As long as we leave <code>iex</code> running, Elixir will remember that <code>sentence</code> is
+    <code>"A really long and complex sentence we'd rather not repeat."</code> and <code>score</code> is <code>40</code>,
+    and <code>x</code> is <code>"not for multiplication"</code>. At any point in time, we can ask it what
+    <code>sentence</code> or <code>score</code> or <code>x</code> is and it will tell us:
   </p>
 
-<pre><code>iex> sentence
+  <pre><code>iex> sentence
 <span class='console-green'>"A really long and complex sentence we'd rather not repeat."</span>
 iex> score
 <span class='console-yellow'>40</span>
@@ -32,30 +35,38 @@ iex> x
 </code></pre>
 
   <p>
-    <code>sentence</code>, <code>score</code> and <code>x</code> here are <em>variables</em>, and they're given that particular name because the thing that the computer remembers with that name of <code>sentence</code> or <code>score</code> or <code>x</code> can <em>vary</em>. Remember when we talked about multiplying numbers and we saw that we couldn't use <code>x</code> to multiply? The reason for this is because Elixir would read <code>x</code> as a variable, not as a suggestion to multiply the numbers on either side. So we will continue using <code>*</code> instead.
+    <code>sentence</code>, <code>score</code> and <code>x</code> here are <em>variables</em>, and they're given that
+    particular name because the thing that the computer remembers with that name of <code>sentence</code> or
+    <code>score</code> or <code>x</code> can <em>vary</em>. Remember when we talked about multiplying numbers and we saw
+    that we couldn't use <code>x</code> to multiply? The reason for this is because Elixir would read <code>x</code> as
+    a variable, not as a suggestion to multiply the numbers on either side. So we will continue using <code>*</code>
+    instead.
   </p>
 
   <p>
-    We can tell the computer to replace its definition of a variable with another one. This is often referred to as <em>re-assignment</em>. Let's replace (or <em>re-assign</em>) the <code>sentence</code> variable's defintion:
+    We can tell the computer to replace its definition of a variable with another one. This is often referred to as
+    <em>re-assignment</em>. Let's replace (or <em>re-assign</em>) the <code>sentence</code> variable's defintion:
   </p>
 
-<pre><code>iex> sentence = "An even longer and significantly more complex sentence &#9166;
+  <pre><code>iex> sentence = "An even longer and significantly more complex sentence &#9166;
 that we might be ok with repeating, if the mood takes us."
 <span class='console-green'>"An even longer and significantly more complex sentence &#9166;
 that we might be ok with repeating, if the mood takes us."</span></code></pre>
 
   <p>
-    Then when we ask the computer what <code>sentence</code> is, it will have forgotten the old <code>sentence</code> and will only know the new one:
+    Then when we ask the computer what <code>sentence</code> is, it will have forgotten the old <code>sentence</code>
+    and will only know the new one:
   </p>
 
-<pre><code>iex> sentence
+  <pre><code>iex> sentence
 <span class='console-green'>"An even longer and significantly more complex sentence &#9166;
 that we might be ok with repeating, if the mood takes us."
 </span></code></pre>
 
   <div class='grouped'>
     <p>
-      Now the masses are looking chirpier. Some are even smiling! Isn't that wonderful? Let's create another variable called <code>place</code>:
+      Now the masses are looking chirpier. Some are even smiling! Isn't that wonderful? Let's create another variable
+      called <code>place</code>:
     </p>
 
     <pre><code>iex> place = "World"
@@ -63,26 +74,37 @@ that we might be ok with repeating, if the mood takes us."
   </div>
 
   <p>
-    The computer will now remember that <code>place</code> is <code>"World"</code>. "But what's the use of just <em>setting</em> a variable like this? Why make the computer remember at all?", Isodora (the spokesperson) says. "Spokesperson, thanks", says Isodora, breaking the 4th wall again. Okay, Isodora (the spokesperson) said those things. By the way, we have since learned the spokes<s>woman</s>person's name is Isodora, and so we've done some variable creation of our own in our own brain: <code>spokesperson = "Isodora"</code>. Woah. "Just call me Izzy", says <s>Isodora</s>Izzy. Ok, we will -- making our brains reassign the <code>spokesperson</code> variable: <code>spokesperson = "Izzy"</code>.
+    The computer will now remember that <code>place</code> is <code>"World"</code>. "But what's the use of just
+    <em>setting</em> a variable like this? Why make the computer remember at all?", Isodora (the spokesperson) says.
+    "Spokesperson, thanks", says Isodora, breaking the 4th wall again. Okay, Isodora (the spokesperson) said those
+    things. By the way, we have since learned the spokes<s>woman</s>person's name is Isodora, and so we've done some
+    variable creation of our own in our own brain: <code>spokesperson = "Isodora"</code>. Woah. "Just call me Izzy",
+    says <s>Isodora</s>Izzy. Ok, we will -- making our brains reassign the <code>spokesperson</code> variable:
+    <code>spokesperson = "Izzy"</code>.
   </p>
 
   <p>
-    Ok, Izzy's right. We should do something meaningful with this variable. Ok, Izzy, how about this? <em>[cracks knuckles]</em>
+    Ok, Izzy's right. We should do something meaningful with this variable. Ok, Izzy, how about this? <em>[cracks
+      knuckles]</em>
   </p>
 
-<pre><code>iex> "Hello, #{place}!"
+  <pre><code>iex> "Hello, #{place}!"
 <span class='console-green'>"Hello, World!"</span></code></pre>
 
   <p>
-    The masses go nuts. It's pandemonium! Then after a few shushing motions with my hands (which are completely ineffectual) and a quick "OI!" from Izzy, they're (mostly) quiet again.
+    The masses go nuts. It's pandemonium! Then after a few shushing motions with my hands (which are completely
+    ineffectual) and a quick "OI!" from Izzy, they're (mostly) quiet again.
   </p>
 
   <p>
-    "What just happened?", asks Izzy? But <em>you</em>, Dear Reader, had asked that question already. Izzy didn't hear because of the crowd and the <em>sheer, unbounded</em> pandemonium.
+    "What just happened?", asks Izzy? But <em>you</em>, Dear Reader, had asked that question already. Izzy didn't hear
+    because of the crowd and the <em>sheer, unbounded</em> pandemonium.
   </p>
 
   <p>
-    What on earth are those funky characters around <code>place</code>? You can think of them as a placeholder. Nerdier-types would call it <em>interpolation</em>. It tells the computer that we want to put the <code>place</code> variable <em>riiiiight</em> here, right after <code>Hello</code> and the space, and right before <code>!</code>.
+    What on earth are those funky characters around <code>place</code>? You can think of them as a placeholder.
+    Nerdier-types would call it <em>interpolation</em>. It tells the computer that we want to put the <code>place</code>
+    variable <em>riiiiight</em> here, right after <code>Hello</code> and the space, and right before <code>!</code>.
   </p>
 
   <figure>
@@ -91,7 +113,8 @@ that we might be ok with repeating, if the mood takes us."
   </figure>
 
   <p>
-    The computer takes the sentence that we give it, realises that there's that funky <code>#{}</code> placeholder indicator, and it remembers what <code>place</code> was and puts it right there. Pretty nifty, eh?
+    The computer takes the sentence that we give it, realises that there's that funky <code>#{}</code> placeholder
+    indicator, and it remembers what <code>place</code> was and puts it right there. Pretty nifty, eh?
   </p>
 </section>
 
@@ -99,8 +122,10 @@ that we might be ok with repeating, if the mood takes us."
   <h3>Exercises</h3>
 
   <ul>
-    <li>If we store the number of seconds in a day using this code: <code>seconds = 86400</code>, calculate using that variable how many hours there are in 30 days.</li>
-    <li>Create a variable called <code>name</code>, store a string in it and place the value of that variable in another string.</li>
+    <li>If we store the number of seconds in a day using this code: <code>seconds = 86400</code>, calculate using that
+      variable how many hours there are in 30 days.</li>
+    <li>Create a variable called <code>name</code>, store a string in it and place the value of that variable in another
+      string.</li>
     <li>The line <code>5 / "four"</code> shows an error. Think about why this error might happen.</li>
   </ul>
 </section>

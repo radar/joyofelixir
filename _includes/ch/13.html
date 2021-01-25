@@ -1,21 +1,27 @@
-<section class='break'>
+<section class='major'>
   <h2 id='chapter-13'>13. Finding more functions</h2>
 
   <p>
-    We've now seen a small taste of a variety of functions that Elixir provides us. In this chapter, we're going to look at some new functions that will help us. These functions can show us documentation about other functions, tell us about variables within our code and more. We'll also see where we can go to find out more information
+    We've now seen a small taste of a variety of functions that Elixir provides us. In this chapter, we're going to look
+    at some new functions that will help us. These functions can show us documentation about other functions, tell us
+    about variables within our code and more. We'll also see where we can go to find out more information
   </p>
 
   <section>
     <h3>iex helper functions</h3>
 
     <p>
-      The <code>iex</code> prompt lets us run Elixir code with ease and to also see the output of that code. We've seen plenty of examples of this throughout the last twelve chapters. But the <code>iex</code> prompt has at least two more tricks up its sleeves.
+      The <code>iex</code> prompt lets us run Elixir code with ease and to also see the output of that code. We've seen
+      plenty of examples of this throughout the last twelve chapters. But the <code>iex</code> prompt has at least two
+      more tricks up its sleeves.
     </p>
 
     <h4>The h helper</h4>
 
     <p>
-      The first of these tricks is the <code>h</code> helper. This helper's name is short for "help", and it will display documentation on whatever you wish. For instance, if you wanted to bring up the documentation for <code>Map.get/2</code>, you can do that by running this command inside of <code>iex</code>:
+      The first of these tricks is the <code>h</code> helper. This helper's name is short for "help", and it will
+      display documentation on whatever you wish. For instance, if you wanted to bring up the documentation for
+      <code>Map.get/2</code>, you can do that by running this command inside of <code>iex</code>:
     </p>
 
     <pre><code>iex> h Map.get/2</code></pre>
@@ -42,25 +48,36 @@ If <span class='console-blue'>key</span> is present in <span class='console-blue
 </code></pre>
 
     <p>
-      This output shows us the documentation that Elixir has for the <code>Map.get/2</code> function. It even shows us some examples of how to use this function, which is pretty great!
+      This output shows us the documentation that Elixir has for the <code>Map.get/2</code> function. It even shows us
+      some examples of how to use this function, which is pretty great!
     </p>
 
     <p>
-      One thing we didn't learn back in Chapter 10 when we first learned about the <code>Map.get/2</code> function is that it can take a <em>third</em> argument too, a default argument. This argument will be returned if the key we're trying to get isn't found, as we can see by the examples provided by the very helpful documentation.
+      One thing we didn't learn back in Chapter 10 when we first learned about the <code>Map.get/2</code> function is
+      that it can take a <em>third</em> argument too, a default argument. This argument will be returned if the key
+      we're trying to get isn't found, as we can see by the examples provided by the very helpful documentation.
     </p>
 
     <p>
-      "Hold on a minute!", Izzy pipes up. "If this function takes a <em>third</em> argument, then why is it called <code>Map.get/2</code> and not <code>Map.get/3</code>?". Izzy makes a good point. The number at the end of <code>Map.get/2</code> signifies how many arguments a function takes. We learned this back in Chapter 9. What we can see with this function is that there's a <code>Map.get</code> variant that takes three arguments, and so there is a <code>Map.get/3</code> function, as well as the <code>Map.get/2</code>.
+      "Hold on a minute!", Izzy pipes up. "If this function takes a <em>third</em> argument, then why is it called
+      <code>Map.get/2</code> and not <code>Map.get/3</code>?". Izzy makes a good point. The number at the end of
+      <code>Map.get/2</code> signifies how many arguments a function takes. We learned this back in Chapter 9. What we
+      can see with this function is that there's a <code>Map.get</code> variant that takes three arguments, and so there
+      is a <code>Map.get/3</code> function, as well as the <code>Map.get/2</code>.
     </p>
 
     <p>
-      We can look up any function's documentation that we've seen so far. Go on, try looking up the documentation for functions that we've seen in the past chapters. They're all documented here!
+      We can look up any function's documentation that we've seen so far. Go on, try looking up the documentation for
+      functions that we've seen in the past chapters. They're all documented here!
     </p>
 
     <h4>The arrow and v helpers</h4>
 
     <p>
-      Two more little helpers that you should know about are the arrows on your keyboard, and the <code>v</code> helper provided by <code>iex</code>. You might have been using the arrows already to move around in code. The up and down arrows allow us to move through the historical input in our prompt, while the <code>v</code> helper lets us pull values out of particular lines in the output.
+      Two more little helpers that you should know about are the arrows on your keyboard, and the <code>v</code> helper
+      provided by <code>iex</code>. You might have been using the arrows already to move around in code. The up and down
+      arrows allow us to move through the historical input in our prompt, while the <code>v</code> helper lets us pull
+      values out of particular lines in the output.
     </p>
 
     <p>
@@ -71,7 +88,8 @@ If <span class='console-blue'>key</span> is present in <span class='console-blue
 iex(2)> %{name: "Ryan", age: "30ish", gender: "Male"}</code></pre>
 
     <p>
-      Oh drat. We've just realised that wanted to assign these to variables, but forgot to. One way we can get that value again is by pressing the up-arrow on our keyboard. We'll then see this:
+      Oh drat. We've just realised that wanted to assign these to variables, but forgot to. One way we can get that
+      value again is by pressing the up-arrow on our keyboard. We'll then see this:
     </p>
 
     <pre><code>iex(1)> %{name: "Izzy", age: "30ish", gender: "Female"}
@@ -81,7 +99,8 @@ iex(2)> %{name: "Ryan", age: "30ish", gender: "Male"}
 iex(3)> %{name: "Ryan", age: "30ish", gender: "Male"}</code></pre>
 
     <p>
-      Our terminal helpfully brings back the last value when we push the up-arrow. But if we push the up-arrow again, look what happens:
+      Our terminal helpfully brings back the last value when we push the up-arrow. But if we push the up-arrow again,
+      look what happens:
     </p>
 
     <pre><code>iex(1)> %{name: "Izzy", age: "30ish", gender: "Female"}
@@ -91,7 +110,8 @@ iex(2)> %{name: "Ryan", age: "30ish", gender: "Male"}
 iex(3)> %{age: "30ish", gender: "Female", name: "Izzy"}</code></pre>
 
     <p>
-      We're now back to the first value again! We could then go to the start of this line (by pushing the left-arrow, or <kbd>Ctrl+A</kbd>) and assign it to a variable if we wished:
+      We're now back to the first value again! We could then go to the start of this line (by pushing the left-arrow, or
+      <kbd>Ctrl+A</kbd>) and assign it to a variable if we wished:
     </p>
 
     <pre><code>iex(3)> izzy = %{age: "30ish", gender: "Female", name: "Izzy"}
@@ -118,18 +138,23 @@ iex(3)> %{age: "30ish", gender: "Female", name: "Izzy"}</code></pre>
 %{age: "30ish", gender: "Female", name: "Izzy"}</code></pre>
 
     <p>
-      This is how we can navigate up and down, or back and forward (depending your viewpoint) through the history of what we've put into <code>iex</code>.
+      This is how we can navigate up and down, or back and forward (depending your viewpoint) through the history of
+      what we've put into <code>iex</code>.
     </p>
 
     <p>
-      Now about that <code>v</code> helper. If we want, we can pick a value out of a particular line by using <code>v</code>. For instance, if we wanted the value from the 2nd line of our <code>iex</code> prompt and then to assign that to a variable called <code>ryan</code> we can run this code:
+      Now about that <code>v</code> helper. If we want, we can pick a value out of a particular line by using
+      <code>v</code>. For instance, if we wanted the value from the 2nd line of our <code>iex</code> prompt and then to
+      assign that to a variable called <code>ryan</code> we can run this code:
     </p>
 
     <pre><code>iex(4)> ryan = v(2)
 %{name: "Ryan", age: "30ish", gender: "Male"}</code></pre>
 
     <p>
-      This code can be read as: find the 2nd value from the prompt, and assign it to a variable called <code>ryan</code>. As this <code>v</code> helper is a function in Elixir, We can even leave off the brackets if we wish to save us some typing:
+      This code can be read as: find the 2nd value from the prompt, and assign it to a variable called
+      <code>ryan</code>. As this <code>v</code> helper is a function in Elixir, We can even leave off the brackets if we
+      wish to save us some typing:
     </p>
 
     <pre><code>iex(5)> ryan = v 2
@@ -140,11 +165,13 @@ iex(3)> %{age: "30ish", gender: "Female", name: "Izzy"}</code></pre>
     <h3>Tab complete</h3>
 
     <p>
-      One last <code>iex</code> helper that I want to show you involves another key on your keyboard: the <kbd>Tab</kbd> key.
+      One last <code>iex</code> helper that I want to show you involves another key on your keyboard: the <kbd>Tab</kbd>
+      key.
     </p>
 
     <p>
-      In your <code>iex</code> prompt, you can hit the <kbd>Tab</kbd> key to make it autocomplete what you type. For instance, you can type this:
+      In your <code>iex</code> prompt, you can hit the <kbd>Tab</kbd> key to make it autocomplete what you type. For
+      instance, you can type this:
     </p>
 
     <pre><code>iex> String.rev</code></pre>
@@ -156,11 +183,14 @@ iex(3)> %{age: "30ish", gender: "Female", name: "Izzy"}</code></pre>
     <pre><code>iex> String.reverse</code></pre>
 
     <p>
-      You can do this with any module name or function you wish. Go on, give it a go with things like <code>En[TAB]</code>, and <code>Enum.fil[TAB]</code>.
+      You can do this with any module name or function you wish. Go on, give it a go with things like
+      <code>En[TAB]</code>, and <code>Enum.fil[TAB]</code>.
     </p>
 
     <p>
-      You might realise if you experiment enough that if <code>iex</code> doesn't know what you want, then it will provide some suggestions. For instance, if we type <code>Enum.f</code> and hit tab, we'll see all the functions from the <code>Enum</code> module that start with <code>f</code>:
+      You might realise if you experiment enough that if <code>iex</code> doesn't know what you want, then it will
+      provide some suggestions. For instance, if we type <code>Enum.f</code> and hit tab, we'll see all the functions
+      from the <code>Enum</code> module that start with <code>f</code>:
     </p>
 
     <table class='autocomplete-suggestions'>
@@ -182,11 +212,14 @@ iex(3)> %{age: "30ish", gender: "Female", name: "Izzy"}</code></pre>
     </table>
 
     <p>
-      We've seen the <code>Enum.find/2</code> and <code>Enum.filter/2</code> functions back in Chapter 9, but as we can see here Elixir provides a few more functions than the ones we've seen so far.
+      We've seen the <code>Enum.find/2</code> and <code>Enum.filter/2</code> functions back in Chapter 9, but as we can
+      see here Elixir provides a few more functions than the ones we've seen so far.
     </p>
 
     <p>
-      Keep on exploring here and seeing what other functions you can find. Remember that you can always use the <code>h</code> helper to bring up information about functions you don't know about yet. For instance, we could bring up the documentation for <code>Enum.find_index/2</code> by writing this:
+      Keep on exploring here and seeing what other functions you can find. Remember that you can always use the
+      <code>h</code> helper to bring up information about functions you don't know about yet. For instance, we could
+      bring up the documentation for <code>Enum.find_index/2</code> by writing this:
     </p>
 
     <pre><code>iex> h Enum.find_index/2</code></pre>
@@ -218,11 +251,14 @@ the element itself.
     <h3>Elixir's documentation</h3>
 
     <p>
-      As we've seen a few times now, we can bring up documentation in the <code>iex</code> prompt with the <code>h</code> helper. There's another place where we can go to find the same documentation, as well as documentation for every other function Elixir provides.
+      As we've seen a few times now, we can bring up documentation in the <code>iex</code> prompt with the
+      <code>h</code> helper. There's another place where we can go to find the same documentation, as well as
+      documentation for every other function Elixir provides.
     </p>
 
     <p>
-      That place is <a href='https://elixir-lang.org/docs.html'>https://elixir-lang.org/docs.html</a>. When you visit that site, you'll see a list of documentation:
+      That place is <a href='https://elixir-lang.org/docs.html'>https://elixir-lang.org/docs.html</a>. When you visit
+      that site, you'll see a list of documentation:
     </p>
 
     <figure>
@@ -231,15 +267,22 @@ the element itself.
     </figure>
 
     <p>
-      The "stable" name at the top indicates that the documentation listed underneath is the for the most recent stable release of Elixir, where "stable" meaning that it's safe for people like us to use, and won't have any nasty bugs in it.
+      The "stable" name at the top indicates that the documentation listed underneath is the for the most recent stable
+      release of Elixir, where "stable" meaning that it's safe for people like us to use, and won't have any nasty bugs
+      in it.
     </p>
 
     <p>
-      We can see a list of documentation here for the different parts of Elixir. There's "Elixir", which is the documentation for all the functions we've been using so far. You can see documentation for other parts of Elixir too, including "IEx", which gets its own set of documentation. There's also "Mix" which we'll find out about in Chapter 14, and "ExUnit" that we'll find out about in Chapter 15.
+      We can see a list of documentation here for the different parts of Elixir. There's "Elixir", which is the
+      documentation for all the functions we've been using so far. You can see documentation for other parts of Elixir
+      too, including "IEx", which gets its own set of documentation. There's also "Mix" which we'll find out about in
+      Chapter 14, and "ExUnit" that we'll find out about in Chapter 15.
     </p>
 
     <p>
-      If we click that "Elixir" link near the top, we'll be taken to the documentation site for Elixir's standard library. A "standard library" is a set of functions that programming languages provides, and this new page will show you Elixir's.
+      If we click that "Elixir" link near the top, we'll be taken to the documentation site for Elixir's standard
+      library. A "standard library" is a set of functions that programming languages provides, and this new page will
+      show you Elixir's.
     </p>
 
     <p>
@@ -252,7 +295,8 @@ the element itself.
     </figure>
 
     <p>
-      Let's not focus on all the words on the right-hand-side too much. What I want to show you here is the search bar over on the left.
+      Let's not focus on all the words on the right-hand-side too much. What I want to show you here is the search bar
+      over on the left.
     </p>
 
     <figure>
@@ -261,7 +305,8 @@ the element itself.
     </figure>
 
     <p>
-      You can type any module or function name into this box to be taken right to its documentation. If we want to find out about <code>Enum.find</code>, we can search for that and then see this page:
+      You can type any module or function name into this box to be taken right to its documentation. If we want to find
+      out about <code>Enum.find</code>, we can search for that and then see this page:
     </p>
 
     <figure>
@@ -270,7 +315,10 @@ the element itself.
     </figure>
 
     <p>
-      If we click on the <code>find/3</code> function, we'll be taken right to its location in the docs: <a href='https://hexdocs.pm/elixir/Enum.html#find/3'>https://hexdocs.pm/elixir/Enum.html#find/3</a>. The great thing about this URL is that it's shareable, and so if you have friends that are learning Elixir too, you can give them this URL to teach them about <code>Enum.find/3</code> too.
+      If we click on the <code>find/3</code> function, we'll be taken right to its location in the docs: <a
+        href='https://hexdocs.pm/elixir/Enum.html#find/3'>https://hexdocs.pm/elixir/Enum.html#find/3</a>. The great
+      thing about this URL is that it's shareable, and so if you have friends that are learning Elixir too, you can give
+      them this URL to teach them about <code>Enum.find/3</code> too.
     </p>
 
     <p>
@@ -283,11 +331,14 @@ the element itself.
     </figure>
 
     <p>
-      The great thing here is that we'll be on a page that has <em>all</em> the documentation that Elixir has for the <code>Enum</code> module. We can scroll up (or down!) the page to find out what other functions Eliixr provides in this module.
+      The great thing here is that we'll be on a page that has <em>all</em> the documentation that Elixir has for the
+      <code>Enum</code> module. We can scroll up (or down!) the page to find out what other functions Eliixr provides in
+      this module.
     </p>
 
     <p>
-      The other great thing about this is that the documentation here will match what we see when we use the <code>h</code> helper in the <code>iex</code> prompt:
+      The other great thing about this is that the documentation here will match what we see when we use the
+      <code>h</code> helper in the <code>iex</code> prompt:
     </p>
 
     <pre><code class='no-highlight custom'><div class='console-bg-yellow center'>def find(enumerable, default \\ nil, fun)</div>
@@ -307,20 +358,25 @@ iex> Enum.find([2, 4, 6], 0, fn x -> rem(x, 2) == 1 end)
 iex> Enum.find([2, 3, 4], fn x -> rem(x, 2) == 1 end)
 3</span></code></pre>
 
-  <p>
-    So now we have two ways of looking at documentation for the functions that we're using within Elixir.
-  </p>
+    <p>
+      So now we have two ways of looking at documentation for the functions that we're using within Elixir.
+    </p>
   </section>
 
   <section>
     <h3>Elixir School</h3>
 
     <p>
-      It would be remiss of me to talk about documentation and not to mention the other excellent source of documentation, written by the Elixir community for the Elixir community: <a href='http://elixirschool.com'>Elixir School</a>.
+      It would be remiss of me to talk about documentation and not to mention the other excellent source of
+      documentation, written by the Elixir community for the Elixir community: <a href='http://elixirschool.com'>Elixir
+        School</a>.
     </p>
 
     <p>
-      This site covers a lot of the same topics that we've covered -- and will cover in this book -- but in some particular cases it can provide different explanations for things. Now that you're this far into your Elixir journey, you should be able to read this and glean further knowledge from this site to bolster all the knowledge you've gained thus far.
+      This site covers a lot of the same topics that we've covered -- and will cover in this book -- but in some
+      particular cases it can provide different explanations for things. Now that you're this far into your Elixir
+      journey, you should be able to read this and glean further knowledge from this site to bolster all the knowledge
+      you've gained thus far.
     </p>
   </section>
 
@@ -328,19 +384,25 @@ iex> Enum.find([2, 3, 4], fn x -> rem(x, 2) == 1 end)
     <h3>Summary</h3>
 
     <p>
-      In this chapter, we've looked at how we can be more productive by reading documentation and learning from that, as well as new tricks for moving around in the <code>iex</code> prompt.
+      In this chapter, we've looked at how we can be more productive by reading documentation and learning from that, as
+      well as new tricks for moving around in the <code>iex</code> prompt.
     </p>
 
     <p>
-      We saw the <code>h</code> helper, which brings up documentation about a particular module or function. We also saw that we can press the up and down arrows on our keyboards to navigate through the history of what we've typed into <code>iex</code>
+      We saw the <code>h</code> helper, which brings up documentation about a particular module or function. We also saw
+      that we can press the up and down arrows on our keyboards to navigate through the history of what we've typed into
+      <code>iex</code>
     </p>
 
     <p>
-      Lastly, we saw that Elixir has online documentation that we can read too, and we saw that this documentation matches exactly what we can see in our <code>iex</code> prompt.
+      Lastly, we saw that Elixir has online documentation that we can read too, and we saw that this documentation
+      matches exactly what we can see in our <code>iex</code> prompt.
     </p>
 
     <p>
-      While we were looking at that documentation, we saw mentions of things called "Mix" and "ExUnit". These are two additional parts of Elixir's tooling that we will be looking at in the 4th and final part of this book: Chapters 14 and 15.
+      While we were looking at that documentation, we saw mentions of things called "Mix" and "ExUnit". These are two
+      additional parts of Elixir's tooling that we will be looking at in the 4th and final part of this book: Chapters
+      14 and 15.
     </p>
   </section>
 </section>
