@@ -219,12 +219,36 @@ end</code></pre>
       we run this command, Elixir will compile our module to a file called <code>Elixir.Person.beam</code>.
     </p>
 
-    <p>
-      We could also compile this file with <code>c "person.exs"</code> -- only a single argument to the <code>c</code>
-      function call. This will still compile the module, but every time we go back into <code>iex</code>, we will need
-      to re-compile the module to use it. By running it with two arguments -- <code>c "person.exs", "."</code>, we can
-      enter and leave <code>iex</code> and always have our <code>Person</code> module available.
-    </p>
+    <aside>
+      <header>What's the point of <code>Elixir.Person.beam</code>, anyway?</header>
+
+      <p>
+        We've just ran <code>c "person.exs", "."</code> and that's created a file called
+        <code>Elixir.Person.beam</code>, and now you're probably wondering <em>why</em> we went to all that effort.
+      </p>
+
+      <p>
+        When we <em>compile</em> Elixir code, we're translating that Elixir code from a format that we, as humans, can
+        read into a format that computers can read. Yes, computers <em>can</em> already read the format that we've
+        written <code>person.exs</code> in before -- but they take a bit longer to read this as it's not their native
+        language. By compiling it, we do the translation for the computer before we ask it to run our program.
+      </p>
+
+      <p>
+        The other advantage to creating this file is that <code>iex</code> will automatically load our
+        <code>Person</code> module any time in the future when we run <code>iex</code>. We won't need to run
+        <code>c "person.exs", "."</code>, unless we change that <code>person.exs</code> file. One of the features of
+        <code>iex</code> is that it will notice that there's a <code>Elixir.Person.beam</code> file in the directory
+        where we're running <code>iex</code>, and it will automatically load that file. Isn't that great?
+      </p>
+
+      <p>
+        We could also compile this file with <code>c "person.exs"</code> -- only a single argument to the <code>c</code>
+        function call. This will still compile the module, but every time we go back into <code>iex</code>, we will need
+        to re-compile the module to use it. By running it with two arguments -- <code>c "person.exs", "."</code>, we can
+        enter and leave <code>iex</code> and always have our <code>Person</code> module available.
+      </p>
+    </aside>
 
     <p>
       With this file compiled, we can start to use to use the <code>Person</code> module. Let's try the
