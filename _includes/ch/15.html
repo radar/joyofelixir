@@ -350,6 +350,31 @@ iex(1)></code></pre>
       the super benefits of using Mix -- it will automatically compile our code for us!
     </p>
 
+    <aside>
+      <header>Why compilation matters</header>
+
+      <p>
+        I don't want to spend too long belabouring the point about compilation. It's one of those nerdy words.
+      </p>
+
+      <p>
+        Compiling our code is an incredibly important step towards <em>running</em> our code. It's the step that turns
+        the code into something we, as humans, can read, into something that the computer can read easily. And it does
+        all sorts of things to help the computer read it <em>really fast</em>, converting our Elixir code into
+        <em>bytecode</em>. This <em>bytecode</em> can be read really quickly by the computer.
+      </p>
+
+      <p>
+        Yes, even faster than that nerdy
+        speed-reading friend of yours. Computers are really good at what they do.
+      </p>
+
+      <p>
+        Compilation gathers up all of our Elixir code and wraps it into a neat little package, ready for the computer to
+        run.
+      </p>
+    </aside>
+
     <p>
       Let's try using our <code>People.Person</code> code now in <code>iex</code>:
     </p>
@@ -399,8 +424,164 @@ Person[Izzy Bell, home]</code></pre>
         Elixir's <code>alias</code> directive on the elixir-lang.org site</a>.
     </p>
 
+  </section>
+
+  <section>
+    <h3>Making things neat and tidy</h3>
+
     <p>
-      Now that we've seen how to include our own code into our Mix project, in the next chapter we'll be looking at how
+      Mix isn't just about organising all your code into a specific directory. It also comes with some helpful
+      utilities, that we call "tasks". You can see a big long list of these if you run <code>mix help</code>, but be
+      warned: the list is
+      <em>very, very long</em>. Talk about intimidating!
+    </p>
+
+    <p>
+      You're not ever going to be expected to know about all of these. There will be no pop quiz. However, we will be
+      using a few of these tasks in our journey. The first one I want to introduce is one called
+      <code>mix format</code>.
+    </p>
+
+    <p>
+      Long through the ages have wars been waged about the right way to write code. Do we put semi-colons at the end of
+      lines, or not? Do we
+      use tabs for indentation (like heathens) or spaces? When is the right time to use the enter key? So many little
+      battles turn into big internet arguments. And there's nothing nerds like more than arguing about how to write
+      code. Well, except maybe Star Trek vs Star Wars.
+    </p>
+
+    <p>
+      The <code>mix format</code> task puts all these arguments to bed and tucks them in real good. The
+      <code>mix format</code> task takes any Elixir code and... <em>formats</em> it. It makes it neat and tidy!
+    </p>
+
+    <p>
+      Let's go into <code>lib/person.ex</code> and make a good ol' mess of things:
+    </p>
+
+    <pre><code>defmodule People.Person do
+      defstruct first_name: nil, last_name: nil, birthday: nil, location: "home"
+
+      def full_name(%__MODULE__{} = person) do "#{person.first_name} #{person.last_name}" end
+
+      def age(%__MODULE__{} = person) do days = Date.diff(Date.utc_today(), person.birthday); days / 365.25 end
+
+      def toggle_location(%__MODULE__{
+
+
+        location: "away"
+
+
+        } = person) do
+        person |> set_location("home")
+      end
+
+      def toggle_location(%__MODULE__{
+
+              location: "home"
+
+              } = person) do
+        person |> set_location("away")
+      end
+
+      defp set_location(%__MODULE__{} = person, location) do
+        %{person | location: location}
+      end
+
+      defimpl Inspect do
+        def inspect(%{first_name: first_name,last_name: last_name,location: location}, _) do
+          "Person[#{first_name} #{last_name}, #{location}]"
+        end
+      end
+    end</code></pre>
+
+    <p>
+      Wow, what a mess. Lines are all squished together. Most of the lines have additional spaces at the start of them. There's blank lines where there doesn't need to be, and a lot more.
+    </p>
+
+    <p>
+      Let's go over into the terminal and run the <code>format</code> task now:
+    </p>
+
+    <pre><code class="hljs plain">$ mix format</code></pre>
+
+    <p>
+      This command will format our code for us, turning it into:
+    </p>
+
+    <pre><code>defmodule People.Person do
+  defstruct first_name: nil, last_name: nil, birthday: nil, location: "home"
+
+  def full_name(%__MODULE__{} = person) do
+    "#{person.first_name} #{person.last_name}"
+  end
+
+  def age(%__MODULE__{} = person) do
+    days = Date.diff(Date.utc_today(), person.birthday)
+    days / 365.25
+  end
+
+  def toggle_location(
+        %__MODULE__{
+          location: "away"
+        } = person
+      ) do
+    person |> set_location("home")
+  end
+
+  def toggle_location(
+        %__MODULE__{
+          location: "home"
+        } = person
+      ) do
+    person |> set_location("away")
+  end
+
+  defp set_location(%__MODULE__{} = person, location) do
+    %{person | location: location}
+  end
+
+  defimpl Inspect do
+    def inspect(%{first_name: first_name, last_name: last_name, location: location}, _) do
+      "Person[#{first_name} #{last_name}, #{location}]"
+    end
+  end
+end</code></pre>
+
+    <p>
+      That's a lot nicer! But it could still be a little neater. For example, the <code>defstruct</code> line at the top of the file is a bit long. Let's change that line to this:
+    </p>
+
+    <pre><code>defstruct first_name: nil,
+          last_name: nil,
+          birthday: nil,
+          location: "home"</code></pre>
+
+    <p>
+      That's a little easier to read. A few lines of vertical code is easier to read than a long horizontal line of code. But wait! We changed this <em>mix format</em> ran! Does this mean that if we run <code>mix format</code> again that it would re-format this code back to a single line? Let's find out:
+    </p>
+
+    <pre><code class="hljs plain">$ mix format</code></pre>
+
+    <p>
+      And if we look at our code again...
+    </p>
+
+    <pre><code>defstruct first_name: nil,
+      last_name: nil,
+      birthday: nil,
+      location: "home"</code></pre>
+
+    <p>
+      It stayed the same? Yes! While <code>mix format</code> will re-format your code to be inline with sensible defaults, if you want to format it a little "neater", <code>mix format</code> doesn't mind and will leave that code as-is.
+    </p>
+
+    <p>
+      Whenever we're writing Elixir code, we should use <code>mix format</code> to format our code to ensure that it is as neat and tidy as it can be. It's worth nothing this too: some editors, such as Visual Studio Code with its Elixir extension, will automatically format your Elixir files whenever you save them.
+    </p>
+
+    <p>
+      Now that we've seen how to include our own code into our Mix project (and how to format it!), in the next chapter we'll be looking at how
       to include <em>other</em> people's code.
     </p>
   </section>
