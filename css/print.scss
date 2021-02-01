@@ -15,10 +15,14 @@ body {
 
 p,
 aside,
-pre,
 .todo,
 .grouped {
   page-break-inside: avoid;
+}
+
+pre {
+  widows: 5;
+  orphans: 5;
 }
 
 section {

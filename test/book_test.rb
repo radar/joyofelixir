@@ -126,6 +126,12 @@ class TestBook < Minitest::Test
     assert page.has_content?("14. Modules and Structs")
   end
 
+  def test_toc_navigation_15
+    go_toc
+    click_link "Introduction to Mix"
+    assert page.has_content?("15. Introduction to Mix")
+  end
+
   def test_toc_setup_and_install
     go_toc
     click_link "Setup and install"
@@ -164,10 +170,14 @@ class TestBook < Minitest::Test
     assert page.has_content?("13. Finding more functions")
     click_next_link
     assert page.has_content?("14. Modules and Structs")
+    click_next_link
+    assert page.has_content?("15. Introduction to Mix")
   end
 
   def test_walkthrough_backwards
-    visit "http://localhost:4000/14-modules-and-structs"
+    visit "http://localhost:4000/15-introduction-to-mix/"
+    assert page.has_content?("15. Introduction to Mix")
+    click_previous_link
     assert page.has_content?("14. Modules and Structs")
     click_previous_link
     assert page.has_content?("13. Finding more functions")

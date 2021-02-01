@@ -8,7 +8,6 @@ body {
   height: 100%;
 
   font-family: "Bitter";
-  font-weight: 100;
   -webkit-text-size-adjust: 100%;
   @media screen {
     background: linear-gradient(
@@ -255,15 +254,5 @@ footer {
 
   a + a {
     margin-left: 10px;
-  }
-}
-
-table {
-  border-collapse: collapse;
-  border: 1px solid black;
-  th,
-  td {
-    padding: 10px;
-    border: 1px solid black;
   }
 }
