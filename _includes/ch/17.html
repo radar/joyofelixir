@@ -1,8 +1,279 @@
 <section class='break'>
-  <h2 id='chapter-16'>16. Mix dependencies</h2>
+  <h2 id='chapter-17'>17. Mix dependencies</h2>
 
-  <div class='todo'>
-    * Introduction to adding and using Plug
-    * `import` / `use` is covered
-  </div>
+  <p>
+    In this 2nd chapter about Mix, we're going to be looking at how to bring in code written by other people into our project. While we can rely on a lot of what we need being a part of what Elixir provides, it is impossible for Elixir to provide <em>absolutely everything</em> that we need. That would make Elixir absolutely huge!
+  </p>
+
+  <p>
+    To get around this problem, Elixir has support for bringing in other people's code through a system called <em>packaging</em>. Different packages -- collections of code -- can be found on <a href='https://hex.pm/'>Hex</a>, a site that aggregates all the packages for Elixir. We can use Hex to pull in packages into our application. We're going to do exactly that in this chapter, pulling in a package called <code>plug_cowboy</code>, which will allow us to start our very own web server. It won't do very much, but it'll be a start! When we get this server up and running, we will be able to open a browser like Google Chrome, type http://localhost:4000 into the address bar, and see something that we created ourselves.
+  </p>
+
+  <aside>
+    <header>There's no place like localhost</header>
+
+    <p>
+      We refer to "localhost" above... but what is it?
+    </p>
+
+    <p>
+      "localhost" is a short name that all computers have to refer to itself. When we put http://localhost:4000 or even "localhost:4000" in to a browser, we're telling the computer to speak <em>to itself</em>.
+    </p>
+
+    <p>
+      The "4000" at the end is to specify a port. When we run a web server, it will run on a particular network "port" of our computer, and we need to tell the browser that we want the web server running on port 4000, not anything else. See the <a href='https://en.wikipedia.org/wiki/Port_(computer_networking)'>Wikipedia page on ports</a> to learn more about these.
+    </p>
+  </aside>
+
+  <section>
+    <h3>Adding a dependency</h3>
+
+    <p>
+      To start building this web server, we're going to need to add a dependency on a package to our Mix project. If you think back a chapter, you might remember that we have a <code>deps</code> function within the <code>mix.exs</code> file:
+    </p>
+
+    <pre><code>defp deps do
+  [
+    # {:dep_from_hexpm, "~> 0.3.0"},
+    # {:dep_from_git, git: "https://github.com/elixir-lang/my_dep.git", tag: "0.1.0"}
+  ]
+end</code></pre>
+
+    <p>
+      This function is where we define the package dependencies that our Mix project has. In order to create a web server in Elixir, we will use a package called <code>plug_cowboy</code>. Let's add this package to our <code>mix.exs</code> file now:
+    </p>
+
+    <pre><code>defp deps do
+  [
+    {:plug_cowboy, "2.4.1"}
+  ]
+end</code></pre>
+
+    <p>
+      This line inside of <code>deps</code> says to Mix that our project will depend on a package called <code>plug_cowboy</code>, and the second element in the tuple tells Mix the version of <code>plug_cowboy</code> that we want to use is the "2.4.1" version. This is the latest at the time of writing here.
+    </p>
+
+    <p>
+      To download this package's code, we need to go to our terminal and then run a Mix task called <code>deps.get</code>:
+    </p>
+
+    <pre><code>$ mix deps.get</code></pre>
+
+    <p>
+      The output of this command will be surprising:
+    </p>
+
+    <pre><code>Resolving Hex dependencies...
+Dependency resolution completed:
+Unchanged:
+cowboy 2.8.0
+cowboy_telemetry 0.3.1
+cowlib 2.9.1
+mime 1.5.0
+plug 1.11.0
+plug_cowboy 2.4.1
+plug_crypto 1.2.0
+ranch 1.7.1
+telemetry 0.4.2
+All dependencies are up to date
+</code></pre>
+
+    <p>
+      "What is <code>cowboy_telemetry?</code>, What about <code>cowlib</code>?", Izzy asks frantically. This was more than we all bargained for. This was only supposed to get <code>plug_cowboy</code>! What's happened here is that <code>mix deps.get</code> has pulled down <em>nine</em> new dependencies, instead of <em>one</em>. This has happened because when we specify a dependency in <code>mix.exs</code>, we are also telling Mix to grab all of that dependency's dependencies, and <em>their</em> dependencies and so on.
+    </p>
+
+    <p>
+      A great visualization of these dependencies can be found with another Mix task. This time, the task we want to run is <code>deps.tree</code>. Let's run that now:
+    </p>
+
+    <pre><code>$ mix deps.tree</code></pre>
+
+    <p>
+      This Mix task will show us the dependency tree for our project:
+    </p>
+
+    <pre><code>people
+  └── plug_cowboy ~> 2.0 (Hex package)
+      ├── cowboy ~> 2.7 (Hex package)
+      │   ├── cowlib ~> 2.9.1 (Hex package)
+      │   └── ranch ~> 1.7.1 (Hex package)
+      ├── cowboy_telemetry ~> 0.3 (Hex package)
+      │   ├── cowboy ~> 2.7 (Hex package)
+      │   └── telemetry ~> 0.4 (Hex package)
+      ├── plug ~> 1.7 (Hex package)
+      │   ├── mime ~> 1.0 (Hex package)
+      │   ├── plug_crypto ~> 1.1.1 or ~> 1.2 (Hex package)
+      │   └── telemetry ~> 0.4 (Hex package)
+      └── telemetry ~> 0.4 (Hex package)</code></pre>
+
+
+    <p>
+      While our project itself specifies a dependency on <code>plug_cowboy</code>, the <code>plug_cowboy</code> package depends on four other packages: <code>cowboy</code>, <code>cowboy_telemetry</code>, <code>plug</code> and <code>telemetry</code>. Out of these, <code>cowboy</code>, <code>cowboy_telemetry</code> and <code>plug</code> have further dependencies on additional packages.
+    </p>
+
+    <p>
+      When we specify a dependency on a package in Mix, that package can depend on any number of other packages. This means that code across the Elixir ecosystem can be spread out across several different packages.
+    </p>
+
+    <p>
+      This <code>plug_cowboy</code> package that we've brought in will allow us to build small modules, called <em>plugs</em>, that can then be served up through a webserver. The <code>plug_cowboy</code> package is a "joining" of two smaller packages: <code>plug</code>, which provides the standardised plug interface that turns Elixir code into web server responses, and <code>cowboy</code>, which is simply a webserver. Using these together will give us exactly what we want: a webserver that can serve Elixir code.
+    </p>
+
+    <p>
+      With <code>plug_cowboy</code> installed, let's now set about using it in our <code>people</code> Mix project.
+    </p>
+  </section>
+
+  <section>
+    <h3>Building our first plug</h3>
+
+    <p>
+      What we're aiming to do with this chapter is to make it so that we can go to http://localhost:4000 and see something that our very own Elixir code has generated. To get started with this, we will need to write a new module into the <code>people</code> Mix project. This module will be responsible for defining what we see when we go to http://localhost:4000. We'll create a new file at <code>lib/plug.ex</code> and put this code in it:
+    </p>
+
+    <pre><code>defmodule People.Plug do
+  import Plug.Conn
+
+  def init(options) do
+    # initialize options
+    options
+  end
+
+  def call(conn, _opts) do
+    conn
+    |> put_resp_content_type("text/plain")
+    |> send_resp(200, "Hello from the People project!")
+  end
+end</code></pre>
+
+    <p>
+      There are a few new concepts here to be introduced. The first of these is the <code>import</code> keyword, used to import <code>Plug.Conn</code>. When we use <code>import</code> in this way in Elixir, what we're saying is that we want to take all the public functions of <code>Plug.Conn</code>, and bring them into the current module. This is how we're able to call <code>put_resp_content_type</code> and <code>send_resp</code> in the <code>call</code> function of this module, without having defined those functions ourselves.
+    </p>
+
+    <p>
+      If we weren't going to use <code>import</code>, we would have to write the <code>call</code> function like this:
+    </p>
+
+    <pre><code>defmodule People.Plug do
+  def call(conn, _opts) do
+    conn
+    |> Plug.Conn.put_resp_content_type("text/plain")
+    |> Plug.Conn.send_resp(200, "Hello from the People project!")
+  end
+end</code></pre>
+
+    <p>
+      By using <code>import</code>, we bring in those functions from <code>Plug.Conn</code>, and remove the need to specify the module from where those functions are coming from every time we refer to them.
+    </p>
+
+    <p>
+      When we make a request to http://localhost:4000, this <code>People.Plug</code> module works out how to respond by following the code in the <code>People.Plug.call/2</code> function. This function starts out by taking a <code>conn</code>, which will be a <code>Plug.Conn</code> struct containing information about the request. "Conn" is short for "connection", and I for one am quite happy that it's abbreviated.
+    </p>
+
+    <p>
+      The next thing that's new, is those functions from <code>Plug.Conn</code> themselves: <code>put_resp_content_type</code> and <code>send_resp</code>.
+    </p>
+
+    <p>
+      When we use <code>put_resp_content_type</code>, we're telling the browser that made the request that the <em>type</em> of content that we're sending back is plain text, or in computer parlance "text/plain". This is useful because if we were sending back an image instead, we could send something like "image/jpg" back, and a browser would display that image rather than some text.
+    </p>
+
+    <p>
+      The <code>send_resp</code> function takes two arguments, a <em>status</em> and a <em>body</em>. The <em>status</em> informs the browser if the request was successful or not. There are many different statuses, and you can see a big list of them here: <a href='https://httpstatuses.com/'>httpstatuses.com</a>. (And yes, <a href='https://httpstatuses.com/418'>there is a status just in case you're a teapot</a> -- added as an April Fools' joke.) A "200" status means that the request was successful.
+    </p>
+
+    <p>
+      The <em>body</em> argument to <code>send_resp</code> is the content that will be displayed on the page when a request is made to http://localhost:4000.
+    </p>
+
+    <p>
+      This plug is designed to take in <em>any</em> request and return the same response for all of those requests. Later on, we'll see how to return different responses depending on the request. For now, let's try running this server.
+    </p>
+  </section>
+
+  <section>
+    <h3>Starting a server</h3>
+
+    <p>
+      We've now built our first plug, and it's time to start running the web server. To start the webserver running, we're first going to need to start a new IEx session. Let's run this command to start that up:
+    </p>
+
+    <pre><code>iex -S mix</code></pre>
+
+    <p>
+      Remeber to run this with the <code>-S mix</code>, otherwise we will not be able to access this next function!
+    </p>
+
+    <p>
+      To run our webserver, we'll run this command:
+    </p>
+
+    <pre><code>Plug.Cowboy.http People.Plug, []</code></pre>
+
+    <p>
+      The <code>Plug.Cowboy.http/2</code> function takes two arguments:
+    </p>
+
+    <ol>
+      <li>The module that provides the plug for our webserver</li>
+      <li>A list of options</li>
+    </ol>
+
+    <p>
+      The options that are passed here are then passed to the <code>People.Plug.init/1</code> function. We can ignore this for now, since we are not passing any options.
+    </p>
+
+    <p>
+      The <code>Plug.Cowboy.http/2</code> function then returns a tuple with this strange syntax (or something similar to it, your numbers might be different!):
+    </p>
+
+    <pre><code>{:ok, #PID<0.242.0>}</code></pre>
+
+    <p>
+      We know from Chapter 11 that tuples can be used to indicate the success or failure of a particular operation. From the output here, we can see that the operation was successful... but what's that second part? That is a PID, indicating an internal Elixir <em>process</em> -- "PID" means "Process identifier". All Elixir code runs inside processes, and the second element for this tuple is telling us that our webserver is running within a particular process, with the identifier of <code>0.242.0</code>.
+    </p>
+
+    <p>
+      We could choose to start up a <em>separate</em> plug using this same function and Elixir wouldn't even start to break a sweat.
+    </p>
+
+    <p>
+      Now that our server has started running, let's try and access it by opening a browser (if you're reading this book, chances are you've already got one open...) and go to <a href='http://localhost:4000'>http://localhost:4000</a>. When you go there, you should see:
+    </p>
+
+    <center>
+      <pre><code class='large'><span class='console-green'>Hello from the People project</span></code></pre>
+    </center>
+
+    <p>
+      And that's all you'll see, as that's all we've told Elixir to show us.
+    </p>
+
+    <p>
+      If you wanted to change the content that's returned here, you can edit the <code>People.Plug.call/2</code> function to something else:
+    </p>
+
+    <pre><code>def call(conn, _opts) do
+  conn
+  |> put_resp_content_type("text/plain")
+  |> send_resp(200, "Hello again from the People project")
+end</code></pre>
+
+    <p>
+      And then in the <code>iex -S mix</code> session, you can use the <code>r</code> helper to recompile and reload that module:
+    </p>
+
+    <pre><code>iex> r People.Plug
+{:reloaded, People.Plug, [People.Plug]}</code></pre>
+
+    <p>
+      Once that module has been recompiled and reloaded, going to <a href='http://localhost:4000'>http://localhost:4000</a> will show a different message now:
+    </p>
+
+    <center>
+      <pre><code class='large'><span class='console-green'>Hello again from the People project</span></code></pre>
+    </center>
+  </section>
+
+  <!-- <div class='todo'>Plug router + plug supervision coming soon!</div> -->
 </section>
