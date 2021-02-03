@@ -2,11 +2,19 @@
   <h2 id='chapter-17'>17. Mix dependencies</h2>
 
   <p>
-    In this 2nd chapter about Mix, we're going to be looking at how to bring in code written by other people into our project. While we can rely on a lot of what we need being a part of what Elixir provides, it is impossible for Elixir to provide <em>absolutely everything</em> that we need. That would make Elixir absolutely huge!
+    In this 2nd chapter about Mix, we're going to be looking at how to bring in code written by other people into our
+    project. While we can rely on a lot of what we need being a part of what Elixir provides, it is impossible for
+    Elixir to provide <em>absolutely everything</em> that we need. That would make Elixir absolutely huge!
   </p>
 
   <p>
-    To get around this problem, Elixir has support for bringing in other people's code through a system called <em>packaging</em>. Different packages -- collections of code -- can be found on <a href='https://hex.pm/'>Hex</a>, a site that aggregates all the packages for Elixir. We can use Hex to pull in packages into our application. We're going to do exactly that in this chapter, pulling in a package called <code>plug_cowboy</code>, which will allow us to start our very own web server. It won't do very much, but it'll be a start! When we get this server up and running, we will be able to open a browser like Google Chrome, type http://localhost:4000 into the address bar, and see something that we created ourselves.
+    To get around this problem, Elixir has support for bringing in other people's code through a system called
+    <em>packaging</em>. Different packages -- collections of code -- can be found on <a href='https://hex.pm/'>Hex</a>,
+    a site that aggregates all the packages for Elixir. We can use Hex to pull in packages into our application. We're
+    going to do exactly that in this chapter, pulling in a package called <code>plug_cowboy</code>, which will allow us
+    to start our very own web server. It won't do very much, but it'll be a start! When we get this server up and
+    running, we will be able to open a browser like Google Chrome, type http://localhost:4000 into the address bar, and
+    see something that we created ourselves.
   </p>
 
   <aside>
@@ -17,19 +25,30 @@
     </p>
 
     <p>
-      "localhost" is a short name that all computers have to refer to itself. When we put http://localhost:4000 or even "localhost:4000" in to a browser, we're telling the computer to speak <em>to itself</em>.
+      "localhost" is a short name that all computers have to refer to itself. When we put http://localhost:4000 or even
+      "localhost:4000" in to a browser, we're telling the computer to speak <em>to itself</em>.
     </p>
 
     <p>
-      The "4000" at the end is to specify a port. When we run a web server, it will run on a particular network "port" of our computer, and we need to tell the browser that we want the web server running on port 4000, not anything else. See the <a href='https://en.wikipedia.org/wiki/Port_(computer_networking)'>Wikipedia page on ports</a> to learn more about these.
+      The "4000" at the end is to specify a port. When we run a web server, it will run on a particular network "port"
+      of our computer, and we need to tell the browser that we want the web server running on port 4000, not anything
+      else. See the <a href='https://en.wikipedia.org/wiki/Port_(computer_networking)'>Wikipedia page on ports</a> to
+      learn more about these.
     </p>
   </aside>
+
+  <p>
+    After we've got a simple web server running, we'll introduce a concept called a <em>router</em> that will allow us
+    to send different responses, depending on the path that we type into the browser.
+  </p>
 
   <section>
     <h3>Adding a dependency</h3>
 
     <p>
-      To start building this web server, we're going to need to add a dependency on a package to our Mix project. If you think back a chapter, you might remember that we have a <code>deps</code> function within the <code>mix.exs</code> file:
+      To start building this web server, we're going to need to add a dependency on a package to our Mix project. If you
+      think back a chapter, you might remember that we have a <code>deps</code> function within the <code>mix.exs</code>
+      file:
     </p>
 
     <pre><code>defp deps do
@@ -40,7 +59,9 @@
 end</code></pre>
 
     <p>
-      This function is where we define the package dependencies that our Mix project has. In order to create a web server in Elixir, we will use a package called <code>plug_cowboy</code>. Let's add this package to our <code>mix.exs</code> file now:
+      This function is where we define the package dependencies that our Mix project has. In order to create a web
+      server in Elixir, we will use a package called <code>plug_cowboy</code>. Let's add this package to our
+      <code>mix.exs</code> file now:
     </p>
 
     <pre><code>defp deps do
@@ -50,11 +71,14 @@ end</code></pre>
 end</code></pre>
 
     <p>
-      This line inside of <code>deps</code> says to Mix that our project will depend on a package called <code>plug_cowboy</code>, and the second element in the tuple tells Mix the version of <code>plug_cowboy</code> that we want to use is the "2.4.1" version. This is the latest at the time of writing here.
+      This line inside of <code>deps</code> says to Mix that our project will depend on a package called
+      <code>plug_cowboy</code>, and the second element in the tuple tells Mix the version of <code>plug_cowboy</code>
+      that we want to use is the "2.4.1" version. This is the latest at the time of writing here.
     </p>
 
     <p>
-      To download this package's code, we need to go to our terminal and then run a Mix task called <code>deps.get</code>:
+      To download this package's code, we need to go to our terminal and then run a Mix task called
+      <code>deps.get</code>:
     </p>
 
     <pre><code>$ mix deps.get</code></pre>
@@ -79,11 +103,16 @@ All dependencies are up to date
 </code></pre>
 
     <p>
-      "What is <code>cowboy_telemetry?</code>, What about <code>cowlib</code>?", Izzy asks frantically. This was more than we all bargained for. This was only supposed to get <code>plug_cowboy</code>! What's happened here is that <code>mix deps.get</code> has pulled down <em>nine</em> new dependencies, instead of <em>one</em>. This has happened because when we specify a dependency in <code>mix.exs</code>, we are also telling Mix to grab all of that dependency's dependencies, and <em>their</em> dependencies and so on.
+      "What is <code>cowboy_telemetry?</code>, What about <code>cowlib</code>?", Izzy asks frantically. This was more
+      than we all bargained for. This was only supposed to get <code>plug_cowboy</code>! What's happened here is that
+      <code>mix deps.get</code> has pulled down <em>nine</em> new dependencies, instead of <em>one</em>. This has
+      happened because when we specify a dependency in <code>mix.exs</code>, we are also telling Mix to grab all of that
+      dependency's dependencies, and <em>their</em> dependencies and so on.
     </p>
 
     <p>
-      A great visualization of these dependencies can be found with another Mix task. This time, the task we want to run is <code>deps.tree</code>. Let's run that now:
+      A great visualization of these dependencies can be found with another Mix task. This time, the task we want to run
+      is <code>deps.tree</code>. Let's run that now:
     </p>
 
     <pre><code>$ mix deps.tree</code></pre>
@@ -108,15 +137,23 @@ All dependencies are up to date
 
 
     <p>
-      While our project itself specifies a dependency on <code>plug_cowboy</code>, the <code>plug_cowboy</code> package depends on four other packages: <code>cowboy</code>, <code>cowboy_telemetry</code>, <code>plug</code> and <code>telemetry</code>. Out of these, <code>cowboy</code>, <code>cowboy_telemetry</code> and <code>plug</code> have further dependencies on additional packages.
+      While our project itself specifies a dependency on <code>plug_cowboy</code>, the <code>plug_cowboy</code> package
+      depends on four other packages: <code>cowboy</code>, <code>cowboy_telemetry</code>, <code>plug</code> and
+      <code>telemetry</code>. Out of these, <code>cowboy</code>, <code>cowboy_telemetry</code> and <code>plug</code>
+      have further dependencies on additional packages.
     </p>
 
     <p>
-      When we specify a dependency on a package in Mix, that package can depend on any number of other packages. This means that code across the Elixir ecosystem can be spread out across several different packages.
+      When we specify a dependency on a package in Mix, that package can depend on any number of other packages. This
+      means that code across the Elixir ecosystem can be spread out across several different packages.
     </p>
 
     <p>
-      This <code>plug_cowboy</code> package that we've brought in will allow us to build small modules, called <em>plugs</em>, that can then be served up through a webserver. The <code>plug_cowboy</code> package is a "joining" of two smaller packages: <code>plug</code>, which provides the standardised plug interface that turns Elixir code into web server responses, and <code>cowboy</code>, which is simply a webserver. Using these together will give us exactly what we want: a webserver that can serve Elixir code.
+      This <code>plug_cowboy</code> package that we've brought in will allow us to build small modules, called
+      <em>plugs</em>, that can then be served up through a webserver. The <code>plug_cowboy</code> package is a
+      "joining" of two smaller packages: <code>plug</code>, which provides the standardised plug interface that turns
+      Elixir code into web server responses, and <code>cowboy</code>, which is simply a webserver. Using these together
+      will give us exactly what we want: a webserver that can serve Elixir code.
     </p>
 
     <p>
@@ -128,7 +165,10 @@ All dependencies are up to date
     <h3>Building our first plug</h3>
 
     <p>
-      What we're aiming to do with this chapter is to make it so that we can go to http://localhost:4000 and see something that our very own Elixir code has generated. To get started with this, we will need to write a new module into the <code>people</code> Mix project. This module will be responsible for defining what we see when we go to http://localhost:4000. We'll create a new file at <code>lib/plug.ex</code> and put this code in it:
+      What we're aiming to do with this chapter is to make it so that we can go to http://localhost:4000 and see
+      something that our very own Elixir code has generated. To get started with this, we will need to write a new
+      module into the <code>people</code> Mix project. This module will be responsible for defining what we see when we
+      go to http://localhost:4000. We'll create a new file at <code>lib/plug.ex</code> and put this code in it:
     </p>
 
     <pre><code>defmodule People.Plug do
@@ -147,7 +187,11 @@ All dependencies are up to date
 end</code></pre>
 
     <p>
-      There are a few new concepts here to be introduced. The first of these is the <code>import</code> keyword, used to import <code>Plug.Conn</code>. When we use <code>import</code> in this way in Elixir, what we're saying is that we want to take all the public functions of <code>Plug.Conn</code>, and bring them into the current module. This is how we're able to call <code>put_resp_content_type</code> and <code>send_resp</code> in the <code>call</code> function of this module, without having defined those functions ourselves.
+      There are a few new concepts here to be introduced. The first of these is the <code>import</code> keyword, used to
+      import <code>Plug.Conn</code>. When we use <code>import</code> in this way in Elixir, what we're saying is that we
+      want to take all the public functions of <code>Plug.Conn</code>, and bring them into the current module. This is
+      how we're able to call <code>put_resp_content_type</code> and <code>send_resp</code> in the <code>call</code>
+      function of this module, without having defined those functions ourselves.
     </p>
 
     <p>
@@ -163,31 +207,46 @@ end</code></pre>
 end</code></pre>
 
     <p>
-      By using <code>import</code>, we bring in those functions from <code>Plug.Conn</code>, and remove the need to specify the module from where those functions are coming from every time we refer to them.
+      By using <code>import</code>, we bring in those functions from <code>Plug.Conn</code>, and remove the need to
+      specify the module from where those functions are coming from every time we refer to them.
     </p>
 
     <p>
-      When we make a request to http://localhost:4000, this <code>People.Plug</code> module works out how to respond by following the code in the <code>People.Plug.call/2</code> function. This function starts out by taking a <code>conn</code>, which will be a <code>Plug.Conn</code> struct containing information about the request. "Conn" is short for "connection", and I for one am quite happy that it's abbreviated.
+      When we make a request to http://localhost:4000, this <code>People.Plug</code> module works out how to respond by
+      following the code in the <code>People.Plug.call/2</code> function. This function starts out by taking a
+      <code>conn</code>, which will be a <code>Plug.Conn</code> struct containing information about the request. "Conn"
+      is short for "connection", and I for one am quite happy that it's abbreviated.
     </p>
 
     <p>
-      The next thing that's new, is those functions from <code>Plug.Conn</code> themselves: <code>put_resp_content_type</code> and <code>send_resp</code>.
+      The next thing that's new, is those functions from <code>Plug.Conn</code> themselves:
+      <code>put_resp_content_type</code> and <code>send_resp</code>.
     </p>
 
     <p>
-      When we use <code>put_resp_content_type</code>, we're telling the browser that made the request that the <em>type</em> of content that we're sending back is plain text, or in computer parlance "text/plain". This is useful because if we were sending back an image instead, we could send something like "image/jpg" back, and a browser would display that image rather than some text.
+      When we use <code>put_resp_content_type</code>, we're telling the browser that made the request that the
+      <em>type</em> of content that we're sending back is plain text, or in computer parlance "text/plain". This is
+      useful because if we were sending back an image instead, we could send something like "image/jpg" back, and a
+      browser would display that image rather than some text.
     </p>
 
     <p>
-      The <code>send_resp</code> function takes two arguments, a <em>status</em> and a <em>body</em>. The <em>status</em> informs the browser if the request was successful or not. There are many different statuses, and you can see a big list of them here: <a href='https://httpstatuses.com/'>httpstatuses.com</a>. (And yes, <a href='https://httpstatuses.com/418'>there is a status just in case you're a teapot</a> -- added as an April Fools' joke.) A "200" status means that the request was successful.
+      The <code>send_resp</code> function takes two arguments, a <em>status</em> and a <em>body</em>. The
+      <em>status</em> informs the browser if the request was successful or not. There are many different statuses, and
+      you can see a big list of them here: <a href='https://httpstatuses.com/'>httpstatuses.com</a>. (And yes, <a
+        href='https://httpstatuses.com/418'>there is a status just in case you're a teapot</a> -- added as an April
+      Fools' joke.) A "200" status means that the request was successful.
     </p>
 
     <p>
-      The <em>body</em> argument to <code>send_resp</code> is the content that will be displayed on the page when a request is made to http://localhost:4000.
+      The <em>body</em> argument to <code>send_resp</code> is the content that will be displayed on the page when a
+      request is made to http://localhost:4000.
     </p>
 
     <p>
-      This plug is designed to take in <em>any</em> request and return the same response for all of those requests. Later on, we'll see how to return different responses depending on the request. For now, let's try running this server.
+      This plug is designed to take in <em>any</em> request and return the same response for all of those requests.
+      Later on, we'll see how to return different responses depending on the request. For now, let's try running this
+      server.
     </p>
   </section>
 
@@ -195,7 +254,8 @@ end</code></pre>
     <h3>Starting a server</h3>
 
     <p>
-      We've now built our first plug, and it's time to start running the web server. To start the webserver running, we're first going to need to start a new IEx session. Let's run this command to start that up:
+      We've now built our first plug, and it's time to start running the web server. To start the webserver running,
+      we're first going to need to start a new IEx session. Let's run this command to start that up:
     </p>
 
     <pre><code>iex -S mix</code></pre>
@@ -220,25 +280,34 @@ end</code></pre>
     </ol>
 
     <p>
-      The options that are passed here are then passed to the <code>People.Plug.init/1</code> function. We can ignore this for now, since we are not passing any options.
+      The options that are passed here are then passed to the <code>People.Plug.init/1</code> function. We can ignore
+      this for now, since we are not passing any options.
     </p>
 
     <p>
-      The <code>Plug.Cowboy.http/2</code> function then returns a tuple with this strange syntax (or something similar to it, your numbers might be different!):
+      The <code>Plug.Cowboy.http/2</code> function then returns a tuple with this strange syntax (or something similar
+      to it, your numbers might be different!):
     </p>
 
     <pre><code>{:ok, #PID<0.242.0>}</code></pre>
 
     <p>
-      We know from Chapter 11 that tuples can be used to indicate the success or failure of a particular operation. From the output here, we can see that the operation was successful... but what's that second part? That is a PID, indicating an internal Elixir <em>process</em> -- "PID" means "Process identifier". All Elixir code runs inside processes, and the second element for this tuple is telling us that our webserver is running within a particular process, with the identifier of <code>0.242.0</code>.
+      We know from Chapter 11 that tuples can be used to indicate the success or failure of a particular operation. From
+      the output here, we can see that the operation was successful... but what's that second part? That is a PID,
+      indicating an internal Elixir <em>process</em> -- "PID" means "Process identifier". All Elixir code runs inside
+      processes, and the second element for this tuple is telling us that our webserver is running within a particular
+      process, with the identifier of <code>0.242.0</code>.
     </p>
 
     <p>
-      We could choose to start up a <em>separate</em> plug using this same function and Elixir wouldn't even start to break a sweat.
+      We could choose to start up a <em>separate</em> plug using this same function and Elixir wouldn't even start to
+      break a sweat.
     </p>
 
     <p>
-      Now that our server has started running, let's try and access it by opening a browser (if you're reading this book, chances are you've already got one open...) and go to <a href='http://localhost:4000'>http://localhost:4000</a>. When you go there, you should see:
+      Now that our server has started running, let's try and access it by opening a browser (if you're reading this
+      book, chances are you've already got one open...) and go to <a
+        href='http://localhost:4000'>http://localhost:4000</a>. When you go there, you should see:
     </p>
 
     <center>
@@ -250,7 +319,8 @@ end</code></pre>
     </p>
 
     <p>
-      If you wanted to change the content that's returned here, you can edit the <code>People.Plug.call/2</code> function to something else:
+      If you wanted to change the content that's returned here, you can edit the <code>People.Plug.call/2</code>
+      function to something else:
     </p>
 
     <pre><code>def call(conn, _opts) do
@@ -260,20 +330,353 @@ end</code></pre>
 end</code></pre>
 
     <p>
-      And then in the <code>iex -S mix</code> session, you can use the <code>r</code> helper to recompile and reload that module:
+      And then in the <code>iex -S mix</code> session, you can use the <code>r</code> helper to recompile and reload
+      that module:
     </p>
 
     <pre><code>iex> r People.Plug
 {:reloaded, People.Plug, [People.Plug]}</code></pre>
 
     <p>
-      Once that module has been recompiled and reloaded, going to <a href='http://localhost:4000'>http://localhost:4000</a> will show a different message now:
+      Once that module has been recompiled and reloaded, going to <a
+        href='http://localhost:4000'>http://localhost:4000</a> will show a different message now:
     </p>
 
     <center>
       <pre><code class='large'><span class='console-green'>Hello again from the People project</span></code></pre>
     </center>
+
+    <p>
+      Sending a <em>single</em> response from a web server is a good feat, and you should be proud to have accomplished
+      that already. But what would be cooler is if we could send different responses based on what's requested.
+    </p>
   </section>
 
-  <!-- <div class='todo'>Plug router + plug supervision coming soon!</div> -->
+  <section>
+    <h3>Taking a different route</h3>
+
+    <p>
+      When you've been reading this book, you might've noticed that the address changes in the browser, depending on
+      what chapter you're reading. This chapter's address is <a
+        href='https://joyofelixir.com/17-mix-dependencies'>https://joyofelixir.com/17-mix-dependencies</a> and the last
+      chapter's address is <a
+        href='https://joyofelixir.com/16-introduction-to-mix/'>https://joyofelixir.com/16-introduction-to-mix/</a>.
+      These addresses are how the joyofelixir.com server knows which chapter you want to read.
+    </p>
+
+    <p>
+      We're going to do something similar here by using a part of the <code>plug</code> package called a
+      <em>router</em>. A router tells Plug how to serve particular requests, depending on the address requested.
+    </p>
+
+    <p>
+      In this section, we'll use the <code>Plug.Router</code> module to dynamically choose which plug to serve our
+      responses with. When we go to http://localhost:4000/hello/Izzy, the server will respond with "Hello, Izzy!". And
+      if we go to http://localhost:4000/goodbye/Izzy, then the server will respond with "Goodbye, Izzy!".
+    </p>
+
+    <p>
+      Let's set this up now by creating a new file called <code>lib/router.ex</code> within the <code>people</code>
+      project:
+    </p>
+
+    <pre><code>defmodule People.Router do
+  use Plug.Router
+
+  plug :match
+  plug :dispatch
+
+  get "hello/:name", to: People.Hello
+  get "goodbye/:name", to: People.Goodbye
+
+  match _ do
+    send_resp(conn, 404, "there's nothing here")
+  end
+end</code></pre>
+
+    <p>
+      This file starts out by defining a module called <code>People.Router</code>. This module will be our router for
+      requests coming into our application, and is in charge of determining what plug to route our requests to.
+    </p>
+
+    <p>
+      In order to do that routing, we need to use <code>Plug.Router</code>. This <code>use Plug.Router</code> line gives
+      us access to the <code>plug</code>, <code>get</code> and <code>match</code> functions that are used here.
+    </p>
+
+    <p>
+      The two uses of <code>plug</code> here define some default behaviour in the form of two distinct plugs. The
+      <code>:match</code> plug makes <code>Plug.Router</code> attempt to match the request path to one of the routes we
+      have defined. The <code>:dispatch</code> plug is responsible for sending that response back to the browser once we
+      have done that routing.
+    </p>
+
+    <p>
+      After the uses of <code>plug</code>, we define two routes by using the <code>get</code> function. When you type in
+      address in your browser window and hit enter, your browser does not simply request
+      https://joyofelixir.com/17-mix-dependencies. The request actually looks like this:
+    </p>
+
+    <pre><code>GET /17-mix-dependencies HTTP/1.1</code></pre>
+
+    <p>Your browser sends this request (along with some other information) to the joyofelixir.com server, and the server
+      dutifully returns you this chapter.</p>
+
+    <p>
+      In our situation, when we go to http://localhost:4000/hello/Izzy, our browser will send a request to the server at
+      localhost:4000, and that request will be:
+    </p>
+
+    <pre><code>GET /hello/Izzy HTTP/1.1</code></pre>
+
+    <p>
+      A <code>GET</code> request is one that is asking a server to <em>get</em> information about a particular page, and
+      then to return that information. A request to <code>/hello/Izzy</code> will match our first route,
+      <code>get "hello/:name"</code>, because the <code>:name</code> part is a dynamic part of our route -- it could be
+      anything.
+    </p>
+
+    <p>
+      The same rules apply to our <code>goodbye</code> route. A request like this:
+    </p>
+
+    <pre><code>GET /goodbye/Izzy HTTP/1.1</code></pre>
+
+    <p>
+      Will match the <code>get "goodbye/:name"</code> route.
+
+    </p>
+
+    <p>
+      The final thing that we have defined in our router is a <code>match</code> block. This block tells the server what
+      to do in case there's no route that matches. Imagine we made a request like this:
+    </p>
+
+    <pre><code>GET /greet/Izzy HTTP/1.1</code></pre>
+
+    <p>
+      Our server does not have any route that matches this shape, and so it will not know what to do in that case. This
+      <code>match _</code> means to match anything, and then to return "there's nothing here" if there's a route
+      accessed that is not specified within this file.
+    </p>
+
+    <p>
+      Before we can run our router, we will need to define both the <code>People.Hello</code> and
+      <code>People.Goodbye</code> modules. Let's start by defining <code>People.Hello</code> over in
+      <code>lib/hello.ex</code>:
+    </p>
+
+    <pre><code>defmodule People.Hello do
+    import Plug.Conn
+
+    def init(options), do: options
+
+    def call(conn, _opts) do
+      conn
+      |> put_resp_content_type("text/plain")
+      |> send_resp(200, "Hello from the People project")
+    end
+  end</code></pre>
+
+
+    <p>
+      And we'll define <code>People.Goodbye</code> over in <code>lib/goodbye.ex</code>:
+    </p>
+
+    <pre><code>defmodule People.Hello do
+  import Plug.Conn
+
+  def init(options), do: options
+
+  def call(conn, _opts) do
+    conn
+    |> put_resp_content_type("text/plain")
+    |> send_resp(200, "Goodbye from the People project")
+  end
+end</code></pre>
+
+    <p>
+      Let's go ahead and see this new router in action. We can use this router in the same way we used our
+      <code>People.Plug</code> module before: by starting an IEx prompt, and then by using
+      <code>Plug.Cowboy.http</code>. Let's start a fresh IEx prompt now. If we're still inside an <code>IEx</code>
+      session from earlier, we'll need to exit it and start a new one so that our <code>People.Router</code> code is
+      compiled, which will make it available in this session.
+    </p>
+
+    <pre><code>iex -S mix</code></pre>
+
+    <p>
+      Then inside this prompt we'll start our router:
+    </p>
+
+    <pre><code>Plug.Cowboy.http People.Router, []</code></pre>
+
+    <p>
+      This will start our server again, and we will be able to go to http://localhost:4000 and see this message appear:
+    </p>
+
+    <center>
+      <pre><code class='large'><span class='console-green'>there's nothing here</span></code></pre>
+    </center>
+
+    <p>
+      Oh right! This text is the one coming from our catch-all <code>match</code> block at the bottom of the router. We
+      need to go to one of our routes to see something proper. Let's try: <a
+        href='http://localhost:4000/hello/Izzy'>http://localhost:4000/hello/Izzy</a>.
+    </p>
+
+    <center>
+      <pre><code class='large'><span class='console-green'>Hello from the People project</span></code></pre>
+    </center>
+
+    <p>
+      Alright! That one works. Let's try <a
+        href='http://localhost:4000/goodbye/Izzy'>http://localhost:4000/goodbye/Izzy</a>.
+    </p>
+
+    <center>
+      <pre><code class='large'><span class='console-green'>Goodbye from the People project</span></code></pre>
+    </center>
+
+    <p>
+      Excellent! Both of our plugs are now serving requests from our router. If we wanted to, we could add as many
+      different routes as we wished, all routing to different plugs.
+    </p>
+
+    <p>
+      What we haven't talked about yet is that <code>:name</code> thing in the routes. Let's look at that now.
+    </p>
+
+    <section>
+      <h3>Using parameters from requests</h3>
+    </section>
+
+    <p>
+      When we've defined our routes in <code>People.Router</code>, we've defined them like this:
+    </p>
+
+    <pre><code>get "hello/:name", to: People.Hello
+get "goodbye/:name", to: People.Goodbye</code></pre>
+
+    <p>
+      We know that the <code>:name</code> means that we can put <em>anything</em> we want after the slash, but what if
+      we wanted to actually do something with whatever name was entered? What if we wanted to add a personal touch here?
+    </p>
+
+    <p>
+      The way we can do that is by reading out the <code>:name</code> part, and using it in our code. When a request is
+      made to our application using <a href='http://localhost:4000/hello/Izzy'>http://localhost:4000/hello/Izzy</a>,
+      that "Izzy" part is sent as data inside the <code>conn</code> struct, under a key called <code>params</code>. If
+      we were to take a peek inside that <code>conn</code> object, here's what we would see:
+    </p>
+
+    <pre><code>%Plug.Conn{
+  ...
+  params: %{"name" => "Izzy"},
+  ...
+}</code></pre>
+
+    <p>
+      We can grab that <code>"name"</code> key out of <code>params</code>, and then use it in our code by using pattern
+      matching. You haven't forgotten about little ol' pattern matching I hope! We can see a quick example of this by
+      experimenting with the <code>Plug.Conn</code> struct within an <code>iex -S mix</code> session:
+    </p>
+
+    <pre><code>iex> conn = %Plug.Conn{params: %{"name" => "Izzy"}}
+%Plug.Conn{
+  adapter: {Plug.MissingAdapter, :...},
+  ...
+}</code></pre>
+
+    <p>
+      This is a struct which has a key called <code>params</code>. We can get the value for that <code>params</code> out
+      by pattern matching like this:
+    </p>
+
+    <pre><code>iex> %{params: params} = conn
+iex> params
+%{"name" => "Izzy"}</code></pre>
+
+    <p>
+      Then to get the name out of the <code>params</code>, we can pattern match again:
+    </p>
+
+    <pre><code>iex> %{"name" => name} = params
+iex> name
+"Izzy"</code></pre>
+
+    <p>
+      We can pattern match in multiple stages like this, or we could do it in one big go:
+    </p>
+
+    <pre><code>iex> %{params: %{"name" => name}} = conn
+iex> name
+"Izzy"</code></pre>
+
+    <p>
+      We can "reach into" the <code>conn</code> struct in this way and pull out the parameter that we need. Let's apply
+      this knowledge in
+    </p>
+
+    <pre><code>defmodule People.Hello do
+  import Plug.Conn
+
+  def init(options), do: options
+
+  def call(%Plug.Conn{params: %{"name" => name}} = conn, _opts) do
+    conn
+    |> put_resp_content_type("text/plain")
+    |> send_resp(200, "Hello #{name}!")
+  end
+end</code></pre>
+
+    <p>
+      This will now display "Hello" and then whatever the <code>name</code> parameter specified in our request is.
+    </p>
+
+    <p>
+      Let's apply the same changes to <code>People.Goodbye</code> too:
+    </p>
+
+    <pre><code>defmodule People.Goodbye do
+  import Plug.Conn
+
+  def init(options), do: options
+
+  def call(%Plug.Conn{params: %{"name" => name}} = conn, _opts) do
+    conn
+    |> put_resp_content_type("text/plain")
+    |> send_resp(200, "Goodbye #{name}!")
+  end
+end</code></pre>
+
+    <p>
+      To update our server with this new code, we will need to recompile and reload these modules by using the
+      <code>r</code> function again:
+    </p>
+
+    <pre><code>iex> r People.Hello
+iex> r People.Goodbye</code></pre>
+
+    <p>
+      Then when we go to <a href='http://localhost:4000/hello/Izzy'>http://localhost:4000/hello/Izzy</a> we'll now see:
+    </p>
+
+    <center>
+      <pre><code class='large'><span class='console-green'>Hello Izzy!</span></code></pre>
+    </center>
+
+    <p>
+      And the same will happen for the goodbye route too at <a
+        href='http://localhost:4000/hello/Izzy'>http://localhost:4000/goodbye/Izzy</a>
+    </p>
+
+    <center>
+      <pre><code class='large'><span class='console-green'>Goodbye Izzy!</span></code></pre>
+    </center>
+
+    <p>
+      You can now put anything after <code>/hello</code> or <code>/goodbye</code> and it will use that value in our code. Pretty cool!
+    </p>
+  </section>
 </section>
