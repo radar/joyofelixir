@@ -589,6 +589,19 @@ end</code></pre>
         <li>The <em>pattern</em> of those arguments</li>
       </ol>
     </aside>
+
+    <p>
+      One final thing to do here is to use pattern matching to pull out the values from the struct that we depend on. Let's change the two functions of <code>full_name</code> and <code>age</code> to this:
+    </p>
+
+    <pre><code>def full_name(%Person{first_name: first_name, last_name: last_name} = person) do
+  "#{first_name} #{last_name}"
+end
+
+def age(%Person{birthday: birthday} = person) do
+  days = Date.diff(Date.utc_today, birthday)
+  days / 365.25
+end</code></pre>
   </section>
 
   <section>
@@ -799,7 +812,7 @@ Person</code></pre>
   # ...
 
   defimpl Inspect do
-    def inspect(%{
+    def inspect(%Person{
       first_name: first_name,
       last_name: last_name,
       location: location,
