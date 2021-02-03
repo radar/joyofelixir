@@ -538,4 +538,146 @@ IO.puts "I suggest it was [#{person}] in the [#{place}] with the [#{object}]"</c
 
     <p>There are no exercises for this chapter.</p>
   </section>
+
+  <section>
+    <h3>Chapter 14</h3>
+
+    <p>There are no exercises for this chapter.</p>
+  </section>
+
+  <section>
+    <h3>Chapter 15</h3>
+
+    <p>There are no exercises for this chapter.</p>
+  </section>
+
+  <section>
+    <h3>Chapter 16</h3>
+
+    <p>There are no exercises for this chapter.</p>
+  </section>
+
+  <section>
+    <h3>Chapter 17</h3>
+
+    <p><em>Add a new route that accepts a date in the format of <code>1987-12-04</code> as a parameter. Use your <code>Person.age</code> function to return how old this would make the person.</code></em></p>
+
+    <p>
+      The first step here is to add a new route to <code>People.Router</code>, defined in <code>lib/router.ex</code>
+    </p>
+
+    <pre><code>defmodule People.Router do
+  use Plug.Router
+
+  plug(:match)
+  plug(:dispatch)
+
+  get("hello/:name", to: People.Hello)
+  get("goodbye/:name", to: People.Goodbye)
+  get("age/:birthday", to: People.Age)
+
+  match _ do
+    send_resp(conn, 404, "there's nothing here")
+  end
+end</code></pre>
+
+    <p>
+      This route goes to a plug that does not exist, and so we will need to define a module with an <code>init</code> and <code>call</code> function inside it:
+    </p>
+
+    <pre><code>defmodule People.Age do
+  import Plug.Conn
+
+  def init(options), do: options
+
+  def call(conn, _opts) do
+    conn
+    |> put_resp_content_type("text/plain")
+    |> send_resp(200, "You are #{age} years old!")
+  end
+end</code></pre>
+
+    <p>
+      Inside the <code>call</code> function here, we do not have an <code>age</code> variable yet. We'll need to calculate that using the <code>Person.age/1</code> function... but that function takes a <code>Person</code> struct, and that struct must contain a value for <code>birthday</code> so that our calculation works. We need something in this shape:
+    </p>
+
+    <pre><code>%Person{birthday: "1987-12-04"}</code></pre>
+
+    <p>
+      But instead of a hard-coded birthday, we need the value from the parameter. Let's pull that out using pattern matching first:
+    </p>
+
+    <pre><code>def call(%Plug.Conn{params: %{"birthday" => birthday}} = conn, _opts) do
+  conn
+  |> put_resp_content_type("text/plain")
+  |> send_resp(200, "You are #{age} years old!")
+end</code></pre>
+
+    <p>
+      Now we will have a <code>birthday</code> value that we can use to construct a person struct:
+    </p>
+
+    <pre><code>def call(%Plug.Conn{params: %{"birthday" => birthday}} = conn, _opts) do
+  age = %People.Person{birthday: birthday} |> People.Person.age
+
+  conn
+  |> put_resp_content_type("text/plain")
+  |> send_resp(200, "You are #{age} years old!")
+end</code></pre>
+
+    <p>
+      This will get us <em>most</em> of the way there, but if we attempt to run the code now we'll see it blow up:
+    </p>
+
+    <pre><code>
+<span class='console-red'>[timestamp] [error] #PID<0.394.0> running People.Router (connection #PID<0.384.0>, stream id 3) terminated
+  Server: localhost:4001 (http)
+  Request: GET /age/1987-12-04
+  ** (exit) an exception was raised:
+      ** (FunctionClauseError) no function clause matching in Date.diff/2
+          (elixir 1.10.4) lib/calendar/date.ex:577: Date.diff(~D[2021-02-03], "1987-12-04")
+          (people 0.1.0) lib/person.ex:12: People.Person.age/1
+          (people 0.1.0) lib/age.ex:7: People.Age.call/2
+          (people 0.1.0) lib/plug/router.ex:284: People.Router.dispatch/2
+          (people 0.1.0) lib/router.ex:1: People.Router.plug_builder_call/2</span></code></pre>
+
+  <p>
+    This exception is pointing squarely at our <code>People.Person.age</code> function, and at its use of <code>Date.diff/2</code>. This function takes two dates, but we've given it a date and a string. So we need to convert the <code>birthday</code> variable into a date!
+  </p>
+
+  <pre><code>def call(%Plug.Conn{params: %{"birthday" => birthday}} = conn, _opts) do
+    age = %People.Person{birthday: Date.from_iso8601!(birthday)} |> People.Person.age
+
+    conn
+    |> put_resp_content_type("text/plain")
+    |> send_resp(200, "You are #{age} years old!")
+  end</code></pre>
+
+  <p>
+    This will then ensure that when the birthday goes through to <code>People.Person.age</code> that it's a date, and we can then compare two dates with <code>Date.diff/2</code>. A tricky little step, wasn't that?
+  </p>
+
+  <p>
+    It's also worth pointing out here that we use <code>People.Person</code> to refer to that module twice, but we could use only <code>Person</code> if we aliased the module at the top of <code>Person.Age</code>
+  </p>
+
+  <pre><code>defmodule People.Age do
+  import Plug.Conn
+  alias People.Person
+
+  def init(options), do: options
+
+  def call(%Plug.Conn{params: %{"birthday" => birthday}} = conn, _opts) do
+    age = %Person{birthday: Date.from_iso8601!(birthday)} |> Person.age
+
+    conn
+    |> put_resp_content_type("text/plain")
+    |> send_resp(200, "You are #{age} years old!")
+  end
+end</code></pre>
+
+  <p>
+    This makes our code a little bit longer vertically, for the sake of saving some horizontal length.
+  </p>
+  </section>
 </section>
