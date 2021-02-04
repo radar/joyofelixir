@@ -1,7 +1,383 @@
 <section class='break'>
-  <h2 id='chapter-17'>17. How to test your code</h2>
+  <h2 id='chapter-18'>18. Automated testing</h2>
 
-  <div class='todo'>
-    * Introduction to testing with ExUnit, including Doctests
-  </div>
+  <p>
+    This chapter is all about testing your code. Haven't we been doing that already? We've certainly be using it a few
+    times. Isn't that testing?
+  </p>
+
+  <p>
+    I should be more specific. In this chapter, we'll be covering <em>automated</em> testing. We're going to write even
+    more Elixir code that will put our current Elixir code (the stuff in <code>lib/person.ex</code> and
+    <code>lib/router.ex</code>) through its paces.
+  </p>
+
+  <p>
+    As we develop larger and larger Elixir applications through using Elixir, testing each function of these
+    applications in a manual way will get tedious. But still, we want to ensure that our application is functioning the
+    way we meant it to! The way that we do this, and maintain our sanity, is through automated testing.
+  </p>
+
+  <p>
+    We'll explore here how to write these automated tests using another piece of Elixir called ExUnit. We will run these
+    tests with a Mix task simply called <code>test</code>, and when that command runs we'll be able to verify if our
+    application is working or not.
+  </p>
+
+  <p>
+    In the last section of this chapter, we'll cover how to write documentation for our code. This documentation will be
+    helpful to anyone who wants to read it, but it can also be written in a way that runs further automated tests for
+    our application, using something called <em>doctests</em>.
+  </p>
+
+  <section>
+    <h3>Introduction to ExUnit</h3>
+
+    <p>
+      Let's start by looking at this ExUnit thing. Elixir is made up several distinct parts, and you've now seen Elixir
+      itself, IEx and Mix in action. The latest part to join the fray of our learning is ExUnit.
+    </p>
+
+    <p>
+      ExUnit is a tool that we can use to write automated tests for our application. Believe it or not, but we already
+      have a test in our application. We've just been choosing not to see it at the moment. Let's look at this file now,
+      <code>test/people_test.exs</code>:
+    </p>
+
+    <pre><code>defmodule PeopleTest do
+  use ExUnit.Case
+  doctest People
+
+  test "greets the world" do
+    assert People.hello() == :world
+  end
+end</code></pre>
+
+    <p>
+      When we ran <code>mix new people</code> one of the files that was generated was this file. Another one of the
+      files that was generated was one called <code>lib/people.ex</code>. Not to be confused with
+      <code>lib/person.ex</code>! Let's look at <code>lib/people.ex</code> now. I'll remove the documentation here to
+      make it easier to focus on what we're doing.
+    </p>
+
+    <pre><code>defmodule People do
+  def hello do
+    :world
+  end
+end
+</code></pre>
+
+    <p>
+      The test in <code>test/people_test.exs</code> ensures that when the <code>People.hello/0</code> function is
+      called, that it returns <code>:world</code>. We can run this test with the <code>test</code> Mix task:
+    </p>
+
+    <pre><code>$ mix test</code></pre>
+
+    <p>
+      When we run this cmomand, we'll see this output:
+    </p>
+
+    <pre><code class='hljs plain'><span class='console-green'>..</span>
+
+Finished in 0.04 seconds
+<span class='console-green'>1 doctest, 1 test, 0 failures</span></code></pre>
+
+    <p>
+      We'll ignore the "1 doctest" part here, and focus on the "1 test" part. ExUnit is showing us here that it has ran
+      a single test, and that there were no failures when it ran that test. This means that our
+      <code>People.hello/0</code> function is behaving. Great!
+    </p>
+
+    <p>
+      But what if it wasn't behaving? Well, let's take a look at what happens by changing this function to return
+      something else other than <code>:world</code>:
+    </p>
+
+    <pre><code>defmodule People do
+  def hello do
+    :earth
+  end
+end</code></pre>
+
+    <p>
+      Let's run our tests again:
+    </p>
+
+    <pre><code>$ mix test</code></pre>
+
+    <p>
+      This time, there will be one failure:
+    </p>
+
+    <pre><code class='hljs plain'>1) test greets the world (PeopleTest)
+   <span class='console-grey bold'>test/people_test.exs:5</span>
+   Assertion with == failed
+   <span class='console-blue'>code:</span>  assert People.hello() == :world
+   <span class='console-blue'>left:</span>  <span class='console-red'>:earth</span>
+   <span class='console-blue'>right:</span> <span class='console-green'>:world</span>
+   stacktrace:
+     test/people_test.exs:6: (test)</code></pre>
+
+    <p>
+      Without even having to run <code>iex -S mix</code> and then run <code>People.hello</code> to see if this function
+      is working, we've been able to tell by running our automated test. Well, we probably knew it wouldn't work before
+      then but... the point still stands! When our Elixir projects get larger, testing really does come in handy. It's
+      good to practice it now on a small scale, so that we can employ it on a larger scale.
+    </p>
+
+    <p>
+      When we change the <code>People</code> code back:
+    </p>
+
+    <pre><code>defmodule People do
+  def hello do
+    :world
+  end
+end</code></pre>
+
+    <p>
+      And then re-run the command to run the tests:
+    </p>
+
+    <pre><code>$ mix test</code></pre>
+
+    <p>
+      We'll see everything is still working:
+    </p>
+
+    <pre><code class='hljs plain'><span class='console-green'>..</span>
+
+Finished in 0.04 seconds
+<span class='console-green'>1 doctest, 1 test, 0 failures</span></code></pre>
+
+    <p>
+      Now that we've seen how to use tests that already exist, we will now try (and succeed!) to write our own.
+    </p>
+  </section>
+
+  <section>
+    <h3>Writing our own tests</h3>
+
+    <p>
+      Writing our own tests will not very scary at all. In fact, we can copy a lot of what Mix has already done for us.
+      The tests that we will write will now will be for our <code>People.Person</code> module, and we'll start with the
+      <code>full_name</code> function. Let's create a new file
+      at <code>test/person_test.exs</code> and put this content in it:
+    </p>
+
+    <pre><code>defmodule People.PersonTest do
+  use ExUnit.Case
+  alias People.Person
+
+  test "full_name/1" do
+    person = %Person{
+      first_name: "Ryan",
+      last_name: "Bigg"
+    }
+
+    assert person |> Person.full_name() === "Ryan Bigg"
+  end
+end</code></pre>
+
+    <p>
+      There are a two main things to remember with tests:
+    </p>
+
+    <ol>
+      <li>The files do not get compiled into the "final version" of our application, so they are Elixir scripts,
+        indicated by their ".exs" extension</li>
+      <li>The common convention is to name the module for the tests after the module that's under test. We're testing
+        the <code>People.Person</code> module here, and so our test follows that same pattern, just with
+        <code>Test</code> on the end.
+      </li>
+    </ol>
+
+    <p>
+      As tests are written inside of modules, we can use <code>alias</code> here, just like we have done in our other
+      code. Inside this module, we <code>use ExUnit.Case</code>, which then gives us access to the <code>test</code>
+      function that then lets us define a test.
+    </p>
+
+    <p>
+      Inside that test, we write code just like we might within a <code>iex -S mix</code> session. We build up a brand
+      new person, and then pass that data through to <code>Person.full_name/1</code>. We then use the
+      <code>assert</code> function from ExUnit to verify that the function matches the expected value.
+    </p>
+
+    <p>
+      Let's try running this test now with our new favourite command:
+    </p>
+
+    <pre><code>$ mix test</code></pre>
+
+    <p>
+      Here's what we'll see:
+    </p>
+
+    <pre><code class='hljs plain'><span class='console-green'>...</span>
+
+Finished in 0.05 seconds
+<span class='console-green'>1 doctest, 2 tests, 0 failures</span></code></pre>
+
+    <p>
+      Excellent! Our test is now verifying that our <code>Person.full_name/1</code> function is behaving correctly.
+    </p>
+
+    <p>
+      The great thing about having these tests is that if we were to change the behaviour of
+      <code>Person.full_name/1</code> function to something else that was wrong, then this test would fail. Rather than
+      doing that, what we'll do is change the <em>test</em> first, to assert that the full name is different. Just
+      for... something different to do.
+    </p>
+
+    <p>
+      We'll be changing our test to assert that if there is no last name specified that it outputs just the first name.
+      After all, what if people like <a href='https://en.wikipedia.org/wiki/Teller_(magician)'>Teller</a> or <a
+        href='https://en.wikipedia.org/wiki/Madonna'>Madonna</a> were to use our Elixir application, we should support
+      them too -- they have mononyms. We could go further and attempt to address <a
+        href='https://www.kalzumeus.com/2010/06/17/falsehoods-programmers-believe-about-names/'>the falsehoods
+        programmers believe about names</a>, but perhaps that's too much. Let's just do these mononym people first.
+    </p>
+
+    <p>
+      Let's add another test for these mononymic people:
+    </p>
+
+    <pre><code>defmodule PersonTest do
+  use ExUnit.Case
+  alias People.Person
+
+  ...
+
+  test "full_name/1 with mononyms" do
+    teller = %Person{
+      first_name: "Teller"
+    }
+
+    assert teller |> Person.full_name() === "Teller"
+
+    madonna = %Person{
+      first_name: "Madonna"
+    }
+
+    assert madonna |> Person.full_name() === "Madonna"
+  end
+end</code></pre>
+
+    <p>
+      This test has not one but <em>two</em> assertions in it! The first asserts that when we ask for Teller's full
+      name, we get... well, we just get "Teller". The same goes for Madonna.
+    </p>
+
+    <p>
+      Let's try running this test now.
+    </p>
+
+    <pre><code class='hljs plain'>$ mix test</code></pre>
+
+    <p>
+      Here's what we'll see:
+    </p>
+
+    <pre><code class="hljs plain">1) test full_name/1 with mononyms (PersonTest)
+  test/person_test.exs:14
+  <span class='console-red'>Assertion with === failed</span>
+  code:  assert teller |> Person.full_name() === "Teller"
+  left:  "Teller<span class='console-bg-red'>&nbsp;</span>"
+  right: "Teller"
+  stacktrace:
+    test/person_test.exs:19: (test)</code></pre>
+
+    <p>
+      Uh oh. Our test is failing! We are not as perfect as may have thought. We have two options here. First, we could
+      change the test to expect "Teller " (with that space). The second is that we could fix the code. I personally like
+      the latter option and so that's what we'll do.
+    </p>
+
+    <p>
+      Let's go over to <code>lib/person.ex</code> and take a look at our <code>full_name</code> function:
+    </p>
+
+    <pre><code>def full_name(%__MODULE__{
+  first_name: first_name,
+  last_name: last_name
+}) do
+  "#{first_name} #{last_name}"
+end</code></pre>
+
+    <p>
+      This function takes the <code>first_name</code> and the <code>last_name</code> of the the passed in person and
+      joins them together with a space. But now that we're working with people with only single name, we're going to
+      need to do something different here. That something different is to use pattern matching!
+    </p>
+
+    <p>
+      The default value for a <code>last_name</code> is <code>nil</code>. So if we just have a first name but no last
+      name specified, we could define a different <code>full_name</code> function to act accordingly. And then that
+      shgould make our test happy too! Let's try that out.
+    </p>
+
+    <pre><code>def full_name(%__MODULE__{
+  first_name: first_name,
+  last_name: nil
+}) do
+  "#{first_name}"
+end
+
+def full_name(%__MODULE__{
+  first_name: first_name,
+  last_name: last_name
+}) do
+  "#{first_name} #{last_name}"
+end</code></pre>
+
+
+    <p>
+      We now have two function clauses for <code>full_name</code>, one that matches when <code>last_name</code> is
+      <code>nil</code>, and another when its any other value. In the first clause, we only output the first name.
+    </p>
+
+    <p>
+      This goes to show that in order to make a test work, sometimes we need to change the underlying code.
+    </p>
+
+    <p>
+      Let's run that test again and see what happens:
+    </p>
+
+    <pre><code class='hljs plain'>$ mix test</code></pre>
+
+    <pre><code class='hljs plain'><span class='console-green'>....</span>
+
+Finished in 0.05 seconds
+<span class='console-green'>1 doctest, 3 tests, 0 failures</span></code></pre>
+
+    <p>
+      Wonderful. Our <code>Person.full_name/1</code> function now supports people with only a first name, as well as
+      those with first and last names.
+    </p>
+  </section>
+
+  <section>
+    <h3>Documentation and tests</h3>
+
+    <div class='todo'>Coming soon</div>
+  </section>
+
+  <section>
+    <h3>Testing the router</h3>
+
+    <div class='todo'>Coming soon</div>
+  </section>
+
+  <section>
+    <h3>Exercises</h3>
+
+    <ol>
+      <li>
+        Write a test that asserts <code>Person.age/1</code> works correctly.
+      </li>
+    </ol>
+  </section>
 </section>

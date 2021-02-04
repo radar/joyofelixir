@@ -13,6 +13,10 @@
   color: black;
 }
 
+span[class^="console-"].bold {
+  font-weight: bold;
+}
+
 .console-red {
   color: $red;
 
@@ -29,6 +33,14 @@
   }
 }
 
+.console-grey {
+  color: $grey;
+
+  span[class^="hljs-"] {
+    color: $grey;
+  }
+}
+
 .unused-clause {
   opacity: 0.5;
 }
@@ -38,5 +50,10 @@
 }
 
 .hljs-number {
- color: $yellow;
+  color: $yellow;
+}
+
+.console-bg-red {
+  background: $red;
+  color: black;
 }
