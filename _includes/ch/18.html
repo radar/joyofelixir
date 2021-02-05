@@ -362,13 +362,277 @@ Finished in 0.05 seconds
   <section>
     <h3>Documentation and tests</h3>
 
-    <div class='todo'>Coming soon</div>
+    <p>
+      We've now seen one way to write our own tests. But there's <em>two</em> major ways to write our own tests in
+      Elixir! The second of these is something called <em>doctests</em>.
+    </p>
+
+    <p>
+      We've seen doctests referred to in the test output before, we haven't talked about them yet. When we're writing
+      Elixir code, we can <em>document</em> that code by leaving documentation above it. An example of this is found in
+      the
+      <code>lib/people.ex</code> file:
+    </p>
+
+    <pre><code>defmodule People do
+  @moduledoc """
+  Documentation for People.
+  """
+
+  @doc """
+  Hello world.
+
+  ## Examples
+
+      iex> People.hello()
+      :world
+
+  """
+  def hello do
+    :world
+  end
+end</code></pre>
+
+    <p>
+      The <code>@moduledoc</code> and <code>@doc</code> syntax here are called <em>module attributes</em>, and they
+      allow us to write documentation for either the module as a whole, or for functions. We'll just be talking about
+      function documentation here. The <code>"""</code> ("triple quote") syntax here is another way of writing strings
+      in Elixir, and is typically used to indicate strings that go over multiple lines, such as this documentation.
+    </p>
+
+    <p>
+      The documentation for the <code>hello</code> function here simply reads "Hello world." and then contains an
+      example to show you how to use this function. This documentation is what will appear when we use the
+      <code>h</code> helper in an <code>IEx</code> session:
+    </p>
+
+    <pre><code>iex> h People.hello</code></pre>
+
+
+    <pre><code class='no-highlight custom'><div class='console-bg-yellow center'>def hello</div>
+Hello world.
+
+<span class='console-yellow'>## Examples</span>
+<span class='console-blue'>
+  iex> People.hello()
+  :world</span></code></pre>
+
+    <p>
+      Documentation, in the form of <code>@doc</code> and <code>@moduledoc</code> is the way that Elixir developers
+      communicate how to use their code. The "Examples" that are listed here show what an expected output of
+      <code>hello</code> is.
+    </p>
+
+    <p>
+      Back in Chapter 13, we saw this documentation for <code>Enum.find_index/2</code>:
+    </p>
+
+    <pre><code class='no-highlight custom'><div class='console-bg-yellow center'>def find_index(enumerable, fun)</div>
+
+Similar to <span class='console-blue'>find/3</span>, but returns the index (zero-based) of the element instead of
+the element itself.
+
+<span class='console-yellow'>## Examples</span>
+<span class='console-blue'>
+    iex> Enum.find_index([2, 4, 6], fn x -> rem(x, 2) == 1 end)
+    nil
+
+    iex> Enum.find_index([2, 3, 4], fn x -> rem(x, 2) == 1 end)
+    1</span></code></pre>
+
+    <p>
+      This documentation is formatted in a similar way: a short description of the function, followed by some examples.
+    </p>
+
+    <p>
+      What's cool about both of these documentation examples is that they contain tests, in the form of examples. Both
+      <code>People.hello</code>'s documentation, and <code>Enum.find_index/2</code>'s documentation ensure that those
+      functions are working, just as their examples demonstrate.
+    </p>
+
+    <p>
+      Let's see a live example of this now, by writing some documentation tests for our <code>Person.full_name</code>
+      function. We should document the behaviour of this function because it behaves differently depending on if there
+      is only a <code>first_name</code> or a <code>last_name</code>, and documentation is a good way of demonstrating
+      this. If we didn't have documentation, anyone wanting to learn how our code worked would have to read and
+      understand the code, and that can take longer to understand than some clear-cut examples.
+    </p>
+
+    <p>
+      To document our <code>full_name</code> function, we'll go into <code>lib/person.ex</code> and add these lines
+      before the first <code>full_name</code> function clause. It's important to note here that we do not need to
+      document <em>both</em> clauses, as this documentation applies equally to both functions.
+    </p>
+
+    <pre><code>  @doc """
+  Joins together a person's first name and last name.
+  If that person only has a first name, then will only show that name.
+
+  ## Examples
+
+  iex> ryan = %Person{first_name: "Ryan", last_name: "Bigg"}
+  iex> ryan |> Person.full_name
+  "Ryan Bigg"
+
+  iex> madonna = %Person{first_name: "Madonna"}
+  iex> madonna |> Person.full_name
+  "Madonna"
+"""
+def full_name(%__MODULE__{
+      first_name: first_name,
+      last_name: nil
+    }) do
+  "#{first_name}"
+end
+
+def full_name(%__MODULE__{
+      first_name: first_name,
+      last_name: last_name
+    }) do
+  "#{first_name} #{last_name}"
+end</code></pre>
+
+    <p>
+      This new documentation now documents our <code>full_name</code> function, <em>and</em> it can be used to test the
+      <code>full_name</code> function too... except there's one last thing we need to do before we can run this
+      documentation as tests. We need to tell our tests to run the documentation. Let's go into
+      <code>test/person_test.exs</code> and add a new line at the top:
+    </p>
+
+    <pre><code>defmodule PersonTest do
+use ExUnit.Case
+alias People.Person
+doctest People.Person</code></pre>
+
+    <p>
+      When we use <code>doctest</code> in this test, we're telling ExUnit that we have documentation tests in the
+      <code>People.Person</code> module that we would like to run, along side the other, regular tests that are defined
+      in this file.
+    </p>
+
+    <p>
+      With that line now added, we will be able to run our tests again and see that there are more running:
+    </p>
+
+    <pre><code>$ mix test</code></pre>
+
+    <pre><code><span class='console-green'>......</span>
+
+Finished in 0.06 seconds
+<span class='console-green'>3 doctests, 3 tests, 0 failures</span></code></pre>
+
+    <p>
+      Okay, so the number has gone up, but how can we be really sure our documentation tests are the ones that are
+      running here? To see the names of the running tests, we can pass an option to <code>mix test</code> called
+      <code>--trace</code>:
+    </p>
+
+    <pre><code>mix test --trace
+PersonTest
+  <span class='console-green'>* doctest People.Person.full_name/1 (2) (0.00ms)
+  * test full_name/1 (0.00ms)
+  * test full_name/1 with mononyms (0.00ms)
+  * doctest People.Person.full_name/1 (1) (0.00ms)</span>
+
+PeopleTest
+  <span class='console-green'>* doctest People.hello/0 (1) (0.00ms)
+  * test greets the world (0.00ms)</span>
+
+
+Finished in 0.06 seconds
+<span class='console-green'>3 doctests, 3 tests, 0 failures</span>
+</code></pre>
+
+    <p>
+      Yes! Our doctests are indeed running. We've now seen how to write documentation in our Elixir modules that include
+      examples that will then be incorporated into our tests. By using documentation in this way, we can ensure that our
+      documentation is always up to date and that our code is always working.
+    </p>
   </section>
 
   <section>
     <h3>Testing the router</h3>
 
-    <div class='todo'>Coming soon</div>
+    <p>
+      Lastly, we need to talk about how to test another part of our code -- the Plug router that we added in the last
+      chapter. To test a plug router is not as easy as calling a function and asserting on whatever comes back. But it's
+      almost as easy!
+    </p>
+
+    <p>
+      We'll start out by creating a new test file for this, at <code>test/router_test.exs</code>:
+    </p>
+
+    <pre><code>defmodule RouterTest do
+      use ExUnit.Case
+      use Plug.Test
+
+      @opts People.Router.init([])
+
+      test "returns hello 'name'" do
+        conn = conn(:get, "/hello/Izzy")
+
+        conn = People.Router.call(conn, @opts)
+
+        assert conn.state == :sent
+        assert conn.status == 200
+        assert conn.resp_body == "Hello Izzy!"
+      end
+    end</code></pre>
+
+    <p>
+      This new module starts out by using <code>ExUnit.Case</code>, and this gives us the ability to call that
+      <code>test</code> function a little bit later on. But this module also uses <code>Plug.Test</code>. This module
+      includes a few helper functions that we can use for making requests to our routers. One of these functions is
+      <code>conn</code>.
+    </p>
+
+    <p>
+      Inside the test, we use <code>conn</code> to build up a test connection to make a request. We then send this
+      request to the router by calling the <code>People.Router.call</code> function, passing in that <code>conn</code>.
+      We also pass in <code>@opts</code>, which comes from calling the <code>People.Router.init</code> function at the
+      top of this module.
+    </p>
+
+    <p>
+      Once we have called the router, we will get back a new <code>conn</code>, which will contain the response from the
+      router. We check that this connection has been "sent" -- Plug's terminology for if the router has chosen to
+      dispatch a request or not.
+    </p>
+
+    <p>
+      We also check here the <code>status</code> and the <code>resp_body</code> of the <code>conn</code>, making sure
+      that it has suceeded and returned the correct message.
+    </p>
+
+    <p>
+      When we run this test, we should see that it passes:
+    </p>
+
+    <pre><code>$ mix test</code></pre>
+
+    <pre><code><span class='console-green'>.......</span>
+
+Finished in 0.07 seconds
+<span class='console-green'>3 doctests, 4 tests, 0 failures</span></code></pre>
+
+    <p>
+      See? I told you that it was almost as easy as calling a function and asserting on the outcome. This is made
+      possible by the fact that routers (and plugs) are simply modules with functions. They take some arguments, and
+      return some data. We can then assert easily on that data.
+    </p>
+
+    <p>
+      It is possible also to write tests for the <code>People.Hello</code> and <code>People.Goodbye</code> plugs, but I
+      think that's best left as an exercise to the reader, and so I will include it at the end of this chapter in the
+      exercises list.
+    </p>
+
+    <p>
+      And that's all there is to testing our modules and functions within Elixir. We use ExUnit to write these tests,
+      and we can put these tests under the <code>test</code> directory of our application, or write them as "inline"
+      documentation on our functions in the form of documentation tests.
+    </p>
   </section>
 
   <section>
@@ -376,7 +640,13 @@ Finished in 0.05 seconds
 
     <ol>
       <li>
-        Write a test that asserts <code>Person.age/1</code> works correctly.
+        Write a test that asserts <code>Person.age/1</code> works correctly. This could be a regular test, or a
+        documentation test. Why not try both?
+      </li>
+
+      <li>
+        Write tests for the <code>People.Hello</code> and <code>People.Goodbye</code> plugs. Refer back to your tests
+        for <code>People.Router</code> if you need to.
       </li>
     </ol>
   </section>
