@@ -155,13 +155,13 @@ Izzy
       These expected temperatures aren't just random numbers. That's just Melbourne for you. It just can't make up its
       mind. Now what if for our American friends we represented these numbers in their familiar &mdash; but wacky
       &mdash;
-      farenheit? Otherwise they might read the numbers and think that Melbourne is a frigid hellscape, which <a
+      fahrenheit? Otherwise they might read the numbers and think that Melbourne is a frigid hellscape, which <a
         href='https://www.theguardian.com/australia-news/2017/aug/16/melbourne-worlds-most-liveable-city-for-seventh-year-running'>it
         most certainly is not</a>.
     </p>
 
     <p>
-      So we want to convert these temperatures from their celsius amounts into the farenheit equivalents, turning the
+      So we want to convert these temperatures from their celsius amounts into the fahrenheit equivalents, turning the
       map
       into this:
     </p>
@@ -186,7 +186,7 @@ Izzy
 
     <p>
       We would use <code>Enum.map/2</code> to run a function on each of these numbers to convert the numbers to
-      farenheit
+      fahrenheit
       (using that function that we saw back in <a href='/5-funky-functions'>Chapter 5</a>:
     </p>
 
@@ -323,7 +323,7 @@ iex> Enum.into(new_forecast, %{})
       <li>We then take this <code>forecast</code> variable, and pass it as the
         first argument to <code>Enum.map/2</code>. The second argument passed to
         <code>Enum.map/2</code> is a function which runs on each key-value pair
-        in the map. This function takes the temperature -- the value -- and converts it to farenheit.
+        in the map. This function takes the temperature -- the value -- and converts it to fahrenheit.
       </li>
       <li>We assign the result of this <code>Enum.map/2</code> call to a variable
         called <code>new_forecast</code>, and then immediately pass that into <code>Enum.into/2</code> as the first
@@ -395,7 +395,7 @@ iex> Enum.into(new_forecast, %{})
   <p>
     Let's now use this pipe operator on our forecast data. Here's some code that uses
     the pipe operator ("and then") that is functionally identical to the code from the previous section, where we have a
-    forecast in celsius and we convert it to farenheit:
+    forecast in celsius and we convert it to fahrenheit:
   </p>
 
   <pre><code>%{
@@ -844,7 +844,7 @@ iex> %{izzy | "country" => "Australia"}
   <p>
     In this chapter, we've seen a couple of ways of working with maps. We saw that we could go through each key-value
     pair in the map with <code>Enum.each/2</code>. We also used <code>Enum.map/2</code> and <code>Enum.into/2</code> to
-    change the values inside the maps to other values, converting temperature numbers to farenheit ones.
+    change the values inside the maps to other values, converting temperature numbers to fahrenheit ones.
   </p>
 
   <p>
