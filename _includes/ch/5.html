@@ -145,8 +145,8 @@ iex> c_to_f.(40)
   </p>
 
   <pre>
-<code>iex> greeting = fn (name, gender, age) ->
-...>   "Hello, #{name}! I see you're #{gender} and you're #{age} years old."
+<code>iex> greeting = fn (name, pronouns, age) ->
+...>   "Hello, #{name}! I see you're #{pronouns} and you're #{age} years old."
 ...> end
 <span class='console-yellow'>#Function&lt;18.52032458/3 in :erl_eval.expr/5&gt;</span></code></pre>
 
@@ -157,8 +157,8 @@ iex> c_to_f.(40)
   </p>
 
   <pre>
-<code>iex> greeting.("Izzy", "Female", "30ish")
-<span class='console-green'>"Hello, Izzy! I see you're Female and you're 30ish years old!"</span></code></pre>
+<code>iex> greeting.("Izzy", "she/her", "30ish")
+<span class='console-green'>"Hello, Izzy! I see you're she/her and you're 30ish years old!"</span></code></pre>
 
   <p>We can go nuts with the number of arguments that a function is defined with. However, we need to take a modicum of
     caution when running the functions. If we specify the wrong number of arguments, Elixir will tell us off with big
@@ -226,8 +226,8 @@ iex> greeting.("World")
     <code>greeting</code> function from earlier:
   </p>
 
-  <pre><code>iex> greeting = fn (name, gender, age) ->
-  ...>   "Hello, #{name}! I see you're #{gender} and you're #{age} years old."
+  <pre><code>iex> greeting = fn (name, pronouns, age) ->
+  ...>   "Hello, #{name}! I see you're #{pronouns} and you're #{age} years old."
   ...> end</code></pre>
 
   <p>
@@ -240,8 +240,8 @@ iex> greeting.("World")
     Then we can call it with three arguments too:
   </p>
 
-  <pre><code>iex> captured_greeting.("Izzy", "Female", "30ish")
-<span class='console-green'>"Hello, Izzy! I see you're Female and you're 30ish years old!"</span></code></pre>
+  <pre><code>iex> captured_greeting.("Izzy", "she/her", "30ish")
+<span class='console-green'>"Hello, Izzy! I see you're she/her and you're 30ish years old!"</span></code></pre>
 
   <p>
     Functions written with the <code>fn</code> construct and the capture operator behave identically. The only

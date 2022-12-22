@@ -84,56 +84,56 @@ If <span class='console-blue'>key</span> is present in <span class='console-blue
       Let's say that we've been working in <code>iex</code> and we've written this code:
     </p>
 
-    <pre><code>iex(1)> %{name: "Izzy", age: "30ish", gender: "Female"}
-iex(2)> %{name: "Ryan", age: "30ish", gender: "Male"}</code></pre>
+    <pre><code>iex(1)> %{name: "Izzy", age: "30ish", pronouns: "she/her"}
+iex(2)> %{name: "Ryan", age: "30ish", pronouns: "he/him"}</code></pre>
 
     <p>
       Oh drat. We've just realised that wanted to assign these to variables, but forgot to. One way we can get that
       value again is by pressing the up-arrow on our keyboard. We'll then see this:
     </p>
 
-    <pre><code>iex(1)> %{name: "Izzy", age: "30ish", gender: "Female"}
-%{age: "30ish", gender: "Female", name: "Izzy"}
-iex(2)> %{name: "Ryan", age: "30ish", gender: "Male"}
-%{name: "Ryan", age: "30ish", gender: "Male"}
-iex(3)> %{name: "Ryan", age: "30ish", gender: "Male"}</code></pre>
+    <pre><code>iex(1)> %{name: "Izzy", age: "30ish", pronouns: "she/her"}
+%{age: "30ish", pronouns: "she/her", name: "Izzy"}
+iex(2)> %{name: "Ryan", age: "30ish", pronouns: "he/him"}
+%{name: "Ryan", age: "30ish", pronouns: "he/him"}
+iex(3)> %{name: "Ryan", age: "30ish", pronouns: "he/him"}</code></pre>
 
     <p>
       Our terminal helpfully brings back the last value when we push the up-arrow. But if we push the up-arrow again,
       look what happens:
     </p>
 
-    <pre><code>iex(1)> %{name: "Izzy", age: "30ish", gender: "Female"}
-%{age: "30ish", gender: "Female", name: "Izzy"}
-iex(2)> %{name: "Ryan", age: "30ish", gender: "Male"}
-%{name: "Ryan", age: "30ish", gender: "Male"}
-iex(3)> %{age: "30ish", gender: "Female", name: "Izzy"}</code></pre>
+    <pre><code>iex(1)> %{name: "Izzy", age: "30ish", pronouns: "she/her"}
+%{age: "30ish", pronouns: "she/her", name: "Izzy"}
+iex(2)> %{name: "Ryan", age: "30ish", pronouns: "he/him"}
+%{name: "Ryan", age: "30ish", pronouns: "he/him"}
+iex(3)> %{age: "30ish", pronouns: "she/her", name: "Izzy"}</code></pre>
 
     <p>
       We're now back to the first value again! We could then go to the start of this line (by pushing the left-arrow, or
       <kbd>Ctrl+A</kbd>) and assign it to a variable if we wished:
     </p>
 
-    <pre><code>iex(3)> izzy = %{age: "30ish", gender: "Female", name: "Izzy"}
-%{age: "30ish", gender: "Female", name: "Izzy"}</code></pre>
+    <pre><code>iex(3)> izzy = %{age: "30ish", pronouns: "she/her", name: "Izzy"}
+%{age: "30ish", pronouns: "she/her", name: "Izzy"}</code></pre>
 
     <p>
       If we push the up-arrow again here, we'll get the same as line 3; the line we just had:
     </p>
 
-    <pre><code>iex(4)> izzy = %{age: "30ish", gender: "Female", name: "Izzy"}</code></pre>
+    <pre><code>iex(4)> izzy = %{age: "30ish", pronouns: "she/her", name: "Izzy"}</code></pre>
 
     <p>
       If we push it a second time, we'll get the same as line 2.
     </p>
 
-    <pre><code>iex(4)> %{name: "Ryan", age: "30ish", gender: "Male"}</code></pre>
+    <pre><code>iex(4)> %{name: "Ryan", age: "30ish", pronouns: "he/him"}</code></pre>
 
     <p>
       If we push the down-arrow, we'll go back to line 3.
     </p>
 
-    <pre><code>iex(4)> izzy = %{age: "30ish", gender: "Female", name: "Izzy"}</code></pre>
+    <pre><code>iex(4)> izzy = %{age: "30ish", pronouns: "she/her", name: "Izzy"}</code></pre>
 
     <p>
       This is how we can navigate up and down, or back and forward (depending your viewpoint) through the history of
@@ -147,7 +147,7 @@ iex(3)> %{age: "30ish", gender: "Female", name: "Izzy"}</code></pre>
     </p>
 
     <pre><code>iex(4)> ryan = v(2)
-%{name: "Ryan", age: "30ish", gender: "Male"}</code></pre>
+%{name: "Ryan", age: "30ish", pronouns: "he/him"}</code></pre>
 
     <p>
       This code can be read as: find the 2nd value from the prompt, and assign it to a variable called
@@ -156,7 +156,7 @@ iex(3)> %{age: "30ish", gender: "Female", name: "Izzy"}</code></pre>
     </p>
 
     <pre><code>iex(5)> ryan = v 2
-%{name: "Ryan", age: "30ish", gender: "Male"}</code></pre>
+%{name: "Ryan", age: "30ish", pronouns: "he/him"}</code></pre>
   </section>
 
   <section>

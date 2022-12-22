@@ -9,9 +9,9 @@
 
     <pre>
 <code>iex> those_who_are_assembled = [
-...> ["Izzy", "30ish", "Female"],
+...> ["Izzy", "30ish", "she/her"],
   ... a long time passes ...
-...> ["Izzy the Younger", "Female", "20ish"],
+...> ["Izzy the Younger", "she/her", "20ish"],
 ...> ]</code>
 </pre>
 
@@ -32,8 +32,8 @@
     </p>
 
     <pre>
-<code>iex> person = %{"name" => "Roberto", "age" => 56, "gender" => "Male"}
-%{<span class='console-green'>"age"</span> => <span class='console-yellow'>56</span>, <span class='console-green'>"gender"</span> => <span class='console-green'>"Male"</span>, <span class='console-green'>"name"</span> => <span class='console-green'>"Roberto"</span>}</code></pre>
+<code>iex> person = %{"name" => "Roberto", "age" => 56, "pronouns" => "he/him"}
+%{<span class='console-green'>"age"</span> => <span class='console-yellow'>56</span>, <span class='console-green'>"pronouns"</span> => <span class='console-green'>"he/him"</span>, <span class='console-green'>"name"</span> => <span class='console-green'>"Roberto"</span>}</code></pre>
 
     <p>
       Maps start with a <code>%</code> and enclose their data in a warm curly-brace cuddle. In a map, we structure data
@@ -75,8 +75,8 @@
     </p>
 
     <pre>
-<code>iex> person = %{"gender" => "Male", "age" => 56, "name" => "Roberto"}
-%{<span class='console-green'>"age"</span> => <span class='console-yellow'>56</span>, <span class='console-green'>"gender"</span> => <span class='console-green'>"Male"</span>, <span class='console-green'>"name"</span> => <span class='console-green'>"Roberto"</span>}</code></pre>
+<code>iex> person = %{"pronouns" => "he/him", "age" => 56, "name" => "Roberto"}
+%{<span class='console-green'>"age"</span> => <span class='console-yellow'>56</span>, <span class='console-green'>"pronouns"</span> => <span class='console-green'>"he/him"</span>, <span class='console-green'>"name"</span> => <span class='console-green'>"Roberto"</span>}</code></pre>
 
     <p>
       The position of the <code>"name"</code> key within a map has no meaning. The keys for a map can be in any order.
@@ -122,9 +122,9 @@
     </p>
 
     <pre><code>iex> those_who_are_assembled = [
-...> %{"name" => "Izzy", "age" => "30ish", "gender" => "Female"},
-...> %{"name" => "The Author", "age" => "30ish", "gender" => "Male"},
-...> %{"name" => "The Reader", "age" => "Unknowable", "gender" => "Unknowable"},
+...> %{"name" => "Izzy", "age" => "30ish", "pronouns" => "she/her"},
+...> %{"name" => "The Author", "age" => "30ish", "pronouns" => "he/him"},
+...> %{"name" => "The Reader", "age" => "Unknowable", "pronouns" => "Unknowable"},
 ...> ]</code></pre>
 
     <p>
@@ -133,7 +133,7 @@
 
     <p>
       This list of maps containing the crowd's information is immune to the problem we were seeing at the start of this
-      chapter. It doesn't matter what order the key-value combinations of age, name or gender are placed -- the maps
+      chapter. It doesn't matter what order the key-value combinations of age, name or pronouns are placed -- the maps
       will contain the right information at the right spots. As an additional bonus, we can refer to these values with
       their keys, rather than having to remember their positions.
     </p>
@@ -145,7 +145,7 @@
     <p>
       Before we go onwards, I'd like us to dwell a bit longer on maps. So far, we've seen that maps are comprised of a
       series of keys and values. Those keys in our maps have only been strings, but the values have been a mixture of
-      strings (for <code>name</code> and <code>gender</code>) and numbers (for <code>age</code>). This kind of hints at
+      strings (for <code>name</code> and <code>pronouns</code>) and numbers (for <code>age</code>). This kind of hints at
       what maps are capable of storing, but I would like to cover a few more cases so we can really get the hang of
       these map things.
     </p>
@@ -189,7 +189,7 @@ iex> choices[<span class='console-green'>2</span>]
     <pre><code>iex> person = %{
   name: "Izzy",
   age: "30ish",
-  gender: "Female"
+  pronouns: "she/her"
 }</code></pre>
 
     <p>
@@ -199,7 +199,7 @@ iex> choices[<span class='console-green'>2</span>]
     <pre><code>iex> person = %{
   :name => "Izzy",
   :age => "30ish",
-  :gender => "Female"
+  :pronouns => "she/her"
 }</code></pre>
 
     <p>
@@ -247,9 +247,9 @@ iex> choices[<span class='console-green'>2</span>]
     </p>
 
     <pre><code>iex> those_who_are_assembled = [
-  ...> %{name: "Izzy", age: "30ish", gender: "Female"},
-  ...> %{name: "The Author", gender: "Male", age: "30ish"},
-  ...> %{name: "The Reader", gender: "Unknowable", age: "Unknowable"},
+  ...> %{name: "Izzy", age: "30ish", pronouns: "she/her"},
+  ...> %{name: "The Author", pronouns: "he/him", age: "30ish"},
+  ...> %{name: "The Reader", pronouns: "Unknowable", age: "Unknowable"},
   ...> ]</code></pre>
 
     <p>
