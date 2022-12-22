@@ -20,7 +20,7 @@
         Similar to this, we could <em>enumerate</em> through a map. If we were to take one of our maps from earlier...
       </p>
 
-      <pre><code>%{name: "Izzy", age: "30ish", gender: "Female"}</code></pre>
+      <pre><code>%{name: "Izzy", age: "30ish", pronouns: "she/her"}</code></pre>
 
       <p>
         ...and write each key and value pair down, they may look something like this:
@@ -31,8 +31,8 @@
         <dd>Izzy</dd>
         <dt><strong>Age</strong></dt>
         <dd>30ish</dd>
-        <dt><strong>Gender</strong></dt>
-        <dd>Female</dd>
+        <dt><strong>pronouns</strong></dt>
+        <dd>she/her</dd>
       </dl>
     </blockquote>
 
@@ -40,8 +40,8 @@
       But we never got around to actually showing you how this was done! Well, enough dilly-dallying, here's an example:
     </p>
 
-    <pre><code>iex> person = %{name: "Izzy", age: "30ish", gender: "Female"}
- %{age: "30ish", gender: "Female", name: "Izzy"}
+    <pre><code>iex> person = %{name: "Izzy", age: "30ish", pronouns: "she/her"}
+ %{age: "30ish", pronouns: "she/her", name: "Izzy"}
 iex> Enum.each(person, fn ({key, value}) -> IO.puts value end)
 </code></pre>
 
@@ -85,7 +85,7 @@ iex> Enum.each(person, fn ({key, value}) -> IO.puts value end)
 
     <pre><code>iex> Enum.each(person, fn ({key, value}) -> IO.puts value end)
 30ish
-Female
+she/her
 Izzy
 :ok</code></pre>
 
@@ -134,7 +134,7 @@ Izzy
     </p>
 
     <pre>
-<code>iex> person = %{name: "Izzy", age: "30ish", gender: "Female"}</code></pre>
+<code>iex> person = %{name: "Izzy", age: "30ish", pronouns: "she/her"}</code></pre>
 
     <p>
       We should try to use another map for this section. Hmmmm. How about a map with the days of the week and their
@@ -518,8 +518,8 @@ iex> Enum.into(new_forecast, %{})
     key by using square brackets.
   </p>
 
-  <pre><code>iex> person = %{"gender" => "Female", "age" => "30ish", "name" => "Izzy"}
-%{"age" => "30ish", "gender" => "Female", "name" => "Izzy"}
+  <pre><code>iex> person = %{"pronouns" => "she/her", "age" => "30ish", "name" => "Izzy"}
+%{"age" => "30ish", "pronouns" => "she/her", "name" => "Izzy"}
 iex> person["name"]
 "Izzy"</code></pre>
 
@@ -609,10 +609,10 @@ iex> person["name"]
     </p>
 
     <pre><code>iex> those_who_are_assembled = [
-  %{age: "30ish", gender: "Female", name: "Izzy"}
+  %{age: "30ish", pronouns: "she/her", name: "Izzy"}
 ]
 iex> [first_person = %{name: first_name} | others] = those_who_are_assembled
-[%{age: "30ish", gender: "Female", name: "Izzy"}]
+[%{age: "30ish", pronouns: "she/her", name: "Izzy"}]
 iex> first_name
 "Izzy"</code></pre>
 
@@ -669,7 +669,7 @@ iex> first_person
     data that we have on Izzy so far:
   </p>
 
-  <pre><code>iex> izzy = %{"name" => "Izzy", "age" => "30ish", "gender" => "Female"}</code></pre>
+  <pre><code>iex> izzy = %{"name" => "Izzy", "age" => "30ish", "pronouns" => "she/her"}</code></pre>
 
   <p>
     Recently, we've found out that Izzy is from Australia. That would explain
@@ -683,7 +683,7 @@ iex> first_person
   <pre><code>iex> izzy = %{
   <span class='unfocussed'>"name" => "Izzy"</span>,
   "age" => "40ish",
-  <span class='unfocussed'>"gender" => "Female",</span>
+  <span class='unfocussed'>"pronouns" => "she/her",</span>
   "country" => "Australia",
 }</code></pre>
 
@@ -694,7 +694,7 @@ iex> first_person
   </p>
 
   <pre><code>iex> izzy = Map.put(izzy, "age", "40ish")
-%{"age" => "40ish", "gender" => "Female", "name" => "Izzy"}</code></pre>
+%{"age" => "40ish", "pronouns" => "she/her", "name" => "Izzy"}</code></pre>
 
   <p>
     Ah that's so much better than writing the whole map from scratch! We can
@@ -710,7 +710,7 @@ iex> first_person
   </p>
 
   <pre><code>izzy |> Map.put("age", "40ish") |> Map.put("country", "Australia")
-%{"age" => "40ish", "country" => "Australia", "gender" => "Female", "name" => "Izzy"}</code></pre>
+%{"age" => "40ish", "country" => "Australia", "pronouns" => "she/her", "name" => "Izzy"}</code></pre>
 
   <p>
     This time, we've updated the value under the <code>age</code> key, <em>and</em> we've also added a new key here
@@ -719,7 +719,7 @@ iex> first_person
   </p>
 
   <pre><code>izzy
-%{"age" => "30ish", "gender" => "Female", "name" => "Izzy"}</code></pre>
+%{"age" => "30ish", "pronouns" => "she/her", "name" => "Izzy"}</code></pre>
 
   <p>
     This is because of that <em>immutability</em> thing we talked about a few chapters ago. Data in Elixir never changes
@@ -729,7 +729,7 @@ iex> first_person
   </p>
 
   <pre><code>izzy = izzy |> Map.put("age", "40ish") |> Map.put("country", "Australia")
-%{"age" => "40ish", "country" => "Australia", "gender" => "Female", "name" => "Izzy"}</code></pre>
+%{"age" => "40ish", "country" => "Australia", "pronouns" => "she/her", "name" => "Izzy"}</code></pre>
 
   <p>
     From that point onwards, our code would know that Izzy is 40ish and from Australia. Phew.
@@ -747,7 +747,7 @@ iex> first_person
     Let's change the data that we have on Izzy back to what it was at the start of this chapter:
   </p>
 
-  <pre><code>izzy = %{"name" => "Izzy", "age" => "30ish", "gender" => "Female"}</code></pre>
+  <pre><code>izzy = %{"name" => "Izzy", "age" => "30ish", "pronouns" => "she/her"}</code></pre>
 
   <p>
     This'll make it easier to show what <code>Map.merge/2</code> does.
@@ -760,7 +760,7 @@ iex> first_person
 %{
   "age" => "40ish",
   "country" => "Australia",
-  "gender" => "Female",
+  "pronouns" => "she/her",
   "name" => "Izzy"
 }</code></pre>
 
@@ -788,10 +788,10 @@ iex> first_person
     way, which we'll call <em>pipe merging</em>. The syntax goes like this:
   </p>
 
-  <pre><code>iex> izzy = %{"name" => "Izzy", "age" => "30ish", "gender" => "Female"}
-%{"age" => "30ish", "gender" => "Female", "name" => "Izzy"}
+  <pre><code>iex> izzy = %{"name" => "Izzy", "age" => "30ish", "pronouns" => "she/her"}
+%{"age" => "30ish", "pronouns" => "she/her", "name" => "Izzy"}
 iex> %{izzy | "age" => "40ish", "name" => "Isadora"}
-%{"age" => "40ish", "gender" => "Female", "name" => "Isadora"}</code></pre>
+%{"age" => "40ish", "pronouns" => "she/her", "name" => "Isadora"}</code></pre>
 
   <p>
     This syntax <em>looks</em> like a map, but it's split in two. On the left hand side, inside the map syntax, we have
@@ -805,12 +805,12 @@ iex> %{izzy | "age" => "40ish", "name" => "Isadora"}
     syntax:
   </p>
 
-  <pre><code>iex> izzy = %{"name" => "Izzy", "age" => "30ish", "gender" => "Female"}
-%{"age" => "30ish", "gender" => "Female", "name" => "Izzy"}
+  <pre><code>iex> izzy = %{"name" => "Izzy", "age" => "30ish", "pronouns" => "she/her"}
+%{"age" => "30ish", "pronouns" => "she/her", "name" => "Izzy"}
 iex> %{izzy | "country" => "Australia"}
 <span class='console-red'>
-** (KeyError) key "country" not found in: %{"age" => "30ish", "gender" => "Female", "name" => "Izzy"}
-    (stdlib) :maps.update("country", "Australia", %{"age" => "30ish", "gender" => "Female", "name" => "Izzy"})</span></code></pre>
+** (KeyError) key "country" not found in: %{"age" => "30ish", "pronouns" => "she/her", "name" => "Izzy"}
+    (stdlib) :maps.update("country", "Australia", %{"age" => "30ish", "pronouns" => "she/her", "name" => "Izzy"})</span></code></pre>
 
 
   <p>
@@ -829,7 +829,7 @@ iex> %{izzy | "country" => "Australia"}
   </p>
 
   <pre><code>izzy = Map.delete(izzy, "country")
-%{"age" => "40ish", "gender" => "Female", "name" => "Izzy"}
+%{"age" => "40ish", "pronouns" => "she/her", "name" => "Izzy"}
 </code></pre>
 
   <p>

@@ -97,31 +97,31 @@ iex> third = "eggs"
     And so Izzy continues. She disappears into the crowd directly to our right, and somehow re-appears within mere
     seconds on our left. This is despite the density of the crowd. Amazing stuff. She then asks: "Hey Mr. Author Guy, I
     want to also track people's ages so that I can do some statistics on who exactly is assembled here. Oh, and I want
-    to track their gender too. But a list doesn't seem very suitable for this. How can I do this?"
+    to track their pronouns too. But a list doesn't seem very suitable for this. How can I do this?"
   </p>
 
   <p>
     Well Izzy, there's more than one way you could do this. If all you wanted to track about a person was their name,
-    their age and their gender, you could make each item in the list its own list:
+    their age and their pronouns, you could make each item in the list its own list:
   </p>
 
   <pre>
 <code>iex> those_who_are_assembled = [
-...> ["Izzy", "30ish", "Female"],
-...> ["The Author", "30ish", "Male"],
+...> ["Izzy", "30ish", "she/her"],
+...> ["The Author", "30ish", "he/him"],
 ...> ]</code></pre>
 
   <p>
     These lists-inside-of-lists would be called <em>sub-lists</em>. You would then have to keep in mind that the first
-    item in each sub-list is the name, the second is the age and the third is the gender. What if you (or someone else,
-    using your computer) forgot the order and started adding in people, with age and gender swapping positions?
+    item in each sub-list is the name, the second is the age and the third is the pronouns. What if you (or someone else,
+    using your computer) forgot the order and started adding in people, with age and pronouns swapping positions?
   </p>
 
   <pre>
 <code>iex> those_who_are_assembled = [
-...> ["Izzy", "30ish", "Female"],
+...> ["Izzy", "30ish", "she/her"],
   ... a long time passes ...
-...> ["Izzy the Younger", "Female", "20ish"],
+...> ["Izzy the Younger", "she/her", "20ish"],
 ...> ]</code></pre>
 
   <p>
