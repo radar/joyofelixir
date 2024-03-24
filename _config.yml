@@ -27,8 +27,6 @@ exclude:
 
 # Build settings
 markdown: kramdown
-sass:
-    sass_dir: _sass
 
 
 elixir_version: v1.10.4
