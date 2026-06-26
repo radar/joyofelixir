@@ -442,7 +442,7 @@ iex> Enum.map(words, fn(word) -> String.replace(word, "e", "a") end)
 
     <h4>Exercise 2</h4>
 
-    <p><em>Use <code>Enum.reduce/2</code> to multiply these numbers together: <code>[2, 4, 991, 2543]</code></em></p>
+    <p><em>Use <code>Enum.reduce/2</code> to multiply these numbers together: <code>[5, 12, 9, 24, 9, 18]</code></em></p>
 
     <p>
       The final example of <code>Enum.reduce/2</code> shows us how to add together a list of scores:
@@ -457,10 +457,10 @@ iex> Enum.reduce(scores, fn (score, sum) -> sum + score end)
       We can adapt this to multiply together our new list:
     </p>
 
-    <pre><code>iex> numbers = [2, 4, 991, 2543]
-[2, 4, 991, 2543]
+    <pre><code>iex> numbers = [5, 12, 9, 24, 9, 18]
+[5, 12, 9, 24, 9, 18]
 iex> Enum.reduce(numbers, fn (number, sum) -> sum * number end)
-20160904</code></pre>
+2099520</code></pre>
   </section>
 
   <section>
